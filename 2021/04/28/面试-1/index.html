@@ -3,7 +3,7 @@
 
 
 <head>
-    <meta charset="utf-8">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     <meta name="keywords" content="面试_1, kavin">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,13 +29,13 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
 
 <body>
-    <header class="navbar-fixed">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
     <nav id="headNav" class="bg-color nav-transparent">
         <div id="navContainer" class="nav-wrapper container">
             <div class="brand-logo">
@@ -463,6 +463,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -470,14 +473,41 @@
             <div id="articleContent">
                 <!-- toc -->
 <h2 id="变量的声明和定义有声明区别"><a href="#变量的声明和定义有声明区别" class="headerlink" title="变量的声明和定义有声明区别"></a>变量的声明和定义有声明区别</h2><p>变量的定义是为变量分配地址和存储空间，变量的声明不分配地址。<br>一个变量可以在多个地方声明，但是只在一个地方定义。<br>加入<code>extern</code>修饰的是变量的声明，说明此变量将在文件以外或在文件后面部分定义。<br><strong>说明</strong>：很多时候一个变量，只是声明不分配内存空间，直到具体使用时才初始化，分配内存空间，如外部变量</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">extern</span> <span class="keyword">int</span> A;</span><br><span class="line">    <span class="comment">// 这是声明不是定义，声明A是一个外部变量</span></span><br><span class="line">    <span class="comment">// 注意：声明外部变量时可以把变量类型去掉，如：extern A;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> A;  <span class="comment">// 定义，定义了A为整形的外部变量</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">extern</span> <span class="token keyword">int</span> A<span class="token punctuation">;</span>
+    <span class="token comment">// 这是声明不是定义，声明A是一个外部变量</span>
+    <span class="token comment">// 注意：声明外部变量时可以把变量类型去掉，如：extern A;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">int</span> A<span class="token punctuation">;</span>  <span class="token comment">// 定义，定义了A为整形的外部变量</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="简述-ifdef、-else、-endif和-ifndef的作用"><a href="#简述-ifdef、-else、-endif和-ifndef的作用" class="headerlink" title="简述#ifdef、#else、#endif和#ifndef的作用"></a>简述#ifdef、#else、#endif和#ifndef的作用</h2><p>利用<code>#ifdef</code>、<code>#endif</code>将某程序功能模块包括进去，以向特定用户提供该功能<br>在不需要时用户可轻易将其屏蔽。 </p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __MATH__ </span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;math.c&quot;</span> </span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> </span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">__MATH__ </span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"math.c"</span> </span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span> </span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>在子程序前加上标记，以便于追踪和调试。 </p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> DEBUG</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span> (<span class="string">&quot;In debugging......!&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">DEBUG</span></span>
+
+<span class="token function">printf</span> <span class="token punctuation">(</span><span class="token string">"In debugging......!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>应对硬件的限制。由于一些具体应用环境的硬件不一样，限于条件，本地缺乏这种设备，只能绕过硬件，直接写出预期结果。<br><strong>注意</strong>：虽然不用条件编译命令而直接用<code>if</code>语句也能达到要求，但那样做目标程序长（因为所有语句都编译），运行时间长因为在程序运行时间对<code>if</code>语句进行测试）。<br>而采用条件编译，可以减少被编译的语句，从而减少目标程序的长度，减少运行时间</p>
-<h2 id="写出int-bool-float-指针变量与“零值”比较的if语句"><a href="#写出int-bool-float-指针变量与“零值”比较的if语句" class="headerlink" title="写出int/bool/float/指针变量与“零值”比较的if语句"></a>写出int/bool/float/指针变量与“零值”比较的if语句</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// int与零值比较</span></span><br><span class="line"><span class="keyword">if</span> (n == <span class="number">0</span>)</span><br><span class="line"><span class="keyword">if</span> (n != <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// bool与零值比较 </span></span><br><span class="line"><span class="keyword">if</span> (flag)     <span class="comment">// 表示flag为真 </span></span><br><span class="line"><span class="keyword">if</span> (!flag)    <span class="comment">// 表示flag为假 </span></span><br><span class="line"></span><br><span class="line"><span class="comment">// float与零值比较 </span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">float</span> EPSINON = <span class="number">0.00001</span>;</span><br><span class="line"><span class="keyword">if</span> ((x &gt;= -EPSINON) &amp;&amp; (x &lt;= EPSINON)) <span class="comment">//其中EPSINON是允许的误差（即精度） </span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 指针变量与零值比较 </span></span><br><span class="line"><span class="keyword">if</span> (p == <span class="literal">NULL</span>)</span><br><span class="line"><span class="keyword">if</span> (p != <span class="literal">NULL</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="写出int-bool-float-指针变量与“零值”比较的if语句"><a href="#写出int-bool-float-指针变量与“零值”比较的if语句" class="headerlink" title="写出int/bool/float/指针变量与“零值”比较的if语句"></a>写出int/bool/float/指针变量与“零值”比较的if语句</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// int与零值比较</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span>
+
+<span class="token comment">// bool与零值比较 </span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>flag<span class="token punctuation">)</span>     <span class="token comment">// 表示flag为真 </span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>flag<span class="token punctuation">)</span>    <span class="token comment">// 表示flag为假 </span>
+
+<span class="token comment">// float与零值比较 </span>
+<span class="token keyword">const</span> <span class="token keyword">float</span> EPSINON <span class="token operator">=</span> <span class="token number">0.00001</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>x <span class="token operator">>=</span> <span class="token operator">-</span>EPSINON<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>x <span class="token operator">&lt;=</span> EPSINON<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//其中EPSINON是允许的误差（即精度） </span>
+
+<span class="token comment">// 指针变量与零值比较 </span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>p <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>p <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="结构体可以直接赋值吗"><a href="#结构体可以直接赋值吗" class="headerlink" title="结构体可以直接赋值吗"></a>结构体可以直接赋值吗</h2><p>声明时可以直接初始化，同一结构体的不同对象之间也可以直接赋值，但是当结构体中含有指针成员时一定要小心。<br><strong>注意</strong>：当有多个指针指向同一段内存时，某个指针释放这段内存可能会导致其他指针的非法操作，因此在释放前一定要确保其他指针不再使用这段内存空间</p>
 <h2 id="sizeof-和strlen-的区别"><a href="#sizeof-和strlen-的区别" class="headerlink" title="sizeof 和strlen 的区别"></a>sizeof 和strlen 的区别</h2><ul>
@@ -1234,7 +1264,7 @@ $(function () {
     
 
     
-    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    <script src="/libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 
 </body>

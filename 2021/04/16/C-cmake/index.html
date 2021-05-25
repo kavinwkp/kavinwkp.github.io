@@ -3,7 +3,7 @@
 
 
 <head>
-    <meta charset="utf-8">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     <meta name="keywords" content="cmake, kavin">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,13 +29,13 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
 
 <body>
-    <header class="navbar-fixed">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
     <nav id="headNav" class="bg-color nav-transparent">
         <div id="navContainer" class="nav-wrapper container">
             <div class="brand-logo">
@@ -472,6 +472,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -493,10 +496,72 @@
 </ul>
 <h2 id="文件目录"><a href="#文件目录" class="headerlink" title="文件目录"></a>文件目录</h2><img src="/2021/04/16/C-cmake/cmake.png#pic_center" width="50%" height="50%" alt="test">
 
-<h3 id="Solider目录的CMakeLists-txt"><a href="#Solider目录的CMakeLists-txt" class="headerlink" title="Solider目录的CMakeLists.txt"></a>Solider目录的CMakeLists.txt</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">aux_source_directory</span>(. SRC_LIST)</span><br><span class="line"><span class="comment">// 将此目录的源文件集合称为变量SRC_LIST</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">message</span>($&#123;SRC_LIST&#125;)</span><br><span class="line"><span class="comment">// #un.cpp;Solider.cpp</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">include_directories</span>($&#123;PROJECT_SOURCE_DIR&#125;/include)</span><br><span class="line"><span class="comment">// 头文件目录</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">add_library</span>(Solider_shared SHARED $&#123;SRC_LIST&#125;)</span><br><span class="line"><span class="comment">// 库的名称，类型，源文件（动态库）</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">add_library</span>(Solider_static STATIC $&#123;SRC_LIST&#125;)</span><br><span class="line"><span class="comment">// 静态库</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">set_target_properties</span>(Solider_shared PROPERTIES OUTPUT_NAME <span class="string">&quot;Solider&quot;</span>)</span><br><span class="line"><span class="comment">// # 库的名称，库的输出名称（动态库）</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">set_target_properties</span>(Solider_static PROPERTIES OUTPUT_NAME <span class="string">&quot;Solider&quot;</span>)</span><br><span class="line"><span class="comment">// # 静态库</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span>(LIBRARY_OUTPUT_PATH $&#123;PROJECT_SOURCE_DIR&#125;/lib)</span><br><span class="line"><span class="comment">// 库文件输出到工作空间的lib目录下</span></span><br></pre></td></tr></table></figure>
+<h3 id="Solider目录的CMakeLists-txt"><a href="#Solider目录的CMakeLists-txt" class="headerlink" title="Solider目录的CMakeLists.txt"></a>Solider目录的CMakeLists.txt</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">aux_source_directory</span><span class="token punctuation">(</span><span class="token punctuation">.</span> SRC_LIST<span class="token punctuation">)</span>
+<span class="token comment">// 将此目录的源文件集合称为变量SRC_LIST</span>
 
-<h3 id="工作空间的CMakeLists-txt-生成库文件"><a href="#工作空间的CMakeLists-txt-生成库文件" class="headerlink" title="工作空间的CMakeLists.txt (生成库文件)"></a>工作空间的CMakeLists.txt (生成库文件)</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cmake_minimum_required</span>(VERSION <span class="number">3.0</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">project</span>(MAIN)</span><br><span class="line"></span><br><span class="line"><span class="comment">// message($&#123;MAIN_BINARY_DIR&#125;)</span></span><br><span class="line"><span class="comment">// message($&#123;PROJECT_BINARY_DIR&#125;)</span></span><br><span class="line"><span class="comment">// message($&#123;CMAKE_BINARY_DIR&#125;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果是out-of-source编译，指的是工程编译发生的目录 </span></span><br><span class="line"><span class="comment">// /home/kavin/algorithm/VSCode/test05/build</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// message($&#123;MAIN_SOURCE_DIR&#125;)</span></span><br><span class="line"><span class="comment">// message($&#123;PROJECT_SOURCE_DIR&#125;)</span></span><br><span class="line"><span class="comment">// message($&#123;CMAKE_SOURCE_DIR&#125;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 这三个变量指代的内容是一致的，是工程顶层目录 </span></span><br><span class="line"><span class="comment">// /home/kavin/algorithm/VSCode/test05</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 为了生成库文件，完成之后面再把这句注释掉</span></span><br><span class="line"><span class="comment">// 会进入Solider目录执行里里面的工作空间的CMakeLists.txt</span></span><br><span class="line"><span class="built_in">add_subdirectory</span>(Solider)</span><br></pre></td></tr></table></figure>
-<h3 id="工作空间的CMakeLists-txt-编译源文件"><a href="#工作空间的CMakeLists-txt-编译源文件" class="headerlink" title="工作空间的CMakeLists.txt (编译源文件)"></a>工作空间的CMakeLists.txt (编译源文件)</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cmake_minimum_required</span>(VERSION <span class="number">3.0</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">project</span>(MAIN)</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span>(CMAKE_CXX_FLAGS <span class="string">&quot;$&#123;CMAKE_CXX_FLAGS&#125;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span>(CMAKE_BUILD_TYPE Debug)     <span class="comment">// 要启用F5调试一定要用这一条</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 头文件目录</span></span><br><span class="line"><span class="built_in">include_directories</span>($&#123;CMAKE_SOURCE_DIR&#125;/include)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 库文件目录</span></span><br><span class="line"><span class="built_in">link_directories</span>(lib)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成可执行文件</span></span><br><span class="line"><span class="built_in">add_executable</span>(main main.cpp)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 链接库(静态库)</span></span><br><span class="line"><span class="built_in">target_link_libraries</span>(main libSolider.a)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果是动态库要记得添加环境变量 LD_LIBRARY_PATH=lib/</span></span><br></pre></td></tr></table></figure>
+<span class="token function">message</span><span class="token punctuation">(</span>$<span class="token punctuation">&#123;</span>SRC_LIST<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">// #un.cpp;Solider.cpp</span>
+
+<span class="token function">include_directories</span><span class="token punctuation">(</span>$<span class="token punctuation">&#123;</span>PROJECT_SOURCE_DIR<span class="token punctuation">&#125;</span><span class="token operator">/</span>include<span class="token punctuation">)</span>
+<span class="token comment">// 头文件目录</span>
+
+<span class="token function">add_library</span><span class="token punctuation">(</span>Solider_shared SHARED $<span class="token punctuation">&#123;</span>SRC_LIST<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">// 库的名称，类型，源文件（动态库）</span>
+
+<span class="token function">add_library</span><span class="token punctuation">(</span>Solider_static STATIC $<span class="token punctuation">&#123;</span>SRC_LIST<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token comment">// 静态库</span>
+
+<span class="token function">set_target_properties</span><span class="token punctuation">(</span>Solider_shared PROPERTIES OUTPUT_NAME <span class="token string">"Solider"</span><span class="token punctuation">)</span>
+<span class="token comment">// # 库的名称，库的输出名称（动态库）</span>
+
+<span class="token function">set_target_properties</span><span class="token punctuation">(</span>Solider_static PROPERTIES OUTPUT_NAME <span class="token string">"Solider"</span><span class="token punctuation">)</span>
+<span class="token comment">// # 静态库</span>
+
+<span class="token function">set</span><span class="token punctuation">(</span>LIBRARY_OUTPUT_PATH $<span class="token punctuation">&#123;</span>PROJECT_SOURCE_DIR<span class="token punctuation">&#125;</span><span class="token operator">/</span>lib<span class="token punctuation">)</span>
+<span class="token comment">// 库文件输出到工作空间的lib目录下</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="工作空间的CMakeLists-txt-生成库文件"><a href="#工作空间的CMakeLists-txt-生成库文件" class="headerlink" title="工作空间的CMakeLists.txt (生成库文件)"></a>工作空间的CMakeLists.txt (生成库文件)</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">cmake_minimum_required</span><span class="token punctuation">(</span>VERSION <span class="token number">3.0</span><span class="token punctuation">)</span>
+
+<span class="token function">project</span><span class="token punctuation">(</span>MAIN<span class="token punctuation">)</span>
+
+<span class="token comment">// message($&#123;MAIN_BINARY_DIR&#125;)</span>
+<span class="token comment">// message($&#123;PROJECT_BINARY_DIR&#125;)</span>
+<span class="token comment">// message($&#123;CMAKE_BINARY_DIR&#125;)</span>
+
+<span class="token comment">// 如果是out-of-source编译，指的是工程编译发生的目录 </span>
+<span class="token comment">// /home/kavin/algorithm/VSCode/test05/build</span>
+
+<span class="token comment">// message($&#123;MAIN_SOURCE_DIR&#125;)</span>
+<span class="token comment">// message($&#123;PROJECT_SOURCE_DIR&#125;)</span>
+<span class="token comment">// message($&#123;CMAKE_SOURCE_DIR&#125;)</span>
+
+<span class="token comment">// 这三个变量指代的内容是一致的，是工程顶层目录 </span>
+<span class="token comment">// /home/kavin/algorithm/VSCode/test05</span>
+
+<span class="token comment">// 为了生成库文件，完成之后面再把这句注释掉</span>
+<span class="token comment">// 会进入Solider目录执行里里面的工作空间的CMakeLists.txt</span>
+<span class="token function">add_subdirectory</span><span class="token punctuation">(</span>Solider<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="工作空间的CMakeLists-txt-编译源文件"><a href="#工作空间的CMakeLists-txt-编译源文件" class="headerlink" title="工作空间的CMakeLists.txt (编译源文件)"></a>工作空间的CMakeLists.txt (编译源文件)</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">cmake_minimum_required</span><span class="token punctuation">(</span>VERSION <span class="token number">3.0</span><span class="token punctuation">)</span>
+
+<span class="token function">project</span><span class="token punctuation">(</span>MAIN<span class="token punctuation">)</span>
+
+<span class="token function">set</span><span class="token punctuation">(</span>CMAKE_CXX_FLAGS <span class="token string">"$&#123;CMAKE_CXX_FLAGS&#125;"</span><span class="token punctuation">)</span>
+
+<span class="token function">set</span><span class="token punctuation">(</span>CMAKE_BUILD_TYPE Debug<span class="token punctuation">)</span>     <span class="token comment">// 要启用F5调试一定要用这一条</span>
+
+<span class="token comment">// 头文件目录</span>
+<span class="token function">include_directories</span><span class="token punctuation">(</span>$<span class="token punctuation">&#123;</span>CMAKE_SOURCE_DIR<span class="token punctuation">&#125;</span><span class="token operator">/</span>include<span class="token punctuation">)</span>
+
+<span class="token comment">// 库文件目录</span>
+<span class="token function">link_directories</span><span class="token punctuation">(</span>lib<span class="token punctuation">)</span>
+
+<span class="token comment">// 生成可执行文件</span>
+<span class="token function">add_executable</span><span class="token punctuation">(</span>main main<span class="token punctuation">.</span>cpp<span class="token punctuation">)</span>
+
+<span class="token comment">// 链接库(静态库)</span>
+<span class="token function">target_link_libraries</span><span class="token punctuation">(</span>main libSolider<span class="token punctuation">.</span>a<span class="token punctuation">)</span>
+
+<span class="token comment">// 如果是动态库要记得添加环境变量 LD_LIBRARY_PATH=lib/</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -1243,7 +1308,7 @@ $(function () {
     
 
     
-    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    <script src="/libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 
 </body>

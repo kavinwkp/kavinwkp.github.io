@@ -3,7 +3,7 @@
 
 
 <head>
-    <meta charset="utf-8">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     <meta name="keywords" content="Eigen_求秩, kavin">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,13 +29,13 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
 
 <body>
-    <header class="navbar-fixed">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
     <nav id="headNav" class="bg-color nav-transparent">
         <div id="navContainer" class="nav-wrapper container">
             <div class="brand-logo">
@@ -463,15 +463,42 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!-- toc -->
-<h2 id="rank-基本用法"><a href="#rank-基本用法" class="headerlink" title="rank()基本用法"></a><code>rank()</code>基本用法</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">JacobiSVD&lt;MatrixXd&gt; <span class="title">svd</span><span class="params">(m)</span></span>;</span><br><span class="line">svd.<span class="built_in">rank</span>()</span><br></pre></td></tr></table></figure>
+<h2 id="rank-基本用法"><a href="#rank-基本用法" class="headerlink" title="rank()基本用法"></a><code>rank()</code>基本用法</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">JacobiSVD<span class="token operator">&lt;</span>MatrixXd<span class="token operator">></span> <span class="token function">svd</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">;</span>
+svd<span class="token punctuation">.</span><span class="token function">rank</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;Eigen/Dense&quot;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> Eigen;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">MatrixXd <span class="title">a</span><span class="params">(<span class="number">3</span>, <span class="number">3</span>)</span></span>;</span><br><span class="line">    a &lt;&lt; <span class="number">1</span>,  <span class="number">2</span>, <span class="number">0</span>,</span><br><span class="line">         <span class="number">3</span>, <span class="number">-1</span>, <span class="number">1</span>,</span><br><span class="line">         <span class="number">0</span>,  <span class="number">2</span>, <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">MatrixXd <span class="title">b</span><span class="params">(<span class="number">3</span>, <span class="number">1</span>)</span></span>;</span><br><span class="line">    b &lt;&lt; <span class="number">2</span>,</span><br><span class="line">        <span class="number">1</span>,</span><br><span class="line">        <span class="number">1</span>;</span><br><span class="line">    MatrixXd m = MatrixXd::<span class="built_in">Zero</span>(<span class="number">3</span>, <span class="number">3</span>);</span><br><span class="line">    m.<span class="built_in">col</span>(<span class="number">0</span>) = b;</span><br><span class="line">    m.<span class="built_in">col</span>(<span class="number">1</span>) = a * b;</span><br><span class="line">    m.<span class="built_in">col</span>(<span class="number">2</span>) = a * a * b;</span><br><span class="line">    cout &lt;&lt; m &lt;&lt; endl;</span><br><span class="line">    <span class="function">JacobiSVD&lt;MatrixXd&gt; <span class="title">svd</span><span class="params">(m)</span></span>;</span><br><span class="line">    cout &lt;&lt; svd.<span class="built_in">rank</span>() &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cstring></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Eigen/Dense"</span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> Eigen<span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    MatrixXd <span class="token function">a</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    a <span class="token operator">&lt;&lt;</span> <span class="token number">1</span><span class="token punctuation">,</span>  <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span>
+         <span class="token number">3</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span>
+         <span class="token number">0</span><span class="token punctuation">,</span>  <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    MatrixXd <span class="token function">b</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    b <span class="token operator">&lt;&lt;</span> <span class="token number">2</span><span class="token punctuation">,</span>
+        <span class="token number">1</span><span class="token punctuation">,</span>
+        <span class="token number">1</span><span class="token punctuation">;</span>
+    MatrixXd m <span class="token operator">=</span> <span class="token class-name">MatrixXd</span><span class="token operator">::</span><span class="token function">Zero</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    m<span class="token punctuation">.</span><span class="token function">col</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">=</span> b<span class="token punctuation">;</span>
+    m<span class="token punctuation">.</span><span class="token function">col</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">=</span> a <span class="token operator">*</span> b<span class="token punctuation">;</span>
+    m<span class="token punctuation">.</span><span class="token function">col</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">=</span> a <span class="token operator">*</span> a <span class="token operator">*</span> b<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> m <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    JacobiSVD<span class="token operator">&lt;</span>MatrixXd<span class="token operator">></span> <span class="token function">svd</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> svd<span class="token punctuation">.</span><span class="token function">rank</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -712,13 +739,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/21/Eigen-Eigen-Quaternion/">
+                <a href="/2021/03/21/Eigen-Eigen-%E5%90%91%E9%87%8F/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Eigen_Quaternion">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Eigen_向量">
                         
-                        <span class="card-title">Eigen_Quaternion</span>
+                        <span class="card-title">Eigen_向量</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -757,13 +784,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/21/Eigen-Eigen-%E7%9F%A9%E9%98%B5%E5%B1%9E%E6%80%A7/">
+                <a href="/2021/03/21/Eigen-Eigen-%E8%BF%90%E7%AE%97%E7%AC%A6/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Eigen_矩阵属性">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="Eigen_运算符">
                         
-                        <span class="card-title">Eigen_矩阵属性</span>
+                        <span class="card-title">Eigen_运算符</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1210,7 +1237,7 @@ $(function () {
     
 
     
-    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    <script src="/libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 
 </body>

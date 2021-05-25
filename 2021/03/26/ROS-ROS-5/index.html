@@ -3,7 +3,7 @@
 
 
 <head>
-    <meta charset="utf-8">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     <meta name="keywords" content="ROS自定义类, kavin">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,13 +29,13 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
 
 <body>
-    <header class="navbar-fixed">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
     <nav id="headNav" class="bg-color nav-transparent">
         <div id="navContainer" class="nav-wrapper container">
             <div class="brand-logo">
@@ -463,19 +463,119 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!-- toc -->
-<h2 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> EXAMPLE_H_</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EXAMPLE_H_</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ros/ros.h&gt;</span> </span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;std_msgs/Bool.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;std_msgs/Float32.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;std_srvs/Trigger.h&gt;</span> </span></span><br><span class="line"></span><br><span class="line"><span class="comment">// rossrv show std_msgs/Trigger</span></span><br><span class="line"><span class="comment">// bool success</span></span><br><span class="line"><span class="comment">// string message</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Example</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Example</span>(ros::NodeHandle* nodehandle);   <span class="comment">// 构造函数，传句柄地址</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    ros::NodeHandle nh_; </span><br><span class="line">    ros::Subscriber minimal_subscriber_;</span><br><span class="line">    ros::ServiceServer minimal_service_;</span><br><span class="line">    ros::Publisher  minimal_publisher_;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">double</span> val_from_subscriber_; </span><br><span class="line">    <span class="keyword">double</span> val_to_remember_; </span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">initializeSubscribers</span><span class="params">()</span></span>;   <span class="comment">// 初始化订阅者成员函数</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">initializePublishers</span><span class="params">()</span></span>;    <span class="comment">// 初始化发布者成员函数</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">initializeServices</span><span class="params">()</span></span>;      <span class="comment">// 初始化服务端成员函数</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 回调函数</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">subscriberCallback</span><span class="params">(<span class="keyword">const</span> std_msgs::Float32 &amp;msg)</span></span>; </span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">serviceCallback</span><span class="params">(std_srvs::Trigger::Request &amp;request, std_srvs::Trigger::Response &amp;response)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">EXAMPLE_H_</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">EXAMPLE_H_</span></span>
 
-<h2 id="源文件"><a href="#源文件" class="headerlink" title="源文件"></a>源文件</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;Example.h&quot;</span></span></span><br><span class="line"></span><br><span class="line">Example::<span class="built_in">Example</span>(ros::NodeHandle* nodehandle) : <span class="built_in">nh_</span>(*nodehandle)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">ROS_INFO</span>(<span class="string">&quot;in class constructor of Example&quot;</span>);</span><br><span class="line">    <span class="built_in">initializeSubscribers</span>(); </span><br><span class="line">    <span class="built_in">initializePublishers</span>();</span><br><span class="line">    <span class="built_in">initializeServices</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Example::initializeSubscribers</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Initializing Subscribers&quot;</span>);</span><br><span class="line">    minimal_subscriber_ = nh_.<span class="built_in">subscribe</span>(<span class="string">&quot;input_topic&quot;</span>, <span class="number">1</span>, &amp;Example::subscriberCallback, <span class="keyword">this</span>);</span><br><span class="line">    <span class="comment">//函数指针和this指针</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Example::initializePublishers</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Initializing Publishers&quot;</span>);</span><br><span class="line">    minimal_publisher_ = nh_.advertise&lt;std_msgs::Float32&gt;(<span class="string">&quot;output_topic&quot;</span>, <span class="number">1</span>, <span class="literal">true</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Example::initializeServices</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Initializing Services&quot;</span>);</span><br><span class="line">    minimal_service_ = nh_.<span class="built_in">advertiseService</span>(<span class="string">&quot;service&quot;</span>, &amp;Example::serviceCallback, <span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Example::subscriberCallback</span><span class="params">(<span class="keyword">const</span> std_msgs::Float32 &amp;msg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    val_from_subscriber_ = msg.data;</span><br><span class="line">    <span class="built_in">ROS_INFO</span>(<span class="string">&quot;Receive message: %f&quot;</span>, msg.data);   </span><br><span class="line">    val_to_remember_ += val_from_subscriber_;</span><br><span class="line">    std_msgs::Float32 output_msg;</span><br><span class="line">    output_msg.data = val_to_remember_;</span><br><span class="line">    minimal_publisher_.<span class="built_in">publish</span>(output_msg);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">Example::serviceCallback</span><span class="params">(std_srvs::Trigger::Request &amp;request, std_srvs::Trigger::Response &amp;response)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">ROS_INFO</span>(<span class="string">&quot;service callback&quot;</span>);</span><br><span class="line">    response.success = <span class="literal">true</span>;</span><br><span class="line">    response.message = <span class="string">&quot;response message&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ros::<span class="built_in">init</span>(argc, argv, <span class="string">&quot;Example&quot;</span>);</span><br><span class="line">    ros::NodeHandle nh;</span><br><span class="line">    <span class="function">Example <span class="title">example</span><span class="params">(&amp;nh)</span></span>;   <span class="comment">// 构造函数的参数是句柄地址</span></span><br><span class="line">    ros::<span class="built_in">spin</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="生成库文件"><a href="#生成库文件" class="headerlink" title="生成库文件"></a>生成库文件</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">add_libraries(Example src/Example.cpp)</span><br></pre></td></tr></table></figure>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;math.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;vector></span></span>
 
-<h2 id="可执行文件链接库"><a href="#可执行文件链接库" class="headerlink" title="可执行文件链接库"></a>可执行文件链接库</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">add_executable(test_node src/test.cpp)</span><br><span class="line">target_link_libraries(test_node Example)</span><br></pre></td></tr></table></figure>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h></span> </span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;std_msgs/Bool.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;std_msgs/Float32.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;std_srvs/Trigger.h></span> </span>
+
+<span class="token comment">// rossrv show std_msgs/Trigger</span>
+<span class="token comment">// bool success</span>
+<span class="token comment">// string message</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Example</span>
+<span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">Example</span><span class="token punctuation">(</span>ros<span class="token operator">::</span>NodeHandle<span class="token operator">*</span> nodehandle<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 构造函数，传句柄地址</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    ros<span class="token operator">::</span>NodeHandle nh_<span class="token punctuation">;</span> 
+    ros<span class="token operator">::</span>Subscriber minimal_subscriber_<span class="token punctuation">;</span>
+    ros<span class="token operator">::</span>ServiceServer minimal_service_<span class="token punctuation">;</span>
+    ros<span class="token operator">::</span>Publisher  minimal_publisher_<span class="token punctuation">;</span>
+    
+    <span class="token keyword">double</span> val_from_subscriber_<span class="token punctuation">;</span> 
+    <span class="token keyword">double</span> val_to_remember_<span class="token punctuation">;</span> 
+    
+
+    <span class="token keyword">void</span> <span class="token function">initializeSubscribers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 初始化订阅者成员函数</span>
+    <span class="token keyword">void</span> <span class="token function">initializePublishers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 初始化发布者成员函数</span>
+    <span class="token keyword">void</span> <span class="token function">initializeServices</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">// 初始化服务端成员函数</span>
+    
+    <span class="token comment">// 回调函数</span>
+    <span class="token keyword">void</span> <span class="token function">subscriberCallback</span><span class="token punctuation">(</span><span class="token keyword">const</span> std_msgs<span class="token operator">::</span>Float32 <span class="token operator">&amp;</span>msg<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+    <span class="token keyword">bool</span> <span class="token function">serviceCallback</span><span class="token punctuation">(</span>std_srvs<span class="token operator">::</span>Trigger<span class="token operator">::</span>Request <span class="token operator">&amp;</span>request<span class="token punctuation">,</span> std_srvs<span class="token operator">::</span>Trigger<span class="token operator">::</span>Response <span class="token operator">&amp;</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="源文件"><a href="#源文件" class="headerlink" title="源文件"></a>源文件</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Example.h"</span></span>
+
+<span class="token class-name">Example</span><span class="token operator">::</span><span class="token function">Example</span><span class="token punctuation">(</span>ros<span class="token operator">::</span>NodeHandle<span class="token operator">*</span> nodehandle<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">nh_</span><span class="token punctuation">(</span><span class="token operator">*</span>nodehandle<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"in class constructor of Example"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">initializeSubscribers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+    <span class="token function">initializePublishers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">initializeServices</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token class-name">Example</span><span class="token operator">::</span><span class="token function">initializeSubscribers</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"Initializing Subscribers"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    minimal_subscriber_ <span class="token operator">=</span> nh_<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token string">"input_topic"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>Example<span class="token operator">::</span>subscriberCallback<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//函数指针和this指针</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token class-name">Example</span><span class="token operator">::</span><span class="token function">initializePublishers</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"Initializing Publishers"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    minimal_publisher_ <span class="token operator">=</span> nh_<span class="token punctuation">.</span>advertise<span class="token operator">&lt;</span>std_msgs<span class="token operator">::</span>Float32<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"output_topic"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token class-name">Example</span><span class="token operator">::</span><span class="token function">initializeServices</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"Initializing Services"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    minimal_service_ <span class="token operator">=</span> nh_<span class="token punctuation">.</span><span class="token function">advertiseService</span><span class="token punctuation">(</span><span class="token string">"service"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>Example<span class="token operator">::</span>serviceCallback<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token class-name">Example</span><span class="token operator">::</span><span class="token function">subscriberCallback</span><span class="token punctuation">(</span><span class="token keyword">const</span> std_msgs<span class="token operator">::</span>Float32 <span class="token operator">&amp;</span>msg<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    val_from_subscriber_ <span class="token operator">=</span> msg<span class="token punctuation">.</span>data<span class="token punctuation">;</span>
+    <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"Receive message: %f"</span><span class="token punctuation">,</span> msg<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>   
+    val_to_remember_ <span class="token operator">+=</span> val_from_subscriber_<span class="token punctuation">;</span>
+    std_msgs<span class="token operator">::</span>Float32 output_msg<span class="token punctuation">;</span>
+    output_msg<span class="token punctuation">.</span>data <span class="token operator">=</span> val_to_remember_<span class="token punctuation">;</span>
+    minimal_publisher_<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span>output_msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">bool</span> <span class="token class-name">Example</span><span class="token operator">::</span><span class="token function">serviceCallback</span><span class="token punctuation">(</span>std_srvs<span class="token operator">::</span>Trigger<span class="token operator">::</span>Request <span class="token operator">&amp;</span>request<span class="token punctuation">,</span> std_srvs<span class="token operator">::</span>Trigger<span class="token operator">::</span>Response <span class="token operator">&amp;</span>response<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"service callback"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    response<span class="token punctuation">.</span>success <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    response<span class="token punctuation">.</span>message <span class="token operator">=</span> <span class="token string">"response message"</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    ros<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"Example"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ros<span class="token operator">::</span>NodeHandle nh<span class="token punctuation">;</span>
+    Example <span class="token function">example</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>nh<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 构造函数的参数是句柄地址</span>
+    ros<span class="token operator">::</span><span class="token function">spin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="生成库文件"><a href="#生成库文件" class="headerlink" title="生成库文件"></a>生成库文件</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token function">add_libraries</span><span class="token punctuation">(</span>Example src<span class="token operator">/</span>Example<span class="token operator">.</span>cpp<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="可执行文件链接库"><a href="#可执行文件链接库" class="headerlink" title="可执行文件链接库"></a>可执行文件链接库</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token function">add_executable</span><span class="token punctuation">(</span>test_node src<span class="token operator">/</span>test<span class="token operator">.</span>cpp<span class="token punctuation">)</span>
+<span class="token function">target_link_libraries</span><span class="token punctuation">(</span>test_node Example<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -716,13 +816,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/26/ROS-ROS-4/">
+                <a href="/2021/03/26/ROS-ROS-3/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="ROS自定义srv">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="ROS自定义msg">
                         
-                        <span class="card-title">ROS自定义srv</span>
+                        <span class="card-title">ROS自定义msg</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1218,7 +1318,7 @@ $(function () {
     
 
     
-    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    <script src="/libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 
 </body>

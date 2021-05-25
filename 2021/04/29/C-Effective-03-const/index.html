@@ -3,7 +3,7 @@
 
 
 <head>
-    <meta charset="utf-8">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     <meta name="keywords" content="03_const代替#defind, kavin">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,13 +29,13 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
 
 <body>
-    <header class="navbar-fixed">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
     <nav id="headNav" class="bg-color nav-transparent">
         <div id="navContainer" class="nav-wrapper container">
             <div class="brand-logo">
@@ -463,13 +463,37 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="尽可能使用const代替-define"><a href="#尽可能使用const代替-define" class="headerlink" title="尽可能使用const代替#define"></a>尽可能使用const代替#define</h2><p>有时候需要重载<code>const</code>版本与非<code>const</code>版本的成员函数，但他们的代码又很多重复<br>所以可以直接用非<code>const</code>函数调用<code>const</code>函数</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Text</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    string text;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Text</span>(string input): <span class="built_in">text</span>(input) &#123;&#125;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span>&amp; <span class="keyword">operator</span> [] (<span class="keyword">size_t</span> pos) <span class="keyword">const</span> &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;const operator: &quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> text[pos];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">char</span>&amp; <span class="keyword">operator</span> [] (<span class="keyword">size_t</span> pos) &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;non-const operator: &quot;</span>;</span><br><span class="line">        <span class="comment">// return text[pos];</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">const_cast</span>&lt;<span class="keyword">char</span>&amp;&gt;(<span class="keyword">static_cast</span>&lt;<span class="keyword">const</span> Text&amp;&gt;(*<span class="keyword">this</span>)[pos]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">Text <span class="title">t</span><span class="params">(<span class="string">&quot;hello&quot;</span>)</span></span>;</span><br><span class="line">    cout &lt;&lt; t[<span class="number">0</span>] &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Text</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    string text<span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">Text</span><span class="token punctuation">(</span>string input<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">text</span><span class="token punctuation">(</span>input<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">&amp;</span> <span class="token keyword">operator</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">(</span>size_t pos<span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"const operator: "</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> text<span class="token punctuation">[</span>pos<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">char</span><span class="token operator">&amp;</span> <span class="token keyword">operator</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">(</span>size_t pos<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"non-const operator: "</span><span class="token punctuation">;</span>
+        <span class="token comment">// return text[pos];</span>
+        <span class="token keyword">return</span> <span class="token keyword">const_cast</span><span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token operator">&amp;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token keyword">static_cast</span><span class="token operator">&lt;</span><span class="token keyword">const</span> Text<span class="token operator">&amp;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">[</span>pos<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    Text <span class="token function">t</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> t<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>static_cast</code>将<code>this</code>指针转换为<code>const</code>指针，这样就可以调用<code>const operator[]</code><br><code>const_cast</code>将返回值解除<code>const</code></p>
 
                 
@@ -1210,7 +1234,7 @@ $(function () {
     
 
     
-    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    <script src="/libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 
 </body>

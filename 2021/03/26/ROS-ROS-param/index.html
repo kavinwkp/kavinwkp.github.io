@@ -3,7 +3,7 @@
 
 
 <head>
-    <meta charset="utf-8">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     <meta name="keywords" content="ROS参数服务器, kavin">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,13 +29,13 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
 
 <body>
-    <header class="navbar-fixed">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
     <nav id="headNav" class="bg-color nav-transparent">
         <div id="navContainer" class="nav-wrapper container">
             <div class="brand-logo">
@@ -463,17 +463,40 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!-- toc -->
-<h2 id="YAML文件"><a href="#YAML文件" class="headerlink" title="YAML文件"></a>YAML文件</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">joint1_gains:</span> &#123;<span class="attr">p:</span> <span class="number">7.0</span>, <span class="attr">i:</span> <span class="number">8.0</span>, <span class="attr">d:</span> <span class="number">9.0</span>&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="YAML文件"><a href="#YAML文件" class="headerlink" title="YAML文件"></a>YAML文件</h2><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">joint1_gains</span><span class="token punctuation">:</span> <span class="token punctuation">&#123;</span><span class="token key atrule">p</span><span class="token punctuation">:</span> <span class="token number">7.0</span><span class="token punctuation">,</span> <span class="token key atrule">i</span><span class="token punctuation">:</span> <span class="token number">8.0</span><span class="token punctuation">,</span> <span class="token key atrule">d</span><span class="token punctuation">:</span> <span class="token number">9.0</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h2 id="源文件"><a href="#源文件" class="headerlink" title="源文件"></a>源文件</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ros/ros.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ros::<span class="built_in">init</span>(argc, argv, <span class="string">&quot;read_param_node&quot;</span>);</span><br><span class="line">    ros::NodeHandle n;</span><br><span class="line">    <span class="keyword">double</span> P_gain, D_gain, I_gain;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">ROS_WARN</span>(<span class="string">&quot;rosparam start&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (n.<span class="built_in">getParam</span>(<span class="string">&quot;/gains/p&quot;</span>, P_gain)) &#123;</span><br><span class="line">        <span class="built_in">ROS_WARN</span>(<span class="string">&quot;proportional gain set to %f&quot;</span>, P_gain);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">ROS_WARN</span>(<span class="string">&quot;Can&#x27;t load param of P&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    ros::<span class="built_in">spin</span>()</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="源文件"><a href="#源文件" class="headerlink" title="源文件"></a>源文件</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h></span></span>
 
-<h2 id="launch文件"><a href="#launch文件" class="headerlink" title="launch文件"></a><code>launch</code>文件</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;launch&gt;</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">command</span>=<span class="string">&quot;load&quot;</span> <span class="attr">file</span>=<span class="string">&quot;$(find ros_learning)/param/gains.yaml&quot;</span>/&gt;</span></span></span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;read_param_node&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;ros_learning&quot;</span> <span class="attr">type</span>=<span class="string">&quot;read_param_node&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> /&gt;</span></span></span><br><span class="line">&lt;/launch&gt;</span><br></pre></td></tr></table></figure>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    ros<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"read_param_node"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ros<span class="token operator">::</span>NodeHandle n<span class="token punctuation">;</span>
+    <span class="token keyword">double</span> P_gain<span class="token punctuation">,</span> D_gain<span class="token punctuation">,</span> I_gain<span class="token punctuation">;</span>
+
+    <span class="token function">ROS_WARN</span><span class="token punctuation">(</span><span class="token string">"rosparam start"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>n<span class="token punctuation">.</span><span class="token function">getParam</span><span class="token punctuation">(</span><span class="token string">"/gains/p"</span><span class="token punctuation">,</span> P_gain<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">ROS_WARN</span><span class="token punctuation">(</span><span class="token string">"proportional gain set to %f"</span><span class="token punctuation">,</span> P_gain<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">ROS_WARN</span><span class="token punctuation">(</span><span class="token string">"Can't load param of P"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    ros<span class="token operator">::</span><span class="token function">spin</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="launch文件"><a href="#launch文件" class="headerlink" title="launch文件"></a><code>launch</code>文件</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token operator">&lt;</span>launch<span class="token operator">></span>
+    <span class="token operator">&lt;</span>rosparam command<span class="token operator">=</span><span class="token string">"load"</span> file<span class="token operator">=</span><span class="token string">"$(find ros_learning)/param/gains.yaml"</span><span class="token operator">/</span><span class="token operator">></span>
+    <span class="token operator">&lt;</span>node name<span class="token operator">=</span><span class="token string">"read_param_node"</span> pkg<span class="token operator">=</span><span class="token string">"ros_learning"</span> type<span class="token operator">=</span><span class="token string">"read_param_node"</span> output<span class="token operator">=</span><span class="token string">"screen"</span> <span class="token operator">/</span><span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>launch<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -763,13 +786,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/26/PX4-PX4/">
+                <a href="/2021/03/25/C-C-%E6%8C%87%E9%92%88/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="PX4">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="C++指针">
                         
-                        <span class="card-title">PX4</span>
+                        <span class="card-title">C++指针</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -780,12 +803,16 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-26
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-25
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kavin
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/C/" class="post-category">
+                                    C++
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -793,12 +820,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/ROS/">
-                        <span class="chip bg-color">ROS</span>
-                    </a>
-                    
-                    <a href="/tags/PX4/">
-                        <span class="chip bg-color">PX4</span>
+                    <a href="/tags/C/">
+                        <span class="chip bg-color">C++</span>
                     </a>
                     
                 </div>
@@ -1220,7 +1243,7 @@ $(function () {
     
 
     
-    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    <script src="/libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 
 </body>

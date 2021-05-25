@@ -3,7 +3,7 @@
 
 
 <head>
-    <meta charset="utf-8">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     <meta name="keywords" content="Eigen_Quaternion, kavin">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,13 +29,13 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
 
 <body>
-    <header class="navbar-fixed">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
     <nav id="headNav" class="bg-color nav-transparent">
         <div id="navContainer" class="nav-wrapper container">
             <div class="brand-logo">
@@ -463,17 +463,65 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!-- toc -->
-<h2 id="旋转向量到旋转矩阵"><a href="#旋转向量到旋转矩阵" class="headerlink" title="旋转向量到旋转矩阵"></a>旋转向量到旋转矩阵</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> alpha = M_PI / <span class="number">3</span>;</span><br><span class="line"><span class="function">AngleAxisd <span class="title">rotation_vector</span><span class="params">(alpha, Vector3d(<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>))</span></span>;</span><br><span class="line"><span class="comment">// x轴: 1 0 0</span></span><br><span class="line"><span class="comment">// y轴: 0 1 0</span></span><br><span class="line"><span class="comment">// z轴: 0 0 1</span></span><br><span class="line"></span><br><span class="line">MatrixXd rotation_matrix;</span><br><span class="line"></span><br><span class="line">rotation_matrix = rotation_vector.<span class="built_in">matrix</span>();</span><br><span class="line"><span class="comment">// rotation_matrix = rotation_vector.toRotationMatrix();</span></span><br><span class="line"></span><br><span class="line">cout &lt;&lt; rotation_matrix &lt;&lt; endl;</span><br><span class="line"><span class="comment">// 1         0         0</span></span><br><span class="line"><span class="comment">// 0       0.5 -0.866025</span></span><br><span class="line"><span class="comment">// 0  0.866025       0.5</span></span><br></pre></td></tr></table></figure>
+<h2 id="旋转向量到旋转矩阵"><a href="#旋转向量到旋转矩阵" class="headerlink" title="旋转向量到旋转矩阵"></a>旋转向量到旋转矩阵</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">double</span> alpha <span class="token operator">=</span> M_PI <span class="token operator">/</span> <span class="token number">3</span><span class="token punctuation">;</span>
+AngleAxisd <span class="token function">rotation_vector</span><span class="token punctuation">(</span>alpha<span class="token punctuation">,</span> <span class="token function">Vector3d</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// x轴: 1 0 0</span>
+<span class="token comment">// y轴: 0 1 0</span>
+<span class="token comment">// z轴: 0 0 1</span>
 
-<h2 id="旋转向量到欧拉角"><a href="#旋转向量到欧拉角" class="headerlink" title="旋转向量到欧拉角"></a>旋转向量到欧拉角</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Vector3d eulerAngle = rotation_vector.<span class="built_in">matrix</span>().<span class="built_in">eulerAngles</span>(<span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line"><span class="comment">// ZYX: 2, 1, 0</span></span><br><span class="line"></span><br><span class="line">cout &lt;&lt; eulerAngle &lt;&lt; endl;</span><br><span class="line"><span class="comment">//      0</span></span><br><span class="line"><span class="comment">//     -0</span></span><br><span class="line"><span class="comment">// 1.0472</span></span><br></pre></td></tr></table></figure>
+MatrixXd rotation_matrix<span class="token punctuation">;</span>
 
-<h2 id="旋转向量到四元数"><a href="#旋转向量到四元数" class="headerlink" title="旋转向量到四元数"></a>旋转向量到四元数</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Quaterniond <span class="title">quaternion</span><span class="params">(rotation_vector)</span></span>;</span><br><span class="line">cout &lt;&lt; quaternion.<span class="built_in">coeffs</span>() &lt;&lt; endl;</span><br><span class="line"><span class="comment">//      0.5</span></span><br><span class="line"><span class="comment">//        0</span></span><br><span class="line"><span class="comment">//        0</span></span><br><span class="line"><span class="comment">// 0.866025</span></span><br><span class="line"></span><br><span class="line">cout &lt;&lt; quaternion.<span class="built_in">x</span>() &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; quaternion.<span class="built_in">y</span>() &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; quaternion.<span class="built_in">z</span>() &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; quaternion.<span class="built_in">w</span>() &lt;&lt; endl;</span><br><span class="line"><span class="comment">// 0.5</span></span><br><span class="line"><span class="comment">// 0</span></span><br><span class="line"><span class="comment">// 0</span></span><br><span class="line"><span class="comment">// 0.866025</span></span><br><span class="line"></span><br><span class="line">Quaterniond quaternion2;</span><br><span class="line">quaternion2 = rotation_vector;  <span class="comment">// 重载了&#x27;=&#x27;</span></span><br><span class="line">cout &lt;&lt; quaternion2.<span class="built_in">coeffs</span>() &lt;&lt; endl;</span><br><span class="line"><span class="comment">//      0.5</span></span><br><span class="line"><span class="comment">//        0</span></span><br><span class="line"><span class="comment">//        0</span></span><br><span class="line"><span class="comment">// 0.866025</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 四元数的初始化</span></span><br><span class="line"><span class="function">Quaterniond <span class="title">quaternion</span><span class="params">(w, x, y, z)</span></span>;</span><br></pre></td></tr></table></figure>
+rotation_matrix <span class="token operator">=</span> rotation_vector<span class="token punctuation">.</span><span class="token function">matrix</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// rotation_matrix = rotation_vector.toRotationMatrix();</span>
+
+cout <span class="token operator">&lt;&lt;</span> rotation_matrix <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+<span class="token comment">// 1         0         0</span>
+<span class="token comment">// 0       0.5 -0.866025</span>
+<span class="token comment">// 0  0.866025       0.5</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="旋转向量到欧拉角"><a href="#旋转向量到欧拉角" class="headerlink" title="旋转向量到欧拉角"></a>旋转向量到欧拉角</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Vector3d eulerAngle <span class="token operator">=</span> rotation_vector<span class="token punctuation">.</span><span class="token function">matrix</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">eulerAngles</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// ZYX: 2, 1, 0</span>
+
+cout <span class="token operator">&lt;&lt;</span> eulerAngle <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+<span class="token comment">//      0</span>
+<span class="token comment">//     -0</span>
+<span class="token comment">// 1.0472</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="旋转向量到四元数"><a href="#旋转向量到四元数" class="headerlink" title="旋转向量到四元数"></a>旋转向量到四元数</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Quaterniond <span class="token function">quaternion</span><span class="token punctuation">(</span>rotation_vector<span class="token punctuation">)</span><span class="token punctuation">;</span>
+cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">coeffs</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+<span class="token comment">//      0.5</span>
+<span class="token comment">//        0</span>
+<span class="token comment">//        0</span>
+<span class="token comment">// 0.866025</span>
+
+cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">x</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">y</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">z</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">w</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+<span class="token comment">// 0.5</span>
+<span class="token comment">// 0</span>
+<span class="token comment">// 0</span>
+<span class="token comment">// 0.866025</span>
+
+Quaterniond quaternion2<span class="token punctuation">;</span>
+quaternion2 <span class="token operator">=</span> rotation_vector<span class="token punctuation">;</span>  <span class="token comment">// 重载了'='</span>
+cout <span class="token operator">&lt;&lt;</span> quaternion2<span class="token punctuation">.</span><span class="token function">coeffs</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+<span class="token comment">//      0.5</span>
+<span class="token comment">//        0</span>
+<span class="token comment">//        0</span>
+<span class="token comment">// 0.866025</span>
+
+<span class="token comment">// 四元数的初始化</span>
+Quaterniond <span class="token function">quaternion</span><span class="token punctuation">(</span>w<span class="token punctuation">,</span> x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> z<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -714,13 +762,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/21/Eigen-Eigen-%E5%90%91%E9%87%8F/">
+                <a href="/2021/03/21/Eigen-Eigen-2/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Eigen_向量">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Eigen_2">
                         
-                        <span class="card-title">Eigen_向量</span>
+                        <span class="card-title">Eigen_2</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -759,13 +807,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/21/Eigen-Eigen-%E6%B1%82%E7%A7%A9/">
+                <a href="/2021/03/21/Eigen-Eigen-%E5%90%91%E9%87%8F/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Eigen_求秩">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Eigen_向量">
                         
-                        <span class="card-title">Eigen_求秩</span>
+                        <span class="card-title">Eigen_向量</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1212,7 +1260,7 @@ $(function () {
     
 
     
-    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    <script src="/libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 
 </body>
