@@ -408,51 +408,51 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="创建文本文件并写入"><a href="#创建文本文件并写入" class="headerlink" title="创建文本文件并写入"></a>创建文本文件并写入</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;fstream></span></span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+                <h2 id="创建文本文件并写入"><a href="#创建文本文件并写入" class="headerlink" title="创建文本文件并写入"></a>创建文本文件并写入</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+using namespace std;
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    myFile<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">"test.txt"</span><span class="token punctuation">,</span> ios_base<span class="token operator">::</span>out<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>myFile<span class="token punctuation">.</span><span class="token function">is_open</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"open file"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-        myFile <span class="token operator">&lt;&lt;</span> <span class="token string">"hello world"</span><span class="token punctuation">;</span>
-        myFile<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+int main(int argc, char const *argv[])
+&#123;
+    myFile.open(&quot;test.txt&quot;, ios_base::out);
+    if (myFile.is_open()) &#123;
+        cout &lt;&lt; &quot;open file&quot; &lt;&lt; endl;
+        myFile &lt;&lt; &quot;hello world&quot;;
+        myFile.close();
+    &#125;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><code>ios_base::out</code>表示以只写模式打开文件，用<code>is_open</code>检查是否成功打开文件</p>
-<h2 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a>读取文件</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    ifstream myFile<span class="token punctuation">;</span>
-    myFile<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">"test.txt"</span><span class="token punctuation">,</span> ios_base<span class="token operator">::</span>in<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>myFile<span class="token punctuation">.</span><span class="token function">is_open</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Open File"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-        string fileContent<span class="token punctuation">;</span>
-        <span class="token keyword">while</span> <span class="token punctuation">(</span>myFile<span class="token punctuation">.</span><span class="token function">good</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token function">getline</span><span class="token punctuation">(</span>myFile<span class="token punctuation">,</span> fileContent<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            cout <span class="token operator">&lt;&lt;</span> fileContent <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        myFile<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+<h2 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a>读取文件</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int main(int argc, char const *argv[])
+&#123;
+    ifstream myFile;
+    myFile.open(&quot;test.txt&quot;, ios_base::in);
+    if (myFile.is_open()) &#123;
+        cout &lt;&lt; &quot;Open File&quot; &lt;&lt; endl;
+        string fileContent;
+        while (myFile.good()) &#123;
+            getline(myFile, fileContent);
+            cout &lt;&lt; fileContent &lt;&lt; endl;
+        &#125;
+        myFile.close();
+    &#125;
+    return 0;
+&#125;
 Open File
-hello world <span class="token comment">// 输出文件内容</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+hello world &#x2F;&#x2F; 输出文件内容<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>ios_base::in</code>以只读方式打开文件，循环读取文件里的所有字符，保存在<code>string</code>类型的<code>fileContent</code>里面</p>
 <h2 id="stringstream"><a href="#stringstream" class="headerlink" title="stringstream"></a>stringstream</h2><p>可以用<code>stringstream</code>把其他类型的数据转换为<code>string</code>类型</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> input <span class="token operator">=</span> <span class="token number">34</span><span class="token punctuation">;</span>
-    stringstream str<span class="token punctuation">;</span>
-    str <span class="token operator">&lt;&lt;</span> input<span class="token punctuation">;</span>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int main() &#123;
+    int input &#x3D; 34;
+    stringstream str;
+    str &lt;&lt; input;
     
-    string strInput<span class="token punctuation">;</span>
-    str <span class="token operator">>></span> strInput<span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> strInput <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span class="token number">34</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    string strInput;
+    str &gt;&gt; strInput;
+    cout &lt;&lt; strInput &lt;&lt; endl;
+&#125;
+34<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

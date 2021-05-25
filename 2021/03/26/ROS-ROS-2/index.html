@@ -410,101 +410,101 @@
             <div id="articleContent">
                 <!-- toc -->
 <h2 id="Minimal-Simulator"><a href="#Minimal-Simulator" class="headerlink" title="Minimal Simulator"></a>Minimal Simulator</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;ros/ros.h></span> </span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;std_msgs/Float64.h></span> </span>
-std_msgs<span class="token operator">::</span>Float64 g_velocity<span class="token punctuation">;</span>
-std_msgs<span class="token operator">::</span>Float64 g_force<span class="token punctuation">;</span>
+#include&lt;ros&#x2F;ros.h&gt; 
+#include&lt;std_msgs&#x2F;Float64.h&gt; 
+std_msgs::Float64 g_velocity;
+std_msgs::Float64 g_force;
 
-<span class="token keyword">void</span> <span class="token function">myCallback</span><span class="token punctuation">(</span><span class="token keyword">const</span> std_msgs<span class="token operator">::</span>Float64<span class="token operator">&amp;</span> message_holder<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"received force value is: %f"</span><span class="token punctuation">,</span> message_holder<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    g_force<span class="token punctuation">.</span>data <span class="token operator">=</span> message_holder<span class="token punctuation">.</span>data<span class="token punctuation">;</span> 
-<span class="token punctuation">&#125;</span>
+void myCallback(const std_msgs::Float64&amp; message_holder) &#123;
+    ROS_INFO(&quot;received force value is: %f&quot;, message_holder.data);
+    g_force.data &#x3D; message_holder.data; 
+&#125;
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    ros<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"minimal_simulator"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>NodeHandle nh<span class="token punctuation">;</span> 
-    ros<span class="token operator">::</span>Subscriber my_subscriber_object <span class="token operator">=</span> nh<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token string">"force_cmd"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> myCallback<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>Publisher my_publisher_object <span class="token operator">=</span> nh<span class="token punctuation">.</span>advertise<span class="token operator">&lt;</span>std_msgs<span class="token operator">::</span>Float64<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"velocity"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">// 订阅力控制话题，通过积分发布速度话题</span>
+int main(int argc, char **argv) &#123;
+    ros::init(argc, argv, &quot;minimal_simulator&quot;);
+    ros::NodeHandle nh; 
+    ros::Subscriber my_subscriber_object &#x3D; nh.subscribe(&quot;force_cmd&quot;, 1, myCallback);
+    ros::Publisher my_publisher_object &#x3D; nh.advertise&lt;std_msgs::Float64&gt;(&quot;velocity&quot;, 1);
+    &#x2F;&#x2F; 订阅力控制话题，通过积分发布速度话题
 
-    <span class="token keyword">double</span> mass <span class="token operator">=</span> <span class="token number">1.0</span><span class="token punctuation">;</span>
-    <span class="token keyword">double</span> dt <span class="token operator">=</span> <span class="token number">0.01</span><span class="token punctuation">;</span>   <span class="token comment">//10ms 积分时间</span>
-    <span class="token keyword">double</span> sample_rate <span class="token operator">=</span> <span class="token number">1.0</span> <span class="token operator">/</span> dt<span class="token punctuation">;</span> 
-    ros<span class="token operator">::</span>Rate <span class="token function">naptime</span><span class="token punctuation">(</span>sample_rate<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    g_velocity<span class="token punctuation">.</span>data <span class="token operator">=</span> <span class="token number">0.0</span><span class="token punctuation">;</span>  
-    g_force<span class="token punctuation">.</span>data <span class="token operator">=</span> <span class="token number">0.0</span><span class="token punctuation">;</span> 
+    double mass &#x3D; 1.0;
+    double dt &#x3D; 0.01;   &#x2F;&#x2F;10ms 积分时间
+    double sample_rate &#x3D; 1.0 &#x2F; dt; 
+    ros::Rate naptime(sample_rate);
+    g_velocity.data &#x3D; 0.0;  
+    g_force.data &#x3D; 0.0; 
 
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>ros<span class="token operator">::</span><span class="token function">ok</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        g_velocity<span class="token punctuation">.</span>data <span class="token operator">=</span> g_velocity<span class="token punctuation">.</span>data <span class="token operator">+</span> <span class="token punctuation">(</span>g_force<span class="token punctuation">.</span>data <span class="token operator">/</span> mass<span class="token punctuation">)</span> <span class="token operator">*</span> dt<span class="token punctuation">;</span> 
-        my_publisher_object<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span>g_velocity<span class="token punctuation">)</span><span class="token punctuation">;</span> 
-        <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"velocity = %f"</span><span class="token punctuation">,</span> g_velocity<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        ros<span class="token operator">::</span><span class="token function">spinOnce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        naptime<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span> 
+    while (ros::ok()) &#123;
+        g_velocity.data &#x3D; g_velocity.data + (g_force.data &#x2F; mass) * dt; 
+        my_publisher_object.publish(g_velocity); 
+        ROS_INFO(&quot;velocity &#x3D; %f&quot;, g_velocity.data);
+        ros::spinOnce();
+        naptime.sleep(); 
+    &#125;
+    return 0;
+&#125; 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 
-<h2 id="Minimal-Controller"><a href="#Minimal-Controller" class="headerlink" title="Minimal Controller"></a>Minimal Controller</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;std_msgs/Float64.h></span></span>
+<h2 id="Minimal-Controller"><a href="#Minimal-Controller" class="headerlink" title="Minimal Controller"></a>Minimal Controller</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;ros&#x2F;ros.h&gt;
+#include &lt;std_msgs&#x2F;Float64.h&gt;
 
-std_msgs<span class="token operator">::</span>Float64 g_vel<span class="token punctuation">;</span>
-std_msgs<span class="token operator">::</span>Float64 g_vel_cmd<span class="token punctuation">;</span>
-std_msgs<span class="token operator">::</span>Float64 g_force<span class="token punctuation">;</span>
+std_msgs::Float64 g_vel;
+std_msgs::Float64 g_vel_cmd;
+std_msgs::Float64 g_force;
 
-<span class="token keyword">void</span> <span class="token function">vel_cb</span><span class="token punctuation">(</span><span class="token keyword">const</span> std_msgs<span class="token operator">::</span>Float64<span class="token operator">::</span>ConstPtr <span class="token operator">&amp;</span>velocity<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    <span class="token function">ROS_WARN</span><span class="token punctuation">(</span><span class="token string">"Receive velocity: %f m/s"</span><span class="token punctuation">,</span> velocity<span class="token operator">-></span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    g_vel<span class="token punctuation">.</span>data <span class="token operator">=</span> velocity<span class="token operator">-></span>data<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+void vel_cb(const std_msgs::Float64::ConstPtr &amp;velocity)
+&#123;
+    ROS_WARN(&quot;Receive velocity: %f m&#x2F;s&quot;, velocity-&gt;data);
+    g_vel.data &#x3D; velocity-&gt;data;
+&#125;
 
-<span class="token keyword">void</span> <span class="token function">vel_cmd_cb</span><span class="token punctuation">(</span><span class="token keyword">const</span> std_msgs<span class="token operator">::</span>Float64<span class="token operator">::</span>ConstPtr <span class="token operator">&amp;</span>vel_cmd<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    <span class="token function">ROS_WARN</span><span class="token punctuation">(</span><span class="token string">"Receive desired velocity: %f m/s"</span><span class="token punctuation">,</span> vel_cmd<span class="token operator">-></span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    g_vel_cmd<span class="token punctuation">.</span>data <span class="token operator">=</span> vel_cmd<span class="token operator">-></span>data<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+void vel_cmd_cb(const std_msgs::Float64::ConstPtr &amp;vel_cmd)
+&#123;
+    ROS_WARN(&quot;Receive desired velocity: %f m&#x2F;s&quot;, vel_cmd-&gt;data);
+    g_vel_cmd.data &#x3D; vel_cmd-&gt;data;
+&#125;
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    ros<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"controller"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>NodeHandle nh<span class="token punctuation">;</span>
-    <span class="token comment">// 订阅当前速度和期望速度</span>
-    ros<span class="token operator">::</span>Subscriber vel_sub <span class="token operator">=</span> nh<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token string">"velocity"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> vel_cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>Subscriber vel_cmd_sub <span class="token operator">=</span> nh<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token string">"vel_cmd"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> vel_cmd_cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+int main(int argc, char** argv)
+&#123;
+    ros::init(argc, argv, &quot;controller&quot;);
+    ros::NodeHandle nh;
+    &#x2F;&#x2F; 订阅当前速度和期望速度
+    ros::Subscriber vel_sub &#x3D; nh.subscribe(&quot;velocity&quot;, 1, vel_cb);
+    ros::Subscriber vel_cmd_sub &#x3D; nh.subscribe(&quot;vel_cmd&quot;, 1, vel_cmd_cb);
 
-    <span class="token comment">// 输出期望控制力</span>
-    ros<span class="token operator">::</span>Publisher force_pub <span class="token operator">=</span> nh<span class="token punctuation">.</span>advertise<span class="token operator">&lt;</span>std_msgs<span class="token operator">::</span>Float64<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"force_cmd"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">double</span> Kv <span class="token operator">=</span> <span class="token number">1.0</span><span class="token punctuation">;</span>    <span class="token comment">// 比例控制器</span>
-    <span class="token keyword">double</span> dt <span class="token operator">=</span> <span class="token number">0.01</span><span class="token punctuation">;</span> 
-    <span class="token keyword">double</span> sample_rate <span class="token operator">=</span> <span class="token number">1.0</span> <span class="token operator">/</span> dt<span class="token punctuation">;</span> 
-    ros<span class="token operator">::</span>Rate <span class="token function">naptime</span><span class="token punctuation">(</span>sample_rate<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    g_vel<span class="token punctuation">.</span>data <span class="token operator">=</span> <span class="token number">0.0</span><span class="token punctuation">;</span> 
-    g_vel_cmd<span class="token punctuation">.</span>data <span class="token operator">=</span> <span class="token number">0.0</span><span class="token punctuation">;</span> 
-    g_force<span class="token punctuation">.</span>data <span class="token operator">=</span> <span class="token number">0.0</span><span class="token punctuation">;</span>
-    <span class="token keyword">double</span> vel_err <span class="token operator">=</span> <span class="token number">0.0</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span><span class="token punctuation">(</span>ros<span class="token operator">::</span><span class="token function">ok</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
-        vel_err <span class="token operator">=</span> g_vel_cmd<span class="token punctuation">.</span>data <span class="token operator">-</span> g_vel<span class="token punctuation">.</span>data<span class="token punctuation">;</span>
-        g_force<span class="token punctuation">.</span>data <span class="token operator">=</span> Kv <span class="token operator">*</span> vel_err<span class="token punctuation">;</span>
-        force_pub<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span>g_force<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"force command = %f N"</span><span class="token punctuation">,</span> g_force<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        ros<span class="token operator">::</span><span class="token function">spinOnce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        naptime<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    &#x2F;&#x2F; 输出期望控制力
+    ros::Publisher force_pub &#x3D; nh.advertise&lt;std_msgs::Float64&gt;(&quot;force_cmd&quot;, 10);
+    double Kv &#x3D; 1.0;    &#x2F;&#x2F; 比例控制器
+    double dt &#x3D; 0.01; 
+    double sample_rate &#x3D; 1.0 &#x2F; dt; 
+    ros::Rate naptime(sample_rate);
+    g_vel.data &#x3D; 0.0; 
+    g_vel_cmd.data &#x3D; 0.0; 
+    g_force.data &#x3D; 0.0;
+    double vel_err &#x3D; 0.0;
+    while(ros::ok())
+    &#123;
+        vel_err &#x3D; g_vel_cmd.data - g_vel.data;
+        g_force.data &#x3D; Kv * vel_err;
+        force_pub.publish(g_force);
+        ROS_INFO(&quot;force command &#x3D; %f N&quot;, g_force.data);
+        ros::spinOnce();
+        naptime.sleep();
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="launch文件"><a href="#launch文件" class="headerlink" title="launch文件"></a><code>launch</code>文件</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token operator">&lt;</span>launch<span class="token operator">></span>
-    <span class="token operator">&lt;</span>node name<span class="token operator">=</span><span class="token string double-quoted-string">"simulator"</span> pkg<span class="token operator">=</span><span class="token string double-quoted-string">"ros_learning"</span> type<span class="token operator">=</span><span class="token string double-quoted-string">"simulator_node"</span><span class="token operator">/</span><span class="token operator">></span>
-    <span class="token operator">&lt;</span>node name<span class="token operator">=</span><span class="token string double-quoted-string">"controller"</span> pkg<span class="token operator">=</span><span class="token string double-quoted-string">"ros_learning"</span> type<span class="token operator">=</span><span class="token string double-quoted-string">"controller_node"</span><span class="token operator">/</span><span class="token operator">></span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>launch<span class="token operator">></span>
-<span class="token comment"># name: 节点名</span>
-<span class="token comment"># pkg: 包名</span>
-<span class="token comment"># type: 可执行文件名</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="launch文件"><a href="#launch文件" class="headerlink" title="launch文件"></a><code>launch</code>文件</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;launch&gt;
+    &lt;node name&#x3D;&quot;simulator&quot; pkg&#x3D;&quot;ros_learning&quot; type&#x3D;&quot;simulator_node&quot;&#x2F;&gt;
+    &lt;node name&#x3D;&quot;controller&quot; pkg&#x3D;&quot;ros_learning&quot; type&#x3D;&quot;controller_node&quot;&#x2F;&gt;
+&lt;&#x2F;launch&gt;
+# name: 节点名
+# pkg: 包名
+# type: 可执行文件名<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="rqt-plot-画曲线"><a href="#rqt-plot-画曲线" class="headerlink" title="rqt_plot 画曲线"></a><code>rqt_plot</code> 画曲线</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">rostopic pub <span class="token operator">-</span>r <span class="token number">10</span> vel_cmd std_msgs<span class="token operator">/</span>Float64 <span class="token number">0.5</span>
-rqt_plot velocity<span class="token operator">/</span>data<span class="token punctuation">,</span> vel_cmd<span class="token operator">/</span>data<span class="token punctuation">,</span> force_cmd<span class="token operator">/</span>data<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="rqt-plot-画曲线"><a href="#rqt-plot-画曲线" class="headerlink" title="rqt_plot 画曲线"></a><code>rqt_plot</code> 画曲线</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">rostopic pub -r 10 vel_cmd std_msgs&#x2F;Float64 0.5
+rqt_plot velocity&#x2F;data, vel_cmd&#x2F;data, force_cmd&#x2F;data<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <center>
 <img src="/2021/03/26/ROS-ROS-2/profiles.png#pic_center" width="100%" height="100%" alt="test">
 <br>
@@ -798,13 +798,13 @@ padding: 2px;">profiles</div>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/26/ROS-ROS-4/">
+                <a href="/2021/03/26/ROS-ROS-3/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="ROS自定义srv">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="ROS自定义msg">
                         
-                        <span class="card-title">ROS自定义srv</span>
+                        <span class="card-title">ROS自定义msg</span>
                     </div>
                 </a>
                 <div class="card-content article-content">

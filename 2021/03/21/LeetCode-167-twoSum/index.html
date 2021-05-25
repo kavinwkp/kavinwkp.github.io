@@ -421,26 +421,26 @@
 <h2 id="LeetCode-167-两数之和-II-输入有序数组"><a href="#LeetCode-167-两数之和-II-输入有序数组" class="headerlink" title="LeetCode 167. 两数之和 II - 输入有序数组"></a>LeetCode 167. 两数之和 II - 输入有序数组</h2><p>给定一个已按照<strong>升序排列</strong>的整数数组<code>numbers</code>，请你从数组中找出两个数满足相加之和等于目标数<code>target</code>。</p>
 <p>函数应该以长度为 2 的整数数组的形式返回这两个数的下标值。<code>numbers</code> 的下标 从 1 开始计数 ，所以答案数组应当满足 <code>1 &lt;= answer[0] &lt; answer[1] &lt;= numbers.length</code> 。</p>
 <p>你可以假设每个输入只对应唯一的答案，而且你不可以重复使用相同的元素。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入：numbers <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">11</span><span class="token punctuation">,</span><span class="token number">15</span><span class="token punctuation">]</span><span class="token punctuation">,</span> target <span class="token operator">=</span> <span class="token number">9</span>
-输出：<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span>
-解释：<span class="token number">2</span> 与 <span class="token number">7</span> 之和等于目标数 <span class="token number">9</span> 。因此 index1 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> index2 <span class="token operator">=</span> <span class="token number">2</span> 。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入：numbers &#x3D; [2,7,11,15], target &#x3D; 9
+输出：[1,2]
+解释：2 与 7 之和等于目标数 9 。因此 index1 &#x3D; 1, index2 &#x3D; 2 。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 
-<h2 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">//用二分法优化右指针的位置</span>
-vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">twoSum</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> numbers<span class="token punctuation">,</span> <span class="token keyword">int</span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> l <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> r <span class="token operator">=</span> numbers<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>l <span class="token operator">&lt;</span> r<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">int</span>  mid <span class="token operator">=</span> <span class="token punctuation">(</span>l <span class="token operator">+</span> r <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">1</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>numbers<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> numbers<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">&lt;=</span> target<span class="token punctuation">)</span> l <span class="token operator">=</span> mid<span class="token punctuation">;</span>
-        <span class="token keyword">else</span> r <span class="token operator">=</span> mid <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> j <span class="token operator">=</span> r<span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> j<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>numbers<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+</span> numbers<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">==</span> target<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-        <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>numbers<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+</span> numbers<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">></span> target<span class="token punctuation">)</span> <span class="token operator">--</span>j<span class="token punctuation">;</span>
-        <span class="token keyword">else</span> <span class="token operator">++</span>i<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F;用二分法优化右指针的位置
+vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; numbers, int target) &#123;
+    int l &#x3D; 0, r &#x3D; numbers.size() - 1;
+    while (l &lt; r) &#123;
+        int  mid &#x3D; (l + r + 1) &gt;&gt; 1;
+        if (numbers[0] + numbers[mid] &lt;&#x3D; target) l &#x3D; mid;
+        else r &#x3D; mid - 1;
+    &#125;
+    int i &#x3D; 0, j &#x3D; r;
+    while (i &lt; j) &#123;
+        if (numbers[i] + numbers[j] &#x3D;&#x3D; target) return &#123;i + 1, j + 1&#125;;
+        else if (numbers[i] + numbers[j] &gt; target) --j;
+        else ++i;
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><pre class="line-numbers language-Java" data-language="Java"><code class="language-Java">&#x2F;&#x2F;数组是有序的，可以用双指针法
 &#x2F;&#x2F;同时可以用二分法确定右指针的位置，进行优化

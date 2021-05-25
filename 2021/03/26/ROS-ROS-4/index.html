@@ -410,74 +410,74 @@
             <div id="articleContent">
                 <!-- toc -->
 <h2 id="自定义srv消息"><a href="#自定义srv消息" class="headerlink" title="自定义srv消息"></a>自定义<code>srv</code>消息</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string name
-<span class="token operator">--</span><span class="token operator">-</span>
+---
 int32 age
-<span class="token keyword">bool</span> sex<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+bool sex<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="修改CMakeLists-txt"><a href="#修改CMakeLists-txt" class="headerlink" title="修改CMakeLists.txt"></a>修改<code>CMakeLists.txt</code></h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token function">add_service_files</span><span class="token punctuation">(</span>
-  <span class="token constant">FILES</span>
-  stu<span class="token operator">.</span>srv
-<span class="token punctuation">)</span>
+<h2 id="修改CMakeLists-txt"><a href="#修改CMakeLists-txt" class="headerlink" title="修改CMakeLists.txt"></a>修改<code>CMakeLists.txt</code></h2><pre class="line-numbers language-php" data-language="php"><code class="language-php">add_service_files(
+  FILES
+  stu.srv
+)
 
-<span class="token function">generate_messages</span><span class="token punctuation">(</span>
-  <span class="token constant">DEPENDENCIES</span>
+generate_messages(
+  DEPENDENCIES
   std_msgs
   std_srvs
-<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"ros_learning/stu.h"</span></span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;ros&#x2F;ros.h&gt;
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &quot;ros_learning&#x2F;stu.h&quot;
+using namespace std;
 
-<span class="token comment">// 注意回调函数的参数写法</span>
-<span class="token keyword">bool</span> <span class="token function">stu_cb</span><span class="token punctuation">(</span>ros_learning<span class="token operator">::</span>stu<span class="token operator">::</span>Request <span class="token operator">&amp;</span>request<span class="token punctuation">,</span> ros_learning<span class="token operator">::</span>stu<span class="token operator">::</span>Response <span class="token operator">&amp;</span>response<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    string <span class="token function">input_name</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> input_name <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    response<span class="token punctuation">.</span>age <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
-    response<span class="token punctuation">.</span>sex <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+&#x2F;&#x2F; 注意回调函数的参数写法
+bool stu_cb(ros_learning::stu::Request &amp;request, ros_learning::stu::Response &amp;response)
+&#123;
+    string input_name(request.name);
+    cout &lt;&lt; input_name &lt;&lt; endl;
+    response.age &#x3D; 20;
+    response.sex &#x3D; true;
+    return true;
+&#125;
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    ros<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"service"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>NodeHandle nh<span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>ServiceServer service <span class="token operator">=</span> nh<span class="token punctuation">.</span><span class="token function">advertiseService</span><span class="token punctuation">(</span><span class="token string">"look_up_stu"</span><span class="token punctuation">,</span> stu_cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span><span class="token function">spin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+int main(int argc, char** argv)
+&#123;
+    ros::init(argc, argv, &quot;service&quot;);
+    ros::NodeHandle nh;
+    ros::ServiceServer service &#x3D; nh.advertiseService(&quot;look_up_stu&quot;, stu_cb);
+    ros::spin();
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"ros_learning/stu.h"</span></span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;ros&#x2F;ros.h&gt;
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &quot;ros_learning&#x2F;stu.h&quot;
+using namespace std;
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    ros<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"client"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>NodeHandle n<span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>ServiceClient client <span class="token operator">=</span> n<span class="token punctuation">.</span>serviceClient<span class="token operator">&lt;</span>ros_learning<span class="token operator">::</span>stu<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"look_up_stu"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros_learning<span class="token operator">::</span>stu srv<span class="token punctuation">;</span>
-    string inputName<span class="token punctuation">;</span>
-    <span class="token keyword">while</span><span class="token punctuation">(</span>ros<span class="token operator">::</span><span class="token function">ok</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
-        cin <span class="token operator">>></span> inputName<span class="token punctuation">;</span>
-        srv<span class="token punctuation">.</span>request<span class="token punctuation">.</span>name <span class="token operator">=</span> inputName<span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>inputName<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span><span class="token string">"exit"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-            <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span> 
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>client<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>srv<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token punctuation">&#123;</span>
-            cout <span class="token operator">&lt;&lt;</span> <span class="token string">"name: "</span> <span class="token operator">&lt;&lt;</span> srv<span class="token punctuation">.</span>request<span class="token punctuation">.</span>name <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-            cout <span class="token operator">&lt;&lt;</span> <span class="token string">"age: "</span> <span class="token operator">&lt;&lt;</span> srv<span class="token punctuation">.</span>response<span class="token punctuation">.</span>age <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-            cout <span class="token operator">&lt;&lt;</span> <span class="token string">"sex: "</span> <span class="token operator">&lt;&lt;</span> srv<span class="token punctuation">.</span>response<span class="token punctuation">.</span>sex <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
+int main(int argc, char** argv)
+&#123;
+    ros::init(argc, argv, &quot;client&quot;);
+    ros::NodeHandle n;
+    ros::ServiceClient client &#x3D; n.serviceClient&lt;ros_learning::stu&gt;(&quot;look_up_stu&quot;);
+    ros_learning::stu srv;
+    string inputName;
+    while(ros::ok())
+    &#123;
+        cin &gt;&gt; inputName;
+        srv.request.name &#x3D; inputName;
+        if (!inputName.compare(&quot;exit&quot;))
+            return 0; 
+        if (client.call(srv))
+        &#123;
+            cout &lt;&lt; &quot;name: &quot; &lt;&lt; srv.request.name &lt;&lt; endl;
+            cout &lt;&lt; &quot;age: &quot; &lt;&lt; srv.response.age &lt;&lt; endl;
+            cout &lt;&lt; &quot;sex: &quot; &lt;&lt; srv.response.sex &lt;&lt; endl;
+        &#125;
             
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    &#125;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -718,13 +718,13 @@ int32 age
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/26/ROS-ROS-2/">
+                <a href="/2021/03/26/ROS-ROS-3/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="ROS_2">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="ROS自定义msg">
                         
-                        <span class="card-title">ROS_2</span>
+                        <span class="card-title">ROS自定义msg</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -763,13 +763,13 @@ int32 age
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/26/ROS-ROS-3/">
+                <a href="/2021/03/26/ROS-ROS-5/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="ROS自定义msg">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="ROS自定义类">
                         
-                        <span class="card-title">ROS自定义msg</span>
+                        <span class="card-title">ROS自定义类</span>
                     </div>
                 </a>
                 <div class="card-content article-content">

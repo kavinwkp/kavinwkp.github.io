@@ -420,8 +420,8 @@
                 <h2 id="剑指-Offer-03-数组中重复的数字"><a href="#剑指-Offer-03-数组中重复的数字" class="headerlink" title="剑指 Offer 03. 数组中重复的数字"></a>剑指 Offer 03. 数组中重复的数字</h2><p>在一个长度为 <code>n</code> 的数组 <code>nums</code> 里的所有数字都在 <code>0~n-1</code> 的范围内。数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。请找出数组中任意一个重复的数字。</p>
 <p>示例 1：</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入：
-<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span>
-输出：<span class="token number">2</span> 或 <span class="token number">3</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+[2, 3, 1, 0, 2, 5, 3]
+输出：2 或 3 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p> </p>
 <p>限制：</p>
 <p><code>2 &lt;= n &lt;= 100000</code></p>
@@ -430,24 +430,24 @@
 <img src="/2021/05/19/%E5%89%91%E6%8C%87Offer-03-%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%E5%AD%97/03.png#pic_center" width="20%" height="20%">
 </center>
 
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">void</span> <span class="token function">swap</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token operator">&amp;</span>vi<span class="token punctuation">,</span> <span class="token keyword">int</span> i<span class="token punctuation">,</span> <span class="token keyword">int</span> j<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">int</span> temp <span class="token operator">=</span> vi<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        vi<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> vi<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        vi<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> temp<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">int</span> <span class="token function">findRepeatNumber</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> num<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> num<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>  <span class="token comment">// 遍历数组</span>
-            <span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">!=</span> num<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>               <span class="token comment">// 发现和index对不上</span>
-                <span class="token keyword">if</span> <span class="token punctuation">(</span>num<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> num<span class="token punctuation">[</span>num<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>      <span class="token comment">// 如果那个位置已经正确</span>
-                    <span class="token keyword">return</span> num<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>              <span class="token comment">// 就说明重复了</span>
-                <span class="token function">swap</span><span class="token punctuation">(</span>num<span class="token punctuation">,</span> i<span class="token punctuation">,</span> num<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>           <span class="token comment">// 否则交换两个数</span>
-            <span class="token punctuation">&#125;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">class Solution &#123;
+public:
+    void swap(vector&lt;int&gt; &amp;vi, int i, int j) &#123;
+        int temp &#x3D; vi[i];
+        vi[i] &#x3D; vi[j];
+        vi[j] &#x3D; temp;
+    &#125;
+    int findRepeatNumber(vector&lt;int&gt;&amp; num) &#123;
+        for (int i &#x3D; 0; i &lt; num.size(); i++) &#123;  &#x2F;&#x2F; 遍历数组
+            while (i !&#x3D; num[i]) &#123;               &#x2F;&#x2F; 发现和index对不上
+                if (num[i] &#x3D;&#x3D; num[num[i]])      &#x2F;&#x2F; 如果那个位置已经正确
+                    return num[i];              &#x2F;&#x2F; 就说明重复了
+                swap(num, i, num[i]);           &#x2F;&#x2F; 否则交换两个数
+            &#125;
+        &#125;
+        return -1;
+    &#125;
+&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>

@@ -419,110 +419,110 @@
             <div id="articleContent">
                 <!-- toc -->
 <h2 id="重载基类的方法"><a href="#重载基类的方法" class="headerlink" title="重载基类的方法"></a>重载基类的方法</h2><p>如果要使用基类的方法，可以用作用域解析运算符<code>(::)</code></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">void</span> <span class="token function">info</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">this</span><span class="token operator">-></span>x <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">class A &#123;
+public:
+    void info() &#123;
+        cout &lt;&lt; this-&gt;x &lt;&lt; endl;
+    &#125;
+&#125;;
 
-<span class="token keyword">class</span> <span class="token class-name">B</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">A</span></span> <span class="token punctuation">&#123;</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">void</span> <span class="token function">info</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>   <span class="token comment">// 重载基类的方法</span>
-        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"B: "</span> <span class="token operator">&lt;&lt;</span> <span class="token keyword">this</span><span class="token operator">-></span>x <span class="token operator">&lt;&lt;</span> <span class="token string">", "</span> <span class="token operator">&lt;&lt;</span> <span class="token keyword">this</span><span class="token operator">-></span>y <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-        <span class="token class-name">A</span><span class="token operator">::</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 使用基类的方法</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+class B : public A &#123;
+public:
+    void info() &#123;   &#x2F;&#x2F; 重载基类的方法
+        cout &lt;&lt; &quot;B: &quot; &lt;&lt; this-&gt;x &lt;&lt; &quot;, &quot; &lt;&lt; this-&gt;y &lt;&lt; endl;
+        A::info();  &#x2F;&#x2F; 使用基类的方法
+    &#125;
+&#125;;
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    B<span class="token operator">*</span> b <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">B</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    b<span class="token operator">-></span><span class="token function">info</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">delete</span> b<span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+int main(int argc, char const *argv[])
+&#123;
+    B* b &#x3D; new B(3, 4);
+    b-&gt;info();
+    delete b;
+    return 0;
+&#125;
 A constructor
 B constructor
-B<span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span>     <span class="token comment">// 调用派生类的info()</span>
-A<span class="token operator">:</span> <span class="token number">3</span>        <span class="token comment">// 调用基类的info()</span>
+B: 3, 4     &#x2F;&#x2F; 调用派生类的info()
+A: 3        &#x2F;&#x2F; 调用基类的info()
 B destructor
 A destructor<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="隐藏基类的方法"><a href="#隐藏基类的方法" class="headerlink" title="隐藏基类的方法"></a>隐藏基类的方法</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">void</span> <span class="token function">info</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"A: "</span> <span class="token operator">&lt;&lt;</span> <span class="token keyword">this</span><span class="token operator">-></span>x <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">void</span> <span class="token function">info</span><span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"A: receive "</span> <span class="token operator">&lt;&lt;</span> val <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<h2 id="隐藏基类的方法"><a href="#隐藏基类的方法" class="headerlink" title="隐藏基类的方法"></a>隐藏基类的方法</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">class A &#123;
+public:
+    void info() &#123;
+        cout &lt;&lt; &quot;A: &quot; &lt;&lt; this-&gt;x &lt;&lt; endl;
+    &#125;
+    void info(int val) &#123;
+        cout &lt;&lt; &quot;A: receive &quot; &lt;&lt; val &lt;&lt; endl;
+    &#125;
+&#125;;
 
-<span class="token keyword">class</span> <span class="token class-name">B</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">A</span></span> <span class="token punctuation">&#123;</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">void</span> <span class="token function">info</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"B: "</span> <span class="token operator">&lt;&lt;</span> <span class="token keyword">this</span><span class="token operator">-></span>x <span class="token operator">&lt;&lt;</span> <span class="token string">", "</span> <span class="token operator">&lt;&lt;</span> <span class="token keyword">this</span><span class="token operator">-></span>y <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+class B : public A &#123;
+public:
+    void info() &#123;
+        cout &lt;&lt; &quot;B: &quot; &lt;&lt; this-&gt;x &lt;&lt; &quot;, &quot; &lt;&lt; this-&gt;y &lt;&lt; endl;
+    &#125;
+&#125;;
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    B<span class="token operator">*</span> b <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">B</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    b<span class="token operator">-></span><span class="token function">info</span><span class="token punctuation">(</span><span class="token number">34</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// error，B中没有实现info(int val)</span>
-    <span class="token keyword">delete</span> b<span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+int main(int argc, char const *argv[])
+&#123;
+    B* b &#x3D; new B(3, 4);
+    b-&gt;info(34);    &#x2F;&#x2F; error，B中没有实现info(int val)
+    delete b;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>派生类中实现了<code>info()</code>，他隐藏了基类<code>A::info()</code>的所有版本，编译器调用了派生类的<code>info()</code>，但他没有接受参数，也就会出错</p>
 <h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><ol>
-<li>在<code>main()</code>中使用作用域解析运算符<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">b<span class="token operator">-></span><span class="token class-name">A</span><span class="token operator">::</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token number">34</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>在派生类中使用<code>using</code>关键字<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">using</span> A<span class="token operator">::</span>info<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>重载基类的所有info方法<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">info</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"B: "</span> <span class="token operator">&lt;&lt;</span> <span class="token keyword">this</span><span class="token operator">-></span>x <span class="token operator">&lt;&lt;</span> <span class="token string">", "</span> <span class="token operator">&lt;&lt;</span> <span class="token keyword">this</span><span class="token operator">-></span>y <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span class="token keyword">void</span> <span class="token function">info</span><span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"B: receive "</span> <span class="token operator">&lt;&lt;</span> val <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>在<code>main()</code>中使用作用域解析运算符<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">b-&gt;A::info(34);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>在派生类中使用<code>using</code>关键字<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">using A::info;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>重载基类的所有info方法<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void info() &#123;
+    cout &lt;&lt; &quot;B: &quot; &lt;&lt; this-&gt;x &lt;&lt; &quot;, &quot; &lt;&lt; this-&gt;y &lt;&lt; endl;
+&#125;
+void info(int val) &#123;
+    cout &lt;&lt; &quot;B: receive &quot; &lt;&lt; val &lt;&lt; endl;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ol>
 <h2 id="私有继承"><a href="#私有继承" class="headerlink" title="私有继承"></a>私有继承</h2><p>公有继承派生类在继承结构层次外部可以使用基类的公有和保护成员，如<code>b-&gt;g()</code><br>私有继承则表示，基类的公有和保护成员，只能在派生类内部使用，<strong>外部无法访问</strong></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">void</span> <span class="token function">g</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">this</span><span class="token operator">-></span><span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">class A &#123;
+public:
+    virtual void f() &#x3D; 0;
+    void g() &#123; this-&gt;f(); &#125;
+&#125;;
 
-<span class="token keyword">class</span> <span class="token class-name">B</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">private</span> <span class="token class-name">A</span></span> <span class="token punctuation">&#123;</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"B: f("</span> <span class="token operator">&lt;&lt;</span> <span class="token keyword">this</span><span class="token operator">-></span>x <span class="token operator">&lt;&lt;</span> <span class="token string">", "</span> <span class="token operator">&lt;&lt;</span> <span class="token keyword">this</span><span class="token operator">-></span>y <span class="token operator">&lt;&lt;</span> <span class="token string">")"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token keyword">private</span><span class="token operator">:</span>
-    <span class="token keyword">int</span> y<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+class B : private A &#123;
+public:
+    void f() &#123;
+        cout &lt;&lt; &quot;B: f(&quot; &lt;&lt; this-&gt;x &lt;&lt; &quot;, &quot; &lt;&lt; this-&gt;y &lt;&lt; &quot;)&quot; &lt;&lt; endl;
+    &#125;
+private:
+    int y;
+&#125;;
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    B<span class="token operator">*</span> b <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">B</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    b<span class="token operator">-></span><span class="token function">g</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// error，私有继承不能访问基类的成员函数</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+int main(int argc, char const *argv[])
+&#123;
+    B* b &#x3D; new B(3, 4);
+    b-&gt;g();     &#x2F;&#x2F; error，私有继承不能访问基类的成员函数
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="保护继承"><a href="#保护继承" class="headerlink" title="保护继承"></a>保护继承</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">void</span> <span class="token function">g</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">this</span><span class="token operator">-></span><span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<h2 id="保护继承"><a href="#保护继承" class="headerlink" title="保护继承"></a>保护继承</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">class A &#123;
+public:
+    virtual void f() &#x3D; 0;
+    void g() &#123; this-&gt;f(); &#125;
+&#125;;
 
-<span class="token keyword">class</span> <span class="token class-name">B</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">A</span></span> <span class="token punctuation">&#123;</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"B: f("</span> <span class="token operator">&lt;&lt;</span> <span class="token keyword">this</span><span class="token operator">-></span>x <span class="token operator">&lt;&lt;</span> <span class="token string">", "</span> <span class="token operator">&lt;&lt;</span> <span class="token keyword">this</span><span class="token operator">-></span>y <span class="token operator">&lt;&lt;</span> <span class="token string">")"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+class B : public A &#123;
+public:
+    void f() &#123;
+        cout &lt;&lt; &quot;B: f(&quot; &lt;&lt; this-&gt;x &lt;&lt; &quot;, &quot; &lt;&lt; this-&gt;y &lt;&lt; &quot;)&quot; &lt;&lt; endl;
+    &#125;
+&#125;;
 
-<span class="token keyword">class</span> <span class="token class-name">C</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">protected</span> <span class="token class-name">B</span></span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">void</span> <span class="token function">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token operator">-></span><span class="token function">g</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+class C : protected B &#123;
+    void func() &#123;
+        this-&gt;g();
+    &#125;
+&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>C类想访问A类的成员方法，如果B对A是私有或保护继承，C类是无法访问A类的成员方法的<br>只有B类对A类是公有继承，C类才能访问A类的成员方法</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
 <li>如果是<code>is-a</code>关系，即属于关系，要用公有继承</li>

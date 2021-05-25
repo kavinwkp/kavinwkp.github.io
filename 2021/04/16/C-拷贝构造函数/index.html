@@ -419,81 +419,81 @@
             <div id="articleContent">
                 <!-- toc -->
 
-<h2 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<h2 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
 
-<span class="token keyword">class</span> <span class="token class-name">Human</span>
-<span class="token punctuation">&#123;</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token function">Human</span><span class="token punctuation">(</span>string name<span class="token punctuation">,</span> <span class="token keyword">int</span> age<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">&amp;</span> val<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token operator">~</span><span class="token function">Human</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">private</span><span class="token operator">:</span>
-    string _name<span class="token punctuation">;</span>
-    <span class="token keyword">int</span> _age<span class="token punctuation">;</span>
-    <span class="token keyword">int</span><span class="token operator">*</span> _ptr <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+class Human
+&#123;
+public:
+    Human(string name, int age, const int&amp; val);
+    ~Human();
+private:
+    string _name;
+    int _age;
+    int* _ptr &#x3D; nullptr;
+&#125;;
 
-<span class="token class-name">Human</span><span class="token operator">::</span><span class="token function">Human</span><span class="token punctuation">(</span>string name<span class="token punctuation">,</span> <span class="token keyword">int</span> age<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">&amp;</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">this</span><span class="token operator">-></span>_name <span class="token operator">=</span> name<span class="token punctuation">;</span>
-    <span class="token keyword">this</span><span class="token operator">-></span>_age <span class="token operator">=</span> age<span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">&amp;</span>val <span class="token operator">!=</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token operator">-></span>_ptr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">;</span>
-        <span class="token operator">*</span><span class="token keyword">this</span><span class="token operator">-></span>_ptr <span class="token operator">=</span> val<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">else</span>
-        <span class="token keyword">this</span><span class="token operator">-></span>_ptr <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+Human::Human(string name, int age, const int&amp; val) &#123;
+    this-&gt;_name &#x3D; name;
+    this-&gt;_age &#x3D; age;
+    if (&amp;val !&#x3D; nullptr) &#123;
+        this-&gt;_ptr &#x3D; new int;
+        *this-&gt;_ptr &#x3D; val;
+    &#125;
+    else
+        this-&gt;_ptr &#x3D; nullptr;
+&#125;
 
-<span class="token class-name">Human</span><span class="token operator">::</span><span class="token operator">~</span><span class="token function">Human</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token operator">-></span>_ptr <span class="token operator">!=</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"delete ptr"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-        <span class="token keyword">delete</span> <span class="token keyword">this</span><span class="token operator">-></span>_ptr<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
+Human::~Human() &#123;
+    if (this-&gt;_ptr !&#x3D; nullptr) &#123;
+        cout &lt;&lt; &quot;delete ptr&quot; &lt;&lt; endl;
+        delete this-&gt;_ptr;
+    &#125;
+&#125;
 
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> num1 <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
-    Human <span class="token function">kavin</span><span class="token punctuation">(</span><span class="token string">"kavin"</span><span class="token punctuation">,</span> <span class="token number">23</span><span class="token punctuation">,</span> num1<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    kavin<span class="token punctuation">.</span><span class="token function">setAge</span><span class="token punctuation">(</span><span class="token number">34</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    kavin<span class="token punctuation">.</span><span class="token function">Introduce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-I<span class="token string">'m kavin, and I'</span>m <span class="token number">34</span> years old<span class="token punctuation">.</span>
-<span class="token keyword">delete</span> ptr  <span class="token comment">// 调用了析构函数</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+int main(int argc, char const *argv[])
+&#123;
+    int num1 &#x3D; 100;
+    Human kavin(&quot;kavin&quot;, 23, num1);
+    kavin.setAge(34);
+    kavin.Introduce();
+    return 0;
+&#125;
+I&#39;m kavin, and I&#39;m 34 years old.
+delete ptr  &#x2F;&#x2F; 调用了析构函数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>类成员变量里有指针，程序结束时应该要释放，所以需要重载析构函数，类里面只有一个析构函数。</p>
-<h2 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<h2 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
 
-<span class="token keyword">class</span> <span class="token class-name">Human</span>
-<span class="token punctuation">&#123;</span>
-<span class="token comment">// 拷贝构造函数</span>
-<span class="token class-name">Human</span><span class="token operator">::</span><span class="token function">Human</span><span class="token punctuation">(</span><span class="token keyword">const</span> Human<span class="token operator">&amp;</span> copySource<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">this</span><span class="token operator">-></span>_name <span class="token operator">=</span> copySource<span class="token punctuation">.</span>_name<span class="token punctuation">;</span>
-    <span class="token keyword">this</span><span class="token operator">-></span>_age <span class="token operator">=</span> copySource<span class="token punctuation">.</span>_age<span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"copy constructor"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>copySource<span class="token punctuation">.</span>_ptr <span class="token operator">!=</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token operator">-></span>_ptr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">;</span>
-        <span class="token operator">*</span><span class="token keyword">this</span><span class="token operator">-></span>_ptr <span class="token operator">=</span> <span class="token operator">*</span>copySource<span class="token punctuation">.</span>_ptr<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">else</span> 
-        <span class="token keyword">this</span><span class="token operator">-></span>_ptr <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+class Human
+&#123;
+&#x2F;&#x2F; 拷贝构造函数
+Human::Human(const Human&amp; copySource) &#123;
+    this-&gt;_name &#x3D; copySource._name;
+    this-&gt;_age &#x3D; copySource._age;
+    cout &lt;&lt; &quot;copy constructor&quot; &lt;&lt; endl;
+    if (copySource._ptr !&#x3D; nullptr) &#123;
+        this-&gt;_ptr &#x3D; new int;
+        *this-&gt;_ptr &#x3D; *copySource._ptr;
+    &#125;
+    else 
+        this-&gt;_ptr &#x3D; nullptr;
+&#125;
 
-<span class="token keyword">void</span> <span class="token function">UseHuman</span><span class="token punctuation">(</span>Human input<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    input<span class="token punctuation">.</span><span class="token function">Introduce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+void UseHuman(Human input) &#123;
+    input.Introduce();
+&#125;
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> num1 <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
-    Human <span class="token function">kavin</span><span class="token punctuation">(</span><span class="token string">"kavin"</span><span class="token punctuation">,</span> <span class="token number">23</span><span class="token punctuation">,</span> num1<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    kavin<span class="token punctuation">.</span><span class="token function">setAge</span><span class="token punctuation">(</span><span class="token number">34</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    kavin<span class="token punctuation">.</span><span class="token function">Introduce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">UseHuman</span><span class="token punctuation">(</span>kavin<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+int main(int argc, char const *argv[])
+&#123;
+    int num1 &#x3D; 100;
+    Human kavin(&quot;kavin&quot;, 23, num1);
+    kavin.setAge(34);
+    kavin.Introduce();
+    UseHuman(kavin);
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>如果没有拷贝构造函数，在<code>UseHuman</code>函数完成之后，类中的指针所指的空间就会被释放，而在<code>main</code>函数结束时，又会调用析构函数释放内存，这样就会发生错误。<br>原因在于，传递参数时是浅复制，没有对指针所指内容进行复制，导致两个指针指向同一个地方，所以拷贝构造函数就需要对指针所指内容进行复制。</p>
 
                 

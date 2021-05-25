@@ -412,75 +412,75 @@
 
 <h2 id="自定义msg消息"><a href="#自定义msg消息" class="headerlink" title="自定义msg消息"></a>自定义<code>msg</code>消息</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Header header
 int32 num
-float64<span class="token punctuation">[</span><span class="token punctuation">]</span> data<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+float64[] data<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="修改CMakeLists-txt"><a href="#修改CMakeLists-txt" class="headerlink" title="修改CMakeLists.txt"></a>修改<code>CMakeLists.txt</code></h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token function">find_package</span><span class="token punctuation">(</span>catkin <span class="token constant">REQUIRED</span> <span class="token constant">COMPONENTS</span>
+<h2 id="修改CMakeLists-txt"><a href="#修改CMakeLists-txt" class="headerlink" title="修改CMakeLists.txt"></a>修改<code>CMakeLists.txt</code></h2><pre class="line-numbers language-php" data-language="php"><code class="language-php">find_package(catkin REQUIRED COMPONENTS
   OpenCV
   roscpp
   rospy
   std_msgs
   message_generation
-<span class="token punctuation">)</span>
+)
 
-<span class="token function">add_message_files</span><span class="token punctuation">(</span>
-  <span class="token constant">FILES</span>
-  test<span class="token operator">.</span>msg
-<span class="token punctuation">)</span>
+add_message_files(
+  FILES
+  test.msg
+)
 
-<span class="token function">generate_messages</span><span class="token punctuation">(</span>
-  <span class="token constant">DEPENDENCIES</span>
+generate_messages(
+  DEPENDENCIES
   std_msgs
-<span class="token punctuation">)</span>
+)
 
-<span class="token function">catkin_package</span><span class="token punctuation">(</span>
- <span class="token constant">CATKIN_DEPENDS</span> roscpp rospy std_msgs message_runtime
-<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+catkin_package(
+ CATKIN_DEPENDS roscpp rospy std_msgs message_runtime
+)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="修改package-xml"><a href="#修改package-xml" class="headerlink" title="修改package.xml"></a>修改<code>package.xml</code></h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token operator">&lt;</span>build_depend<span class="token operator">></span>message_generation<span class="token operator">&lt;</span><span class="token operator">/</span>build_depend<span class="token operator">></span>
-<span class="token operator">&lt;</span>exec_depend<span class="token operator">></span>message_runtime<span class="token operator">&lt;</span><span class="token operator">/</span>exec_depend<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="修改package-xml"><a href="#修改package-xml" class="headerlink" title="修改package.xml"></a>修改<code>package.xml</code></h2><pre class="line-numbers language-php" data-language="php"><code class="language-php">&lt;build_depend&gt;message_generation&lt;&#x2F;build_depend&gt;
+&lt;exec_depend&gt;message_runtime&lt;&#x2F;exec_depend&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"ros_learning/test.h"</span></span>
+<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;ros&#x2F;ros.h&gt;
+#include &lt;iostream&gt;
+#include &quot;ros_learning&#x2F;test.h&quot;
 
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> Eigen<span class="token punctuation">;</span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> cv<span class="token punctuation">;</span>
+using namespace std;
+using namespace Eigen;
+using namespace cv;
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    ros<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"talker"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>NodeHandle n<span class="token punctuation">;</span>
+int main(int argc, char** argv)
+&#123;
+    ros::init(argc, argv, &quot;talker&quot;);
+    ros::NodeHandle n;
 
-    ros<span class="token operator">::</span>Publisher pub <span class="token operator">=</span> n<span class="token punctuation">.</span>advertise<span class="token operator">&lt;</span>ros_learning<span class="token operator">::</span>test<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"chatting"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ros::Publisher pub &#x3D; n.advertise&lt;ros_learning::test&gt;(&quot;chatting&quot;, 10);
 
-    ros<span class="token operator">::</span>Rate <span class="token function">loop_rate</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ros::Rate loop_rate(10);
 
-    <span class="token keyword">double</span> arr<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">14</span><span class="token punctuation">,</span> <span class="token number">15</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-    std<span class="token operator">::</span>vector<span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token operator">></span> <span class="token function">vi</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> arr<span class="token operator">+</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    double arr[3] &#x3D; &#123;14, 15, 16&#125;;
+    std::vector&lt;double&gt; vi(arr, arr+3);
 
-    ros_learning<span class="token operator">::</span>test input_msg<span class="token punctuation">;</span>
-    input_msg<span class="token punctuation">.</span>header<span class="token punctuation">.</span>stamp <span class="token operator">=</span> ros<span class="token operator">::</span><span class="token class-name">Time</span><span class="token operator">::</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    input_msg<span class="token punctuation">.</span>header<span class="token punctuation">.</span>seq <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    input_msg<span class="token punctuation">.</span>header<span class="token punctuation">.</span>frame_id <span class="token operator">=</span> <span class="token string">"base_frame"</span><span class="token punctuation">;</span>
-    input_msg<span class="token punctuation">.</span>num <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    input_msg<span class="token punctuation">.</span>data <span class="token operator">=</span> vi<span class="token punctuation">;</span>
-    <span class="token keyword">while</span><span class="token punctuation">(</span>ros<span class="token operator">::</span><span class="token function">ok</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
-        input_msg<span class="token punctuation">.</span>header<span class="token punctuation">.</span>seq<span class="token operator">++</span><span class="token punctuation">;</span>
-        input_msg<span class="token punctuation">.</span>header<span class="token punctuation">.</span>stamp <span class="token operator">=</span> ros<span class="token operator">::</span><span class="token class-name">Time</span><span class="token operator">::</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> <span class="token operator">&amp;</span> i <span class="token operator">:</span> input_msg<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
-            std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> i <span class="token operator">&lt;&lt;</span> <span class="token string">" "</span><span class="token punctuation">;</span>
-        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
-        pub<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span>input_msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        loop_rate<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
+    ros_learning::test input_msg;
+    input_msg.header.stamp &#x3D; ros::Time::now();
+    input_msg.header.seq &#x3D; 0;
+    input_msg.header.frame_id &#x3D; &quot;base_frame&quot;;
+    input_msg.num &#x3D; 0;
+    input_msg.data &#x3D; vi;
+    while(ros::ok())
+    &#123;
+        input_msg.header.seq++;
+        input_msg.header.stamp &#x3D; ros::Time::now();
+        for (auto &amp; i : input_msg.data)
+            std::cout &lt;&lt; i &lt;&lt; &quot; &quot;;
+        std::cout &lt;&lt; std::endl;
+        pub.publish(input_msg);
+        loop_rate.sleep();
+    &#125;
+&#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="是否使用仿真时间"><a href="#是否使用仿真时间" class="headerlink" title="是否使用仿真时间"></a>是否使用仿真时间</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">$ rosparam get use_sim_time
-<span class="token boolean">true</span>
-$ rosparam set use_sim_time <span class="token boolean">false</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+true
+$ rosparam set use_sim_time false<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -721,13 +721,13 @@ $ rosparam set use_sim_time <span class="token boolean">false</span><span aria-h
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/26/ROS-ROS-4/">
+                <a href="/2021/03/26/ROS-ROS-2/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="ROS自定义srv">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="ROS_2">
                         
-                        <span class="card-title">ROS自定义srv</span>
+                        <span class="card-title">ROS_2</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -766,13 +766,13 @@ $ rosparam set use_sim_time <span class="token boolean">false</span><span aria-h
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/26/ROS-ROS-5/">
+                <a href="/2021/03/26/ROS-ROS-4/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="ROS自定义类">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="ROS自定义srv">
                         
-                        <span class="card-title">ROS自定义类</span>
+                        <span class="card-title">ROS自定义srv</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
