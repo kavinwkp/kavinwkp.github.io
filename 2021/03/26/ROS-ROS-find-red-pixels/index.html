@@ -414,123 +414,123 @@
             <div id="articleContent">
                 <!-- toc -->
 
-<h2 id="ImageConverter类声明"><a href="#ImageConverter类声明" class="headerlink" title="ImageConverter类声明"></a><code>ImageConverter</code>类声明</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;ros&#x2F;ros.h&gt;
-#include &lt;image_transport&#x2F;image_transport.h&gt;
-#include &lt;cv_bridge&#x2F;cv_bridge.h&gt;
-#include &lt;sensor_msgs&#x2F;image_encodings.h&gt;
-#include &lt;opencv2&#x2F;imgproc&#x2F;imgproc.hpp&gt;
-#include &lt;opencv2&#x2F;highgui&#x2F;highgui.hpp&gt;
+<h2 id="ImageConverter类声明"><a href="#ImageConverter类声明" class="headerlink" title="ImageConverter类声明"></a><code>ImageConverter</code>类声明</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;image_transport/image_transport.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cv_bridge/cv_bridge.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sensor_msgs/image_encodings.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;opencv2/imgproc/imgproc.hpp></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;opencv2/highgui/highgui.hpp></span></span>
 
-static const std::string OPENCV_WINDOW &#x3D; &quot;OpenCV display window&quot;;
-using namespace std;
-using namespace cv;
+<span class="token keyword">static</span> <span class="token keyword">const</span> std<span class="token operator">::</span>string OPENCV_WINDOW <span class="token operator">=</span> <span class="token string">"OpenCV display window"</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> cv<span class="token punctuation">;</span>
 
-int g_redratio; &#x2F;&#x2F; 红色阈值
+<span class="token keyword">int</span> g_redratio<span class="token punctuation">;</span> <span class="token comment">// 红色阈值</span>
 
-class ImageConverter &#123;
-    ros::NodeHandle nh_;
-    image_transport::ImageTransport it_;
-    image_transport::Subscriber image_sub_;
-    image_transport::Publisher image_pub_;
+<span class="token keyword">class</span> <span class="token class-name">ImageConverter</span> <span class="token punctuation">&#123;</span>
+    ros<span class="token operator">::</span>NodeHandle nh_<span class="token punctuation">;</span>
+    image_transport<span class="token operator">::</span>ImageTransport it_<span class="token punctuation">;</span>
+    image_transport<span class="token operator">::</span>Subscriber image_sub_<span class="token punctuation">;</span>
+    image_transport<span class="token operator">::</span>Publisher image_pub_<span class="token punctuation">;</span>
 
-public:
+<span class="token keyword">public</span><span class="token operator">:</span>
 
-    ImageConverter(ros::NodeHandle &amp;nodehandle)
-    : it_(nh_) &#123;
-        image_sub_ &#x3D; it_.subscribe(&quot;simple_camera&#x2F;image_raw&quot;, 1,
-                &amp;ImageConverter::imageCb, this);
-        image_pub_ &#x3D; it_.advertise(&quot;&#x2F;image_converter&#x2F;output_video&quot;, 1);
+    <span class="token function">ImageConverter</span><span class="token punctuation">(</span>ros<span class="token operator">::</span>NodeHandle <span class="token operator">&amp;</span>nodehandle<span class="token punctuation">)</span>
+    <span class="token operator">:</span> <span class="token function">it_</span><span class="token punctuation">(</span>nh_<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        image_sub_ <span class="token operator">=</span> it_<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token string">"simple_camera/image_raw"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span>
+                <span class="token operator">&amp;</span>ImageConverter<span class="token operator">::</span>imageCb<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        image_pub_ <span class="token operator">=</span> it_<span class="token punctuation">.</span><span class="token function">advertise</span><span class="token punctuation">(</span><span class="token string">"/image_converter/output_video"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        namedWindow(OPENCV_WINDOW);
-    &#125;
+        <span class="token function">namedWindow</span><span class="token punctuation">(</span>OPENCV_WINDOW<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
 
-    ~ImageConverter() &#123;
-        destroyWindow(OPENCV_WINDOW);
-    &#125;
+    <span class="token operator">~</span><span class="token function">ImageConverter</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">destroyWindow</span><span class="token punctuation">(</span>OPENCV_WINDOW<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
 
-    void imageCb(const sensor_msgs::ImageConstPtr&amp; msg); 
+    <span class="token keyword">void</span> <span class="token function">imageCb</span><span class="token punctuation">(</span><span class="token keyword">const</span> sensor_msgs<span class="token operator">::</span>ImageConstPtr<span class="token operator">&amp;</span> msg<span class="token punctuation">)</span><span class="token punctuation">;</span> 
     
-&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="imageCb回调函数定义"><a href="#imageCb回调函数定义" class="headerlink" title="imageCb回调函数定义"></a><code>imageCb</code>回调函数定义</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void ImageConverter::imageCb(const sensor_msgs::ImageConstPtr&amp; msg)&#123;
-    cv_bridge::CvImagePtr cv_ptr; &#x2F;&#x2F;OpenCV data type
-    try &#123;
-        cv_ptr &#x3D; cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
-    &#125; catch (cv_bridge::Exception&amp; e) &#123;
-        ROS_ERROR(&quot;cv_bridge exception: %s&quot;, e.what());
-        return;
-    &#125;
-    int npix &#x3D; 0;   &#x2F;&#x2F; 红色区域总的像素
-    int isum &#x3D; 0;   &#x2F;&#x2F; 红色的列数
-    int jsum &#x3D; 0;   &#x2F;&#x2F; 红色的行数
-    int redval, blueval, greenval, testval;
-    Vec3b rgbpix;
-    for (int i &#x3D; 0; i &lt; cv_ptr-&gt;image.cols; i++) &#123;
-        for (int j &#x3D; 0; j &lt; cv_ptr-&gt;image.rows; j++) &#123;
-            &#x2F;&#x2F; 提取某点像素值
-            rgbpix &#x3D; cv_ptr-&gt;image.at&lt;Vec3b&gt;(j, i);
-            redval &#x3D; rgbpix[2] + 1; &#x2F;&#x2F; +1 防止除以0
-            blueval &#x3D; rgbpix[0] + 1;
-            greenval &#x3D; rgbpix[1] + 1;
-            testval &#x3D; redval &#x2F; (blueval + greenval);
-            &#x2F;&#x2F; 如果这个点判定为红色，设为白色
-            if (testval &gt; g_redratio) &#123;
-                cv_ptr-&gt;image.at&lt;Vec3b&gt;(j, i)[0] &#x3D; 255;
-                cv_ptr-&gt;image.at&lt;Vec3b&gt;(j, i)[1] &#x3D; 255;
-                cv_ptr-&gt;image.at&lt;Vec3b&gt;(j, i)[2] &#x3D; 255;
-                npix++;     &#x2F;&#x2F; 红色区域总的像素
-                isum +&#x3D; i;  &#x2F;&#x2F; 红色的列数
-                jsum +&#x3D; j;  &#x2F;&#x2F; 红色的行数
-            &#125; else &#123; &#x2F;&#x2F; 其他点设为黑色
-                cv_ptr-&gt;image.at&lt;Vec3b&gt;(j, i)[0] &#x3D; 0;
-                cv_ptr-&gt;image.at&lt;Vec3b&gt;(j, i)[1] &#x3D; 0;
-                cv_ptr-&gt;image.at&lt;Vec3b&gt;(j, i)[2] &#x3D; 0;
-            &#125;
-        &#125;
-    &#125;
+<h2 id="imageCb回调函数定义"><a href="#imageCb回调函数定义" class="headerlink" title="imageCb回调函数定义"></a><code>imageCb</code>回调函数定义</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token class-name">ImageConverter</span><span class="token operator">::</span><span class="token function">imageCb</span><span class="token punctuation">(</span><span class="token keyword">const</span> sensor_msgs<span class="token operator">::</span>ImageConstPtr<span class="token operator">&amp;</span> msg<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    cv_bridge<span class="token operator">::</span>CvImagePtr cv_ptr<span class="token punctuation">;</span> <span class="token comment">//OpenCV data type</span>
+    <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+        cv_ptr <span class="token operator">=</span> cv_bridge<span class="token operator">::</span><span class="token function">toCvCopy</span><span class="token punctuation">(</span>msg<span class="token punctuation">,</span> sensor_msgs<span class="token operator">::</span>image_encodings<span class="token operator">::</span>BGR8<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>cv_bridge<span class="token operator">::</span>Exception<span class="token operator">&amp;</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">ROS_ERROR</span><span class="token punctuation">(</span><span class="token string">"cv_bridge exception: %s"</span><span class="token punctuation">,</span> e<span class="token punctuation">.</span><span class="token function">what</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">int</span> npix <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>   <span class="token comment">// 红色区域总的像素</span>
+    <span class="token keyword">int</span> isum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>   <span class="token comment">// 红色的列数</span>
+    <span class="token keyword">int</span> jsum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>   <span class="token comment">// 红色的行数</span>
+    <span class="token keyword">int</span> redval<span class="token punctuation">,</span> blueval<span class="token punctuation">,</span> greenval<span class="token punctuation">,</span> testval<span class="token punctuation">;</span>
+    Vec3b rgbpix<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> cv_ptr<span class="token operator">-></span>image<span class="token punctuation">.</span>cols<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> cv_ptr<span class="token operator">-></span>image<span class="token punctuation">.</span>rows<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 提取某点像素值</span>
+            rgbpix <span class="token operator">=</span> cv_ptr<span class="token operator">-></span>image<span class="token punctuation">.</span>at<span class="token operator">&lt;</span>Vec3b<span class="token operator">></span><span class="token punctuation">(</span>j<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            redval <span class="token operator">=</span> rgbpix<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">// +1 防止除以0</span>
+            blueval <span class="token operator">=</span> rgbpix<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+            greenval <span class="token operator">=</span> rgbpix<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+            testval <span class="token operator">=</span> redval <span class="token operator">/</span> <span class="token punctuation">(</span>blueval <span class="token operator">+</span> greenval<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">// 如果这个点判定为红色，设为白色</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>testval <span class="token operator">></span> g_redratio<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                cv_ptr<span class="token operator">-></span>image<span class="token punctuation">.</span>at<span class="token operator">&lt;</span>Vec3b<span class="token operator">></span><span class="token punctuation">(</span>j<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">255</span><span class="token punctuation">;</span>
+                cv_ptr<span class="token operator">-></span>image<span class="token punctuation">.</span>at<span class="token operator">&lt;</span>Vec3b<span class="token operator">></span><span class="token punctuation">(</span>j<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">255</span><span class="token punctuation">;</span>
+                cv_ptr<span class="token operator">-></span>image<span class="token punctuation">.</span>at<span class="token operator">&lt;</span>Vec3b<span class="token operator">></span><span class="token punctuation">(</span>j<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">255</span><span class="token punctuation">;</span>
+                npix<span class="token operator">++</span><span class="token punctuation">;</span>     <span class="token comment">// 红色区域总的像素</span>
+                isum <span class="token operator">+=</span> i<span class="token punctuation">;</span>  <span class="token comment">// 红色的列数</span>
+                jsum <span class="token operator">+=</span> j<span class="token punctuation">;</span>  <span class="token comment">// 红色的行数</span>
+            <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 其他点设为黑色</span>
+                cv_ptr<span class="token operator">-></span>image<span class="token punctuation">.</span>at<span class="token operator">&lt;</span>Vec3b<span class="token operator">></span><span class="token punctuation">(</span>j<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+                cv_ptr<span class="token operator">-></span>image<span class="token punctuation">.</span>at<span class="token operator">&lt;</span>Vec3b<span class="token operator">></span><span class="token punctuation">(</span>j<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+                cv_ptr<span class="token operator">-></span>image<span class="token punctuation">.</span>at<span class="token operator">&lt;</span>Vec3b<span class="token operator">></span><span class="token punctuation">(</span>j<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
 
-    ROS_WARN(&quot;npix: %d&quot;, npix);
+    <span class="token function">ROS_WARN</span><span class="token punctuation">(</span><span class="token string">"npix: %d"</span><span class="token punctuation">,</span> npix<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    int half_box &#x3D; 5; &#x2F;&#x2F; 矩形大小
-    int i_centroid, j_centroid;
-    double x_centroid, y_centroid;
-    if (npix &gt; 0) &#123;
-        i_centroid &#x3D; isum &#x2F; npix;   &#x2F;&#x2F; 中间点位置
-        j_centroid &#x3D; jsum &#x2F; npix;
-        x_centroid &#x3D; ((double) isum)&#x2F;((double) npix);
-        y_centroid &#x3D; ((double) jsum)&#x2F;((double) npix);
-        ROS_INFO(&quot;u_avg: %f; v_avg: %f&quot;,x_centroid,y_centroid);
+    <span class="token keyword">int</span> half_box <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span> <span class="token comment">// 矩形大小</span>
+    <span class="token keyword">int</span> i_centroid<span class="token punctuation">,</span> j_centroid<span class="token punctuation">;</span>
+    <span class="token keyword">double</span> x_centroid<span class="token punctuation">,</span> y_centroid<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>npix <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        i_centroid <span class="token operator">=</span> isum <span class="token operator">/</span> npix<span class="token punctuation">;</span>   <span class="token comment">// 中间点位置</span>
+        j_centroid <span class="token operator">=</span> jsum <span class="token operator">/</span> npix<span class="token punctuation">;</span>
+        x_centroid <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span> isum<span class="token punctuation">)</span><span class="token operator">/</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span> npix<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        y_centroid <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span> jsum<span class="token punctuation">)</span><span class="token operator">/</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span> npix<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"u_avg: %f; v_avg: %f"</span><span class="token punctuation">,</span>x_centroid<span class="token punctuation">,</span>y_centroid<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        ROS_WARN(&quot;center (col, row) : (%d, %d)&quot;, i_centroid, j_centroid);
+        <span class="token function">ROS_WARN</span><span class="token punctuation">(</span><span class="token string">"center (col, row) : (%d, %d)"</span><span class="token punctuation">,</span> i_centroid<span class="token punctuation">,</span> j_centroid<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        for (int i_box &#x3D; i_centroid - half_box; i_box &lt;&#x3D; i_centroid + half_box; i_box++) &#123;
-            for (int j_box &#x3D; j_centroid - half_box; j_box &lt;&#x3D; j_centroid + half_box; j_box++) &#123;
-                if ((i_box &gt;&#x3D; 0)&amp;&amp;(j_box &gt;&#x3D; 0)&amp;&amp;(i_box &lt; cv_ptr-&gt;image.cols)&amp;&amp;(j_box &lt; cv_ptr-&gt;image.rows)) &#123;
-                    cv_ptr-&gt;image.at&lt;Vec3b&gt;(j_box, i_box)[0] &#x3D; 255; &#x2F;&#x2F;(255,0,0) is pure blue
-                    cv_ptr-&gt;image.at&lt;Vec3b&gt;(j_box, i_box)[1] &#x3D; 0;
-                    cv_ptr-&gt;image.at&lt;Vec3b&gt;(j_box, i_box)[2] &#x3D; 0;
-                &#125;
-            &#125;
-        &#125;
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i_box <span class="token operator">=</span> i_centroid <span class="token operator">-</span> half_box<span class="token punctuation">;</span> i_box <span class="token operator">&lt;=</span> i_centroid <span class="token operator">+</span> half_box<span class="token punctuation">;</span> i_box<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j_box <span class="token operator">=</span> j_centroid <span class="token operator">-</span> half_box<span class="token punctuation">;</span> j_box <span class="token operator">&lt;=</span> j_centroid <span class="token operator">+</span> half_box<span class="token punctuation">;</span> j_box<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>i_box <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">&amp;&amp;</span><span class="token punctuation">(</span>j_box <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">&amp;&amp;</span><span class="token punctuation">(</span>i_box <span class="token operator">&lt;</span> cv_ptr<span class="token operator">-></span>image<span class="token punctuation">.</span>cols<span class="token punctuation">)</span><span class="token operator">&amp;&amp;</span><span class="token punctuation">(</span>j_box <span class="token operator">&lt;</span> cv_ptr<span class="token operator">-></span>image<span class="token punctuation">.</span>rows<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    cv_ptr<span class="token operator">-></span>image<span class="token punctuation">.</span>at<span class="token operator">&lt;</span>Vec3b<span class="token operator">></span><span class="token punctuation">(</span>j_box<span class="token punctuation">,</span> i_box<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">255</span><span class="token punctuation">;</span> <span class="token comment">//(255,0,0) is pure blue</span>
+                    cv_ptr<span class="token operator">-></span>image<span class="token punctuation">.</span>at<span class="token operator">&lt;</span>Vec3b<span class="token operator">></span><span class="token punctuation">(</span>j_box<span class="token punctuation">,</span> i_box<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+                    cv_ptr<span class="token operator">-></span>image<span class="token punctuation">.</span>at<span class="token operator">&lt;</span>Vec3b<span class="token operator">></span><span class="token punctuation">(</span>j_box<span class="token punctuation">,</span> i_box<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
 
-    &#125;
-    imshow(OPENCV_WINDOW, cv_ptr-&gt;image);   &#x2F;&#x2F; 图像显示
-    waitKey(3); 
-    image_pub_.publish(cv_ptr-&gt;toImageMsg());   &#x2F;&#x2F; 将处理后的图像发布出去
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">imshow</span><span class="token punctuation">(</span>OPENCV_WINDOW<span class="token punctuation">,</span> cv_ptr<span class="token operator">-></span>image<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 图像显示</span>
+    <span class="token function">waitKey</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+    image_pub_<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span>cv_ptr<span class="token operator">-></span><span class="token function">toImageMsg</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 将处理后的图像发布出去</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int main(int argc, char** argv) &#123;
-    ros::init(argc, argv, &quot;find_red_pixels_node&quot;);
-    ros::NodeHandle n;    
-    ImageConverter ic(n);   &#x2F;&#x2F; 创建类实例
-    g_redratio&#x3D; 10;         &#x2F;&#x2F; 红色的阈值
-    ros::Duration timer(0.1);
-    while (ros::ok()) &#123;
-        ros::spinOnce();
-        timer.sleep();
-    &#125;
-    return 0;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    ros<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"find_red_pixels_node"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ros<span class="token operator">::</span>NodeHandle n<span class="token punctuation">;</span>    
+    ImageConverter <span class="token function">ic</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 创建类实例</span>
+    g_redratio<span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>         <span class="token comment">// 红色的阈值</span>
+    ros<span class="token operator">::</span>Duration <span class="token function">timer</span><span class="token punctuation">(</span><span class="token number">0.1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>ros<span class="token operator">::</span><span class="token function">ok</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        ros<span class="token operator">::</span><span class="token function">spinOnce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        timer<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <center>
 
 <img src="/2021/03/26/ROS-ROS-find-red-pixels/image.png#pic_center" width="80%" height="80%" alt="test">
@@ -551,26 +551,26 @@ color: #999;
 padding: 2px;">找到红色区域中心位置</div>
 </center>
 
-<h2 id="canny函数"><a href="#canny函数" class="headerlink" title="canny函数"></a><code>canny</code>函数</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Mat gray_image, contours;
-cvtColor(cv_ptr-&gt;image, gray_image, COLOR_BGR2GRAY);
-Canny(gray_image, contours, 125, 350);
-imshow(OPENCV_WINDOW, contours);
-waitKey(3); 
-sensor_msgs::ImagePtr msg_contours;
-try &#123;
-    msg_contours &#x3D; cv_bridge::CvImage(std_msgs::Header(), &quot;mono8&quot;, contours).toImageMsg();
-&#125; catch(cv_bridge::Exception&amp; e) &#123;
-    ROS_ERROR(&quot;cv_bridge exception: %s&quot;, e.what());
-    return;
-&#125;
-image_pub_.publish(msg_contours);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="canny函数"><a href="#canny函数" class="headerlink" title="canny函数"></a><code>canny</code>函数</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Mat gray_image<span class="token punctuation">,</span> contours<span class="token punctuation">;</span>
+<span class="token function">cvtColor</span><span class="token punctuation">(</span>cv_ptr<span class="token operator">-></span>image<span class="token punctuation">,</span> gray_image<span class="token punctuation">,</span> COLOR_BGR2GRAY<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">Canny</span><span class="token punctuation">(</span>gray_image<span class="token punctuation">,</span> contours<span class="token punctuation">,</span> <span class="token number">125</span><span class="token punctuation">,</span> <span class="token number">350</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">imshow</span><span class="token punctuation">(</span>OPENCV_WINDOW<span class="token punctuation">,</span> contours<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">waitKey</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+sensor_msgs<span class="token operator">::</span>ImagePtr msg_contours<span class="token punctuation">;</span>
+<span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+    msg_contours <span class="token operator">=</span> cv_bridge<span class="token operator">::</span><span class="token function">CvImage</span><span class="token punctuation">(</span>std_msgs<span class="token operator">::</span><span class="token function">Header</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"mono8"</span><span class="token punctuation">,</span> contours<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toImageMsg</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span> <span class="token keyword">catch</span><span class="token punctuation">(</span>cv_bridge<span class="token operator">::</span>Exception<span class="token operator">&amp;</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">ROS_ERROR</span><span class="token punctuation">(</span><span class="token string">"cv_bridge exception: %s"</span><span class="token punctuation">,</span> e<span class="token punctuation">.</span><span class="token function">what</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+image_pub_<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span>msg_contours<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="编码参数"><a href="#编码参数" class="headerlink" title="编码参数"></a>编码参数</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">mono8: CV_8UC1, grayscale image
-mono16: CV_16UC1, 16-bit grayscale image
-bgr8: CV_8UC3, color image with blue-green-red color order
-rgb8: CV_8UC3, color image with red-green-blue color order
-bgra8: CV_8UC4, BGR color image with an alpha channel
-rgba8: CV_8UC4, RGB color image with an alpha channel<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="编码参数"><a href="#编码参数" class="headerlink" title="编码参数"></a>编码参数</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token argument-name">mono8</span><span class="token punctuation">:</span> <span class="token constant">CV_8UC1</span><span class="token punctuation">,</span> grayscale image
+<span class="token argument-name">mono16</span><span class="token punctuation">:</span> <span class="token constant">CV_16UC1</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token operator">-</span>bit grayscale image
+<span class="token argument-name">bgr8</span><span class="token punctuation">:</span> <span class="token constant">CV_8UC3</span><span class="token punctuation">,</span> color image with blue<span class="token operator">-</span>green<span class="token operator">-</span>red color order
+<span class="token argument-name">rgb8</span><span class="token punctuation">:</span> <span class="token constant">CV_8UC3</span><span class="token punctuation">,</span> color image with red<span class="token operator">-</span>green<span class="token operator">-</span>blue color order
+<span class="token argument-name">bgra8</span><span class="token punctuation">:</span> <span class="token constant">CV_8UC4</span><span class="token punctuation">,</span> <span class="token constant">BGR</span> color image with an alpha channel
+<span class="token argument-name">rgba8</span><span class="token punctuation">:</span> <span class="token constant">CV_8UC4</span><span class="token punctuation">,</span> <span class="token constant">RGB</span> color image with an alpha channel<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <center>
 <img src="/2021/03/26/ROS-ROS-find-red-pixels/contours.png#pic_center" width="80%" height="80%" alt="test">
 <br>
@@ -823,13 +823,13 @@ padding: 2px;">红色边缘</div>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/26/ROS-ROS-CV/">
+                <a href="/2021/03/26/ROS-ROS-action/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="ROS cv_bridge">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="ROS action">
                         
-                        <span class="card-title">ROS cv_bridge</span>
+                        <span class="card-title">ROS action</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -853,10 +853,6 @@ padding: 2px;">红色边缘</div>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/OpenCV/">
-                        <span class="chip bg-color">OpenCV</span>
-                    </a>
-                    
                     <a href="/tags/ROS/">
                         <span class="chip bg-color">ROS</span>
                     </a>
@@ -872,13 +868,13 @@ padding: 2px;">红色边缘</div>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/26/ROS-ROS-mavros/">
+                <a href="/2021/03/26/ROS-ROS-param/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="ROS_MAVROS">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="ROS参数服务器">
                         
-                        <span class="card-title">ROS_MAVROS</span>
+                        <span class="card-title">ROS参数服务器</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -904,10 +900,6 @@ padding: 2px;">红色边缘</div>
                     
                     <a href="/tags/ROS/">
                         <span class="chip bg-color">ROS</span>
-                    </a>
-                    
-                    <a href="/tags/mavros/">
-                        <span class="chip bg-color">mavros</span>
                     </a>
                     
                 </div>

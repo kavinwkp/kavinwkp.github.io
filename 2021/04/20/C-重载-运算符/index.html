@@ -445,17 +445,17 @@ Complex operator+(Complex a,Complex b)&#123;&#125;         &#x2F;&#x2F;定义<sp
 
 <h2 id="二、重载一元运算符"><a href="#二、重载一元运算符" class="headerlink" title="二、重载一元运算符"></a>二、重载一元运算符</h2><p>一元运算符只需要一个运算参数，如取地址运算符（&amp;）、负数（-）、自增加（++）等。</p>
 <p>常见调用形式为：</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">@a 或 a@  &#x2F;&#x2F;隐式调用形式
-a.operator@()   &#x2F;&#x2F; 显式调用一元运算符@
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">@a 或 a@  <span class="token comment">//隐式调用形式</span>
+a<span class="token punctuation">.</span><span class="token keyword">operator</span>@<span class="token punctuation">(</span><span class="token punctuation">)</span>   <span class="token comment">// 显式调用一元运算符@</span>
 其中的@代表一元运算符，a代表操作数。
 
-@a代表前缀一元运算，如“++a”；
+@a代表前缀一元运算，如“<span class="token operator">++</span>a”；
 
-a@表示后缀运算，如“a++”。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+a@表示后缀运算，如“a<span class="token operator">++</span>”。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>@a将被C++解释为下面的形式之一</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">a.operator@()
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">a<span class="token punctuation">.</span><span class="token keyword">operator</span>@<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
-operator@(a) <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">operator</span>@<span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>一元运算符作为类成员函数重载时不需要参数，其形式如下：</p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">class X&#123;
@@ -490,39 +490,39 @@ operator -- (X &amp; x, int);<span aria-hidden="true" class="line-numbers-rows">
 
 <p>其中的参数表可以包括任意多个参数。</p>
 <p>3、运算符( )的调用形式如下：</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">X Obj;      &#x2F;&#x2F;对象定义
-Obj()(参数表);      &#x2F;&#x2F;调用形式1
-Obj(参数表);        &#x2F;&#x2F;调用形式2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">X Obj<span class="token punctuation">;</span>      <span class="token comment">//对象定义</span>
+<span class="token function">Obj</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span>参数表<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">//调用形式1</span>
+<span class="token function">Obj</span><span class="token punctuation">(</span>参数表<span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment">//调用形式2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="六、代码示例"><a href="#六、代码示例" class="headerlink" title="六、代码示例"></a>六、代码示例</h2><p>返回值要写成类引用<code>Class&amp;</code>，不然会再调用构造函数新建一个临时变量</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">class A
-&#123;
-public:
-    A(int val &#x3D; 0): x(val) &#123; 
-        cout &lt;&lt; &quot;A: constructor. &quot;; 
-        cout &lt;&lt; &quot;x &#x3D; &quot; &lt;&lt; val &lt;&lt; endl;
-    &#125;
-    &#x2F;&#x2F;返回引用类型
-    A&amp; operator &#x3D; (const A&amp; input) &#123;
-        cout &lt;&lt; &quot;copy Assignment&quot; &lt;&lt; endl;
-        x &#x3D; input.x;
-        return *this;
-    &#125;
-private:
-    int x;
-&#125;;
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span>
+<span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">A</span><span class="token punctuation">(</span><span class="token keyword">int</span> val <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">x</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> 
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"A: constructor. "</span><span class="token punctuation">;</span> 
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"x = "</span> <span class="token operator">&lt;&lt;</span> val <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">//返回引用类型</span>
+    A<span class="token operator">&amp;</span> <span class="token keyword">operator</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">const</span> A<span class="token operator">&amp;</span> input<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"copy Assignment"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+        x <span class="token operator">=</span> input<span class="token punctuation">.</span>x<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> x<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-int main(int argc, char const *argv[])
-&#123;
-    A a(34), b;
-    b &#x3D; a;
-    b.operator&#x3D;(a); &#x2F;&#x2F;写成这样也可以
-    A c &#x3D; a;    &#x2F;&#x2F; 写成这样就不会调用复制赋值运算符函数，编译器内部实现了
-    return 0;
-&#125;
-A: constructor. x &#x3D; 34
-A: constructor. x &#x3D; 0
-copy Assignment &#x2F;&#x2F; 调用了复制复制运算符函数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    A <span class="token function">a</span><span class="token punctuation">(</span><span class="token number">34</span><span class="token punctuation">)</span><span class="token punctuation">,</span> b<span class="token punctuation">;</span>
+    b <span class="token operator">=</span> a<span class="token punctuation">;</span>
+    b<span class="token punctuation">.</span><span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//写成这样也可以</span>
+    A c <span class="token operator">=</span> a<span class="token punctuation">;</span>    <span class="token comment">// 写成这样就不会调用复制赋值运算符函数，编译器内部实现了</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+A<span class="token operator">:</span> constructor<span class="token punctuation">.</span> x <span class="token operator">=</span> <span class="token number">34</span>
+A<span class="token operator">:</span> constructor<span class="token punctuation">.</span> x <span class="token operator">=</span> <span class="token number">0</span>
+copy Assignment <span class="token comment">// 调用了复制复制运算符函数</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

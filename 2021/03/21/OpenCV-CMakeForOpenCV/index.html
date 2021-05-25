@@ -422,8 +422,8 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!-- toc -->
-<h2 id="g-编译OpenCV"><a href="#g-编译OpenCV" class="headerlink" title="g++ 编译OpenCV"></a>g++ 编译OpenCV</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">g++ main.cpp -I D:&#x2F;software&#x2F;opencv&#x2F;opencv&#x2F;build&#x2F;x64&#x2F;mingw&#x2F;install&#x2F;include 
--L D:&#x2F;software&#x2F;opencv&#x2F;opencv&#x2F;build&#x2F;x64&#x2F;mingw&#x2F;install&#x2F;x64&#x2F;mingw&#x2F;lib 
+<h2 id="g-编译OpenCV"><a href="#g-编译OpenCV" class="headerlink" title="g++ 编译OpenCV"></a>g++ 编译OpenCV</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">g++ main.cpp -I D:/software/opencv/opencv/build/x64/mingw/install/include 
+-L D:/software/opencv/opencv/build/x64/mingw/install/x64/mingw/lib 
 -l libopencv_calib3d450 -l libopencv_core450 -l libopencv_dnn450 -l libopencv_features2d450 
 -l libopencv_flann450 -l libopencv_gapi450 -l libopencv_highgui450 -l libopencv_imgcodecs450 
 -l libopencv_imgproc450 -l libopencv_ml450 -l libopencv_objdetect450 -l libopencv_photo450 
@@ -433,9 +433,9 @@
 
 <h2 id="Ubuntu可以用pkg-config"><a href="#Ubuntu可以用pkg-config" class="headerlink" title="Ubuntu可以用pkg_config"></a>Ubuntu可以用<code>pkg_config</code></h2><p><strong>查看OpenCV路径和库</strong></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ pkg-config --cflags --libs opencv 
--I&#x2F;usr&#x2F;local&#x2F;include&#x2F;opencv 
--I&#x2F;usr&#x2F;local&#x2F;include 
--L&#x2F;usr&#x2F;local&#x2F;lib 
+-I/usr/local/include/opencv 
+-I/usr/local/include 
+-L/usr/local/lib 
 -lopencv_dnn -lopencv_ml -lopencv_objdetect 
 -lopencv_shape -lopencv_stitching -lopencv_superres 
 -lopencv_videostab -lopencv_calib3d -lopencv_features2d 
@@ -443,34 +443,34 @@
 -lopencv_video -lopencv_photo -lopencv_imgproc 
 -lopencv_flann -lopencv_viz -lopencv_core
 
-g++ main.cpp -o main &#96;pkg-config --cflags --libs opencv&#96;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+g++ main.cpp -o main <span class="token variable"><span class="token variable">`</span>pkg-config --cflags --libs opencv<span class="token variable">`</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="CMake编译OpenCV"><a href="#CMake编译OpenCV" class="headerlink" title="CMake编译OpenCV"></a>CMake编译OpenCV</h2><pre class="line-numbers language-cmake" data-language="cmake"><code class="language-cmake">find_package(OpenCV REQUIRED)
+<h2 id="CMake编译OpenCV"><a href="#CMake编译OpenCV" class="headerlink" title="CMake编译OpenCV"></a>CMake编译OpenCV</h2><pre class="line-numbers language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">find_package</span><span class="token punctuation">(</span>OpenCV REQUIRED<span class="token punctuation">)</span>
 
-message(&quot;$&#123;OpenCV_INCLUDE_DIRS&#125;&quot;)
-# &#x2F;usr&#x2F;local&#x2F;include
+<span class="token keyword">message</span><span class="token punctuation">(</span><span class="token string">"<span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">OpenCV_INCLUDE_DIRS</span><span class="token punctuation">&#125;</span></span>"</span><span class="token punctuation">)</span>
+<span class="token comment"># /usr/local/include</span>
 
-message(&quot;$&#123;OpenCV_LIBRARY_DIRS&#125;&quot;)
-# &#x2F;usr&#x2F;local&#x2F;include&#x2F;opencv
+<span class="token keyword">message</span><span class="token punctuation">(</span><span class="token string">"<span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">OpenCV_LIBRARY_DIRS</span><span class="token punctuation">&#125;</span></span>"</span><span class="token punctuation">)</span>
+<span class="token comment"># /usr/local/include/opencv</span>
 
-message(&quot;$&#123;OpenCV_LIBS&#125;&quot;)
-# opencv_calib3d;opencv_core;...
+<span class="token keyword">message</span><span class="token punctuation">(</span><span class="token string">"<span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">OpenCV_LIBS</span><span class="token punctuation">&#125;</span></span>"</span><span class="token punctuation">)</span>
+<span class="token comment"># opencv_calib3d;opencv_core;...</span>
 
-set(CMAKE_CXX_FLAGS &quot;$&#123;CMAKE_CXX_FLAGS&#125;&quot;)
+<span class="token keyword">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_CXX_FLAGS</span> <span class="token string">"<span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">CMAKE_CXX_FLAGS</span><span class="token punctuation">&#125;</span></span>"</span><span class="token punctuation">)</span>
 
-set(CMAKE_BUILD_TYPE Debug)
+<span class="token keyword">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_BUILD_TYPE</span> Debug<span class="token punctuation">)</span>
 
-# 头文件目录
-include_directories($&#123;OpenCV_INCLUDE_DIRS&#125;)
+<span class="token comment"># 头文件目录</span>
+<span class="token keyword">include_directories</span><span class="token punctuation">(</span><span class="token punctuation">$&#123;</span>OpenCV_INCLUDE_DIRS<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 
-# 库文件目录
-link_directories($&#123;OpenCV_LIBRARY_DIRS&#125;)
+<span class="token comment"># 库文件目录</span>
+<span class="token keyword">link_directories</span><span class="token punctuation">(</span><span class="token punctuation">$&#123;</span>OpenCV_LIBRARY_DIRS<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 
 
-add_executable(main main.cpp)
+<span class="token keyword">add_executable</span><span class="token punctuation">(</span>main main.cpp<span class="token punctuation">)</span>
 
-#链接
-target_link_libraries(main $&#123;OpenCV_LIBS&#125;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">#链接</span>
+<span class="token keyword">target_link_libraries</span><span class="token punctuation">(</span>main <span class="token punctuation">$&#123;</span>OpenCV_LIBS<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

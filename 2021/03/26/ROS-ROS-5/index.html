@@ -409,110 +409,110 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!-- toc -->
-<h2 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#ifndef EXAMPLE_H_
-#define EXAMPLE_H_
+<h2 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">EXAMPLE_H_</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">EXAMPLE_H_</span></span>
 
 
-#include &lt;math.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;string&gt;
-#include &lt;vector&gt;
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;math.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;vector></span></span>
 
-#include &lt;ros&#x2F;ros.h&gt; 
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h></span> </span>
 
-#include &lt;std_msgs&#x2F;Bool.h&gt;
-#include &lt;std_msgs&#x2F;Float32.h&gt;
-#include &lt;std_srvs&#x2F;Trigger.h&gt; 
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;std_msgs/Bool.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;std_msgs/Float32.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;std_srvs/Trigger.h></span> </span>
 
-&#x2F;&#x2F; rossrv show std_msgs&#x2F;Trigger
-&#x2F;&#x2F; bool success
-&#x2F;&#x2F; string message
+<span class="token comment">// rossrv show std_msgs/Trigger</span>
+<span class="token comment">// bool success</span>
+<span class="token comment">// string message</span>
 
-class Example
-&#123;
-public:
-    Example(ros::NodeHandle* nodehandle);   &#x2F;&#x2F; 构造函数，传句柄地址
-private:
-    ros::NodeHandle nh_; 
-    ros::Subscriber minimal_subscriber_;
-    ros::ServiceServer minimal_service_;
-    ros::Publisher  minimal_publisher_;
+<span class="token keyword">class</span> <span class="token class-name">Example</span>
+<span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">Example</span><span class="token punctuation">(</span>ros<span class="token operator">::</span>NodeHandle<span class="token operator">*</span> nodehandle<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 构造函数，传句柄地址</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    ros<span class="token operator">::</span>NodeHandle nh_<span class="token punctuation">;</span> 
+    ros<span class="token operator">::</span>Subscriber minimal_subscriber_<span class="token punctuation">;</span>
+    ros<span class="token operator">::</span>ServiceServer minimal_service_<span class="token punctuation">;</span>
+    ros<span class="token operator">::</span>Publisher  minimal_publisher_<span class="token punctuation">;</span>
     
-    double val_from_subscriber_; 
-    double val_to_remember_; 
+    <span class="token keyword">double</span> val_from_subscriber_<span class="token punctuation">;</span> 
+    <span class="token keyword">double</span> val_to_remember_<span class="token punctuation">;</span> 
     
 
-    void initializeSubscribers();   &#x2F;&#x2F; 初始化订阅者成员函数
-    void initializePublishers();    &#x2F;&#x2F; 初始化发布者成员函数
-    void initializeServices();      &#x2F;&#x2F; 初始化服务端成员函数
+    <span class="token keyword">void</span> <span class="token function">initializeSubscribers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 初始化订阅者成员函数</span>
+    <span class="token keyword">void</span> <span class="token function">initializePublishers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 初始化发布者成员函数</span>
+    <span class="token keyword">void</span> <span class="token function">initializeServices</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">// 初始化服务端成员函数</span>
     
-    &#x2F;&#x2F; 回调函数
-    void subscriberCallback(const std_msgs::Float32 &amp;msg); 
-    bool serviceCallback(std_srvs::Trigger::Request &amp;request, std_srvs::Trigger::Response &amp;response);
-&#125;;
+    <span class="token comment">// 回调函数</span>
+    <span class="token keyword">void</span> <span class="token function">subscriberCallback</span><span class="token punctuation">(</span><span class="token keyword">const</span> std_msgs<span class="token operator">::</span>Float32 <span class="token operator">&amp;</span>msg<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+    <span class="token keyword">bool</span> <span class="token function">serviceCallback</span><span class="token punctuation">(</span>std_srvs<span class="token operator">::</span>Trigger<span class="token operator">::</span>Request <span class="token operator">&amp;</span>request<span class="token punctuation">,</span> std_srvs<span class="token operator">::</span>Trigger<span class="token operator">::</span>Response <span class="token operator">&amp;</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-#endif<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="源文件"><a href="#源文件" class="headerlink" title="源文件"></a>源文件</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &quot;Example.h&quot;
+<h2 id="源文件"><a href="#源文件" class="headerlink" title="源文件"></a>源文件</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Example.h"</span></span>
 
-Example::Example(ros::NodeHandle* nodehandle) : nh_(*nodehandle)
-&#123;
-    ROS_INFO(&quot;in class constructor of Example&quot;);
-    initializeSubscribers(); 
-    initializePublishers();
-    initializeServices();
-&#125;
+<span class="token class-name">Example</span><span class="token operator">::</span><span class="token function">Example</span><span class="token punctuation">(</span>ros<span class="token operator">::</span>NodeHandle<span class="token operator">*</span> nodehandle<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">nh_</span><span class="token punctuation">(</span><span class="token operator">*</span>nodehandle<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"in class constructor of Example"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">initializeSubscribers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+    <span class="token function">initializePublishers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">initializeServices</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
-void Example::initializeSubscribers()
-&#123;
-    ROS_INFO(&quot;Initializing Subscribers&quot;);
-    minimal_subscriber_ &#x3D; nh_.subscribe(&quot;input_topic&quot;, 1, &amp;Example::subscriberCallback, this);
-    &#x2F;&#x2F;函数指针和this指针
-&#125;
+<span class="token keyword">void</span> <span class="token class-name">Example</span><span class="token operator">::</span><span class="token function">initializeSubscribers</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"Initializing Subscribers"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    minimal_subscriber_ <span class="token operator">=</span> nh_<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token string">"input_topic"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>Example<span class="token operator">::</span>subscriberCallback<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//函数指针和this指针</span>
+<span class="token punctuation">&#125;</span>
 
-void Example::initializePublishers()
-&#123;
-    ROS_INFO(&quot;Initializing Publishers&quot;);
-    minimal_publisher_ &#x3D; nh_.advertise&lt;std_msgs::Float32&gt;(&quot;output_topic&quot;, 1, true);
-&#125;
+<span class="token keyword">void</span> <span class="token class-name">Example</span><span class="token operator">::</span><span class="token function">initializePublishers</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"Initializing Publishers"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    minimal_publisher_ <span class="token operator">=</span> nh_<span class="token punctuation">.</span>advertise<span class="token operator">&lt;</span>std_msgs<span class="token operator">::</span>Float32<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"output_topic"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
-void Example::initializeServices()
-&#123;
-    ROS_INFO(&quot;Initializing Services&quot;);
-    minimal_service_ &#x3D; nh_.advertiseService(&quot;service&quot;, &amp;Example::serviceCallback, this);
-&#125;
+<span class="token keyword">void</span> <span class="token class-name">Example</span><span class="token operator">::</span><span class="token function">initializeServices</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"Initializing Services"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    minimal_service_ <span class="token operator">=</span> nh_<span class="token punctuation">.</span><span class="token function">advertiseService</span><span class="token punctuation">(</span><span class="token string">"service"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>Example<span class="token operator">::</span>serviceCallback<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
-void Example::subscriberCallback(const std_msgs::Float32 &amp;msg)
-&#123;
-    val_from_subscriber_ &#x3D; msg.data;
-    ROS_INFO(&quot;Receive message: %f&quot;, msg.data);   
-    val_to_remember_ +&#x3D; val_from_subscriber_;
-    std_msgs::Float32 output_msg;
-    output_msg.data &#x3D; val_to_remember_;
-    minimal_publisher_.publish(output_msg);
-&#125;
+<span class="token keyword">void</span> <span class="token class-name">Example</span><span class="token operator">::</span><span class="token function">subscriberCallback</span><span class="token punctuation">(</span><span class="token keyword">const</span> std_msgs<span class="token operator">::</span>Float32 <span class="token operator">&amp;</span>msg<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    val_from_subscriber_ <span class="token operator">=</span> msg<span class="token punctuation">.</span>data<span class="token punctuation">;</span>
+    <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"Receive message: %f"</span><span class="token punctuation">,</span> msg<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>   
+    val_to_remember_ <span class="token operator">+=</span> val_from_subscriber_<span class="token punctuation">;</span>
+    std_msgs<span class="token operator">::</span>Float32 output_msg<span class="token punctuation">;</span>
+    output_msg<span class="token punctuation">.</span>data <span class="token operator">=</span> val_to_remember_<span class="token punctuation">;</span>
+    minimal_publisher_<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span>output_msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
-bool Example::serviceCallback(std_srvs::Trigger::Request &amp;request, std_srvs::Trigger::Response &amp;response)
-&#123;
-    ROS_INFO(&quot;service callback&quot;);
-    response.success &#x3D; true;
-    response.message &#x3D; &quot;response message&quot;;
-&#125;
+<span class="token keyword">bool</span> <span class="token class-name">Example</span><span class="token operator">::</span><span class="token function">serviceCallback</span><span class="token punctuation">(</span>std_srvs<span class="token operator">::</span>Trigger<span class="token operator">::</span>Request <span class="token operator">&amp;</span>request<span class="token punctuation">,</span> std_srvs<span class="token operator">::</span>Trigger<span class="token operator">::</span>Response <span class="token operator">&amp;</span>response<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"service callback"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    response<span class="token punctuation">.</span>success <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    response<span class="token punctuation">.</span>message <span class="token operator">=</span> <span class="token string">"response message"</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
 
-int main(int argc, char** argv)
-&#123;
-    ros::init(argc, argv, &quot;Example&quot;);
-    ros::NodeHandle nh;
-    Example example(&amp;nh);   &#x2F;&#x2F; 构造函数的参数是句柄地址
-    ros::spin();
-    return 0;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    ros<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"Example"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ros<span class="token operator">::</span>NodeHandle nh<span class="token punctuation">;</span>
+    Example <span class="token function">example</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>nh<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 构造函数的参数是句柄地址</span>
+    ros<span class="token operator">::</span><span class="token function">spin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="生成库文件"><a href="#生成库文件" class="headerlink" title="生成库文件"></a>生成库文件</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php">add_libraries(Example src&#x2F;Example.cpp)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="生成库文件"><a href="#生成库文件" class="headerlink" title="生成库文件"></a>生成库文件</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token function">add_libraries</span><span class="token punctuation">(</span>Example src<span class="token operator">/</span>Example<span class="token operator">.</span>cpp<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h2 id="可执行文件链接库"><a href="#可执行文件链接库" class="headerlink" title="可执行文件链接库"></a>可执行文件链接库</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php">add_executable(test_node src&#x2F;test.cpp)
-target_link_libraries(test_node Example)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="可执行文件链接库"><a href="#可执行文件链接库" class="headerlink" title="可执行文件链接库"></a>可执行文件链接库</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token function">add_executable</span><span class="token punctuation">(</span>test_node src<span class="token operator">/</span>test<span class="token operator">.</span>cpp<span class="token punctuation">)</span>
+<span class="token function">target_link_libraries</span><span class="token punctuation">(</span>test_node Example<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -798,13 +798,13 @@ target_link_libraries(test_node Example)<span aria-hidden="true" class="line-num
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/26/ROS-ROS-action/">
+                <a href="/2021/03/26/ROS-ROS-CV/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="ROS action">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="ROS cv_bridge">
                         
-                        <span class="card-title">ROS action</span>
+                        <span class="card-title">ROS cv_bridge</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -827,6 +827,10 @@ target_link_libraries(test_node Example)<span aria-hidden="true" class="line-num
                 </div>
                 
                 <div class="card-action article-tags">
+                    
+                    <a href="/tags/OpenCV/">
+                        <span class="chip bg-color">OpenCV</span>
+                    </a>
                     
                     <a href="/tags/ROS/">
                         <span class="chip bg-color">ROS</span>

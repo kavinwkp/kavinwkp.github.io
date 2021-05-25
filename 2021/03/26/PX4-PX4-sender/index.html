@@ -414,78 +414,78 @@
             <div id="articleContent">
                 <!-- toc -->
 
-<h2 id="变量声明"><a href="#变量声明" class="headerlink" title="变量声明"></a>变量声明</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">float cur_time;         &#x2F;&#x2F;程序运行时间
-float Takeoff_height;   &#x2F;&#x2F;默认起飞高度
-float Disarm_height;    &#x2F;&#x2F;自动上锁高度
-float Land_speed;       &#x2F;&#x2F;降落速度
-int Land_mode;          &#x2F;&#x2F;降落策略选择
-Eigen::Vector2f geo_fence_x;        &#x2F;&#x2F;地理围栏
-Eigen::Vector2f geo_fence_y;
-Eigen::Vector2f geo_fence_z;
-Eigen::Vector3d Takeoff_position;   &#x2F;&#x2F; 起飞位置
-prometheus_msgs::DroneState _DroneState;    &#x2F;&#x2F;无人机状态量
-prometheus_msgs::ControlCommand Command_Now;    &#x2F;&#x2F;无人机当前执行命令
-prometheus_msgs::ControlCommand Command_Last;   &#x2F;&#x2F;无人机上一条执行命令
+<h2 id="变量声明"><a href="#变量声明" class="headerlink" title="变量声明"></a>变量声明</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">float</span> cur_time<span class="token punctuation">;</span>         <span class="token comment">//程序运行时间</span>
+<span class="token keyword">float</span> Takeoff_height<span class="token punctuation">;</span>   <span class="token comment">//默认起飞高度</span>
+<span class="token keyword">float</span> Disarm_height<span class="token punctuation">;</span>    <span class="token comment">//自动上锁高度</span>
+<span class="token keyword">float</span> Land_speed<span class="token punctuation">;</span>       <span class="token comment">//降落速度</span>
+<span class="token keyword">int</span> Land_mode<span class="token punctuation">;</span>          <span class="token comment">//降落策略选择</span>
+Eigen<span class="token operator">::</span>Vector2f geo_fence_x<span class="token punctuation">;</span>        <span class="token comment">//地理围栏</span>
+Eigen<span class="token operator">::</span>Vector2f geo_fence_y<span class="token punctuation">;</span>
+Eigen<span class="token operator">::</span>Vector2f geo_fence_z<span class="token punctuation">;</span>
+Eigen<span class="token operator">::</span>Vector3d Takeoff_position<span class="token punctuation">;</span>   <span class="token comment">// 起飞位置</span>
+prometheus_msgs<span class="token operator">::</span>DroneState _DroneState<span class="token punctuation">;</span>    <span class="token comment">//无人机状态量</span>
+prometheus_msgs<span class="token operator">::</span>ControlCommand Command_Now<span class="token punctuation">;</span>    <span class="token comment">//无人机当前执行命令</span>
+prometheus_msgs<span class="token operator">::</span>ControlCommand Command_Last<span class="token punctuation">;</span>   <span class="token comment">//无人机上一条执行命令</span>
 
-Eigen::Vector3d state_sp(0,0,0);
-Eigen::Vector3d state_sp_extra(0,0,0);
-double yaw_sp;
-double yaw_rate_sp;
-prometheus_msgs::Message message;
-prometheus_msgs::LogMessageControl LogMessage;
+Eigen<span class="token operator">::</span>Vector3d <span class="token function">state_sp</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Eigen<span class="token operator">::</span>Vector3d <span class="token function">state_sp_extra</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">double</span> yaw_sp<span class="token punctuation">;</span>
+<span class="token keyword">double</span> yaw_rate_sp<span class="token punctuation">;</span>
+prometheus_msgs<span class="token operator">::</span>Message message<span class="token punctuation">;</span>
+prometheus_msgs<span class="token operator">::</span>LogMessageControl LogMessage<span class="token punctuation">;</span>
 
-&#x2F;&#x2F;RVIZ显示：期望位置
-geometry_msgs::PoseStamped ref_pose_rviz;
-float dt &#x3D; 0;
-ros::Publisher rivz_ref_pose_pub;
-ros::Publisher message_pub;
-ros::Publisher log_message_pub;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="订阅"><a href="#订阅" class="headerlink" title="订阅"></a>订阅</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; 【订阅】为任务模块生成的控制指令(来自terminal_control.cpp)
-ros::Subscriber Command_sub &#x3D; nh.subscribe&lt;prometheus_msgs::ControlCommand&gt;(&quot;&#x2F;prometheus&#x2F;control_command&quot;, 10, Command_cb);
-&#x2F;&#x2F; 本话题为Prometheus地面站发送的控制指令
-ros::Subscriber station_command_sub &#x3D; nh.subscribe&lt;prometheus_msgs::ControlCommand&gt;(&quot;&#x2F;prometheus&#x2F;control_command_station&quot;, 10, station_command_cb);
-&#x2F;&#x2F;【订阅】无人机状态(来自px4_pos_estimator.cpp)
-ros::Subscriber drone_state_sub &#x3D; nh.subscribe&lt;prometheus_msgs::DroneState&gt;(&quot;&#x2F;prometheus&#x2F;drone_state&quot;, 10, drone_state_cb);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">//RVIZ显示：期望位置</span>
+geometry_msgs<span class="token operator">::</span>PoseStamped ref_pose_rviz<span class="token punctuation">;</span>
+<span class="token keyword">float</span> dt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+ros<span class="token operator">::</span>Publisher rivz_ref_pose_pub<span class="token punctuation">;</span>
+ros<span class="token operator">::</span>Publisher message_pub<span class="token punctuation">;</span>
+ros<span class="token operator">::</span>Publisher log_message_pub<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="订阅"><a href="#订阅" class="headerlink" title="订阅"></a>订阅</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 【订阅】为任务模块生成的控制指令(来自terminal_control.cpp)</span>
+ros<span class="token operator">::</span>Subscriber Command_sub <span class="token operator">=</span> nh<span class="token punctuation">.</span>subscribe<span class="token operator">&lt;</span>prometheus_msgs<span class="token operator">::</span>ControlCommand<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"/prometheus/control_command"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> Command_cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 本话题为Prometheus地面站发送的控制指令</span>
+ros<span class="token operator">::</span>Subscriber station_command_sub <span class="token operator">=</span> nh<span class="token punctuation">.</span>subscribe<span class="token operator">&lt;</span>prometheus_msgs<span class="token operator">::</span>ControlCommand<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"/prometheus/control_command_station"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> station_command_cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//【订阅】无人机状态(来自px4_pos_estimator.cpp)</span>
+ros<span class="token operator">::</span>Subscriber drone_state_sub <span class="token operator">=</span> nh<span class="token punctuation">.</span>subscribe<span class="token operator">&lt;</span>prometheus_msgs<span class="token operator">::</span>DroneState<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"/prometheus/drone_state"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> drone_state_cb<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; 【发布】参考位姿 RVIZ显示用
-rivz_ref_pose_pub &#x3D; nh.advertise&lt;geometry_msgs::PoseStamped&gt;(&quot;&#x2F;prometheus&#x2F;control&#x2F;ref_pose_rviz&quot;, 10);
-&#x2F;&#x2F; 【发布】用于地面站显示的提示消息
-message_pub &#x3D; nh.advertise&lt;prometheus_msgs::Message&gt;(&quot;&#x2F;prometheus&#x2F;message&#x2F;main&quot;, 10);
-&#x2F;&#x2F; 【发布】用于log的消息
-log_message_pub &#x3D; nh.advertise&lt;prometheus_msgs::LogMessageControl&gt;(&quot;&#x2F;prometheus&#x2F;log&#x2F;control&quot;, 10);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 【发布】参考位姿 RVIZ显示用</span>
+rivz_ref_pose_pub <span class="token operator">=</span> nh<span class="token punctuation">.</span>advertise<span class="token operator">&lt;</span>geometry_msgs<span class="token operator">::</span>PoseStamped<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"/prometheus/control/ref_pose_rviz"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 【发布】用于地面站显示的提示消息</span>
+message_pub <span class="token operator">=</span> nh<span class="token punctuation">.</span>advertise<span class="token operator">&lt;</span>prometheus_msgs<span class="token operator">::</span>Message<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"/prometheus/message/main"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 【发布】用于log的消息</span>
+log_message_pub <span class="token operator">=</span> nh<span class="token punctuation">.</span>advertise<span class="token operator">&lt;</span>prometheus_msgs<span class="token operator">::</span>LogMessageControl<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"/prometheus/log/control"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; 参数读取
-nh.param&lt;float&gt;(&quot;Takeoff_height&quot;, Takeoff_height, 1.0);
-nh.param&lt;float&gt;(&quot;Disarm_height&quot;, Disarm_height, 0.15);
-nh.param&lt;float&gt;(&quot;Land_speed&quot;, Land_speed, 0.2);
-nh.param&lt;int&gt;(&quot;Land_mode&quot;,Land_mode,0);
-nh.param&lt;float&gt;(&quot;geo_fence&#x2F;x_min&quot;, geo_fence_x[0], -100.0);
-nh.param&lt;float&gt;(&quot;geo_fence&#x2F;x_max&quot;, geo_fence_x[1], 100.0);
-nh.param&lt;float&gt;(&quot;geo_fence&#x2F;y_min&quot;, geo_fence_y[0], -100.0);
-nh.param&lt;float&gt;(&quot;geo_fence&#x2F;y_max&quot;, geo_fence_y[1], 100.0);
-nh.param&lt;float&gt;(&quot;geo_fence&#x2F;z_min&quot;, geo_fence_z[0], -100.0);
-nh.param&lt;float&gt;(&quot;geo_fence&#x2F;z_max&quot;, geo_fence_z[1], 100.0);
-&#x2F;&#x2F; 设定起飞位置
-Takeoff_position[0] &#x3D; 0.0;
-Takeoff_position[1] &#x3D; 0.0;
-Takeoff_position[2] &#x3D; 0.15;
-&#x2F;&#x2F; 建议控制频率: 10 - 50Hz, 控制频率取决于控制形式，若控制方式为速度或加速度应适当提高频率
-ros::Rate rate(20.0);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 参数读取</span>
+nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"Takeoff_height"</span><span class="token punctuation">,</span> Takeoff_height<span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"Disarm_height"</span><span class="token punctuation">,</span> Disarm_height<span class="token punctuation">,</span> <span class="token number">0.15</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"Land_speed"</span><span class="token punctuation">,</span> Land_speed<span class="token punctuation">,</span> <span class="token number">0.2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"Land_mode"</span><span class="token punctuation">,</span>Land_mode<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"geo_fence/x_min"</span><span class="token punctuation">,</span> geo_fence_x<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">100.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"geo_fence/x_max"</span><span class="token punctuation">,</span> geo_fence_x<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">100.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"geo_fence/y_min"</span><span class="token punctuation">,</span> geo_fence_y<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">100.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"geo_fence/y_max"</span><span class="token punctuation">,</span> geo_fence_y<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">100.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"geo_fence/z_min"</span><span class="token punctuation">,</span> geo_fence_z<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">100.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"geo_fence/z_max"</span><span class="token punctuation">,</span> geo_fence_z<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">100.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 设定起飞位置</span>
+Takeoff_position<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0.0</span><span class="token punctuation">;</span>
+Takeoff_position<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0.0</span><span class="token punctuation">;</span>
+Takeoff_position<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0.15</span><span class="token punctuation">;</span>
+<span class="token comment">// 建议控制频率: 10 - 50Hz, 控制频率取决于控制形式，若控制方式为速度或加速度应适当提高频率</span>
+ros<span class="token operator">::</span>Rate <span class="token function">rate</span><span class="token punctuation">(</span><span class="token number">20.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="用于与mavros通讯的类，通过mavros发送控制指令至飞控【本程序-gt-mavros-gt-飞控】"><a href="#用于与mavros通讯的类，通过mavros发送控制指令至飞控【本程序-gt-mavros-gt-飞控】" class="headerlink" title="用于与mavros通讯的类，通过mavros发送控制指令至飞控【本程序-&gt;mavros-&gt;飞控】"></a>用于与mavros通讯的类，通过mavros发送控制指令至飞控【本程序-&gt;mavros-&gt;飞控】</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">command_to_mavros _command_to_mavros;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; 【订阅】无人机期望位置&#x2F;速度&#x2F;加速度 坐标系:ENU系 本话题来自飞控
-position_target_sub &#x3D; command_nh.subscribe&lt;mavros_msgs::PositionTarget&gt;(uav_name + &quot;&#x2F;mavros&#x2F;setpoint_raw&#x2F;target_local&quot;, 10, &amp;command_to_mavros::pos_target_cb,this);
-&#x2F;&#x2F; 【订阅】无人机期望角度&#x2F;角速度 坐标系:ENU系 本话题来自飞控
-attitude_target_sub &#x3D; command_nh.subscribe&lt;mavros_msgs::AttitudeTarget&gt;(uav_name + &quot;&#x2F;mavros&#x2F;setpoint_raw&#x2F;target_attitude&quot;, 10, &amp;command_to_mavros::att_target_cb,this);
+<h2 id="用于与mavros通讯的类，通过mavros发送控制指令至飞控【本程序-gt-mavros-gt-飞控】"><a href="#用于与mavros通讯的类，通过mavros发送控制指令至飞控【本程序-gt-mavros-gt-飞控】" class="headerlink" title="用于与mavros通讯的类，通过mavros发送控制指令至飞控【本程序-&gt;mavros-&gt;飞控】"></a>用于与mavros通讯的类，通过mavros发送控制指令至飞控【本程序-&gt;mavros-&gt;飞控】</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">command_to_mavros _command_to_mavros<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 【订阅】无人机期望位置/速度/加速度 坐标系:ENU系 本话题来自飞控</span>
+position_target_sub <span class="token operator">=</span> command_nh<span class="token punctuation">.</span>subscribe<span class="token operator">&lt;</span>mavros_msgs<span class="token operator">::</span>PositionTarget<span class="token operator">></span><span class="token punctuation">(</span>uav_name <span class="token operator">+</span> <span class="token string">"/mavros/setpoint_raw/target_local"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>command_to_mavros<span class="token operator">::</span>pos_target_cb<span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 【订阅】无人机期望角度/角速度 坐标系:ENU系 本话题来自飞控</span>
+attitude_target_sub <span class="token operator">=</span> command_nh<span class="token punctuation">.</span>subscribe<span class="token operator">&lt;</span>mavros_msgs<span class="token operator">::</span>AttitudeTarget<span class="token operator">></span><span class="token punctuation">(</span>uav_name <span class="token operator">+</span> <span class="token string">"/mavros/setpoint_raw/target_attitude"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>command_to_mavros<span class="token operator">::</span>att_target_cb<span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-&#x2F;&#x2F; 【发布】位置&#x2F;速度&#x2F;加速度期望值至飞控 坐标系 ENU系
-advertise&lt;mavros_msgs::PositionTarget&gt;(uav_name + &quot;&#x2F;mavros&#x2F;setpoint_raw&#x2F;local&quot;, 10);
-&#x2F;&#x2F; 【发布】角度&#x2F;角速度期望值至飞控 坐标系 ENU系
-setpoint_raw_attitude_pub &#x3D; command_nh.advertise&lt;mavros_msgs::AttitudeTarget&gt;(uav_name + &quot;&#x2F;mavros&#x2F;setpoint_raw&#x2F;attitude&quot;, 10);
-&#x2F;&#x2F; 【发布】底层控制量（Mx My Mz 及 F） [0][1][2][3]分别对应 roll pitch yaw控制量及油门推力注意这里是NED系的！！
-actuator_setpoint_pub &#x3D; command_nh.advertise&lt;mavros_msgs::ActuatorControl&gt;(uav_name + &quot;&#x2F;mavros&#x2F;actuator_control&quot;, 10);
-&#x2F;&#x2F; 【发布】本话题要发送至飞控(通过Mavros_extra功能包 &#x2F;plugins&#x2F;mount_control.cpp发送)
-mount_control_pub &#x3D; command_nh.advertise&lt;mavros_msgs::MountControl&gt;(uav_name + &quot;&#x2F;mavros&#x2F;mount_control&#x2F;command&quot;, 1);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">// 【发布】位置/速度/加速度期望值至飞控 坐标系 ENU系</span>
+advertise<span class="token operator">&lt;</span>mavros_msgs<span class="token operator">::</span>PositionTarget<span class="token operator">></span><span class="token punctuation">(</span>uav_name <span class="token operator">+</span> <span class="token string">"/mavros/setpoint_raw/local"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 【发布】角度/角速度期望值至飞控 坐标系 ENU系</span>
+setpoint_raw_attitude_pub <span class="token operator">=</span> command_nh<span class="token punctuation">.</span>advertise<span class="token operator">&lt;</span>mavros_msgs<span class="token operator">::</span>AttitudeTarget<span class="token operator">></span><span class="token punctuation">(</span>uav_name <span class="token operator">+</span> <span class="token string">"/mavros/setpoint_raw/attitude"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 【发布】底层控制量（Mx My Mz 及 F） [0][1][2][3]分别对应 roll pitch yaw控制量及油门推力注意这里是NED系的！！</span>
+actuator_setpoint_pub <span class="token operator">=</span> command_nh<span class="token punctuation">.</span>advertise<span class="token operator">&lt;</span>mavros_msgs<span class="token operator">::</span>ActuatorControl<span class="token operator">></span><span class="token punctuation">(</span>uav_name <span class="token operator">+</span> <span class="token string">"/mavros/actuator_control"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 【发布】本话题要发送至飞控(通过Mavros_extra功能包 /plugins/mount_control.cpp发送)</span>
+mount_control_pub <span class="token operator">=</span> command_nh<span class="token punctuation">.</span>advertise<span class="token operator">&lt;</span>mavros_msgs<span class="token operator">::</span>MountControl<span class="token operator">></span><span class="token punctuation">(</span>uav_name <span class="token operator">+</span> <span class="token string">"/mavros/mount_control/command"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="主循环"><a href="#主循环" class="headerlink" title="主循环"></a>主循环</h2><ul>
 <li><p>Idle</p>
 </li>

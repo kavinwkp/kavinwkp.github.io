@@ -409,36 +409,36 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="Conversion-Function-转换函数"><a href="#Conversion-Function-转换函数" class="headerlink" title="Conversion Function 转换函数"></a>Conversion Function 转换函数</h2><p>必要时对class类型进行转换</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
-using namespace std;
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 
-class Fraction &#123;
-public:
+<span class="token keyword">class</span> <span class="token class-name">Fraction</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
 
-    &#x2F;&#x2F; non-explicit-one-argument ctor
-    Fraction(int num, int den&#x3D;1) : m_num(num), m_den(den) &#123;&#125;
+    <span class="token comment">// non-explicit-one-argument ctor</span>
+    <span class="token function">Fraction</span><span class="token punctuation">(</span><span class="token keyword">int</span> num<span class="token punctuation">,</span> <span class="token keyword">int</span> den<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">m_num</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">m_den</span><span class="token punctuation">(</span>den<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
 
-    &#x2F;&#x2F; 将Fraction转为double
-    operator double() const &#123;
-        return (double)m_num &#x2F; m_den;
-    &#125;
-private:
-    int m_num;
-    int m_den;
-&#125;;
+    <span class="token comment">// 将Fraction转为double</span>
+    <span class="token keyword">operator</span> <span class="token keyword">double</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span>m_num <span class="token operator">/</span> m_den<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> m_num<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> m_den<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-int main(int argc, char const *argv[])
-&#123;
-    Fraction f1(3, 4);
-    cout &lt;&lt; 1 + f1 &lt;&lt; endl;
-    return 0;
-&#125;
-1.75
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    Fraction <span class="token function">f1</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token number">1</span> <span class="token operator">+</span> f1 <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token number">1.75</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>如果要实现下面的功能</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Fraction f2 &#x3D; f1 + 4;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Fraction f2 <span class="token operator">=</span> f1 <span class="token operator">+</span> <span class="token number">4</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>只需要重载<code>+</code>运算符，编译器会调用<code>non-explicit-one-argument</code>构造函数，即隐式的一个参数的构造函数，将<code>4</code>这个<code>int</code>型变量转换为<code>Fraction(4, 1)</code>类型，再进行相加。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Fraction operator + (const Fraction&amp; f) &#123;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Fraction <span class="token keyword">operator</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token keyword">const</span> Fraction<span class="token operator">&amp;</span> f<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p><strong>但是</strong>，如果有转换函数，又有<code>non-explicit-one-argument ctor</code>，编译器就会陷入矛盾，不知道是该把<code>Fraction</code>转为<code>double</code>，还是把<code>int</code>转为<code>Fraction</code></p>
 <p>解决办法，把构造函数声明为<code>explicit</code>，这样就不能隐式地把<code>int</code>转为<code>Fraction</code></p>
 
