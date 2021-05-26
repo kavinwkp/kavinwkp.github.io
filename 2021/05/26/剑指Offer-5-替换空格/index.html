@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="C基础, kavin">
+    <meta name="keywords" content="5-替换空格, kavin">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>C基础 | kavin</title>
+    <title>5-替换空格 | kavin</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">C基础</h1>
+                    <h1 class="description center-align post-title">5-替换空格</h1>
                 </div>
             </div>
         </div>
@@ -380,7 +380,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-04-29
+                    2021-05-26
                 </div>
                 
 
@@ -404,37 +404,40 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="运算符优先级"><a href="#运算符优先级" class="headerlink" title="运算符优先级"></a>运算符优先级</h2><ul>
-<li>算术运算符<ul>
-<li><code>+(正) -(负)</code></li>
-<li><code>* / %</code></li>
-<li><code>+ -</code></li>
-</ul>
-</li>
-<li>逻辑和关系运算符<ul>
-<li><code>!(逻辑非)</code></li>
-<li><code>&lt; &lt;= &gt; &gt;=</code></li>
-<li><code>== !=</code></li>
-<li><code>&amp;&amp;(逻辑与)</code></li>
-<li><code>||(逻辑或)</code></li>
-</ul>
-</li>
-<li>赋值运算符<code>(=)</code></li>
-</ul>
-<h2 id="内存分配"><a href="#内存分配" class="headerlink" title="内存分配"></a>内存分配</h2><p><code>new</code>出来的对象存储在堆里面</p>
-<h2 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h2><p>可以用函数指针指向一个函数</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> x <span class="token operator">+</span> y<span class="token punctuation">;</span>
+                <h2 id="剑指-Offer-05-替换空格"><a href="#剑指-Offer-05-替换空格" class="headerlink" title="剑指 Offer 05. 替换空格"></a>剑指 Offer 05. 替换空格</h2><p>请实现一个函数，把字符串 <code>s</code> 中的每个空格替换成<code>&quot;%20&quot;</code>。</p>
+<h2 id="method-1-直接用string的特性"><a href="#method-1-直接用string的特性" class="headerlink" title="method 1: 直接用string的特性"></a>method 1: 直接用string的特性</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string <span class="token function">replaceSpace</span><span class="token punctuation">(</span>string s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    string t<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> elem <span class="token operator">:</span> s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>elem <span class="token operator">==</span> <span class="token string">' '</span><span class="token punctuation">)</span> t <span class="token operator">+=</span> <span class="token string">"%20"</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> t <span class="token operator">+=</span> elem<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> t<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
+执行用时<span class="token operator">:</span> <span class="token number">4</span> ms
+内存消耗<span class="token operator">:</span> <span class="token number">6.1</span> MB<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>func<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    func <span class="token operator">=</span> <span class="token operator">&amp;</span>Add<span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token punctuation">(</span><span class="token operator">*</span>func<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>  <span class="token comment">// 可以对函数指针取值再调用</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token function">func</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>     <span class="token comment">// 也可以直接调用</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="method-2-模拟"><a href="#method-2-模拟" class="headerlink" title="method 2: 模拟"></a>method 2: 模拟</h2><p>两个指针从后往前赋值，<code>p1</code>指向原<code>string</code>的末尾，<code>p2</code>指向新<code>string</code>末尾，如果<code>p1</code>不是空格，给<code>p2</code>赋值<code>p1</code>，否则<code>p2</code>从后往前赋值<code>%20</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string <span class="token function">replaceSpace</span><span class="token punctuation">(</span>string s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> len <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> len<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isspace</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> s <span class="token operator">+=</span> <span class="token string">"  "</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">int</span> p1 <span class="token operator">=</span> len <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> p2 <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>p1<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isspace</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>p1<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            s<span class="token punctuation">[</span>p2<span class="token operator">--</span><span class="token punctuation">]</span> <span class="token operator">=</span> s<span class="token punctuation">[</span>p1<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            s<span class="token punctuation">[</span>p2<span class="token operator">--</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
+            s<span class="token punctuation">[</span>p2<span class="token operator">--</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'2'</span><span class="token punctuation">;</span>
+            s<span class="token punctuation">[</span>p2<span class="token operator">--</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'%'</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        p1<span class="token operator">--</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> s<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+执行用时<span class="token operator">:</span> <span class="token number">0</span> ms
+内存消耗<span class="token operator">:</span> <span class="token number">6.1</span> MB<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -460,7 +463,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/04/29/C-C%E5%9F%BA%E7%A1%80/">http://example.com/2021/04/29/C-C%E5%9F%BA%E7%A1%80/</a>
+                    <a href="http://example.com/2021/05/26/%E5%89%91%E6%8C%87Offer-5-%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC/">http://example.com/2021/05/26/%E5%89%91%E6%8C%87Offer-5-%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -625,7 +628,7 @@
                         <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
                     </ul>
                     <div id="alipay">
-                        <img src="/" class="reward-img" alt="支付宝打赏二维码">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="支付宝打赏二维码">
                     </div>
                     <div id="wechat">
                         <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
@@ -667,62 +670,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/04/29/C-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/">
+                <a href="/2021/05/26/%E5%89%91%E6%8C%87Offer-5-%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="构造函数">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="5-替换空格">
                         
-                        <span class="card-title">构造函数</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-29
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            kavin
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/C/">
-                        <span class="chip bg-color">C++</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/04/29/C-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="文件操作">
-                        
-                        <span class="card-title">文件操作</span>
+                        <span class="card-title">5-替换空格</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -733,7 +692,45 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-29
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-26
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            kavin
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/05/26/C-Primer-4-2-%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E7%AC%A6/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="4.2-算术运算符">
+                        
+                        <span class="card-title">4.2-算术运算符</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-26
                             </span>
                         <span class="publish-author">
                             
@@ -746,8 +743,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/C/">
-                        <span class="chip bg-color">C++</span>
+                    <a href="/tags/C-Primer/">
+                        <span class="chip bg-color">C++Primer</span>
                     </a>
                     
                 </div>
