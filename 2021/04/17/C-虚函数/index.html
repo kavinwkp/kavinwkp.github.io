@@ -421,7 +421,7 @@
 <h2 id="一、多态性"><a href="#一、多态性" class="headerlink" title="一、多态性"></a>一、多态性</h2><p>多态性：多态就是在同一个类或继承体系结构的基类与派生类中，用同名函数来实现各种不同的功能。</p>
 <p><strong>静态绑定又称静态联编</strong>，是指在编译程序时就根据调用函数提供的信息，把它所对应的具体函数确定下来，即在编译时就把调用函数名与具体函数绑定在一起。 </p>
 <p><strong>动态绑定又称动态联编</strong>，是指在编译程序时还不能确定函数调用所对应的具体函数，只有在程序运行过程中才能够确定函数调用所对应的具体函数，即在程序运行时才把调用函数名与具体函数绑定在一起。</p>
-<p>编译时多态性：静态联编(连接)—-系统在编译时就决定如何实现某一动作，即对某一消息如何处理。静态联编具有执行速度快的优点。在C++中的编译时多态性是通过函数重载和运算符重载实现的。<br>运行时多态性：动态联编(连接)—-系统在运行时动态实现某一动作，即对某一消息在运行过程实现其如何响应。动态联编为系统提供了灵活和高度问题抽象的优点，在C++中的运行时多态性是通过继承和虚函数实现的。</p>
+<p>编译时多态性：静态联编(连接)——系统在编译时就决定如何实现某一动作，即对某一消息如何处理。静态联编具有执行速度快的优点。在C++中的编译时多态性是通过函数重载和运算符重载实现的。<br>运行时多态性：动态联编(连接)——系统在运行时动态实现某一动作，即对某一消息在运行过程实现其如何响应。动态联编为系统提供了灵活和高度问题抽象的优点，在C++中的运行时多态性是通过继承和虚函数实现的。</p>
 <h2 id="二、虚函数"><a href="#二、虚函数" class="headerlink" title="二、虚函数"></a>二、虚函数</h2><p>虚函数的意义</p>
 <p>1、基类与派生类的赋值相容</p>
 <ul>
@@ -444,12 +444,10 @@
 </ul>
 <p>5、基类析构函数几乎总是为虚析构函数。<br>假定使用<code>delete</code>和一个指向派生类的基类指针来销毁派生类对象，如果基类析构函数不为虚,就如一个普通成员函数，<code>delete</code>函数调用的就是基类析构函数。在通过基类对象的引用或指针调用派生类对象时，将致使对象析构不彻底！</p>
 <h2 id="三、纯虚函数和抽象类"><a href="#三、纯虚函数和抽象类" class="headerlink" title="三、纯虚函数和抽象类"></a>三、纯虚函数和抽象类</h2><p>1、纯虚函数概念？</p>
-<p>仅定义函数原型而不定义其实现的虚函数<br>实用角度：占位手段<code>place-holder</code><br>方法学：接口定义手段，抽象表达手段</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">X</span>
+<p>仅定义函数原型而不定义其实现的虚函数<br>实用角度：占位手段<code>place-holder</code><br>方法学：接口定义手段，抽象表达手段<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">X</span>
 <span class="token punctuation">&#123;</span>
     <span class="token keyword">virtual</span> ret_type <span class="token function">func_name</span> <span class="token punctuation">(</span>param<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>2、抽象类概念？</p>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><br>2、抽象类概念？</p>
 <p>包含一个或多个纯虚函数的类<br><strong>不能实例化抽象类</strong><br>但是可以定义抽象类的指针和引用</p>
 <p>3、C++对抽象类具有以下限定</p>
 <ul>
@@ -457,8 +455,7 @@
 <li>抽象类只能作为其他类的基类，可以通过抽象类对象的指针或引用访问到它的派生类对象，实现运行时的多态性。</li>
 <li>如果派生类只是简单地继承了抽象类的纯虚函数，而没有重新定义基类的纯虚函数，则派生类也是一个抽象类。</li>
 </ul>
-<h2 id="虚函数的用法"><a href="#虚函数的用法" class="headerlink" title="虚函数的用法"></a>虚函数的用法</h2><p>为什么要使用虚函数，因为我们希望基类指针如果指向派生类对象，调用的应该是派生类中的方法，如果不用虚函数，只用重载，那他将会调用基类的方法，所以需要虚函数</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
+<h2 id="虚函数的用法"><a href="#虚函数的用法" class="headerlink" title="虚函数的用法"></a>虚函数的用法</h2><p>为什么要使用虚函数，因为我们希望基类指针如果指向派生类对象，调用的应该是派生类中的方法，如果不用虚函数，只用重载，那他将会调用基类的方法，所以需要虚函数<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">info</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"A: info"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span><span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
@@ -477,10 +474,8 @@
 A<span class="token operator">:</span> info
 
 加了<span class="token keyword">virtual</span>，调用派生类方法<span class="token operator">:</span>
-B<span class="token operator">:</span> info<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="纯虚函数"><a href="#纯虚函数" class="headerlink" title="纯虚函数"></a>纯虚函数</h2><p>抽象类中含有虚函数，继承类中需要实现抽象类的所有虚函数<br>成员函数可以调用虚函数，构造函数和析构函数不能调用虚函数</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
+B<span class="token operator">:</span> info<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<h2 id="纯虚函数"><a href="#纯虚函数" class="headerlink" title="纯虚函数"></a>纯虚函数</h2><p>抽象类中含有虚函数，继承类中需要实现抽象类的所有虚函数<br>成员函数可以调用虚函数，构造函数和析构函数不能调用虚函数<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>   <span class="token comment">//纯虚函数</span>
     <span class="token keyword">void</span> <span class="token function">g</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -502,9 +497,7 @@ B<span class="token operator">:</span> info<span aria-hidden="true" class="line-
     B<span class="token operator">*</span> b <span class="token operator">=</span> <span class="token keyword">new</span> B<span class="token punctuation">;</span>
     b<span class="token operator">-></span><span class="token function">g</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token comment">//因为B对A是公有继承，所以可以使用A中的成员方法</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>虚函数是用虚函数表实现的，虚函数表由一系列函数指针组成，每个函数指针指向虚函数的实现<br>从下面的例子可以看出，<code>Base</code>含有2个<code>int</code>和一个虚函数(几个都一样)，<code>Derived</code>含有2个<code>int</code>，他们差了一个指针的大小(8)</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Base</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>虚函数是用虚函数表实现的，虚函数表由一系列函数指针组成，每个函数指针指向虚函数的实现<br>从下面的例子可以看出，<code>Base</code>含有2个<code>int</code>和一个虚函数(几个都一样)，<code>Derived</code>含有2个<code>int</code>，他们差了一个指针的大小(8)<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Base</span>
 <span class="token punctuation">&#123;</span>
     <span class="token keyword">int</span> x<span class="token punctuation">,</span> y<span class="token punctuation">;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
@@ -527,9 +520,8 @@ B<span class="token operator">:</span> info<span aria-hidden="true" class="line-
 <span class="token number">4</span>   <span class="token comment">// int占用4字节</span>
 <span class="token number">8</span>   <span class="token comment">// 指针占用8字节</span>
 <span class="token number">16</span>  <span class="token comment">// 2个int+1个虚函数指针</span>
-<span class="token number">8</span>   <span class="token comment">// 2个int</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="抽象类构造函数"><a href="#抽象类构造函数" class="headerlink" title="抽象类构造函数"></a>抽象类构造函数</h2><p>构造函数不能是虚函数<br>可以用基类指针指向派生类对象<br><code>protected</code>允许派生类和友元类访问，但禁止在继承结构层次外部访问</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
+<span class="token number">8</span>   <span class="token comment">// 2个int</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<h2 id="抽象类构造函数"><a href="#抽象类构造函数" class="headerlink" title="抽象类构造函数"></a>抽象类构造函数</h2><p>构造函数不能是虚函数<br>可以用基类指针指向派生类对象<br><code>protected</code>允许派生类和友元类访问，但禁止在继承结构层次外部访问<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token function">A</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">x</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"A constructor"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
     <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
@@ -558,8 +550,7 @@ B<span class="token operator">:</span> info<span aria-hidden="true" class="line-
 <span class="token punctuation">&#125;</span>
 A constructor
 B constructor
-B<span class="token operator">:</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>可以看到先调用了<code>A</code>的构造函数，后调用了<code>B</code>的构造函数</p>
+B<span class="token operator">:</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>可以看到先调用了<code>A</code>的构造函数，后调用了<code>B</code>的构造函数</p>
 <h2 id="虚析构函数"><a href="#虚析构函数" class="headerlink" title="虚析构函数"></a>虚析构函数</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token keyword">virtual</span> <span class="token operator">~</span><span class="token function">A</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"A destructor"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
@@ -590,8 +581,7 @@ B<span class="token operator">:</span> <span class="token function">f</span><spa
 B destructor    <span class="token comment">// 先调用了派生类的析构函数</span>
 A destructor<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>用基类指针指向派生类对象时，如果基类的析构函数没有声明为<code>virtual</code>，销毁对象时就只会调用<strong>基类</strong>的析构函数，这样会造成内存泄漏<br>所以把基类的析构函数声明为<code>virtual</code>，销毁对象时就会先调用<strong>派生类</strong>的析构函数，再调用<strong>基类</strong>的析构函数</p>
-<h2 id="虚继承"><a href="#虚继承" class="headerlink" title="虚继承"></a>虚继承</h2><p>为了解决菱形问题，一个基类有多个派生类，这些派生类又被一个类继承</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
+<h2 id="虚继承"><a href="#虚继承" class="headerlink" title="虚继承"></a>虚继承</h2><p>为了解决菱形问题，一个基类有多个派生类，这些派生类又被一个类继承<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token keyword">int</span> x<span class="token punctuation">;</span>
     <span class="token function">A</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"A: constructor"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
@@ -613,9 +603,7 @@ A destructor<span aria-hidden="true" class="line-numbers-rows"><span></span><spa
 <span class="token punctuation">&#125;</span>
 A<span class="token operator">:</span> constructor  <span class="token comment">// 调用了两次基类的构造函数</span>
 A<span class="token operator">:</span> constructor
-C<span class="token operator">:</span> constructor<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>解决方法：基类的多个派生类使用<strong>虚继承</strong>，确保只有<strong>一个基类实例</strong></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
+C<span class="token operator">:</span> constructor<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>解决方法：基类的多个派生类使用<strong>虚继承</strong>，确保只有<strong>一个基类实例</strong><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token keyword">int</span> x<span class="token punctuation">;</span>
     <span class="token function">A</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"A: constructor"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
@@ -636,7 +624,8 @@ C<span class="token operator">:</span> constructor<span aria-hidden="true" class
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 A<span class="token operator">:</span> constructor  <span class="token comment">// 只调用了一次基类的构造函数</span>
-C<span class="token operator">:</span> constructor<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+C<span class="token operator">:</span> constructor<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+
                 
             </div>
             <hr/>

@@ -419,7 +419,7 @@
             <div id="articleContent">
                 <!-- toc -->
 <p>运算符重载是C++的一项强大功能。通过重载，可以扩展C++运算符的功能，使它们能够操作用户自定义的数据类型，增加程序代码的直观性和可读性。</p>
-<p>本章主要介绍 类成员运算符重载与友元运算符重载，二元运算符与一元运算符重载，运算符++、–、[]、()重载，this指针与运算符重载及 流运算符&lt;&lt;和&gt;&gt;的重载</p>
+<p>本章主要介绍 类成员运算符重载与友元运算符重载，二元运算符与一元运算符重载，运算符++、—、[]、()重载，this指针与运算符重载及 流运算符&lt;&lt;和&gt;&gt;的重载</p>
 <h2 id="一、重载二元运算符"><a href="#一、重载二元运算符" class="headerlink" title="一、重载二元运算符"></a>一、重载二元运算符</h2><h3 id="二元运算符的调用形式与解析"><a href="#二元运算符的调用形式与解析" class="headerlink" title="二元运算符的调用形式与解析"></a>二元运算符的调用形式与解析</h3><pre class="line-numbers language-py" data-language="py"><code class="language-py">aa@bb
 可解释成: aa.operator@(bb)
 或解释成: operator@(aa,bb)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
@@ -442,21 +442,17 @@ public:
     friend Complex operator+(Complex a,Complex b);  &#x2F;&#x2F;声明
 &#125;;
 Complex operator+(Complex a,Complex b)&#123;&#125;         &#x2F;&#x2F;定义<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="二、重载一元运算符"><a href="#二、重载一元运算符" class="headerlink" title="二、重载一元运算符"></a>二、重载一元运算符</h2><p>一元运算符只需要一个运算参数，如取地址运算符（&amp;）、负数（-）、自增加（++）等。</p>
-<p>常见调用形式为：</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">@a 或 a@  <span class="token comment">//隐式调用形式</span>
+<p>常见调用形式为：<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">@a 或 a@  <span class="token comment">//隐式调用形式</span>
 a<span class="token punctuation">.</span><span class="token keyword">operator</span>@<span class="token punctuation">(</span><span class="token punctuation">)</span>   <span class="token comment">// 显式调用一元运算符@</span>
 其中的@代表一元运算符，a代表操作数。
 
 @a代表前缀一元运算，如“<span class="token operator">++</span>a”；
 
-a@表示后缀运算，如“a<span class="token operator">++</span>”。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>@a将被C++解释为下面的形式之一</p>
+a@表示后缀运算，如“a<span class="token operator">++</span>”。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>@a将被C++解释为下面的形式之一</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">a<span class="token punctuation">.</span><span class="token keyword">operator</span>@<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
 <span class="token keyword">operator</span>@<span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p>一元运算符作为类成员函数重载时不需要参数，其形式如下：</p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">class X&#123;
     T operator@()&#123;&#125;;
@@ -487,13 +483,10 @@ operator -- (X &amp; x, int);<span aria-hidden="true" class="line-numbers-rows">
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">class X&#123;
     X&amp; operator()(参数表);
 &#125;；<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p>其中的参数表可以包括任意多个参数。</p>
-<p>3、运算符( )的调用形式如下：</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">X Obj<span class="token punctuation">;</span>      <span class="token comment">//对象定义</span>
+<p>3、运算符( )的调用形式如下：<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">X Obj<span class="token punctuation">;</span>      <span class="token comment">//对象定义</span>
 <span class="token function">Obj</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span>参数表<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">//调用形式1</span>
-<span class="token function">Obj</span><span class="token punctuation">(</span>参数表<span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment">//调用形式2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
+<span class="token function">Obj</span><span class="token punctuation">(</span>参数表<span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment">//调用形式2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
 <h2 id="六、代码示例"><a href="#六、代码示例" class="headerlink" title="六、代码示例"></a>六、代码示例</h2><p>返回值要写成类引用<code>Class&amp;</code>，不然会再调用构造函数新建一个临时变量</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span>
 <span class="token punctuation">&#123;</span>
