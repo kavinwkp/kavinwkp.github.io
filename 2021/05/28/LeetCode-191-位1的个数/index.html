@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="STL-bitset, kavin">
+    <meta name="keywords" content="191-位1的个数, kavin">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>STL-bitset | kavin</title>
+    <title>191-位1的个数 | kavin</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">STL-bitset</h1>
+                    <h1 class="description center-align post-title">191-位1的个数</h1>
                 </div>
             </div>
         </div>
@@ -368,14 +368,23 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/C/">
-                                <span class="chip bg-color">C++</span>
+                            <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/">
+                                <span class="chip bg-color">位运算</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/LeetCode/" class="post-category">
+                                LeetCode
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -384,7 +393,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-04-27
+                    2021-05-28
                 </div>
                 
 
@@ -408,31 +417,18 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>位标志只能在初始化时指定大小，后面不能再改<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;bitset></span></span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    bitset<span class="token operator">&lt;</span><span class="token number">4</span><span class="token operator">></span> <span class="token function">fourbit</span><span class="token punctuation">(</span><span class="token string">"1011"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> fourbit <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Num of 1: "</span> <span class="token operator">&lt;&lt;</span> fourbit<span class="token punctuation">.</span><span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-
-    bitset<span class="token operator">&lt;</span><span class="token number">4</span><span class="token operator">></span> <span class="token function">fourbit2</span><span class="token punctuation">(</span><span class="token operator">~</span>fourbit<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> fourbit2 <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-
-    bitset<span class="token operator">&lt;</span><span class="token number">4</span><span class="token operator">></span> fourbit3 <span class="token operator">=</span> fourbit<span class="token punctuation">.</span><span class="token function">flip</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> fourbit3 <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-
-    bitset<span class="token operator">&lt;</span><span class="token number">8</span><span class="token operator">></span> <span class="token function">eightbit</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> eightbit <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+                <p><code>lowBit</code>函数返回二进制最低位的1和后面的0，比如<code>1100</code>返回<code>100</code><br><code>1100</code>返回<code>100</code>，做差得<code>1000</code>，<code>ans=1</code><br><code>1000</code>返回<code>1000</code>，做差得<code>0</code>，<code>ans=2</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">uint32_t</span> <span class="token function">lowBit</span><span class="token punctuation">(</span><span class="token keyword">uint32_t</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> x <span class="token operator">&amp;</span> <span class="token punctuation">(</span><span class="token operator">-</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
-<span class="token number">1011</span>
-Num of <span class="token number">1</span><span class="token operator">:</span> <span class="token number">3</span>
-<span class="token number">0100</span>
-<span class="token number">0100</span>
-<span class="token number">11111111</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
-
+<span class="token keyword">int</span> <span class="token function">hammingWeight</span><span class="token punctuation">(</span><span class="token keyword">uint32_t</span> n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> ans <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        n <span class="token operator">-=</span> <span class="token function">lowBit</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ans<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -458,7 +454,7 @@ Num of <span class="token number">1</span><span class="token operator">:</span> 
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/04/27/C-STL-STL-bitset/">http://example.com/2021/04/27/C-STL-STL-bitset/</a>
+                    <a href="http://example.com/2021/05/28/LeetCode-191-%E4%BD%8D1%E7%9A%84%E4%B8%AA%E6%95%B0/">http://example.com/2021/05/28/LeetCode-191-%E4%BD%8D1%E7%9A%84%E4%B8%AA%E6%95%B0/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -496,8 +492,8 @@ Num of <span class="token number">1</span><span class="token operator">:</span> 
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/C/">
-                                    <span class="chip bg-color">C++</span>
+                                <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/">
+                                    <span class="chip bg-color">位运算</span>
                                 </a>
                             
                         </div>
@@ -669,17 +665,18 @@ Num of <span class="token number">1</span><span class="token operator">:</span> 
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/04/27/LeetCode-26-%E5%88%A0%E9%99%A4%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E9%A1%B9/">
+                <a href="/2021/05/28/LeetCode-191-%E4%BD%8D1%E7%9A%84%E4%B8%AA%E6%95%B0/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="26/80_删除有序数组中的重复项">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="191-位1的个数">
                         
-                        <span class="card-title">26/80_删除有序数组中的重复项</span>
+                        <span class="card-title">191-位1的个数</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -689,9 +686,59 @@ Num of <span class="token number">1</span><span class="token operator">:</span> 
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-27
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-28
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
+                                </a>
+                            
+                            
                         </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/">
+                        <span class="chip bg-color">位运算</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/05/27/LeetCode-27-%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="27-移除元素">
+                        
+                        <span class="card-title">27-移除元素</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-27
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -709,55 +756,6 @@ Num of <span class="token number">1</span><span class="token operator">:</span> 
                     
                     <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">
                         <span class="chip bg-color">双指针</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/04/27/C-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="智能指针">
-                        
-                        <span class="card-title">智能指针</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-27
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/C/" class="post-category">
-                                    C++
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/C/">
-                        <span class="chip bg-color">C++</span>
                     </a>
                     
                 </div>
