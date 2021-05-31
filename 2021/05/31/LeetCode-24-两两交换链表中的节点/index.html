@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="Prometheus_msgs, kavin">
+    <meta name="keywords" content="24-两两交换链表中的节点, kavin">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Prometheus_msgs | kavin</title>
+    <title>24-两两交换链表中的节点 | kavin</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Prometheus_msgs</h1>
+                    <h1 class="description center-align post-title">24-两两交换链表中的节点</h1>
                 </div>
             </div>
         </div>
@@ -368,18 +368,27 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/PX4/">
-                                <span class="chip bg-color">PX4</span>
+                            <a href="/tags/%E9%93%BE%E8%A1%A8/">
+                                <span class="chip bg-color">链表</span>
                             </a>
                         
-                            <a href="/tags/ROS/">
-                                <span class="chip bg-color">ROS</span>
+                            <a href="/tags/%E9%80%92%E5%BD%92/">
+                                <span class="chip bg-color">递归</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/LeetCode/" class="post-category">
+                                LeetCode
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -388,7 +397,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-26
+                    2021-05-31
                 </div>
                 
 
@@ -412,131 +421,18 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <!-- toc -->
-<h2 id="prometheus-msgs-DroneState"><a href="#prometheus-msgs-DroneState" class="headerlink" title="prometheus_msgs/DroneState"></a>prometheus_msgs/DroneState</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">$ rosmsg show prometheus_msgs<span class="token operator">/</span>DroneState 
-std_msgs<span class="token operator">/</span>Header header
-  uint32 seq
-  time stamp
-  string frame_id
-string mode     <span class="token comment">// 模式选择，来自"/mavros/state"话题，类型是mavros_msgs::State</span>
-<span class="token keyword">bool</span> connected  <span class="token comment">// 是否连接，来自"/mavros/state"话题，类型是mavros_msgs::State</span>
-<span class="token keyword">bool</span> armed      <span class="token comment">// 是否解锁，来自"/mavros/state"话题，类型是mavros_msgs::State</span>
-<span class="token keyword">bool</span> landed     <span class="token comment">// 是否降落，来自"/mavros/extended_state"，类型是mavros_msgs::ExtendedState</span>
-
-float32 time_from_start
-float32<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> position <span class="token comment">// 位置，来自"/mavros/local_position/pose"，类型是geometry_msgs::PoseStamped</span>
-float32 rel_alt
-float32<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> velocity <span class="token comment">// 速度，来自"/mavros/local_position/velocity_local"，类型是geometry_msgs::TwistStamped</span>
-float32<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> attitude <span class="token comment">// 姿态欧拉角，来自"/mavros/Imu/data"，由四元数转换而来</span>
-geometry_msgs<span class="token operator">/</span>Quaternion attitude_q <span class="token comment">//姿态四元数，来自"/mavros/Imu/data"，类型是sensor_msgs::Imu里面的orientation</span>
-  float64 x
-  float64 y
-  float64 z
-  float64 w
-float32<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> attitude_rate    <span class="token comment">// 角速度，来自"/mavros/Imu/data"，类型是sensor_msgs::Imu里面的angular_velocity</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="prometheus-msgs-Message"><a href="#prometheus-msgs-Message" class="headerlink" title="prometheus_msgs/Message"></a>prometheus_msgs/Message</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">$ rosmsg show prometheus_msgs<span class="token operator">/</span>Message 
-std_msgs<span class="token operator">/</span>Header header
-  uint32 seq
-  time stamp
-  string frame_id
-uint8 message_type          <span class="token comment">// 节点回传地面站的消息</span>
-uint8 NORMAL<span class="token operator">=</span><span class="token number">0</span>              <span class="token comment">// enum message_type</span>
-uint8 WARN<span class="token operator">=</span><span class="token number">1</span>
-uint8 ERROR<span class="token operator">=</span><span class="token number">2</span>
-string source_node
-string content
-$ rosmsg show nav_msgs<span class="token operator">/</span>Odometry 
-std_msgs<span class="token operator">/</span>Header header
-  uint32 seq
-  time stamp
-  string frame_id
-string child_frame_id
-geometry_msgs<span class="token operator">/</span>PoseWithCovariance pose
-  geometry_msgs<span class="token operator">/</span>Pose pose
-    geometry_msgs<span class="token operator">/</span>Point position
-      float64 x
-      float64 y
-      float64 z
-    geometry_msgs<span class="token operator">/</span>Quaternion orientation
-      float64 x
-      float64 y
-      float64 z
-      float64 w
-  float64<span class="token punctuation">[</span><span class="token number">36</span><span class="token punctuation">]</span> covariance
-geometry_msgs<span class="token operator">/</span>TwistWithCovariance twist
-  geometry_msgs<span class="token operator">/</span>Twist twist
-    geometry_msgs<span class="token operator">/</span>Vector3 linear
-      float64 x
-      float64 y
-      float64 z
-    geometry_msgs<span class="token operator">/</span>Vector3 angular
-      float64 x
-      float64 y
-      float64 z
-  float64<span class="token punctuation">[</span><span class="token number">36</span><span class="token punctuation">]</span> covariance<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="prometheus-msgs-ControlCommand"><a href="#prometheus-msgs-ControlCommand" class="headerlink" title="prometheus_msgs/ControlCommand"></a>prometheus_msgs/ControlCommand</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">$ rosmsg show prometheus_msgs<span class="token operator">/</span>ControlCommand 
-uint8 Idle<span class="token operator">=</span><span class="token number">0</span>
-uint8 Takeoff<span class="token operator">=</span><span class="token number">1</span>
-uint8 Hold<span class="token operator">=</span><span class="token number">2</span>
-uint8 Land<span class="token operator">=</span><span class="token number">3</span>
-uint8 Move<span class="token operator">=</span><span class="token number">4</span>
-uint8 Disarm<span class="token operator">=</span><span class="token number">5</span>
-uint8 User_Mode1<span class="token operator">=</span><span class="token number">6</span>
-uint8 User_Mode2<span class="token operator">=</span><span class="token number">7</span>
-std_msgs<span class="token operator">/</span>Header header
-  uint32 seq
-  time stamp
-  string frame_id
-uint32 Command_ID
-string source
-uint8 Mode
-prometheus_msgs<span class="token operator">/</span>PositionReference Reference_State
-  uint8 XYZ_POS<span class="token operator">=</span><span class="token number">0</span>
-  uint8 XY_POS_Z_VEL<span class="token operator">=</span><span class="token number">1</span>
-  uint8 XY_VEL_Z_POS<span class="token operator">=</span><span class="token number">2</span>
-  uint8 XYZ_VEL<span class="token operator">=</span><span class="token number">3</span>
-  uint8 XYZ_ACC<span class="token operator">=</span><span class="token number">4</span>
-  uint8 TRAJECTORY<span class="token operator">=</span><span class="token number">5</span>
-  uint8 ENU_FRAME<span class="token operator">=</span><span class="token number">0</span>
-  uint8 BODY_FRAME<span class="token operator">=</span><span class="token number">1</span>
-  uint8 MIX_FRAME<span class="token operator">=</span><span class="token number">2</span>
-  std_msgs<span class="token operator">/</span>Header header
-    uint32 seq
-    time stamp
-    string frame_id
-  uint8 Move_mode
-  uint8 Move_frame
-  float32 time_from_start
-  float32<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> position_ref
-  float32<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> velocity_ref
-  float32<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> acceleration_ref
-  <span class="token keyword">bool</span> Yaw_Rate_Mode
-  float32 yaw_ref
-  float32 yaw_rate_ref<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="prometheus-msgs-PositionReference"><a href="#prometheus-msgs-PositionReference" class="headerlink" title="prometheus_msgs/PositionReference"></a>prometheus_msgs/PositionReference</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">$ rosmsg show prometheus_msgs<span class="token operator">/</span>PositionReference
-uint8 XYZ_POS<span class="token operator">=</span><span class="token number">0</span>
-uint8 XY_POS_Z_VEL<span class="token operator">=</span><span class="token number">1</span>
-uint8 XY_VEL_Z_POS<span class="token operator">=</span><span class="token number">2</span>
-uint8 XYZ_VEL<span class="token operator">=</span><span class="token number">3</span>
-uint8 XYZ_ACC<span class="token operator">=</span><span class="token number">4</span>
-uint8 TRAJECTORY<span class="token operator">=</span><span class="token number">5</span>
-uint8 ENU_FRAME<span class="token operator">=</span><span class="token number">0</span>
-uint8 BODY_FRAME<span class="token operator">=</span><span class="token number">1</span>
-uint8 MIX_FRAME<span class="token operator">=</span><span class="token number">2</span>
-std_msgs<span class="token operator">/</span>Header header
-  uint32 seq
-  time stamp
-  string frame_id
-uint8 Move_mode
-uint8 Move_frame
-float32 time_from_start
-float32<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> position_ref
-float32<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> velocity_ref
-float32<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> acceleration_ref
-<span class="token keyword">bool</span> Yaw_Rate_Mode
-float32 yaw_ref
-float32 yaw_rate_ref<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+                <h2 id="LeetCode-24-两两交换链表中的节点"><a href="#LeetCode-24-两两交换链表中的节点" class="headerlink" title="LeetCode 24. 两两交换链表中的节点"></a>LeetCode 24. 两两交换链表中的节点</h2><p>给定一个链表，<code>两两交换</code>其中相邻的节点，并返回交换后的链表。</p>
+<p>你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。</p>
+<p>示例 1：<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入：head <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">]</span>
+输出：<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<h2 id="method-递归"><a href="#method-递归" class="headerlink" title="method: 递归"></a>method: 递归</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode<span class="token operator">*</span> <span class="token function">swapPairs</span><span class="token punctuation">(</span>ListNode<span class="token operator">*</span> head<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>head <span class="token operator">||</span> <span class="token operator">!</span>head<span class="token operator">-></span>next<span class="token punctuation">)</span> <span class="token keyword">return</span> head<span class="token punctuation">;</span>
+    ListNode <span class="token operator">*</span>newHead <span class="token operator">=</span> <span class="token function">swapPairs</span><span class="token punctuation">(</span>head<span class="token operator">-></span>next<span class="token operator">-></span>next<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ListNode <span class="token operator">*</span>temp <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>    <span class="token comment">// 记录后向节点，待会会断开链接</span>
+    head<span class="token operator">-></span>next <span class="token operator">=</span> newHead<span class="token punctuation">;</span>
+    temp<span class="token operator">-></span>next <span class="token operator">=</span> head<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> temp<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -562,7 +458,7 @@ float32 yaw_rate_ref<span aria-hidden="true" class="line-numbers-rows"><span></s
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/03/26/PX4-Prometheus-msg/">http://example.com/2021/03/26/PX4-Prometheus-msg/</a>
+                    <a href="http://example.com/2021/05/31/LeetCode-24-%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9/">http://example.com/2021/05/31/LeetCode-24-%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -600,12 +496,12 @@ float32 yaw_rate_ref<span aria-hidden="true" class="line-numbers-rows"><span></s
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/PX4/">
-                                    <span class="chip bg-color">PX4</span>
+                                <a href="/tags/%E9%93%BE%E8%A1%A8/">
+                                    <span class="chip bg-color">链表</span>
                                 </a>
                             
-                                <a href="/tags/ROS/">
-                                    <span class="chip bg-color">ROS</span>
+                                <a href="/tags/%E9%80%92%E5%BD%92/">
+                                    <span class="chip bg-color">递归</span>
                                 </a>
                             
                         </div>
@@ -777,17 +673,18 @@ float32 yaw_rate_ref<span aria-hidden="true" class="line-numbers-rows"><span></s
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/03/26/PX4-PX4-sender/">
+                <a href="/2021/05/31/LeetCode-24-%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="PX4_sender">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="24-两两交换链表中的节点">
                         
-                        <span class="card-title">PX4_sender</span>
+                        <span class="card-title">24-两两交换链表中的节点</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -797,26 +694,31 @@ float32 yaw_rate_ref<span aria-hidden="true" class="line-numbers-rows"><span></s
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-03-26
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-31
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kavin
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/PX4/">
-                        <span class="chip bg-color">PX4</span>
+                    <a href="/tags/%E9%93%BE%E8%A1%A8/">
+                        <span class="chip bg-color">链表</span>
                     </a>
                     
-                    <a href="/tags/ROS/">
-                        <span class="chip bg-color">ROS</span>
+                    <a href="/tags/%E9%80%92%E5%BD%92/">
+                        <span class="chip bg-color">递归</span>
                     </a>
                     
                 </div>
@@ -830,13 +732,13 @@ float32 yaw_rate_ref<span aria-hidden="true" class="line-numbers-rows"><span></s
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/26/ROS-ROS-3/">
+                <a href="/2021/05/29/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="ROS自定义msg">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="1-计算机硬件">
                         
-                        <span class="card-title">ROS自定义msg</span>
+                        <span class="card-title">1-计算机硬件</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -847,12 +749,16 @@ float32 yaw_rate_ref<span aria-hidden="true" class="line-numbers-rows"><span></s
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-26
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-29
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kavin
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" class="post-category">
+                                    计算机组成原理
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -860,8 +766,8 @@ float32 yaw_rate_ref<span aria-hidden="true" class="line-numbers-rows"><span></s
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/ROS/">
-                        <span class="chip bg-color">ROS</span>
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                        <span class="chip bg-color">计算机组成原理</span>
                     </a>
                     
                 </div>
