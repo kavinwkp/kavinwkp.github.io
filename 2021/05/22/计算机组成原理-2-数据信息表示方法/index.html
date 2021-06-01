@@ -428,6 +428,12 @@
 <p>8位原码的表示范围：<strong>-127 ~ 127</strong><br>8位补码的表示范围：<strong>-128 ~ 127</strong><br>因为补码利用了<code>-0</code>这个编码，作为最小的负数<br>比如8位有符号数，最小数<code>-128</code>的编码就是<code>1000 0000</code><br>最大数<code>127</code>的编码是<code>0111 1111</code>(正数的补码和原码一样)<br>所以补码可表示范围比原码多1<br>n位数：$-2^{n-1} \sim 2^{n-1}-1$</p>
 <p><strong>tips:</strong><br>因为计算机中以补码形式存储数据，所以<code>32</code>位的有符号数的<code>int</code>的范围是：$-2^{31} \sim 2^{31}-1$，即 <strong>-2147483648 ~ 2147483647</strong></p>
 <p><code>16</code>位的有符号数的<code>short</code>的范围是：$-2^{15} \sim 2^{15}-1$，即 <strong>-32768 ~ 32767</strong></p>
+<ul>
+<li>已知<code>x</code>的补码，求<code>-x</code>的补码：符号位、数值位全部取反，再<code>+1</code></li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token operator">-</span><span class="token number">69</span>
+补码：<span class="token number">1011</span> <span class="token number">1011</span>
+取反<span class="token operator">+</span><span class="token number">1</span>：<span class="token number">0100</span> <span class="token number">0101</span> 即<span class="token number">69</span>的补码<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">2147483647</span><span class="token punctuation">;</span>
     cout <span class="token operator">&lt;&lt;</span> a<span class="token operator">+</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
@@ -439,7 +445,51 @@
 <li>正数：与补码相同</li>
 <li>负数：原码符号不变，其余取反</li>
 </ul>
-<p>移码：补码符号位取反</p>
+<p>移码：补码符号位取反，移码只能用于表示整数</p>
+<center>
+<img src="/2021/05/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-2-%E6%95%B0%E6%8D%AE%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95/1.png#pic_center" width="80%" height="80%">
+</center>
+
+<p>真值增大时，移码也是增大的</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><center>
+<img src="/2021/05/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-2-%E6%95%B0%E6%8D%AE%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95/2.png#pic_center" width="80%" height="80%">
+</center>
+
+
+<h2 id="补码的作用"><a href="#补码的作用" class="headerlink" title="补码的作用"></a>补码的作用</h2><p>用加法运算替换减法运算<br>88-66<br>找到66的补码：<br>模$2^{8}$ - 66的绝对值<br><code>= 1 0000 0000 - 0100 0100 = 1011 1110</code><br>然后用 <code>88 = 0101 1000</code>，所以<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">   <span class="token number">0101</span> <span class="token number">1000</span>
+<span class="token operator">+</span>  <span class="token number">1011</span> <span class="token number">1110</span>
+<span class="token operator">=</span> <span class="token number">10001</span> <span class="token number">0110</span>
+转化成十进制就是<span class="token number">22</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></p>
+<h2 id="算数移位"><a href="#算数移位" class="headerlink" title="算数移位"></a>算数移位</h2><center>
+<img src="/2021/05/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-2-%E6%95%B0%E6%8D%AE%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95/4.png#pic_center" width="80%" height="80%">
+</center>
+
+<p><strong>补码</strong><br>以最低位的1为分界<br>右移：前段跟反码一样，所以补1<br>左移：后段跟原码一样，所以补0</p>
+<center>
+<img src="/2021/05/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-2-%E6%95%B0%E6%8D%AE%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95/3.png#pic_center" width="80%" height="80%">
+</center>
+
+<h2 id="逻辑移位"><a href="#逻辑移位" class="headerlink" title="逻辑移位"></a>逻辑移位</h2><p>逻辑移位可以看作是对无符号数的算数移位，<strong>符号位也会移动</strong>，最高位补0</p>
+<h2 id="原码、补码一位乘法"><a href="#原码、补码一位乘法" class="headerlink" title="原码、补码一位乘法"></a>原码、补码一位乘法</h2><p>原码：</p>
+<ul>
+<li>符号位通过异或确定，数值位由被乘数和乘数的绝对值进行n轮加法、移位</li>
+<li>每次加法可能是<code>+0</code>、<code>+x的原码</code>，看<code>MQ</code>的最低位<code>(0 1)</code></li>
+<li>每次移位是逻辑右移</li>
+</ul>
+<p>补码：</p>
+<ul>
+<li>符号位、数值位都是由被乘数和乘数进行n轮加法、移位，最后还有一次加法</li>
+<li>每次加法可能是<code>+0</code>、<code>+x的补码</code>、<code>+(-x)的的补码</code>，看辅助位和<code>MQ&#39;最低位&#39;</code>的差值<code>(0 1 -1)</code></li>
+<li>每次移位是补码的算数右移，整数补0，负数补1</li>
+</ul>
+<h2 id="大小端存储"><a href="#大小端存储" class="headerlink" title="大小端存储"></a>大小端存储</h2><center>
+<img src="/2021/05/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-2-%E6%95%B0%E6%8D%AE%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95/5.png#pic_center" width="80%" height="80%">
+</center>
+
+<h2 id="边界对齐"><a href="#边界对齐" class="headerlink" title="边界对齐"></a>边界对齐</h2><center>
+<img src="/2021/05/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-2-%E6%95%B0%E6%8D%AE%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95/6.png#pic_center" width="80%" height="80%">
+</center>
+
 
                 
             </div>
