@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="53-缺失的数字, kavin">
+    <meta name="keywords" content="53-在排序数组中查找数字/缺失的数字, kavin">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>53-缺失的数字 | kavin</title>
+    <title>53-在排序数组中查找数字/缺失的数字 | kavin</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">53-缺失的数字</h1>
+                    <h1 class="description center-align post-title">53-在排序数组中查找数字/缺失的数字</h1>
                 </div>
             </div>
         </div>
@@ -417,12 +417,40 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="剑指-Offer-53-II-0～n-1中缺失的数字"><a href="#剑指-Offer-53-II-0～n-1中缺失的数字" class="headerlink" title="剑指 Offer 53 - II. 0～n-1中缺失的数字"></a>剑指 Offer 53 - II. 0～n-1中缺失的数字</h2><p>一个长度为<code>n-1</code>的递增排序数组中的所有数字都是唯一的，并且每个数字都在范围<code>0 ~ n-1</code>之内。在范围<code>0 ~ n-1</code>内的<code>n</code>个数字中有且只有一个数字不在该数组中，请找出这个数字。</p>
+                <h2 id="剑指-Offer-53-I-在排序数组中查找数字"><a href="#剑指-Offer-53-I-在排序数组中查找数字" class="headerlink" title="剑指 Offer 53 - I. 在排序数组中查找数字"></a>剑指 Offer 53 - I. 在排序数组中查找数字</h2><p>统计一个数字在排序数组中出现的次数。</p>
+<p>示例 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入<span class="token operator">:</span> nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">,</span> target <span class="token operator">=</span> <span class="token number">8</span>
+输出<span class="token operator">:</span> <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>示例 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入<span class="token operator">:</span> nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">,</span> target <span class="token operator">=</span> <span class="token number">6</span>
+输出<span class="token operator">:</span> <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<h3 id="method-二分法"><a href="#method-二分法" class="headerlink" title="method: 二分法"></a>method: 二分法</h3><p>分别找大于等于<code>target</code>的最小数下标<code>low</code>和小于等于<code>target</code>的最大数的下标<code>high</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">low <span class="token operator">&lt;</span> high  一定满足，返回下标差
+low <span class="token operator">==</span> high 不一定满足，可能指向同一个不满足的数
+low <span class="token operator">></span> high  肯定不满足<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">search</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">,</span> <span class="token keyword">int</span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> l <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> r <span class="token operator">=</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>l <span class="token operator">&lt;</span> r<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> mid <span class="token operator">=</span> l <span class="token operator">+</span> r <span class="token operator">>></span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">>=</span> target<span class="token punctuation">)</span> r <span class="token operator">=</span> mid<span class="token punctuation">;</span>
+        <span class="token keyword">else</span> l <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">int</span> low <span class="token operator">=</span> r<span class="token punctuation">;</span>
+    l <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> r <span class="token operator">=</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>l <span class="token operator">&lt;</span> r<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> mid <span class="token operator">=</span> l <span class="token operator">+</span> r <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">>></span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">&lt;=</span> target<span class="token punctuation">)</span> l <span class="token operator">=</span> mid<span class="token punctuation">;</span>
+        <span class="token keyword">else</span> r <span class="token operator">=</span> mid <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">int</span> high <span class="token operator">=</span> r<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>low <span class="token operator">&lt;</span> high<span class="token punctuation">)</span> <span class="token keyword">return</span> high <span class="token operator">-</span> low <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>low <span class="token operator">==</span> high<span class="token punctuation">)</span> <span class="token keyword">return</span> nums<span class="token punctuation">[</span>low<span class="token punctuation">]</span> <span class="token operator">==</span> target<span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="剑指-Offer-53-II-0～n-1中缺失的数字"><a href="#剑指-Offer-53-II-0～n-1中缺失的数字" class="headerlink" title="剑指 Offer 53 - II. 0～n-1中缺失的数字"></a>剑指 Offer 53 - II. 0～n-1中缺失的数字</h2><p>一个长度为<code>n-1</code>的递增排序数组中的所有数字都是唯一的，并且每个数字都在范围<code>0 ~ n-1</code>之内。在范围<code>0 ~ n-1</code>内的<code>n</code>个数字中有且只有一个数字不在该数组中，请找出这个数字。</p>
 <p>示例 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span>
 输出<span class="token operator">:</span> <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>示例 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">]</span>
 输出<span class="token operator">:</span> <span class="token number">8</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
-<p>限制：<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token number">1</span> <span class="token operator">&lt;=</span> 数组长度 <span class="token operator">&lt;=</span> <span class="token number">10000</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></p>
-<h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<h2 id="method-模板一"><a href="#method-模板一" class="headerlink" title="method: 模板一"></a>method: 模板一</h2><p>如果<code>mid</code>满足<code>index != value</code>，那么解区间应该是<code>[l, mid]</code>，所以是模板一</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;vector></span></span>
 <span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 
