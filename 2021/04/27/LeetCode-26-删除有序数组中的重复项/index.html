@@ -368,6 +368,10 @@
                     
                     <div class="article-tag">
                         
+                            <a href="/tags/%E6%95%B0%E7%BB%84/">
+                                <span class="chip bg-color">数组</span>
+                            </a>
+                        
                             <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">
                                 <span class="chip bg-color">双指针</span>
                             </a>
@@ -428,15 +432,13 @@
     <span class="token keyword">auto</span> it <span class="token operator">=</span> <span class="token function">unique</span><span class="token punctuation">(</span>nums<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> nums<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     nums<span class="token punctuation">.</span><span class="token function">erase</span><span class="token punctuation">(</span>it<span class="token punctuation">,</span> nums<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 把后面重复的删掉</span>
     <span class="token keyword">return</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-执行用时<span class="token operator">:</span> <span class="token number">4</span> ms
-内存消耗<span class="token operator">:</span> <span class="token number">13.4</span> MB<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>因为他要的是<code>vector</code>的长度，所以直接返回有用部分的长度就可以了，不用删除</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">removeDuplicates</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">auto</span> it <span class="token operator">=</span> <span class="token function">unique</span><span class="token punctuation">(</span>nums<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> nums<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token function">distance</span><span class="token punctuation">(</span>nums<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> it<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="method-2-快慢指针"><a href="#method-2-快慢指针" class="headerlink" title="method 2: 快慢指针"></a>method 2: 快慢指针</h2><p>慢指针指向需要被覆盖的地方，如果相同，快指针一直走，慢指针不动。<br>不同的话，用快指针的值覆盖慢指针的值，两指针移动一步<br>时间复杂度<code>O(n)</code><br>空间复杂度<code>O(1)</code></p>
+<h2 id="method-2-快慢指针"><a href="#method-2-快慢指针" class="headerlink" title="method 2: 快慢指针"></a>method 2: 快慢指针</h2><p>慢指针指向需要被覆盖的地方，如果相同，快指针一直走，慢指针不动。<br>不同的话，用快指针的值覆盖慢指针的值，两指针移动一步<br>时间复杂度：$O(n)$<br>空间复杂度：$O(1)$</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">removeDuplicates</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
     <span class="token keyword">int</span> index <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
@@ -446,12 +448,9 @@
             index<span class="token operator">++</span><span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> index<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-执行用时<span class="token operator">:</span> <span class="token number">8</span> ms
-内存消耗<span class="token operator">:</span> <span class="token number">13.4</span> MB<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="LeetCode-80-删除有序数组中的重复项-II"><a href="#LeetCode-80-删除有序数组中的重复项-II" class="headerlink" title="LeetCode 80. 删除有序数组中的重复项 II"></a>LeetCode 80. 删除有序数组中的重复项 II</h2><p>给你一个有序数组 <code>nums</code> ，请你 <code>原地</code> 删除重复出现的元素，使每个元素 <code>最多出现两次</code> ，返回删除后数组的新长度。</p>
-<p>不要使用额外的数组空间，你必须在 原地 修改输入数组 并在使用 <code>O(1)</code> 额外空间的条件下完成。</p>
-<h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>慢指针指向需要被覆盖的地方，如果相同，快指针一直走就是了，慢指针不动。<br>不同的话，慢指针加1，再用快指针的值覆盖慢指针的值。<br>时间复杂度<code>O(n)</code><br>空间复杂度<code>O(1)</code><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="LeetCode-80-删除有序数组中的重复项-II"><a href="#LeetCode-80-删除有序数组中的重复项-II" class="headerlink" title="LeetCode 80. 删除有序数组中的重复项 II"></a>LeetCode 80. 删除有序数组中的重复项 II</h2><p>给你一个有序数组 <code>nums</code> ，请你 <code>原地</code> 删除重复出现的元素，使每个元素 <code>最多出现两次</code> ，返回删除后数组的新长度。不要使用额外的数组空间，你必须在原地修改输入数组 并在使用 <code>O(1)</code> 额外空间的条件下完成。</p>
+<h2 id="method-快慢指针"><a href="#method-快慢指针" class="headerlink" title="method: 快慢指针"></a>method: 快慢指针</h2><p>慢指针指向需要被覆盖的地方，如果相同，快指针一直走就是了，慢指针不动。<br>不同的话，慢指针加1，再用快指针的值覆盖慢指针的值。<br>时间复杂度：$O(n)$<br>空间复杂度：$O(1)$<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token keyword">int</span> <span class="token function">removeDuplicates</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;=</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">return</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -464,9 +463,7 @@
         <span class="token punctuation">&#125;</span>
         <span class="token keyword">return</span> index<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-执行用时<span class="token operator">:</span> <span class="token number">8</span> ms
-内存消耗<span class="token operator">:</span> <span class="token number">10.6</span> MB<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果是允许<code>N</code>个元素重复<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token keyword">int</span> <span class="token function">removeDuplicates</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -544,6 +541,10 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
+                            
+                                <a href="/tags/%E6%95%B0%E7%BB%84/">
+                                    <span class="chip bg-color">数组</span>
+                                </a>
                             
                                 <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">
                                     <span class="chip bg-color">双指针</span>
