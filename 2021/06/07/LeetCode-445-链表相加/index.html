@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="977-有序数组的平方, kavin">
+    <meta name="keywords" content="445-链表相加, kavin">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>977-有序数组的平方 | kavin</title>
+    <title>445-链表相加 | kavin</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">977-有序数组的平方</h1>
+                    <h1 class="description center-align post-title">445-链表相加</h1>
                 </div>
             </div>
         </div>
@@ -368,8 +368,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">
-                                <span class="chip bg-color">双指针</span>
+                            <a href="/tags/%E9%93%BE%E8%A1%A8/">
+                                <span class="chip bg-color">链表</span>
+                            </a>
+                        
+                            <a href="/tags/%E6%A0%88/">
+                                <span class="chip bg-color">栈</span>
                             </a>
                         
                     </div>
@@ -393,7 +397,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-05
+                    2021-06-07
                 </div>
                 
 
@@ -417,28 +421,44 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="LeetCode-977-Squares-of-a-Sorted-Array"><a href="#LeetCode-977-Squares-of-a-Sorted-Array" class="headerlink" title="LeetCode 977. Squares of a Sorted Array"></a>LeetCode 977. Squares of a Sorted Array</h2><p>Given an integer array nums sorted in <code>non-decreasing order</code>, return an array of the <code>squares</code> of each number sorted in <code>non-decreasing order</code>.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">]</span>
-Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">,</span><span class="token number">100</span><span class="token punctuation">]</span>
-Explanation<span class="token operator">:</span> After squaring<span class="token punctuation">,</span> the array becomes <span class="token punctuation">[</span><span class="token number">16</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">100</span><span class="token punctuation">]</span><span class="token punctuation">.</span>
-After sorting<span class="token punctuation">,</span> it becomes <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">,</span><span class="token number">100</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></p>
-<h2 id="method-双指针"><a href="#method-双指针" class="headerlink" title="method: 双指针"></a>method: 双指针</h2><p>因为一个区间的平方，最大值肯定是在两边，所以用双指针从两边向中间遍历</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">sortedSquares</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">res</span><span class="token punctuation">(</span>nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> cnt <span class="token operator">=</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> j <span class="token operator">=</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> j<span class="token punctuation">;</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">*</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">></span> nums<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">*</span> nums<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            res<span class="token punctuation">[</span>cnt<span class="token operator">--</span><span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">*</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
-            i<span class="token operator">++</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
-            res<span class="token punctuation">[</span>cnt<span class="token operator">--</span><span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">*</span> nums<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
-            j<span class="token operator">--</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
+                <h2 id="LeetCode-445-Add-Two-Numbers-II"><a href="#LeetCode-445-Add-Two-Numbers-II" class="headerlink" title="LeetCode 445. Add Two Numbers II"></a>LeetCode 445. Add Two Numbers II</h2><p>You are given two non-empty linked lists representing two non-negative integers. The most significant digit comes first and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.</p>
+<p>You may assume the two numbers do not contain any leading zero, except the number 0 itself.</p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> l1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> l2 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">]</span>
+Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<h2 id="method-栈"><a href="#method-栈" class="headerlink" title="method: 栈"></a>method: 栈</h2><p>把两个链表的元素取出来放到栈里，然后再一位一位相加。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode<span class="token operator">*</span> <span class="token function">addTwoNumbers</span><span class="token punctuation">(</span>ListNode<span class="token operator">*</span> l1<span class="token punctuation">,</span> ListNode<span class="token operator">*</span> l2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    stack<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> st1<span class="token punctuation">;</span>
+    stack<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> st2<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>l1<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        st1<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>l1<span class="token operator">-></span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        l1 <span class="token operator">=</span> l1<span class="token operator">-></span>next<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>时间复杂度：$O(n)$<br>如果算完平方后再排序，时间复杂度是$O(n + nlogn)$</p>
-
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>l2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        st2<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>l2<span class="token operator">-></span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        l2 <span class="token operator">=</span> l2<span class="token operator">-></span>next<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    ListNode <span class="token operator">*</span>head <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> carry <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> add1<span class="token punctuation">,</span> add2<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>st1<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token operator">!</span>st2<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">||</span> carry<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>st1<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            add1 <span class="token operator">=</span> st1<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            st1<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">else</span> add1 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>st2<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            add2 <span class="token operator">=</span> st2<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            st2<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">else</span> add2 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> res <span class="token operator">=</span> add1 <span class="token operator">+</span> add2 <span class="token operator">+</span> carry<span class="token punctuation">;</span>
+        carry <span class="token operator">=</span> res <span class="token operator">/</span> <span class="token number">10</span><span class="token punctuation">;</span>
+        ListNode <span class="token operator">*</span>resNode <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">ListNode</span><span class="token punctuation">(</span>res <span class="token operator">%</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        resNode<span class="token operator">-></span>next <span class="token operator">=</span> head<span class="token punctuation">;</span>
+        head <span class="token operator">=</span> resNode<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> head<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -464,7 +484,7 @@ After sorting<span class="token punctuation">,</span> it becomes <span class="to
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/06/05/LeetCode-977-%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E5%B9%B3%E6%96%B9/">http://example.com/2021/06/05/LeetCode-977-%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E5%B9%B3%E6%96%B9/</a>
+                    <a href="http://example.com/2021/06/07/LeetCode-445-%E9%93%BE%E8%A1%A8%E7%9B%B8%E5%8A%A0/">http://example.com/2021/06/07/LeetCode-445-%E9%93%BE%E8%A1%A8%E7%9B%B8%E5%8A%A0/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -502,8 +522,12 @@ After sorting<span class="token punctuation">,</span> it becomes <span class="to
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">
-                                    <span class="chip bg-color">双指针</span>
+                                <a href="/tags/%E9%93%BE%E8%A1%A8/">
+                                    <span class="chip bg-color">链表</span>
+                                </a>
+                            
+                                <a href="/tags/%E6%A0%88/">
+                                    <span class="chip bg-color">栈</span>
                                 </a>
                             
                         </div>
@@ -675,17 +699,18 @@ After sorting<span class="token punctuation">,</span> it becomes <span class="to
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/06/05/LeetCode-209-%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84/">
+                <a href="/2021/06/07/LeetCode-445-%E9%93%BE%E8%A1%A8%E7%9B%B8%E5%8A%A0/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="209-长度最小的子数组">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="445-链表相加">
                         
-                        <span class="card-title">209-长度最小的子数组</span>
+                        <span class="card-title">445-链表相加</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -695,9 +720,9 @@ After sorting<span class="token punctuation">,</span> it becomes <span class="to
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-05
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-07
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -710,15 +735,16 @@ After sorting<span class="token punctuation">,</span> it becomes <span class="to
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E7%BB%84/">
-                        <span class="chip bg-color">数组</span>
+                    <a href="/tags/%E9%93%BE%E8%A1%A8/">
+                        <span class="chip bg-color">链表</span>
                     </a>
                     
-                    <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/">
-                        <span class="chip bg-color">滑动窗口</span>
+                    <a href="/tags/%E6%A0%88/">
+                        <span class="chip bg-color">栈</span>
                     </a>
                     
                 </div>
@@ -732,13 +758,13 @@ After sorting<span class="token punctuation">,</span> it becomes <span class="to
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/06/05/LeetCode-328-%E5%A5%87%E5%81%B6%E9%93%BE%E8%A1%A8/">
+                <a href="/2021/06/07/LeetCode-83-%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="328-奇偶链表">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="83-删除链表重复元素">
                         
-                        <span class="card-title">328-奇偶链表</span>
+                        <span class="card-title">83-删除链表重复元素</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -749,7 +775,7 @@ After sorting<span class="token punctuation">,</span> it becomes <span class="to
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-07
                             </span>
                         <span class="publish-author">
                             
@@ -768,6 +794,10 @@ After sorting<span class="token punctuation">,</span> it becomes <span class="to
                     
                     <a href="/tags/%E9%93%BE%E8%A1%A8/">
                         <span class="chip bg-color">链表</span>
+                    </a>
+                    
+                    <a href="/tags/%E9%80%92%E5%BD%92/">
+                        <span class="chip bg-color">递归</span>
                     </a>
                     
                 </div>

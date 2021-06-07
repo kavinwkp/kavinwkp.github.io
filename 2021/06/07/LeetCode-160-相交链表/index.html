@@ -417,15 +417,21 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="LeetCode-160-Intersection-of-Two-Linked-Lists"><a href="#LeetCode-160-Intersection-of-Two-Linked-Lists" class="headerlink" title="LeetCode 160. Intersection of Two Linked Lists"></a>LeetCode 160. Intersection of Two Linked Lists</h2><p>Given the heads of two singly linked-lists headA and headB, return the node at which the two lists intersect. If the two linked lists have no intersection at all, return null.</p>
-<p>It is guaranteed that there are no cycles anywhere in the entire linked structure.</p>
-<p>Note that the linked lists must retain their original structure after the function returns.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> intersectVal <span class="token operator">=</span> <span class="token number">8</span><span class="token punctuation">,</span> listA <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span> listB <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span> skipA <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> skipB <span class="token operator">=</span> <span class="token number">3</span>
-Output<span class="token operator">:</span> Intersected at <span class="token string">'8'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
-<h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>把链表往后移到右边对齐，然后开始遍历</p>
+                <h2 id="LeetCode-160-Intersection-of-Two-Linked-Lists"><a href="#LeetCode-160-Intersection-of-Two-Linked-Lists" class="headerlink" title="LeetCode 160. Intersection of Two Linked Lists"></a>LeetCode 160. Intersection of Two Linked Lists</h2><p>Given the heads of two singly linked-lists headA and headB, return the node at which the <code>two lists intersect</code>. If the two linked lists have no intersection at all, return null.</p>
+<p>It is guaranteed that there are <code>no cycles</code> anywhere in the entire linked structure.</p>
+<p>Note that the linked lists must <code>retain their original structure</code> after the function returns.</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">A<span class="token operator">:</span>          a1 → a2
+                    ↘
+                      c1 → c2 → c3
+                    ↗
+B<span class="token operator">:</span>    b1 → b2 → b3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>Example 1:</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> intersectVal <span class="token operator">=</span> <span class="token number">8</span><span class="token punctuation">,</span> listA <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span> listB <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span> skipA <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> skipB <span class="token operator">=</span> <span class="token number">3</span>
+Output<span class="token operator">:</span> Intersected at <span class="token string">'8'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="method-1-右端对齐"><a href="#method-1-右端对齐" class="headerlink" title="method 1: 右端对齐"></a>method 1: 右端对齐</h2><p>把短的链表往后移到跟长的链表右端对齐，长的链表的指针移动相同距离，然后两指针开始遍历</p>
 <ul>
-<li>有相同的说明相交，返回当前指针</li>
-<li>没相同的一直找到末尾<code>nullptr</code>，退出循环，也返回当前指针<code>nullptr</code></li>
+<li>指针相遇说明相交，返回当前指针</li>
+<li>没相遇会一直找到末尾<code>nullptr</code>，退出循环，也返回当前指针<code>nullptr</code></li>
 </ul>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode <span class="token operator">*</span><span class="token function">getIntersectionNode</span><span class="token punctuation">(</span>ListNode <span class="token operator">*</span>headA<span class="token punctuation">,</span> ListNode <span class="token operator">*</span>headB<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">int</span> lenA <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
@@ -455,6 +461,37 @@ Output<span class="token operator">:</span> Intersected at <span class="token st
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> curA<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="method-2-指针交叉循环"><a href="#method-2-指针交叉循环" class="headerlink" title="method 2: 指针交叉循环"></a>method 2: 指针交叉循环</h2><p>一个链表的指针遍历完了，就换到另一个链表继续遍历，两个指针相遇说明有相交，没相遇<br>最后会都等于<code>nullptr</code>返回</p>
+<p>情况一：两个链表相交</p>
+<p>链表 <code>headA</code> 和 <code>headB</code> 的长度分别是 <code>m</code> 和 <code>n</code>。假设链表 <code>headA</code> 的不相交部分有 <code>a</code> 个节点，链表 <code>headB</code> 的不相交部分有 <code>b</code> 个节点，两个链表相交的部分有 <code>c</code> 个节点，则有 <code>a+c=m</code>，<code>b+c=n</code>。</p>
+<ul>
+<li>如果 <code>a = b</code>，则两个指针会同时到达两个链表相交的节点，此时返回相交的节点；</li>
+<li>如果 <code>a != b</code>，则指针 <code>pA</code> 会遍历完链表 <code>headA</code>，指针 <code>pB</code> 会遍历完链表 <code>headB</code>，两个指针不会同时到达链表的尾节点，然后指针 <code>pA</code> 移到链表 <code>headB</code> 的头节点，指针 <code>pB</code> 移到链表 <code>headA</code> 的头节点，然后两个指针继续移动，在指针 <code>pA</code> 移动了 <code>a+c+b</code> 次、指针 <code>pB</code> 移动了 <code>b+c+a</code> 次之后，两个指针会<strong>同时到达两个链表相交的节点</strong>，该节点也是两个指针第一次同时指向的节点，此时返回相交的节点。</li>
+</ul>
+<p>情况二：两个链表不相交</p>
+<p>链表 <code>headA</code> 和 <code>headB</code> 的长度分别是 <code>m</code> 和 <code>n</code>。考虑当 <code>m = n</code> 和 <code>m != n</code> 时，两个指针分别会如何移动：</p>
+<ul>
+<li><p>如果 <code>m = n</code>，则两个指针会同时到达两个链表的尾节点，然后同时变成空值 <code>null</code>，此时返回 <code>null</code>；</p>
+</li>
+<li><p>如果 <code>m = n</code>，则由于两个链表没有公共节点，两个指针也不会同时到达两个链表的尾节点，因此两个指针都会遍历完两个链表，在指针 <code>pA</code> 移动了 <code>m+n</code> 次、指针 <code>pB</code> 移动了 <code>n+m</code> 次之后，两个指针会同时变成空值 <code>null</code>，此时返回 <code>null</code>。</p>
+</li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode <span class="token operator">*</span><span class="token function">getIntersectionNode</span><span class="token punctuation">(</span>ListNode <span class="token operator">*</span>headA<span class="token punctuation">,</span> ListNode <span class="token operator">*</span>headB<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    ListNode <span class="token operator">*</span>pA <span class="token operator">=</span> headA<span class="token punctuation">;</span>
+    ListNode <span class="token operator">*</span>pB <span class="token operator">=</span> headB<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>pA <span class="token operator">!=</span> pB<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>pA<span class="token punctuation">)</span> pA <span class="token operator">=</span> pA<span class="token operator">-></span>next<span class="token punctuation">;</span>
+        <span class="token keyword">else</span> pA <span class="token operator">=</span> headB<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>pB<span class="token punctuation">)</span> pB <span class="token operator">=</span> pB<span class="token operator">-></span>next<span class="token punctuation">;</span>
+        <span class="token keyword">else</span> pB <span class="token operator">=</span> headA<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> pA<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>时间复杂度：$O(m+n)$，其中 <code>m</code> 和 <code>n</code> 是分别是链表 <code>headA</code> 和 <code>headB</code> 的长度。两个指针同时遍历两个链表，每个指针遍历两个链表各一次。</li>
+<li>空间复杂度：$O(1)$</li>
+</ul>
+
                 
             </div>
             <hr/>
