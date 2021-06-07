@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="25-合并两个排序的链表, kavin">
+    <meta name="keywords" content="83-删除链表重复元素, kavin">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>25-合并两个排序的链表 | kavin</title>
+    <title>83-删除链表重复元素 | kavin</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">25-合并两个排序的链表</h1>
+                    <h1 class="description center-align post-title">83-删除链表重复元素</h1>
                 </div>
             </div>
         </div>
@@ -372,6 +372,10 @@
                                 <span class="chip bg-color">链表</span>
                             </a>
                         
+                            <a href="/tags/%E9%80%92%E5%BD%92/">
+                                <span class="chip bg-color">递归</span>
+                            </a>
+                        
                     </div>
                     
                 </div>
@@ -380,8 +384,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E5%89%91%E6%8C%87Offer/" class="post-category">
-                                剑指Offer
+                            <a href="/categories/LeetCode/" class="post-category">
+                                LeetCode
                             </a>
                         
                     </div>
@@ -393,7 +397,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-05-27
+                    2021-06-07
                 </div>
                 
 
@@ -417,62 +421,18 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="剑指-Offer-25-合并两个排序的链表"><a href="#剑指-Offer-25-合并两个排序的链表" class="headerlink" title="剑指 Offer 25. 合并两个排序的链表"></a>剑指 Offer 25. 合并两个排序的链表</h2><p>输入两个递增排序的链表，合并这两个链表并使新链表中的节点仍然是递增排序的。</p>
-<p>示例1：<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入：<span class="token number">1</span><span class="token operator">-></span><span class="token number">2</span><span class="token operator">-></span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token operator">-></span><span class="token number">3</span><span class="token operator">-></span><span class="token number">4</span>
-输出：<span class="token number">1</span><span class="token operator">-></span><span class="token number">1</span><span class="token operator">-></span><span class="token number">2</span><span class="token operator">-></span><span class="token number">3</span><span class="token operator">-></span><span class="token number">4</span><span class="token operator">-></span><span class="token number">4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
-<h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode<span class="token operator">*</span> <span class="token function">mergeTwoLists</span><span class="token punctuation">(</span>ListNode<span class="token operator">*</span> l1<span class="token punctuation">,</span> ListNode<span class="token operator">*</span> l2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    ListNode <span class="token operator">*</span>dummy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">ListNode</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ListNode <span class="token operator">*</span>head <span class="token operator">=</span> dummy<span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>l1 <span class="token operator">&amp;&amp;</span> l2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        ListNode <span class="token operator">*</span>tmp <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>l1<span class="token operator">-></span>val <span class="token operator">&lt;</span> l2<span class="token operator">-></span>val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            tmp <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">ListNode</span><span class="token punctuation">(</span>l1<span class="token operator">-></span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            l1 <span class="token operator">=</span> l1<span class="token operator">-></span>next<span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
-            tmp <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">ListNode</span><span class="token punctuation">(</span>l2<span class="token operator">-></span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            l2 <span class="token operator">=</span> l2<span class="token operator">-></span>next<span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        head<span class="token operator">-></span>next <span class="token operator">=</span> tmp<span class="token punctuation">;</span>
-        head <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>
+                <h2 id="LeetCode-83-Remove-Duplicates-from-Sorted-List"><a href="#LeetCode-83-Remove-Duplicates-from-Sorted-List" class="headerlink" title="LeetCode 83. Remove Duplicates from Sorted List"></a>LeetCode 83. Remove Duplicates from Sorted List</h2><p>Given the head of a sorted linked list, delete all duplicates such that each element appears only once. Return the linked list sorted as well.</p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> head <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span>
+Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<h2 id="method-递归"><a href="#method-递归" class="headerlink" title="method: 递归"></a>method: 递归</h2><p>如果重复了，就返回下一个节点<br>没有重复，就返回当前节点</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode<span class="token operator">*</span> <span class="token function">deleteDuplicates</span><span class="token punctuation">(</span>ListNode<span class="token operator">*</span> head<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>head <span class="token operator">||</span> <span class="token operator">!</span>head<span class="token operator">-></span>next<span class="token punctuation">)</span> <span class="token keyword">return</span> head<span class="token punctuation">;</span>
+    head<span class="token operator">-></span>next <span class="token operator">=</span> <span class="token function">deleteDuplicates</span><span class="token punctuation">(</span>head<span class="token operator">-></span>next<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>head<span class="token operator">-></span>val <span class="token operator">==</span> head<span class="token operator">-></span>next<span class="token operator">-></span>val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>l1<span class="token punctuation">)</span> head<span class="token operator">-></span>next <span class="token operator">=</span> l1<span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>l2<span class="token punctuation">)</span> head<span class="token operator">-></span>next <span class="token operator">=</span> l2<span class="token punctuation">;</span>
-    <span class="token keyword">return</span> dummy<span class="token operator">-></span>next<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-执行用时<span class="token operator">:</span> <span class="token number">40</span> ms
-内存消耗<span class="token operator">:</span> <span class="token number">19.6</span> MB<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="改进一下：不需要再重新new节点"><a href="#改进一下：不需要再重新new节点" class="headerlink" title="改进一下：不需要再重新new节点"></a>改进一下：不需要再重新new节点</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode<span class="token operator">*</span> <span class="token function">mergeTwoLists</span><span class="token punctuation">(</span>ListNode<span class="token operator">*</span> l1<span class="token punctuation">,</span> ListNode<span class="token operator">*</span> l2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>l1<span class="token punctuation">)</span> <span class="token keyword">return</span> l2<span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>l2<span class="token punctuation">)</span> <span class="token keyword">return</span> l1<span class="token punctuation">;</span>
-    ListNode <span class="token operator">*</span>dummy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">ListNode</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ListNode <span class="token operator">*</span>head <span class="token operator">=</span> dummy<span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>l1<span class="token operator">-></span>val <span class="token operator">&lt;</span> l2<span class="token operator">-></span>val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        head<span class="token operator">-></span>next <span class="token operator">=</span> l1<span class="token punctuation">;</span>
-        l1 <span class="token operator">=</span> l1<span class="token operator">-></span>next<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
-        head<span class="token operator">-></span>next <span class="token operator">=</span> l2<span class="token punctuation">;</span>
-        l2 <span class="token operator">=</span> l2<span class="token operator">-></span>next<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    head <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>l1 <span class="token operator">&amp;&amp;</span> l2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>l1<span class="token operator">-></span>val <span class="token operator">&lt;</span> l2<span class="token operator">-></span>val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            head<span class="token operator">-></span>next <span class="token operator">=</span> l1<span class="token punctuation">;</span>
-            l1 <span class="token operator">=</span> l1<span class="token operator">-></span>next<span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
-            head<span class="token operator">-></span>next <span class="token operator">=</span> l2<span class="token punctuation">;</span>
-            l2 <span class="token operator">=</span> l2<span class="token operator">-></span>next<span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        head <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>l1<span class="token punctuation">)</span> head<span class="token operator">-></span>next <span class="token operator">=</span> l1<span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>l2<span class="token punctuation">)</span> head<span class="token operator">-></span>next <span class="token operator">=</span> l2<span class="token punctuation">;</span>
-    <span class="token keyword">return</span> dummy<span class="token operator">-></span>next<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-执行用时<span class="token operator">:</span> <span class="token number">28</span> ms
-内存消耗<span class="token operator">:</span> <span class="token number">18.7</span> MB<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">return</span> head<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -498,7 +458,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/05/27/%E5%89%91%E6%8C%87Offer-25-%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%8E%92%E5%BA%8F%E7%9A%84%E9%93%BE%E8%A1%A8/">http://example.com/2021/05/27/%E5%89%91%E6%8C%87Offer-25-%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%8E%92%E5%BA%8F%E7%9A%84%E9%93%BE%E8%A1%A8/</a>
+                    <a href="http://example.com/2021/06/07/LeetCode-83-%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/">http://example.com/2021/06/07/LeetCode-83-%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -538,6 +498,10 @@
                             
                                 <a href="/tags/%E9%93%BE%E8%A1%A8/">
                                     <span class="chip bg-color">链表</span>
+                                </a>
+                            
+                                <a href="/tags/%E9%80%92%E5%BD%92/">
+                                    <span class="chip bg-color">递归</span>
                                 </a>
                             
                         </div>
@@ -709,17 +673,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/05/27/LeetCode-27-%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0/">
+                <a href="/2021/06/07/LeetCode-83-%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="27-移除元素">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="83-删除链表重复元素">
                         
-                        <span class="card-title">27-移除元素</span>
+                        <span class="card-title">83-删除链表重复元素</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -729,9 +694,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-05-27
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-07
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -744,15 +709,16 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">
-                        <span class="chip bg-color">双指针</span>
+                    <a href="/tags/%E9%93%BE%E8%A1%A8/">
+                        <span class="chip bg-color">链表</span>
                     </a>
                     
-                    <a href="/tags/%E6%95%B0%E7%BB%84/">
-                        <span class="chip bg-color">数组</span>
+                    <a href="/tags/%E9%80%92%E5%BD%92/">
+                        <span class="chip bg-color">递归</span>
                     </a>
                     
                 </div>
@@ -766,13 +732,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/05/27/%E5%89%91%E6%8C%87Offer-22-%E9%93%BE%E8%A1%A8%E4%B8%AD%E5%80%92%E6%95%B0%E7%AC%ACk%E4%B8%AA%E8%8A%82%E7%82%B9/">
+                <a href="/2021/06/07/LeetCode-160-%E7%9B%B8%E4%BA%A4%E9%93%BE%E8%A1%A8/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="22-链表中倒数第k个节点">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="160-链表相交">
                         
-                        <span class="card-title">22-链表中倒数第k个节点</span>
+                        <span class="card-title">160-链表相交</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -783,14 +749,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-07
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%89%91%E6%8C%87Offer/" class="post-category">
-                                    剑指Offer
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
                                 </a>
                             
                             

@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="141-环形链表, kavin">
+    <meta name="keywords" content="141/142-环形链表, kavin">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>141-环形链表 | kavin</title>
+    <title>141/142-环形链表 | kavin</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">141-环形链表</h1>
+                    <h1 class="description center-align post-title">141/142-环形链表</h1>
                 </div>
             </div>
         </div>
@@ -439,6 +439,30 @@ Explanation<span class="token operator">:</span> There is a cycle in the linked 
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="LeetCode-142-Linked-List-Cycle-II"><a href="#LeetCode-142-Linked-List-Cycle-II" class="headerlink" title="LeetCode 142. Linked List Cycle II"></a>LeetCode 142. Linked List Cycle II</h2><p>Given a linked list, return the <code>node where the cycle begins</code>. If there is no cycle, return null.</p>
+<p>There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Internally, pos is used to denote the index of the node that tail’s next pointer is connected to. Note that pos is not passed as a parameter.</p>
+<p>Notice that you should not modify the linked list.</p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> head <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span> pos <span class="token operator">=</span> <span class="token number">1</span>
+Output<span class="token operator">:</span> tail connects to node index <span class="token number">1</span>
+Explanation<span class="token operator">:</span> There is a cycle in the linked list<span class="token punctuation">,</span> where tail connects to the second node<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
+<h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode <span class="token operator">*</span><span class="token function">detectCycle</span><span class="token punctuation">(</span>ListNode <span class="token operator">*</span>head<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    ListNode <span class="token operator">*</span>fast <span class="token operator">=</span> head<span class="token punctuation">;</span>
+    ListNode <span class="token operator">*</span>slow <span class="token operator">=</span> head<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>fast <span class="token operator">&amp;&amp;</span> fast<span class="token operator">-></span>next<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        fast <span class="token operator">=</span> fast<span class="token operator">-></span>next<span class="token operator">-></span>next<span class="token punctuation">;</span>
+        slow <span class="token operator">=</span> slow<span class="token operator">-></span>next<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>slow <span class="token operator">==</span> fast<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            ListNode <span class="token operator">*</span>l1 <span class="token operator">=</span> slow<span class="token punctuation">;</span>
+            ListNode <span class="token operator">*</span>l2 <span class="token operator">=</span> head<span class="token punctuation">;</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span>l1 <span class="token operator">!=</span> l2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                l1 <span class="token operator">=</span> l1<span class="token operator">-></span>next<span class="token punctuation">;</span>
+                l2 <span class="token operator">=</span> l2<span class="token operator">-></span>next<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token keyword">return</span> l1<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -774,8 +798,8 @@ Explanation<span class="token operator">:</span> There is a cycle in the linked 
                         <span class="chip bg-color">数组</span>
                     </a>
                     
-                    <a href="/tags/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/">
-                        <span class="chip bg-color">归并排序</span>
+                    <a href="/tags/%E6%8E%92%E5%BA%8F/">
+                        <span class="chip bg-color">排序</span>
                     </a>
                     
                 </div>
