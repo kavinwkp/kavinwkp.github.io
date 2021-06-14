@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="Eigen_2, kavin">
+    <meta name="keywords" content="9-用两个栈实现队列, kavin">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Eigen_2 | kavin</title>
+    <title>9-用两个栈实现队列 | kavin</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Eigen_2</h1>
+                    <h1 class="description center-align post-title">9-用两个栈实现队列</h1>
                 </div>
             </div>
         </div>
@@ -368,14 +368,27 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Eigen/">
-                                <span class="chip bg-color">Eigen</span>
+                            <a href="/tags/%E6%A0%88/">
+                                <span class="chip bg-color">栈</span>
+                            </a>
+                        
+                            <a href="/tags/%E9%98%9F%E5%88%97/">
+                                <span class="chip bg-color">队列</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/LeetCode/" class="post-category">
+                                LeetCode
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -384,7 +397,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-21
+                    2021-06-12
                 </div>
                 
 
@@ -408,57 +421,42 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <!-- toc -->
-<h2 id="转置矩阵"><a href="#转置矩阵" class="headerlink" title="转置矩阵"></a>转置矩阵</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">matrix<span class="token punctuation">.</span><span class="token function">transpose</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h2 id="共轭矩阵"><a href="#共轭矩阵" class="headerlink" title="共轭矩阵"></a>共轭矩阵</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">matrix<span class="token punctuation">.</span><span class="token function">conjugate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h2 id="伴随矩阵-共轭转置"><a href="#伴随矩阵-共轭转置" class="headerlink" title="伴随矩阵(共轭转置)"></a>伴随矩阵(共轭转置)</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">matrix<span class="token punctuation">.</span><span class="token function">adjoint</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h2 id="逆矩阵"><a href="#逆矩阵" class="headerlink" title="逆矩阵"></a>逆矩阵</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">matrix<span class="token punctuation">.</span><span class="token function">inverse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h2 id="块操作"><a href="#块操作" class="headerlink" title="块操作"></a>块操作</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">matrix<span class="token punctuation">.</span><span class="token function">block</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span>j<span class="token punctuation">,</span>p<span class="token punctuation">,</span>q<span class="token punctuation">)</span>
-<span class="token comment">// 起始于(i,j),提取块大小为(p,q)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h2 id="行列式"><a href="#行列式" class="headerlink" title="行列式"></a>行列式</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">matrix<span class="token punctuation">.</span><span class="token function">determinant</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;Eigen/Dense></span></span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> Eigen<span class="token punctuation">;</span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+                <h2 id="剑指-Offer-09-用两个栈实现队列"><a href="#剑指-Offer-09-用两个栈实现队列" class="headerlink" title="剑指 Offer 09. 用两个栈实现队列"></a>剑指 Offer 09. 用两个栈实现队列</h2><p>用两个栈实现一个队列。队列的声明如下，请实现它的两个函数 <code>appendTail</code> 和 <code>deleteHead</code> ，分别完成在队列尾部插入整数和在队列头部删除整数的功能。(<code>若队列中没有元素，deleteHead</code> 操作返回 <code>-1</code> )</p>
+<p>示例 1：<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入：
+<span class="token punctuation">[</span><span class="token string">"CQueue"</span><span class="token punctuation">,</span><span class="token string">"appendTail"</span><span class="token punctuation">,</span><span class="token string">"deleteHead"</span><span class="token punctuation">,</span><span class="token string">"deleteHead"</span><span class="token punctuation">]</span>
+<span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+输出：<span class="token punctuation">[</span>null<span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></p>
+<h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>如果<code>out</code>是空的，就把<code>in</code>里面的元素都搞过来，栈弹出再插入顺序就变了</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">CQueue</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    stack<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> in<span class="token punctuation">;</span>
+    stack<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> out<span class="token punctuation">;</span>
+    <span class="token function">CQueue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    
+    <span class="token keyword">void</span> <span class="token function">in2out</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>out<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>in<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">int</span> x <span class="token operator">=</span> in<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                in<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                out<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-
-    MatrixXd <span class="token function">p</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    p <span class="token operator">&lt;&lt;</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span>
-         <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span>
-         <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">;</span>
-
-    cout <span class="token operator">&lt;&lt;</span> p<span class="token punctuation">.</span><span class="token function">transpose</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token comment">// 1 4 7</span>
-    <span class="token comment">// 2 1 8</span>
-    <span class="token comment">// 3 6 1</span>
-
-    cout <span class="token operator">&lt;&lt;</span> p<span class="token punctuation">.</span><span class="token function">inverse</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token comment">// -0.451923   0.211538  0.0865385</span>
-    <span class="token comment">// 0.365385  -0.192308  0.0576923</span>
-    <span class="token comment">// 0.240385  0.0576923 -0.0673077</span>
-
-    cout <span class="token operator">&lt;&lt;</span> p<span class="token punctuation">.</span><span class="token function">conjugate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token comment">// 1 2 3    共轭矩阵，实数的共轭就是本身</span>
-    <span class="token comment">// 4 1 6</span>
-    <span class="token comment">// 7 8 1</span>
-
-    cout <span class="token operator">&lt;&lt;</span> p<span class="token punctuation">.</span><span class="token function">adjoint</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token comment">// 1 4 7    伴随矩阵，转置+共轭</span>
-    <span class="token comment">// 2 1 8</span>
-    <span class="token comment">// 3 6 1</span>
-
-    cout <span class="token operator">&lt;&lt;</span> p<span class="token punctuation">.</span><span class="token function">block</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> p<span class="token punctuation">.</span>block<span class="token operator">&lt;</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token comment">// 4</span>
-    <span class="token comment">// 7</span>
-
-    cout <span class="token operator">&lt;&lt;</span> p<span class="token punctuation">.</span><span class="token function">determinant</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token comment">// 104</span>
-
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">void</span> <span class="token function">appendTail</span><span class="token punctuation">(</span><span class="token keyword">int</span> value<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        in<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token keyword">int</span> <span class="token function">deleteHead</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">in2out</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>out<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">int</span> x <span class="token operator">=</span> out<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            out<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">else</span> <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -484,7 +482,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/03/21/Eigen-Eigen-2/">http://example.com/2021/03/21/Eigen-Eigen-2/</a>
+                    <a href="http://example.com/2021/06/12/%E5%89%91%E6%8C%87Offer-9-%E7%94%A8%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97/">http://example.com/2021/06/12/%E5%89%91%E6%8C%87Offer-9-%E7%94%A8%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -522,8 +520,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Eigen/">
-                                    <span class="chip bg-color">Eigen</span>
+                                <a href="/tags/%E6%A0%88/">
+                                    <span class="chip bg-color">栈</span>
+                                </a>
+                            
+                                <a href="/tags/%E9%98%9F%E5%88%97/">
+                                    <span class="chip bg-color">队列</span>
                                 </a>
                             
                         </div>
@@ -695,17 +697,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/03/21/OpenCV-CMakeForOpenCV/">
+                <a href="/2021/06/12/%E5%89%91%E6%8C%87Offer-9-%E7%94%A8%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="CMakeForOpenCV">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="9-用两个栈实现队列">
                         
-                        <span class="card-title">CMakeForOpenCV</span>
+                        <span class="card-title">9-用两个栈实现队列</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -715,30 +718,31 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-03-21
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-12
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/OpenCV/" class="post-category">
-                                    OpenCV
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/CMake/">
-                        <span class="chip bg-color">CMake</span>
+                    <a href="/tags/%E6%A0%88/">
+                        <span class="chip bg-color">栈</span>
                     </a>
                     
-                    <a href="/tags/OpenCV/">
-                        <span class="chip bg-color">OpenCV</span>
+                    <a href="/tags/%E9%98%9F%E5%88%97/">
+                        <span class="chip bg-color">队列</span>
                     </a>
                     
                 </div>
@@ -752,13 +756,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/21/Eigen-Eigen-Quaternion/">
+                <a href="/2021/06/11/LeetCode-20-%E6%9C%89%E6%95%88%E6%8B%AC%E5%8F%B7/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Eigen_Quaternion">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="20-有效括号">
                         
-                        <span class="card-title">Eigen_Quaternion</span>
+                        <span class="card-title">20-有效括号</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -769,12 +773,16 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-11
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kavin
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -782,8 +790,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Eigen/">
-                        <span class="chip bg-color">Eigen</span>
+                    <a href="/tags/%E6%A0%88/">
+                        <span class="chip bg-color">栈</span>
                     </a>
                     
                 </div>
