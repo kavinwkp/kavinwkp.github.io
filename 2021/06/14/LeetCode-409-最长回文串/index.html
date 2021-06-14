@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="C++指针, kavin">
+    <meta name="keywords" content="409-最长回文串, kavin">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>C++指针 | kavin</title>
+    <title>409-最长回文串 | kavin</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">C++指针</h1>
+                    <h1 class="description center-align post-title">409-最长回文串</h1>
                 </div>
             </div>
         </div>
@@ -368,8 +368,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/C/">
-                                <span class="chip bg-color">C++</span>
+                            <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+                                <span class="chip bg-color">字符串</span>
                             </a>
                         
                     </div>
@@ -380,8 +380,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/C/" class="post-category">
-                                C++
+                            <a href="/categories/LeetCode/" class="post-category">
+                                LeetCode
                             </a>
                         
                     </div>
@@ -393,7 +393,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-25
+                    2021-06-14
                 </div>
                 
 
@@ -417,55 +417,23 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <!-- toc -->
-<h2 id="指针大小"><a href="#指针大小" class="headerlink" title="指针大小"></a>指针大小</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    
-    cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span class="token number">4</span>
-<span class="token number">1</span>
-<span class="token number">8</span>
-<span class="token number">8</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>可见不管是什么类型的指针，大小都是<strong>8个字节</strong></p>
-<h2 id="const指针"><a href="#const指针" class="headerlink" title="const指针"></a>const指针</h2><h3 id="指向常量的指针"><a href="#指向常量的指针" class="headerlink" title="指向常量的指针"></a>指向常量的指针</h3><ol>
-<li><code>const</code>修饰的是<code>int</code>，说明<code>int</code>是常量不可修改，不能通过指针修改他的值，但可以指向别处</li>
-<li>指针指向的对象可以不是<code>const</code>，但是还是不能用指针去修改他，可以用其他方法修改</li>
-<li>必须用<code>const void*</code>才能指向<code>const</code>对象</li>
-</ol>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">*</span> pInteger<span class="token punctuation">;</span>    <span class="token comment">// int const* pInteger;</span>
-<span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>           <span class="token comment">// 不是const</span>
-pInteger <span class="token operator">=</span> <span class="token operator">&amp;</span>num<span class="token punctuation">;</span>
-<span class="token comment">// *pInteger = 100;	// error, 不能用指针修改常量</span>
-num <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>               <span class="token comment">// yes，可以用其他方法修改</span>
-
-<span class="token keyword">int</span> another <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
-pInteger <span class="token operator">=</span> <span class="token operator">&amp;</span>another<span class="token punctuation">;</span>    <span class="token comment">// yes，可以改变指针指向</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">char</span> ch <span class="token operator">=</span> <span class="token string">'a'</span><span class="token punctuation">;</span>
-<span class="token comment">// void* p = &amp;ch;   //error</span>
-<span class="token keyword">const</span> <span class="token keyword">void</span><span class="token operator">*</span> p <span class="token operator">=</span> <span class="token operator">&amp;</span>ch<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h3 id="常指针、const指针"><a href="#常指针、const指针" class="headerlink" title="常指针、const指针"></a>常指针、const指针</h3><ol>
-<li><code>const</code>修饰的是指针，说明指针是常数，所以他存储的地址不能变，也就是不能改变指向，可以通过指针改变指向对象的值</li>
-<li>常指针必须进行初始化</li>
-<li>常指针不能指向<code>const</code>变量</li>
-</ol>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
-<span class="token comment">// const int num = 10;  // error，const int* -> int*</span>
-<span class="token keyword">int</span><span class="token operator">*</span> <span class="token keyword">const</span> pInt <span class="token operator">=</span> <span class="token operator">&amp;</span>num<span class="token punctuation">;</span> 
-
-<span class="token keyword">int</span> another <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
-<span class="token comment">// pInt = &amp;another;     // error, 常指针不能修改指向</span>
-
-<span class="token operator">*</span>pInt <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>            <span class="token comment">// yes，变量不是const，可以改变他的值</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="指向常量的常指针"><a href="#指向常量的常指针" class="headerlink" title="指向常量的常指针"></a>指向常量的常指针</h2><ul>
-<li>只能指向<code>const</code>变量</li>
-</ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">*</span> <span class="token keyword">const</span> ptr <span class="token operator">=</span> <span class="token operator">&amp;</span>num<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+                <h2 id="LeetCode-409-Longest-Palindrome"><a href="#LeetCode-409-Longest-Palindrome" class="headerlink" title="LeetCode 409. Longest Palindrome"></a>LeetCode 409. Longest Palindrome</h2><p>Given a string s which consists of lowercase or uppercase letters, return the length of the longest palindrome that can be built with those letters.</p>
+<p>Letters are case sensitive, for example, “Aa” is not considered a palindrome here.</p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> s <span class="token operator">=</span> <span class="token string">"abccccdd"</span>
+Output<span class="token operator">:</span> <span class="token number">7</span>
+Explanation<span class="token operator">:</span>
+One longest palindrome that can be built is <span class="token string">"dccaccd"</span><span class="token punctuation">,</span> whose length is <span class="token number">7.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></p>
+<h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>统计每个字母出现的次数，因为区分大小写，所以直接用<code>256</code>长度的数组</p>
+<p>因为奇数也可以用来组成回文，比如<code>aaa</code>，长度是<code>3</code>，但我们需要的数其中的偶数，所以<code>(3 / 2) * 2 = 2</code>，就是我们要的长度<br>如果是偶数经过运算还是一样的<br>如果有奇数，经过运算就会没掉一些，所以长度会比<code>str</code>短，就加个<code>1</code>，因为奇数可以放在回文的中间</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">longestPalindrome</span><span class="token punctuation">(</span>string str<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> nums<span class="token punctuation">[</span><span class="token number">256</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> s <span class="token operator">:</span> str<span class="token punctuation">)</span> nums<span class="token punctuation">[</span><span class="token keyword">int</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token keyword">bool</span> odd <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> n <span class="token operator">:</span> nums<span class="token punctuation">)</span>
+        count <span class="token operator">+=</span> <span class="token punctuation">(</span>n <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> count <span class="token operator">&lt;</span> str<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span> count <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">:</span> count<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -491,7 +459,7 @@ pInteger <span class="token operator">=</span> <span class="token operator">&amp
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/03/25/C-C-%E6%8C%87%E9%92%88/">http://example.com/2021/03/25/C-C-%E6%8C%87%E9%92%88/</a>
+                    <a href="http://example.com/2021/06/14/LeetCode-409-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2/">http://example.com/2021/06/14/LeetCode-409-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -529,8 +497,8 @@ pInteger <span class="token operator">=</span> <span class="token operator">&amp
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/C/">
-                                    <span class="chip bg-color">C++</span>
+                                <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+                                    <span class="chip bg-color">字符串</span>
                                 </a>
                             
                         </div>
@@ -702,17 +670,18 @@ pInteger <span class="token operator">=</span> <span class="token operator">&amp
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/03/26/ROS-ROS-mavros/">
+                <a href="/2021/06/14/LeetCode-409-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="ROS_MAVROS">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="409-最长回文串">
                         
-                        <span class="card-title">ROS_MAVROS</span>
+                        <span class="card-title">409-最长回文串</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -722,26 +691,27 @@ pInteger <span class="token operator">=</span> <span class="token operator">&amp
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-03-26
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-14
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kavin
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/ROS/">
-                        <span class="chip bg-color">ROS</span>
-                    </a>
-                    
-                    <a href="/tags/mavros/">
-                        <span class="chip bg-color">mavros</span>
+                    <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+                        <span class="chip bg-color">字符串</span>
                     </a>
                     
                 </div>
@@ -755,13 +725,13 @@ pInteger <span class="token operator">=</span> <span class="token operator">&amp
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/21/LeetCode-167-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/">
+                <a href="/2021/06/12/%E5%89%91%E6%8C%87Offer-9-%E7%94%A8%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="167-两数之和 II - 输入有序数组">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="9-用两个栈实现队列">
                         
-                        <span class="card-title">167-两数之和 II - 输入有序数组</span>
+                        <span class="card-title">9-用两个栈实现队列</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -772,7 +742,7 @@ pInteger <span class="token operator">=</span> <span class="token operator">&amp
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-12
                             </span>
                         <span class="publish-author">
                             
@@ -789,12 +759,12 @@ pInteger <span class="token operator">=</span> <span class="token operator">&amp
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/">
-                        <span class="chip bg-color">哈希表</span>
+                    <a href="/tags/%E6%A0%88/">
+                        <span class="chip bg-color">栈</span>
                     </a>
                     
-                    <a href="/tags/%E4%BA%8C%E5%88%86%E6%B3%95/">
-                        <span class="chip bg-color">二分法</span>
+                    <a href="/tags/%E9%98%9F%E5%88%97/">
+                        <span class="chip bg-color">队列</span>
                     </a>
                     
                 </div>
