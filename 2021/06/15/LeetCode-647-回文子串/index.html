@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="205-同构字符串, kavin">
+    <meta name="keywords" content="647-回文子串, kavin">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>205-同构字符串 | kavin</title>
+    <title>647-回文子串 | kavin</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">205-同构字符串</h1>
+                    <h1 class="description center-align post-title">647-回文子串</h1>
                 </div>
             </div>
         </div>
@@ -368,6 +368,10 @@
                     
                     <div class="article-tag">
                         
+                            <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">
+                                <span class="chip bg-color">双指针</span>
+                            </a>
+                        
                             <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
                                 <span class="chip bg-color">字符串</span>
                             </a>
@@ -393,7 +397,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-14
+                    2021-06-15
                 </div>
                 
 
@@ -417,22 +421,32 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="LeetCode-205-Isomorphic-Strings"><a href="#LeetCode-205-Isomorphic-Strings" class="headerlink" title="LeetCode 205. Isomorphic Strings"></a>LeetCode 205. Isomorphic Strings</h2><p>Given two strings s and t, determine if they are isomorphic.</p>
-<p>Two strings s and t are isomorphic if <code>the characters in s can be replaced to get t</code>.</p>
-<p>All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character, but a character may map to itself.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> s <span class="token operator">=</span> <span class="token string">"egg"</span><span class="token punctuation">,</span> t <span class="token operator">=</span> <span class="token string">"add"</span>
-Output<span class="token operator">:</span> <span class="token boolean">true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
-<h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>用一个<code>256</code>的数组记录每个字符上一次出现的位置</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">bool</span> <span class="token function">isIsomorphic</span><span class="token punctuation">(</span>string s<span class="token punctuation">,</span> string t<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> preS<span class="token punctuation">[</span><span class="token number">256</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> preT<span class="token punctuation">[</span><span class="token number">256</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>preS<span class="token punctuation">[</span><span class="token keyword">int</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">!=</span> preT<span class="token punctuation">[</span><span class="token keyword">int</span><span class="token punctuation">(</span>t<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-        preS<span class="token punctuation">[</span><span class="token keyword">int</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
-        preT<span class="token punctuation">[</span><span class="token keyword">int</span><span class="token punctuation">(</span>t<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+                <h2 id="LeetCode-647-Palindromic-Substrings"><a href="#LeetCode-647-Palindromic-Substrings" class="headerlink" title="LeetCode 647. Palindromic Substrings"></a>LeetCode 647. Palindromic Substrings</h2><p>Given a string s, return the number of palindromic substrings in it.</p>
+<p>A string is a palindrome when it <code>reads the same backward as forward</code>.</p>
+<p>A substring is a contiguous sequence of characters within the string.</p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> s <span class="token operator">=</span> <span class="token string">"abcb"</span>
+Output<span class="token operator">:</span> <span class="token number">5</span>
+Explanation<span class="token operator">:</span> Three palindromic strings<span class="token operator">:</span> <span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token string">"c"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token string">"bcb"</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
+<h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>中心是单个字符，会形成奇数回文，如<code>aba</code><br>中心是两个字符，会形成偶数回文，如<code>baab</code><br>在字符串中用两个指针从中心向两边扩展，如果相同就继续扩展，否则该中心结束</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> <span class="token function">countSubstrings</span><span class="token punctuation">(</span>string s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">isValue</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> i<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment">// 奇数个回文</span>
+            <span class="token function">isValue</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> i<span class="token punctuation">,</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 偶数个回文</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> cnt<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">void</span> <span class="token function">isValue</span><span class="token punctuation">(</span>string s<span class="token punctuation">,</span> <span class="token keyword">int</span> i<span class="token punctuation">,</span> <span class="token keyword">int</span> j<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">>=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> j <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> s<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            i<span class="token operator">--</span><span class="token punctuation">;</span>
+            j<span class="token operator">++</span><span class="token punctuation">;</span>
+            cnt<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> cnt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -458,7 +472,7 @@ Output<span class="token operator">:</span> <span class="token boolean">true</sp
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/06/14/LeetCode-205-%E5%90%8C%E6%9E%84%E5%AD%97%E7%AC%A6%E4%B8%B2/">http://example.com/2021/06/14/LeetCode-205-%E5%90%8C%E6%9E%84%E5%AD%97%E7%AC%A6%E4%B8%B2/</a>
+                    <a href="http://example.com/2021/06/15/LeetCode-647-%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/">http://example.com/2021/06/15/LeetCode-647-%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -495,6 +509,10 @@ Output<span class="token operator">:</span> <span class="token boolean">true</sp
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
+                            
+                                <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">
+                                    <span class="chip bg-color">双指针</span>
+                                </a>
                             
                                 <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
                                     <span class="chip bg-color">字符串</span>
@@ -669,9 +687,10 @@ Output<span class="token operator">:</span> <span class="token boolean">true</sp
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2021/06/15/LeetCode-647-%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/">
                     <div class="card-image">
@@ -689,9 +708,9 @@ Output<span class="token operator">:</span> <span class="token boolean">true</sp
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-15
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-15
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -704,6 +723,7 @@ Output<span class="token operator">:</span> <span class="token boolean">true</sp
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -726,13 +746,13 @@ Output<span class="token operator">:</span> <span class="token boolean">true</sp
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/06/14/LeetCode-409-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2/">
+                <a href="/2021/06/14/LeetCode-205-%E5%90%8C%E6%9E%84%E5%AD%97%E7%AC%A6%E4%B8%B2/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="409-最长回文串">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="205-同构字符串">
                         
-                        <span class="card-title">409-最长回文串</span>
+                        <span class="card-title">205-同构字符串</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
