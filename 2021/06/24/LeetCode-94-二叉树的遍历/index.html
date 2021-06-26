@@ -418,7 +418,10 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="LeetCode-94-Binary-Tree-Inorder-Traversal"><a href="#LeetCode-94-Binary-Tree-Inorder-Traversal" class="headerlink" title="LeetCode 94. Binary Tree Inorder Traversal"></a>LeetCode 94. Binary Tree Inorder Traversal</h2><p>Given the <code>root</code> of a binary tree, return the <code>inorder traversal</code> of its nodes’ values.</p>
-<h2 id="method-递归"><a href="#method-递归" class="headerlink" title="method: 递归"></a>method: 递归</h2><p>左-根-右</p>
+<h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>中序遍历：<strong>左-根-右</strong></p>
+<ul>
+<li>递归</li>
+</ul>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">inorder</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> cur<span class="token punctuation">,</span> vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> ret<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>cur <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
     <span class="token function">inorder</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>left<span class="token punctuation">,</span> ret<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -430,8 +433,33 @@ vector<span class="token operator">&lt;</span><span class="token keyword">int</s
     <span class="token function">inorder</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span> ret<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>迭代</li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">inorderTraversal</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> ret<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+    stack<span class="token operator">&lt;</span>TreeNode<span class="token operator">*</span><span class="token operator">></span> st<span class="token punctuation">;</span>
+    TreeNode<span class="token operator">*</span> cur <span class="token operator">=</span> root<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>cur <span class="token operator">||</span> <span class="token operator">!</span>st<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>cur<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            st<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            cur <span class="token operator">=</span> cur<span class="token operator">-></span>left<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            cur <span class="token operator">=</span> st<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            st<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            ret<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            cur <span class="token operator">=</span> cur<span class="token operator">-></span>right<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="LeetCode-144-Binary-Tree-Preorder-Traversal"><a href="#LeetCode-144-Binary-Tree-Preorder-Traversal" class="headerlink" title="LeetCode 144. Binary Tree Preorder Traversal"></a>LeetCode 144. Binary Tree Preorder Traversal</h2><p>Given the <code>root</code> of a binary tree, return the <code>preorder traversal</code> of its nodes’ values.</p>
-<h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>根-左-右</p>
+<h2 id="method-1"><a href="#method-1" class="headerlink" title="method"></a>method</h2><p>前序遍历：<strong>根-左-右</strong></p>
+<ul>
+<li>递归法</li>
+</ul>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">preorder</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> cur<span class="token punctuation">,</span> vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> ret<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>cur <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
     ret<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -443,8 +471,28 @@ vector<span class="token operator">&lt;</span><span class="token keyword">int</s
     <span class="token function">preorder</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span> ret<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>迭代法</li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">preorderTraversal</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> ret<span class="token punctuation">;</span>
+    stack<span class="token operator">&lt;</span>TreeNode<span class="token operator">*</span><span class="token operator">></span> st<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+    st<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>st<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        TreeNode<span class="token operator">*</span> cur <span class="token operator">=</span> st<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        st<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ret<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>cur<span class="token operator">-></span>right<span class="token punctuation">)</span> st<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>cur<span class="token operator">-></span>left<span class="token punctuation">)</span> st<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="LeetCode-145-Binary-Tree-Postorder-Traversal"><a href="#LeetCode-145-Binary-Tree-Postorder-Traversal" class="headerlink" title="LeetCode 145. Binary Tree Postorder Traversal"></a>LeetCode 145. Binary Tree Postorder Traversal</h2><p>Given the <code>root</code> of a binary tree, return the <code>postorder traversal</code> of its nodes’ values.</p>
-<h2 id="method-1"><a href="#method-1" class="headerlink" title="method"></a>method</h2><p>左-右-根</p>
+<h2 id="method-2"><a href="#method-2" class="headerlink" title="method"></a>method</h2><p>后序遍历：<strong>左-右-根</strong></p>
+<ul>
+<li>递归法</li>
+</ul>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">postorder</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> cur<span class="token punctuation">,</span> vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> ret<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>cur <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
     <span class="token function">postorder</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>left<span class="token punctuation">,</span> ret<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -457,6 +505,24 @@ vector<span class="token operator">&lt;</span><span class="token keyword">int</s
     <span class="token function">postOrder</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span> ret<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>迭代法</li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">postorderTraversal</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> ret<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+    stack<span class="token operator">&lt;</span>TreeNode<span class="token operator">*</span><span class="token operator">></span> st<span class="token punctuation">;</span>
+    st<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>st<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        TreeNode<span class="token operator">*</span> cur <span class="token operator">=</span> st<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        st<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ret<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>cur<span class="token operator">-></span>left<span class="token punctuation">)</span> st<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>cur<span class="token operator">-></span>right<span class="token punctuation">)</span> st<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">reverse</span><span class="token punctuation">(</span>ret<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> ret<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
