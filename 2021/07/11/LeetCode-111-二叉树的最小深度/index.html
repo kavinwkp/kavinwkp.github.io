@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="CMakeForOpenCV, kavin">
+    <meta name="keywords" content="111-二叉树的最小深度, kavin">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>CMakeForOpenCV | kavin</title>
+    <title>111-二叉树的最小深度 | kavin</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">CMakeForOpenCV</h1>
+                    <h1 class="description center-align post-title">111-二叉树的最小深度</h1>
                 </div>
             </div>
         </div>
@@ -368,12 +368,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/CMake/">
-                                <span class="chip bg-color">CMake</span>
-                            </a>
-                        
-                            <a href="/tags/OpenCV/">
-                                <span class="chip bg-color">OpenCV</span>
+                            <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">
+                                <span class="chip bg-color">二叉树</span>
                             </a>
                         
                     </div>
@@ -384,8 +380,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/OpenCV/" class="post-category">
-                                OpenCV
+                            <a href="/categories/LeetCode/" class="post-category">
+                                LeetCode
                             </a>
                         
                     </div>
@@ -397,7 +393,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-21
+                    2021-07-11
                 </div>
                 
 
@@ -421,53 +417,66 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <!-- toc -->
-<h2 id="g-编译OpenCV"><a href="#g-编译OpenCV" class="headerlink" title="g++ 编译OpenCV"></a>g++ 编译OpenCV</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">g++ main.cpp -I D:/software/opencv/opencv/build/x64/mingw/install/include 
--L D:/software/opencv/opencv/build/x64/mingw/install/x64/mingw/lib 
--l libopencv_calib3d450 -l libopencv_core450 -l libopencv_dnn450 -l libopencv_features2d450 
--l libopencv_flann450 -l libopencv_gapi450 -l libopencv_highgui450 -l libopencv_imgcodecs450 
--l libopencv_imgproc450 -l libopencv_ml450 -l libopencv_objdetect450 -l libopencv_photo450 
--l libopencv_stitching450 -l libopencv_video450 -l libopencv_videoio450 -l libopencv_world450 
--o main.exe 
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="Ubuntu可以用pkg-config"><a href="#Ubuntu可以用pkg-config" class="headerlink" title="Ubuntu可以用pkg_config"></a>Ubuntu可以用<code>pkg_config</code></h2><p><strong>查看OpenCV路径和库</strong><br><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ pkg-config --cflags --libs opencv 
--I/usr/local/include/opencv 
--I/usr/local/include 
--L/usr/local/lib 
--lopencv_dnn -lopencv_ml -lopencv_objdetect 
--lopencv_shape -lopencv_stitching -lopencv_superres 
--lopencv_videostab -lopencv_calib3d -lopencv_features2d 
--lopencv_highgui -lopencv_videoio -lopencv_imgcodecs 
--lopencv_video -lopencv_photo -lopencv_imgproc 
--lopencv_flann -lopencv_viz -lopencv_core
-
-g++ main.cpp -o main <span class="token variable"><span class="token variable">`</span>pkg-config --cflags --libs opencv<span class="token variable">`</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
-<h2 id="CMake编译OpenCV"><a href="#CMake编译OpenCV" class="headerlink" title="CMake编译OpenCV"></a>CMake编译OpenCV</h2><pre class="line-numbers language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">find_package</span><span class="token punctuation">(</span>OpenCV REQUIRED<span class="token punctuation">)</span>
-
-<span class="token keyword">message</span><span class="token punctuation">(</span><span class="token string">"<span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">OpenCV_INCLUDE_DIRS</span><span class="token punctuation">&#125;</span></span>"</span><span class="token punctuation">)</span>
-<span class="token comment"># /usr/local/include</span>
-
-<span class="token keyword">message</span><span class="token punctuation">(</span><span class="token string">"<span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">OpenCV_LIBRARY_DIRS</span><span class="token punctuation">&#125;</span></span>"</span><span class="token punctuation">)</span>
-<span class="token comment"># /usr/local/include/opencv</span>
-
-<span class="token keyword">message</span><span class="token punctuation">(</span><span class="token string">"<span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">OpenCV_LIBS</span><span class="token punctuation">&#125;</span></span>"</span><span class="token punctuation">)</span>
-<span class="token comment"># opencv_calib3d;opencv_core;...</span>
-
-<span class="token keyword">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_CXX_FLAGS</span> <span class="token string">"<span class="token interpolation"><span class="token punctuation">$&#123;</span><span class="token variable">CMAKE_CXX_FLAGS</span><span class="token punctuation">&#125;</span></span>"</span><span class="token punctuation">)</span>
-
-<span class="token keyword">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_BUILD_TYPE</span> Debug<span class="token punctuation">)</span>
-
-<span class="token comment"># 头文件目录</span>
-<span class="token keyword">include_directories</span><span class="token punctuation">(</span><span class="token punctuation">$&#123;</span>OpenCV_INCLUDE_DIRS<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-
-<span class="token comment"># 库文件目录</span>
-<span class="token keyword">link_directories</span><span class="token punctuation">(</span><span class="token punctuation">$&#123;</span>OpenCV_LIBRARY_DIRS<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-
-
-<span class="token keyword">add_executable</span><span class="token punctuation">(</span>main main.cpp<span class="token punctuation">)</span>
-
-<span class="token comment">#链接</span>
-<span class="token keyword">target_link_libraries</span><span class="token punctuation">(</span>main <span class="token punctuation">$&#123;</span>OpenCV_LIBS<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <h2 id="LeetCode-111-Minimum-Depth-of-Binary-Tree"><a href="#LeetCode-111-Minimum-Depth-of-Binary-Tree" class="headerlink" title="LeetCode 111. Minimum Depth of Binary Tree"></a>LeetCode 111. Minimum Depth of Binary Tree</h2><p>Given a binary tree, find its <strong>minimum depth</strong>.</p>
+<p>The <strong>minimum depth</strong> is the number of nodes along the shortest path from the root node down to the nearest leaf node.</p>
+<p>Note: A leaf is a node with <strong>no children</strong>.</p>
+<p>Example 1:<br><img src="/2021/07/11/LeetCode-111-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%B0%8F%E6%B7%B1%E5%BA%A6/111.jpg" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> root <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">15</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">]</span>
+Output<span class="token operator">:</span> <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<h2 id="method-1-递归"><a href="#method-1-递归" class="headerlink" title="method 1: 递归"></a>method 1: 递归</h2><p>如果子树为空的话不能算深度为0，因为只有叶子节点才算深度</p>
+<ul>
+<li>左子树为空，右子树非空，返回右子树高度+1</li>
+<li>右子树为空，左子树非空，返回左子树高度+1</li>
+<li>左右子树都非空，返回较小者+1</li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">minDepth</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> leftDepth <span class="token operator">=</span> <span class="token function">minDepth</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> rightDepth <span class="token operator">=</span> <span class="token function">minDepth</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span>left <span class="token operator">==</span> <span class="token keyword">nullptr</span> <span class="token operator">&amp;&amp;</span> root<span class="token operator">-></span>right<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">1</span> <span class="token operator">+</span> rightDepth<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span>left <span class="token operator">&amp;&amp;</span> root<span class="token operator">-></span>right <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">1</span> <span class="token operator">+</span> leftDepth<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">min</span><span class="token punctuation">(</span>leftDepth<span class="token punctuation">,</span> rightDepth<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="method-2-层序遍历"><a href="#method-2-层序遍历" class="headerlink" title="method 2: 层序遍历"></a>method 2: 层序遍历</h2><h2 id="错误写法"><a href="#错误写法" class="headerlink" title="错误写法"></a>错误写法</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">minDepth</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    queue<span class="token operator">&lt;</span>TreeNode<span class="token operator">*</span><span class="token operator">></span> q<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> depth <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>q<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> size <span class="token operator">=</span> q<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        depth<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            TreeNode<span class="token operator">*</span> cur <span class="token operator">=</span> q<span class="token punctuation">.</span><span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            q<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>cur<span class="token operator">-></span>left<span class="token punctuation">)</span> q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>cur<span class="token operator">-></span>right<span class="token punctuation">)</span> q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 不能用else</span>
+            <span class="token keyword">else</span> <span class="token keyword">break</span><span class="token punctuation">;</span>     <span class="token comment">// 不能用break</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> depth<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li><code>else</code> 是分支语句，执行了if就不会执行 <code>else</code>，这样右节点就不会被放进来</li>
+<li><code>break</code> 退出当前 <code>for</code> 循环，但外面还有一个 <code>while</code> 循环，破坏了层序遍历的结构</li>
+</ul>
+<h3 id="正确写法"><a href="#正确写法" class="headerlink" title="正确写法"></a>正确写法</h3><p>三种情况分别用三个<code>if</code>判断<br>没有左子树和右子树，说明是叶子节点，可以返回了</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">minDepth</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    queue<span class="token operator">&lt;</span>TreeNode<span class="token operator">*</span><span class="token operator">></span> q<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> depth <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>q<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> size <span class="token operator">=</span> q<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        depth<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            TreeNode<span class="token operator">*</span> cur <span class="token operator">=</span> q<span class="token punctuation">.</span><span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            q<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>cur<span class="token operator">-></span>left<span class="token punctuation">)</span> q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>cur<span class="token operator">-></span>right<span class="token punctuation">)</span> q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>cur<span class="token operator">-></span>left <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>cur<span class="token operator">-></span>right<span class="token punctuation">)</span> <span class="token keyword">return</span> depth<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> depth<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -493,7 +502,7 @@ g++ main.cpp -o main <span class="token variable"><span class="token variable">`
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/03/21/OpenCV-CMakeForOpenCV/">http://example.com/2021/03/21/OpenCV-CMakeForOpenCV/</a>
+                    <a href="http://example.com/2021/07/11/LeetCode-111-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%B0%8F%E6%B7%B1%E5%BA%A6/">http://example.com/2021/07/11/LeetCode-111-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%B0%8F%E6%B7%B1%E5%BA%A6/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -531,12 +540,8 @@ g++ main.cpp -o main <span class="token variable"><span class="token variable">`
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/CMake/">
-                                    <span class="chip bg-color">CMake</span>
-                                </a>
-                            
-                                <a href="/tags/OpenCV/">
-                                    <span class="chip bg-color">OpenCV</span>
+                                <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">
+                                    <span class="chip bg-color">二叉树</span>
                                 </a>
                             
                         </div>
@@ -712,13 +717,13 @@ g++ main.cpp -o main <span class="token variable"><span class="token variable">`
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/21/LeetCode-167-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/">
+                <a href="/2021/07/12/LeetCode-222-%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E8%8A%82%E7%82%B9/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="167-两数之和 II - 输入有序数组">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="222-完全二叉树的节点">
                         
-                        <span class="card-title">167-两数之和 II - 输入有序数组</span>
+                        <span class="card-title">222-完全二叉树的节点</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -729,7 +734,7 @@ g++ main.cpp -o main <span class="token variable"><span class="token variable">`
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-03-21
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-07-12
                         </span>
                         <span class="publish-author">
                             
@@ -746,12 +751,8 @@ g++ main.cpp -o main <span class="token variable"><span class="token variable">`
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/">
-                        <span class="chip bg-color">哈希表</span>
-                    </a>
-                    
-                    <a href="/tags/%E4%BA%8C%E5%88%86%E6%B3%95/">
-                        <span class="chip bg-color">二分法</span>
+                    <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">
+                        <span class="chip bg-color">二叉树</span>
                     </a>
                     
                 </div>
@@ -765,13 +766,13 @@ g++ main.cpp -o main <span class="token variable"><span class="token variable">`
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/21/Eigen-Eigen-1/">
+                <a href="/2021/07/11/LeetCode-104-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E6%B7%B1%E5%BA%A6/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Eigen_1">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="104-二叉树的最大深度">
                         
-                        <span class="card-title">Eigen_1</span>
+                        <span class="card-title">104-二叉树的最大深度</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -782,12 +783,16 @@ g++ main.cpp -o main <span class="token variable"><span class="token variable">`
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-11
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kavin
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -795,8 +800,12 @@ g++ main.cpp -o main <span class="token variable"><span class="token variable">`
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Eigen/">
-                        <span class="chip bg-color">Eigen</span>
+                    <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">
+                        <span class="chip bg-color">二叉树</span>
+                    </a>
+                    
+                    <a href="/tags/%E9%80%92%E5%BD%92/">
+                        <span class="chip bg-color">递归</span>
                     </a>
                     
                 </div>
