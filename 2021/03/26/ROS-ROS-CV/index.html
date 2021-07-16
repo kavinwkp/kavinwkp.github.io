@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="ROS cv_bridge, kavin">
+    <meta name="keywords" content="ROS图像处理, kavin">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>ROS cv_bridge | kavin</title>
+    <title>ROS图像处理 | kavin</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">ROS cv_bridge</h1>
+                    <h1 class="description center-align post-title">ROS图像处理</h1>
                 </div>
             </div>
         </div>
@@ -368,12 +368,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/OpenCV/">
-                                <span class="chip bg-color">OpenCV</span>
-                            </a>
-                        
                             <a href="/tags/ROS/">
                                 <span class="chip bg-color">ROS</span>
+                            </a>
+                        
+                            <a href="/tags/OpenCV/">
+                                <span class="chip bg-color">OpenCV</span>
                             </a>
                         
                     </div>
@@ -413,11 +413,12 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!-- toc -->
-<h2 id="发布图像"><a href="#发布图像" class="headerlink" title="发布图像"></a>发布图像</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">image_transport<span class="token operator">::</span>ImageTransport <span class="token function">it</span><span class="token punctuation">(</span>nh<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">//用句柄初始化image_transport</span>
+<h2 id="发布图像"><a href="#发布图像" class="headerlink" title="发布图像"></a>发布图像</h2><p>使用<code>image_transport</code>进行图像话题发布订阅</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">image_transport<span class="token operator">::</span>ImageTransport <span class="token function">it</span><span class="token punctuation">(</span>nh<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">//用句柄初始化image_transport</span>
 image_transport<span class="token operator">::</span>Publisher image_pub <span class="token operator">=</span> it<span class="token punctuation">.</span><span class="token function">advertise</span><span class="token punctuation">(</span><span class="token string">"image_topic"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">//cv::Mat通过cv_bridge::CvImage转换为sensor_msgs::ImagePtr</span>
 sensor_msgs<span class="token operator">::</span>ImagePtr msg <span class="token operator">=</span> cv_bridge<span class="token operator">::</span><span class="token function">CvImage</span><span class="token punctuation">(</span>std_msgs<span class="token operator">::</span><span class="token function">Header</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"bgr8"</span><span class="token punctuation">,</span> image<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toImageMsg</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h></span></span>
+<h3 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;image_transport/image_transport.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;opencv2/highgui/highgui.hpp></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;opencv2/core/core.hpp></span></span>
@@ -453,7 +454,7 @@ sensor_msgs<span class="token operator">::</span>ImagePtr msg <span class="token
 <span class="token comment">//sensor_msgs话题通过cv_bridge::toCvCopy转换为cv::Mat指针</span>
 cv_bridge<span class="token operator">::</span>CvImagePtr cv_ptr <span class="token operator">=</span> cv_bridge<span class="token operator">::</span><span class="token function">toCvCopy</span><span class="token punctuation">(</span>msg<span class="token punctuation">,</span> sensor_msgs<span class="token operator">::</span>image_encodings<span class="token operator">::</span>BGR8<span class="token punctuation">)</span><span class="token punctuation">;</span>
 Mat colorImg <span class="token operator">=</span> cv_ptr<span class="token operator">-></span>image<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h></span></span>
+<h3 id="源代码-1"><a href="#源代码-1" class="headerlink" title="源代码"></a>源代码</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sensor_msgs/image_encodings.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;image_transport/image_transport.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;opencv2/opencv.hpp></span></span>
@@ -565,12 +566,12 @@ Mat colorImg<span class="token punctuation">;</span>
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/OpenCV/">
-                                    <span class="chip bg-color">OpenCV</span>
-                                </a>
-                            
                                 <a href="/tags/ROS/">
                                     <span class="chip bg-color">ROS</span>
+                                </a>
+                            
+                                <a href="/tags/OpenCV/">
+                                    <span class="chip bg-color">OpenCV</span>
                                 </a>
                             
                         </div>
@@ -746,13 +747,13 @@ Mat colorImg<span class="token punctuation">;</span>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/26/ROS-ROS-5/">
+                <a href="/2021/03/26/ROS-ROS-4/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="ROS自定义类">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="ROS自定义srv">
                         
-                        <span class="card-title">ROS自定义类</span>
+                        <span class="card-title">ROS自定义srv</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
