@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="404-左叶子之和, kavin">
+    <meta name="keywords" content="112-路径总和, kavin">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>404-左叶子之和 | kavin</title>
+    <title>112-路径总和 | kavin</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">404-左叶子之和</h1>
+                    <h1 class="description center-align post-title">112-路径总和</h1>
                 </div>
             </div>
         </div>
@@ -372,6 +372,10 @@
                                 <span class="chip bg-color">二叉树</span>
                             </a>
                         
+                            <a href="/tags/%E5%9B%9E%E6%BA%AF/">
+                                <span class="chip bg-color">回溯</span>
+                            </a>
+                        
                     </div>
                     
                 </div>
@@ -393,7 +397,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-07-15
+                    2021-07-17
                 </div>
                 
 
@@ -417,20 +421,43 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="LeetCode-404-Sum-of-Left-Leaves"><a href="#LeetCode-404-Sum-of-Left-Leaves" class="headerlink" title="LeetCode 404. Sum of Left Leaves"></a>LeetCode 404. Sum of Left Leaves</h2><p>Given the root of a binary tree, return the sum of all <strong>left leaves</strong>.</p>
-<p>Example 1:<br><img src="/2021/07/15/LeetCode-404-%E5%B7%A6%E5%8F%B6%E5%AD%90%E4%B9%8B%E5%92%8C/404.jpg" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> root <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">15</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">]</span>
-Output<span class="token operator">:</span> <span class="token number">24</span>
-Explanation<span class="token operator">:</span> There are two left leaves in the binary tree<span class="token punctuation">,</span> with values <span class="token number">9</span> <span class="token operator">and</span> <span class="token number">15</span> respectively<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
-<h2 id="method-递归"><a href="#method-递归" class="headerlink" title="method: 递归"></a>method: 递归</h2><p>左叶子的判断：当前节点的左节点不为空，左节点的左节点和右节点为空</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">sumOfLeftLeaves</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>root <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> leftSum <span class="token operator">=</span> <span class="token function">sumOfLeftLeaves</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> rightSum <span class="token operator">=</span> <span class="token function">sumOfLeftLeaves</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> midSum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span>left <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>root<span class="token operator">-></span>left<span class="token operator">-></span>left <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>root<span class="token operator">-></span>left<span class="token operator">-></span>right<span class="token punctuation">)</span> 
-        midSum <span class="token operator">=</span> root<span class="token operator">-></span>left<span class="token operator">-></span>val<span class="token punctuation">;</span>
-    <span class="token keyword">return</span> midSum <span class="token operator">+</span> leftSum <span class="token operator">+</span> rightSum<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <h2 id="LeetCode-112-Path-Sum"><a href="#LeetCode-112-Path-Sum" class="headerlink" title="LeetCode 112. Path Sum"></a>LeetCode 112. Path Sum</h2><p>Given the root of a binary tree and an integer targetSum, return true if the tree has a <strong>root-to-leaf</strong> path such that adding up all the values along the path equals targetSum.</p>
+<p>A leaf is a node with no children.</p>
+<p>Example 1:<br><img src="/2021/07/17/LeetCode-112-%E8%B7%AF%E5%BE%84%E6%80%BB%E5%92%8C/112.jpg" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> root <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">11</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span>null<span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> targetSum <span class="token operator">=</span> <span class="token number">22</span>
+Output<span class="token operator">:</span> <span class="token boolean">true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<h2 id="method-回溯"><a href="#method-回溯" class="headerlink" title="method: 回溯"></a>method: 回溯</h2><p>注意这种有返回值的回溯的写法</p>
+<p>这里是先判断左右节点非空才递归，也可以不管空不空先递归，再判断节点是否为空</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">bool</span> <span class="token function">dfs</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">,</span> <span class="token keyword">int</span> sum<span class="token punctuation">,</span> <span class="token keyword">int</span> targetSum<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token operator">-></span>left <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>sum <span class="token operator">+</span> root<span class="token operator">-></span>val <span class="token operator">==</span> targetSum<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">bool</span> leftSum <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token keyword">bool</span> rightSum <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        leftSum <span class="token operator">=</span> <span class="token function">dfs</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">,</span> sum <span class="token operator">+</span> root<span class="token operator">-></span>val<span class="token punctuation">,</span> targetSum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        rightSum <span class="token operator">=</span> <span class="token function">dfs</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">,</span> sum <span class="token operator">+</span> root<span class="token operator">-></span>val<span class="token punctuation">,</span> targetSum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>leftSum <span class="token operator">||</span> rightSum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">bool</span> <span class="token function">hasPathSum</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">,</span> <span class="token keyword">int</span> targetSum<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">dfs</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> targetSum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>先递归再判空</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">bool</span> <span class="token function">dfs</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">,</span> <span class="token keyword">int</span> sum<span class="token punctuation">,</span> <span class="token keyword">int</span> targetSum<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token operator">-></span>left <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>sum <span class="token operator">+</span> root<span class="token operator">-></span>val <span class="token operator">==</span> targetSum<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">bool</span> leftSum <span class="token operator">=</span> <span class="token function">dfs</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">,</span> sum <span class="token operator">+</span> root<span class="token operator">-></span>val<span class="token punctuation">,</span> targetSum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">bool</span> rightSum <span class="token operator">=</span> <span class="token function">dfs</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">,</span> sum <span class="token operator">+</span> root<span class="token operator">-></span>val<span class="token punctuation">,</span> targetSum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>leftSum <span class="token operator">||</span> rightSum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">bool</span> <span class="token function">hasPathSum</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">,</span> <span class="token keyword">int</span> targetSum<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token function">dfs</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> targetSum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -456,7 +483,7 @@ Explanation<span class="token operator">:</span> There are two left leaves in th
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/07/15/LeetCode-404-%E5%B7%A6%E5%8F%B6%E5%AD%90%E4%B9%8B%E5%92%8C/">http://example.com/2021/07/15/LeetCode-404-%E5%B7%A6%E5%8F%B6%E5%AD%90%E4%B9%8B%E5%92%8C/</a>
+                    <a href="http://example.com/2021/07/17/LeetCode-112-%E8%B7%AF%E5%BE%84%E6%80%BB%E5%92%8C/">http://example.com/2021/07/17/LeetCode-112-%E8%B7%AF%E5%BE%84%E6%80%BB%E5%92%8C/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -496,6 +523,10 @@ Explanation<span class="token operator">:</span> There are two left leaves in th
                             
                                 <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">
                                     <span class="chip bg-color">二叉树</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%9B%9E%E6%BA%AF/">
+                                    <span class="chip bg-color">回溯</span>
                                 </a>
                             
                         </div>
@@ -667,62 +698,18 @@ Explanation<span class="token operator">:</span> There are two left leaves in th
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/07/16/ROS-Octomap/">
+                <a href="/2021/07/17/LeetCode-112-%E8%B7%AF%E5%BE%84%E6%80%BB%E5%92%8C/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="Octomap">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="112-路径总和">
                         
-                        <span class="card-title">Octomap</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-07-16
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            kavin
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/ROS/">
-                        <span class="chip bg-color">ROS</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/07/14/LeetCode-257-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%89%80%E6%9C%89%E8%B7%AF%E5%BE%84/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="257-二叉树的所有路径">
-                        
-                        <span class="card-title">257-二叉树的所有路径</span>
+                        <span class="card-title">112-路径总和</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -733,7 +720,7 @@ Explanation<span class="token operator">:</span> There are two left leaves in th
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-14
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-17
                             </span>
                         <span class="publish-author">
                             
@@ -747,6 +734,7 @@ Explanation<span class="token operator">:</span> There are two left leaves in th
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -756,6 +744,55 @@ Explanation<span class="token operator">:</span> There are two left leaves in th
                     
                     <a href="/tags/%E5%9B%9E%E6%BA%AF/">
                         <span class="chip bg-color">回溯</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/07/16/PX4-%E6%97%A0%E4%BA%BA%E6%9C%BA/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="无人机">
+                        
+                        <span class="card-title">无人机</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-16
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%97%A0%E4%BA%BA%E6%9C%BA/" class="post-category">
+                                    无人机
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/PX4/">
+                        <span class="chip bg-color">PX4</span>
                     </a>
                     
                 </div>
