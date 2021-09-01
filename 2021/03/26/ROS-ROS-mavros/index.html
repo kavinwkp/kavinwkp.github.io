@@ -409,66 +409,58 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!-- toc -->
-<center>
-<img src="/2021/03/26/ROS-ROS-mavros/mavros.png#pic_center" width="50%" height="50%" alt="test">
-<br>
-<div style="color:orange; border-bottom: 1px solid #d9d9d9;
-display: inline-block;
-color: #999;
-padding: 2px;">通信流程图</div>
-</center>
+<p><img src="/2021/03/26/ROS-ROS-mavros/mavros/mavros.png" alt></p>
+<h2 id="常用MAVROS消息"><a href="#常用MAVROS消息" class="headerlink" title="常用MAVROS消息"></a>常用MAVROS消息</h2><h3 id="global-position-订阅-GPS-数据"><a href="#global-position-订阅-GPS-数据" class="headerlink" title="global_position 订阅 GPS 数据"></a>global_position 订阅 GPS 数据</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>global_position<span class="token operator">/</span>global
+类型名称<span class="token operator">:</span> sensor_msgs<span class="token operator">::</span>NavSatFix
 
-<h2 id="常用MAVROS消息"><a href="#常用MAVROS消息" class="headerlink" title="常用MAVROS消息"></a>常用<code>MAVROS</code>消息</h2><h3 id="global-position-订阅-GPS-数据"><a href="#global-position-订阅-GPS-数据" class="headerlink" title="global_position 订阅 GPS 数据"></a><code>global_position</code> 订阅 GPS 数据</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">消息名称<span class="token punctuation">:</span> mavros<span class="token operator">/</span>global_position<span class="token operator">/</span><span class="token keyword">global</span>
-类型名称<span class="token punctuation">:</span> <span class="token class-name static-context">sensor_msgs</span><span class="token operator">::</span>NavSatFix
-
-常用类成员变量<span class="token punctuation">:</span> 
+常用类成员变量<span class="token operator">:</span> 
 float64 latitude    <span class="token comment">//经</span>
 float64 longitude   <span class="token comment">//纬</span>
 float64 altitude    <span class="token comment">//海拔</span>
 float64<span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span> position_covariance
 uint8 position_covariance_type<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="imu-pub-订阅-IMU-原始数据"><a href="#imu-pub-订阅-IMU-原始数据" class="headerlink" title="imu_pub 订阅 IMU 原始数据"></a><code>imu_pub</code> 订阅 IMU 原始数据</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">消息名称<span class="token punctuation">:</span> mavros<span class="token operator">/</span>imu<span class="token operator">/</span><span class="token function">data
-</span><span class="token punctuation">(</span>不是mavros<span class="token operator">/</span>imu<span class="token operator">/</span>data_raw<span class="token punctuation">,</span> mavros<span class="token operator">/</span>imu<span class="token operator">/</span>data 为经过滤波后的数据<span class="token punctuation">)</span>
-类型名称<span class="token punctuation">:</span> <span class="token class-name static-context">sensor_msgs</span><span class="token operator">::</span>Imu
+<h3 id="imu-pub-订阅-IMU-原始数据"><a href="#imu-pub-订阅-IMU-原始数据" class="headerlink" title="imu_pub 订阅 IMU 原始数据"></a>imu_pub 订阅 IMU 原始数据</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>imu<span class="token operator">/</span><span class="token function">data</span>
+<span class="token punctuation">(</span>不是mavros<span class="token operator">/</span>imu<span class="token operator">/</span>data_raw<span class="token punctuation">,</span> mavros<span class="token operator">/</span>imu<span class="token operator">/</span>data 为经过滤波后的数据<span class="token punctuation">)</span>
+类型名称<span class="token operator">:</span> sensor_msgs<span class="token operator">::</span>Imu
 
-常用类成员变量<span class="token punctuation">:</span>
-<span class="token class-name static-context">geometry_msgs</span><span class="token operator">::</span>Quaternion orientation       <span class="token comment">//旋转四元数(xyzw)</span>
+常用类成员变量<span class="token operator">:</span>
+geometry_msgs<span class="token operator">::</span>Quaternion orientation       <span class="token comment">//旋转四元数(xyzw)</span>
 float64<span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span> orientation_covariance           <span class="token comment">//方差</span>
-<span class="token class-name static-context">geometry_msgs</span><span class="token operator">::</span>Vector3 angular_velocity     <span class="token comment">//3 轴角速度(xyz)</span>
+geometry_msgs<span class="token operator">::</span>Vector3 angular_velocity     <span class="token comment">//3 轴角速度(xyz)</span>
 float64<span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span> angular_velocity_covariance      <span class="token comment">//方差</span>
-<span class="token class-name static-context">geometry_msgs</span><span class="token operator">::</span>Vector3 linear_acceleration  <span class="token comment">//线性加速度(xyz)</span>
+geometry_msgs<span class="token operator">::</span>Vector3 linear_acceleration  <span class="token comment">//线性加速度(xyz)</span>
 float64<span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span> linear_acceleration_covariance   <span class="token comment">//方差</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="local-position-订阅本地位置数据"><a href="#local-position-订阅本地位置数据" class="headerlink" title="local_position 订阅本地位置数据"></a><code>local_position</code> 订阅本地位置数据</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">消息名称<span class="token punctuation">:</span> mavros<span class="token operator">/</span>local_position<span class="token operator">/</span>pose
-类型名称<span class="token punctuation">:</span> <span class="token class-name static-context">geometry_msgs</span><span class="token operator">::</span>PoseStamped
+<h3 id="local-position-订阅本地位置数据"><a href="#local-position-订阅本地位置数据" class="headerlink" title="local_position 订阅本地位置数据"></a>local_position 订阅本地位置数据</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>local_position<span class="token operator">/</span>pose
+类型名称<span class="token operator">:</span> geometry_msgs<span class="token operator">::</span>PoseStamped
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h3 id="manual-control-订阅遥控器的值"><a href="#manual-control-订阅遥控器的值" class="headerlink" title="manual_control 订阅遥控器的值"></a><code>manual_control</code> 订阅遥控器的值</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">消息名称<span class="token punctuation">:</span> mavros<span class="token operator">/</span>manual_control<span class="token operator">/</span>control
-类型名称<span class="token punctuation">:</span> <span class="token class-name static-context">mavros_msgs</span><span class="token operator">::</span>ManualControl
+<h3 id="manual-control-订阅遥控器的值"><a href="#manual-control-订阅遥控器的值" class="headerlink" title="manual_control 订阅遥控器的值"></a>manual_control 订阅遥控器的值</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>manual_control<span class="token operator">/</span>control
+类型名称<span class="token operator">:</span> mavros_msgs<span class="token operator">::</span>ManualControl
 
-常用类成员变量<span class="token punctuation">:</span>
+常用类成员变量<span class="token operator">:</span>
 float32 x
 float32 y
 float32 z
 float32 r
 uint16 buttons<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="sys-status-查询系统状态"><a href="#sys-status-查询系统状态" class="headerlink" title="sys_status 查询系统状态"></a><code>sys_status</code> 查询系统状态</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">消息名称<span class="token punctuation">:</span> mavros<span class="token operator">/</span>state
-类型名称<span class="token punctuation">:</span> <span class="token class-name static-context">mavros_msgs</span><span class="token operator">::</span>State
+<h3 id="sys-status-查询系统状态"><a href="#sys-status-查询系统状态" class="headerlink" title="sys_status 查询系统状态"></a>sys_status 查询系统状态</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>state
+类型名称<span class="token operator">:</span> mavros_msgs<span class="token operator">::</span>State
 
-常用类成员变量<span class="token punctuation">:</span>
-<span class="token keyword type-declaration">bool</span> connected  <span class="token comment">//是否连接</span>
-<span class="token keyword type-declaration">bool</span> armed      <span class="token comment">//是否解锁</span>
-<span class="token keyword type-declaration">bool</span> guided     <span class="token comment">//是否被引导（offboard 模式）</span>
-<span class="token keyword type-declaration">string</span> mode     <span class="token comment">//模式类型</span>
+常用类成员变量<span class="token operator">:</span>
+<span class="token keyword">bool</span> connected  <span class="token comment">//是否连接</span>
+<span class="token keyword">bool</span> armed      <span class="token comment">//是否解锁</span>
+<span class="token keyword">bool</span> guided     <span class="token comment">//是否被引导（offboard 模式）</span>
+string mode     <span class="token comment">//模式类型</span>
 uint8 system_status<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="waypoint-查询航点"><a href="#waypoint-查询航点" class="headerlink" title="waypoint 查询航点"></a><code>waypoint</code> 查询航点</h3><pre class="line-numbers language-php" data-language="php"><code class="language-php">消息名称<span class="token punctuation">:</span> mavros<span class="token operator">/</span>mission<span class="token operator">/</span>waypoints
-类型名称<span class="token punctuation">:</span> <span class="token class-name static-context">mavros_msgs</span><span class="token operator">::</span>WaypointList
+<h3 id="waypoint-查询航点"><a href="#waypoint-查询航点" class="headerlink" title="waypoint 查询航点"></a>waypoint 查询航点</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>mission<span class="token operator">/</span>waypoints
+类型名称<span class="token operator">:</span> mavros_msgs<span class="token operator">::</span>WaypointList
 
-常用类成员变量<span class="token punctuation">:</span>
+常用类成员变量<span class="token operator">:</span>
 uint16 current_seq  <span class="token comment">//当前航点索引</span>
-<span class="token class-name static-context">mavros_msgs</span><span class="token operator">::</span>Waypoint<span class="token punctuation">[</span><span class="token punctuation">]</span> waypoints
+mavros_msgs<span class="token operator">::</span>Waypoint<span class="token punctuation">[</span><span class="token punctuation">]</span> waypoints
     uint8 frame     <span class="token comment">//坐标类型</span>
     uint16 command  <span class="token comment">//命令 id，16 为航点</span>
-    <span class="token keyword type-declaration">bool</span> is_current
-    <span class="token keyword type-declaration">bool</span> autocontinue
+    <span class="token keyword">bool</span> is_current
+    <span class="token keyword">bool</span> autocontinue
     float32 param1
     float32 param2
     float32 param3

@@ -413,6 +413,30 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!-- toc -->
+<h2 id="OpenCV-3-3-1"><a href="#OpenCV-3-3-1" class="headerlink" title="OpenCV 3.3.1"></a>OpenCV 3.3.1</h2><h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> build <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> build
+<span class="token function">mkdir</span> installed
+cmake -DCMAKE_BUILD_TYPE<span class="token operator">=</span>RELEASE -DCMAKE_INSTALL_PREFIX<span class="token operator">=</span>~/Library/opencv-3.3.1/build/installed -DWITH_CUDA<span class="token operator">=</span>OFF -DBUILD_DOCS<span class="token operator">=</span>OFF -DBUILD_EXAMPLES<span class="token operator">=</span>OFF -DBUILD_TESTS<span class="token operator">=</span>OFF -DBUILD_PERF_TESTS<span class="token operator">=</span>OFF -DOPENCV_EXTRA_MODULES_PATH<span class="token operator">=</span><span class="token punctuation">..</span>/opencv_contrib/modules <span class="token punctuation">..</span>
+<span class="token function">make</span> -j4
+<span class="token function">sudo</span> <span class="token function">make</span> <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="修改系统默认版本"><a href="#修改系统默认版本" class="headerlink" title="修改系统默认版本"></a>修改系统默认版本</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> ~/.bashrc
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">PKG_CONFIG_PATH</span><span class="token operator">=</span>~/Library/opencv-3.3.1/build/installed/lib/pkgconfig
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">LD_LIBRARY_PATH</span><span class="token operator">=</span>~/Library/opencv-3.3.1/build/installed/lib
+<span class="token builtin class-name">source</span> ~/.bashrc<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="版本确认"><a href="#版本确认" class="headerlink" title="版本确认"></a>版本确认</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pkg-config --modversion opencv
+<span class="token number">3.3</span>.1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>头文件位置<br><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pkg-config --cflags opencv
+-I/home/kavin/Library/opencv-3.3.1/build/installed/include/opencv
+-I/home/kavin/Library/opencv-3.3.1/build/installed/include<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
+<p>库文件<br><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pkg-config --libs opencv
+-L/home/kavin/Library/opencv-3.3.1/build/installed/lib -lopencv_stitching -lopencv_superres -lopencv_videostab -lopencv_photo -lopencv_aruco 
+-lopencv_bgsegm -lopencv_bioinspired -lopencv_ccalib -lopencv_dpm -lopencv_face -lopencv_freetype -lopencv_fuzzy -lopencv_hdf -lopencv_img_hash 
+-lopencv_line_descriptor -lopencv_optflow -lopencv_reg -lopencv_rgbd -lopencv_saliency -lopencv_sfm -lopencv_stereo -lopencv_structured_light -lopencv_viz -lopencv_phase_unwrapping 
+-lopencv_surface_matching -lopencv_tracking -lopencv_datasets -lopencv_text -lopencv_dnn -lopencv_plot -lopencv_xfeatures2d -lopencv_shape -lopencv_video -lopencv_ml -lopencv_ximgproc 
+-lopencv_calib3d -lopencv_features2d -lopencv_highgui -lopencv_videoio -lopencv_flann -lopencv_xobjdetect -lopencv_imgcodecs -lopencv_objdetect 
+-lopencv_xphoto -lopencv_imgproc -lopencv_core<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<h3 id="CMakeLists指定版本"><a href="#CMakeLists指定版本" class="headerlink" title="CMakeLists指定版本"></a>CMakeLists指定版本</h3><p>不修改默认是在<code>/usr</code>查找</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">set<span class="token punctuation">(</span>OpenCV_DIR <span class="token string">"~/Library/opencv-3.3.1/build"</span><span class="token punctuation">)</span>
+find_package<span class="token punctuation">(</span>OpenCV REQUIRED<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <h2 id="发布图像"><a href="#发布图像" class="headerlink" title="发布图像"></a>发布图像</h2><p>使用<code>image_transport</code>进行图像话题发布订阅</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">image_transport<span class="token operator">::</span>ImageTransport <span class="token function">it</span><span class="token punctuation">(</span>nh<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">//用句柄初始化image_transport</span>
 image_transport<span class="token operator">::</span>Publisher image_pub <span class="token operator">=</span> it<span class="token punctuation">.</span><span class="token function">advertise</span><span class="token punctuation">(</span><span class="token string">"image_topic"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
