@@ -368,16 +368,16 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E9%93%BE%E8%A1%A8/">
-                                <span class="chip bg-color">链表</span>
+                            <a href="/tags/%E9%80%92%E5%BD%92/">
+                                <span class="chip bg-color">递归</span>
                             </a>
                         
                             <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">
                                 <span class="chip bg-color">双指针</span>
                             </a>
                         
-                            <a href="/tags/%E9%80%92%E5%BD%92/">
-                                <span class="chip bg-color">递归</span>
+                            <a href="/tags/%E9%93%BE%E8%A1%A8/">
+                                <span class="chip bg-color">链表</span>
                             </a>
                         
                     </div>
@@ -480,16 +480,14 @@ Output<span class="token operator">:</span> <span class="token boolean">true</sp
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="method-2-递归"><a href="#method-2-递归" class="headerlink" title="method 2: 递归"></a>method 2: 递归</h2><p>如果要求不能修改链表，只能用递归<br>因为递归总是先从最后一个元素开始处理的，相当于有个指针从后往前走<br>所以用一个全局的指针从前往后走就可以相互比较了</p>
 <p>利用栈<strong>先进后出</strong>的特性从后往前遍历</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode <span class="token operator">*</span>front <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>  <span class="token comment">// 全局的指针，从前往后走</span>
-<span class="token keyword">bool</span> <span class="token function">recursivelyCheck</span><span class="token punctuation">(</span>ListNode <span class="token operator">*</span>cur<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>cur<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">recursivelyCheck</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>next<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>cur<span class="token operator">-></span>val <span class="token operator">!=</span> front<span class="token operator">-></span>val<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-        front <span class="token operator">=</span> front<span class="token operator">-></span>next<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode <span class="token operator">*</span>front <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+<span class="token keyword">bool</span> <span class="token function">traversal</span><span class="token punctuation">(</span>ListNode <span class="token operator">*</span>cur<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>cur<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">traversal</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>next<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>cur<span class="token operator">-></span>val <span class="token operator">!=</span> front<span class="token operator">-></span>val<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    front <span class="token operator">=</span> front<span class="token operator">-></span>next<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>    <span class="token comment">// 前面的条件都过了，说明到此为止是回文</span>
 <span class="token punctuation">&#125;</span>
-
 <span class="token keyword">bool</span> <span class="token function">isPalindrome</span><span class="token punctuation">(</span>ListNode<span class="token operator">*</span> head<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     ListNode <span class="token operator">*</span>fast <span class="token operator">=</span> head<span class="token punctuation">;</span>
     ListNode <span class="token operator">*</span>slow <span class="token operator">=</span> head<span class="token punctuation">;</span>
@@ -498,8 +496,8 @@ Output<span class="token operator">:</span> <span class="token boolean">true</sp
         slow <span class="token operator">=</span> slow<span class="token operator">-></span>next<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
     front <span class="token operator">=</span> head<span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token function">recursivelyCheck</span><span class="token punctuation">(</span>slow<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">return</span> <span class="token function">traversal</span><span class="token punctuation">(</span>slow<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>先找到中间节点，从中间节点开始递归</p>
 
                 
@@ -565,16 +563,16 @@ Output<span class="token operator">:</span> <span class="token boolean">true</sp
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E9%93%BE%E8%A1%A8/">
-                                    <span class="chip bg-color">链表</span>
+                                <a href="/tags/%E9%80%92%E5%BD%92/">
+                                    <span class="chip bg-color">递归</span>
                                 </a>
                             
                                 <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">
                                     <span class="chip bg-color">双指针</span>
                                 </a>
                             
-                                <a href="/tags/%E9%80%92%E5%BD%92/">
-                                    <span class="chip bg-color">递归</span>
+                                <a href="/tags/%E9%93%BE%E8%A1%A8/">
+                                    <span class="chip bg-color">链表</span>
                                 </a>
                             
                         </div>
@@ -829,12 +827,12 @@ Output<span class="token operator">:</span> <span class="token boolean">true</sp
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E9%93%BE%E8%A1%A8/">
-                        <span class="chip bg-color">链表</span>
-                    </a>
-                    
                     <a href="/tags/%E9%80%92%E5%BD%92/">
                         <span class="chip bg-color">递归</span>
+                    </a>
+                    
+                    <a href="/tags/%E9%93%BE%E8%A1%A8/">
+                        <span class="chip bg-color">链表</span>
                     </a>
                     
                 </div>
