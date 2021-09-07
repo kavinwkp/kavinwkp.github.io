@@ -372,6 +372,10 @@
                                 <span class="chip bg-color">二叉树</span>
                             </a>
                         
+                            <a href="/tags/%E9%80%92%E5%BD%92/">
+                                <span class="chip bg-color">递归</span>
+                            </a>
+                        
                     </div>
                     
                 </div>
@@ -393,7 +397,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-07-04
+                    2021-09-07
                 </div>
                 
 
@@ -422,22 +426,22 @@
 <p>Example:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">]</span>
 Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">10</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token operator">or</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>Explanation:</p>
 <figure class="half">
-    <img src="/2021/07/04/LeetCode-108-%E6%95%B0%E7%BB%84%E8%BD%AC%E4%B8%BA%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/108_1.jpg">
-    <img src="/2021/07/04/LeetCode-108-%E6%95%B0%E7%BB%84%E8%BD%AC%E4%B8%BA%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/108_2.jpg">
+    <img src="/2021/09/07/LeetCode-108-%E6%95%B0%E7%BB%84%E8%BD%AC%E4%B8%BA%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/108_1.jpg">
+    <img src="/2021/09/07/LeetCode-108-%E6%95%B0%E7%BB%84%E8%BD%AC%E4%B8%BA%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/108_2.jpg">
 </figure>
 
-<h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode<span class="token operator">*</span> <span class="token function">tranversal</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">,</span> <span class="token keyword">int</span> left<span class="token punctuation">,</span> <span class="token keyword">int</span> right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>left <span class="token operator">></span> right<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> mid <span class="token operator">=</span> left <span class="token operator">+</span> right <span class="token operator">>></span> <span class="token number">1</span><span class="token punctuation">;</span>
-    TreeNode<span class="token operator">*</span> root <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">TreeNode</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>mid<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    root<span class="token operator">-></span>left <span class="token operator">=</span> <span class="token function">tranversal</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> left<span class="token punctuation">,</span> mid <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    root<span class="token operator">-></span>right <span class="token operator">=</span> <span class="token function">tranversal</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> mid <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>数组中间节点为根节点，递归处理左边数组和右边数组<br>注意还是左开右闭<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode<span class="token operator">*</span> <span class="token function">traversal</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">,</span> <span class="token keyword">int</span> begin<span class="token punctuation">,</span> <span class="token keyword">int</span> end<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>begin <span class="token operator">>=</span> end<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> mid <span class="token operator">=</span> begin <span class="token operator">+</span> end <span class="token operator">>></span> <span class="token number">1</span><span class="token punctuation">;</span>
+    TreeNode <span class="token operator">*</span>root <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">TreeNode</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>mid<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    root<span class="token operator">-></span>left <span class="token operator">=</span> <span class="token function">traversal</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> begin<span class="token punctuation">,</span> mid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    root<span class="token operator">-></span>right <span class="token operator">=</span> <span class="token function">traversal</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> mid <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> end<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> root<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 TreeNode<span class="token operator">*</span> <span class="token function">sortedArrayToBST</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    TreeNode<span class="token operator">*</span> root <span class="token operator">=</span> <span class="token function">tranversal</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> root<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">return</span> <span class="token function">traversal</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+
                 
             </div>
             <hr/>
@@ -463,7 +467,7 @@ TreeNode<span class="token operator">*</span> <span class="token function">sorte
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/07/04/LeetCode-108-%E6%95%B0%E7%BB%84%E8%BD%AC%E4%B8%BA%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/">http://example.com/2021/07/04/LeetCode-108-%E6%95%B0%E7%BB%84%E8%BD%AC%E4%B8%BA%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/</a>
+                    <a href="http://example.com/2021/09/07/LeetCode-108-%E6%95%B0%E7%BB%84%E8%BD%AC%E4%B8%BA%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/">http://example.com/2021/09/07/LeetCode-108-%E6%95%B0%E7%BB%84%E8%BD%AC%E4%B8%BA%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -503,6 +507,10 @@ TreeNode<span class="token operator">*</span> <span class="token function">sorte
                             
                                 <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">
                                     <span class="chip bg-color">二叉树</span>
+                                </a>
+                            
+                                <a href="/tags/%E9%80%92%E5%BD%92/">
+                                    <span class="chip bg-color">递归</span>
                                 </a>
                             
                         </div>
@@ -674,17 +682,18 @@ TreeNode<span class="token operator">*</span> <span class="token function">sorte
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/07/11/LeetCode-104-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E6%B7%B1%E5%BA%A6/">
+                <a href="/2021/09/07/LeetCode-108-%E6%95%B0%E7%BB%84%E8%BD%AC%E4%B8%BA%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="104-二叉树的最大深度">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="108-数组转为二叉搜索树">
                         
-                        <span class="card-title">104-二叉树的最大深度</span>
+                        <span class="card-title">108-数组转为二叉搜索树</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -694,9 +703,9 @@ TreeNode<span class="token operator">*</span> <span class="token function">sorte
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-07-11
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-07
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -709,6 +718,7 @@ TreeNode<span class="token operator">*</span> <span class="token function">sorte
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -731,13 +741,13 @@ TreeNode<span class="token operator">*</span> <span class="token function">sorte
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/07/04/LeetCode-101-%E5%AF%B9%E7%A7%B0%E4%BA%8C%E5%8F%89%E6%A0%91/">
+                <a href="/2021/09/07/LeetCode-98-%E9%AA%8C%E8%AF%81%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="101-对称二叉树">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="98-验证二叉搜索树">
                         
-                        <span class="card-title">101-对称二叉树</span>
+                        <span class="card-title">98-验证二叉搜索树</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -748,7 +758,7 @@ TreeNode<span class="token operator">*</span> <span class="token function">sorte
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-04
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-07
                             </span>
                         <span class="publish-author">
                             
