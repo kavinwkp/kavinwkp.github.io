@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="725-分隔链表, kavin">
+    <meta name="keywords" content="206-反转链表, kavin">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>725-分隔链表 | kavin</title>
+    <title>206-反转链表 | kavin</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">725-分隔链表</h1>
+                    <h1 class="description center-align post-title">206-反转链表</h1>
                 </div>
             </div>
         </div>
@@ -393,7 +393,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-09
+                    2021-09-15
                 </div>
                 
 
@@ -417,38 +417,17 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="LeetCode-725-Split-Linked-List-in-Parts"><a href="#LeetCode-725-Split-Linked-List-in-Parts" class="headerlink" title="LeetCode 725. Split Linked List in Parts"></a>LeetCode 725. Split Linked List in Parts</h2><p>Given a (singly) linked list with head node root, write a function to split the linked list into <code>k consecutive linked list &quot;parts&quot;</code>.</p>
-<p>The length of each part should be <code>as equal as possible</code>: no two parts should have a size <code>differing by more than 1</code>. This may lead to some parts being null.</p>
-<p>The parts should be in order of occurrence in the input list, and parts occurring earlier should always have a size <code>greater than or equal parts occurring later</code>.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> 
-root <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">3</span>
-Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
-Explanation<span class="token operator">:</span>
-The input has been split into consecutive parts with size difference at most <span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">and</span> earlier parts are a larger size than the later parts<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
-<h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>余数要分配到前面的每一个，也就是前面的每份都要加1，直到余数减到0</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span>ListNode<span class="token operator">*</span><span class="token operator">></span> <span class="token function">splitListToParts</span><span class="token punctuation">(</span>ListNode<span class="token operator">*</span> root<span class="token punctuation">,</span> <span class="token keyword">int</span> k<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    ListNode <span class="token operator">*</span>head <span class="token operator">=</span> root<span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>head<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        len<span class="token operator">++</span><span class="token punctuation">;</span>
-        head <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">int</span> num <span class="token operator">=</span> len <span class="token operator">/</span> k<span class="token punctuation">;</span>  <span class="token comment">// 每份有多少个</span>
-    <span class="token keyword">int</span> mod <span class="token operator">=</span> len <span class="token operator">%</span> k<span class="token punctuation">;</span>  <span class="token comment">// 还剩多少个，要均匀分配</span>
-    vector<span class="token operator">&lt;</span>ListNode<span class="token operator">*</span><span class="token operator">></span> <span class="token function">res</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    head <span class="token operator">=</span> root<span class="token punctuation">;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> head <span class="token operator">&amp;&amp;</span> i <span class="token operator">&lt;</span> k<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        res<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> head<span class="token punctuation">;</span>
-        <span class="token keyword">int</span> count <span class="token operator">=</span> num <span class="token operator">+</span> <span class="token punctuation">(</span>mod<span class="token operator">--</span> <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">?</span> <span class="token number">1</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">--</span>count<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            head <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        ListNode <span class="token operator">*</span>tmp <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>
-        head<span class="token operator">-></span>next <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
-        head <span class="token operator">=</span> tmp<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <h2 id="LeetCode-206-Reverse-Linked-List"><a href="#LeetCode-206-Reverse-Linked-List" class="headerlink" title="LeetCode 206. Reverse Linked List"></a>LeetCode 206. Reverse Linked List</h2><p>同<a href="[../剑指Offer/24-反转链表.md](https://kavinwkp.github.io/2021/05/25/%E5%89%91%E6%8C%87Offer-24-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/">剑指Offer</a>)</p>
+<p>Given the head of a singly linked list, <strong>reverse</strong> the list, and return the reversed list.</p>
+<p>Example 1:<br><img src="/2021/09/15/LeetCode-206-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/206.jpg" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> head <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span>
+Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<h2 id="method-递归"><a href="#method-递归" class="headerlink" title="method: 递归"></a>method: 递归</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode<span class="token operator">*</span> <span class="token function">reverseList</span><span class="token punctuation">(</span>ListNode<span class="token operator">*</span> head<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>head <span class="token operator">||</span> <span class="token operator">!</span>head<span class="token operator">-></span>next<span class="token punctuation">)</span> <span class="token keyword">return</span> head<span class="token punctuation">;</span>
+    ListNode <span class="token operator">*</span>newHead <span class="token operator">=</span> <span class="token function">reverseList</span><span class="token punctuation">(</span>head<span class="token operator">-></span>next<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    head<span class="token operator">-></span>next<span class="token operator">-></span>next <span class="token operator">=</span> head<span class="token punctuation">;</span>
+    head<span class="token operator">-></span>next <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> newHead<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -474,7 +453,7 @@ The input has been split into consecutive parts with size difference at most <sp
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/06/09/LeetCode-725-%E5%88%86%E9%9A%94%E9%93%BE%E8%A1%A8/">http://example.com/2021/06/09/LeetCode-725-%E5%88%86%E9%9A%94%E9%93%BE%E8%A1%A8/</a>
+                    <a href="http://example.com/2021/09/15/LeetCode-206-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/">http://example.com/2021/09/15/LeetCode-206-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -685,70 +664,18 @@ The input has been split into consecutive parts with size difference at most <sp
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/06/09/LeetCode-232-%E7%94%A8%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97/">
+                <a href="/2021/09/15/LeetCode-206-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="232-用栈实现队列">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="206-反转链表">
                         
-                        <span class="card-title">232-用栈实现队列</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-09
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/LeetCode/" class="post-category">
-                                    LeetCode
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E6%A0%88/">
-                        <span class="chip bg-color">栈</span>
-                    </a>
-                    
-                    <a href="/tags/%E9%98%9F%E5%88%97/">
-                        <span class="chip bg-color">队列</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/06/07/LeetCode-445-%E9%93%BE%E8%A1%A8%E7%9B%B8%E5%8A%A0/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="445-链表相加">
-                        
-                        <span class="card-title">445-链表相加</span>
+                        <span class="card-title">206-反转链表</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -759,7 +686,7 @@ The input has been split into consecutive parts with size difference at most <sp
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-07
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-15
                             </span>
                         <span class="publish-author">
                             
@@ -773,15 +700,61 @@ The input has been split into consecutive parts with size difference at most <sp
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%A0%88/">
-                        <span class="chip bg-color">栈</span>
-                    </a>
-                    
                     <a href="/tags/%E9%93%BE%E8%A1%A8/">
                         <span class="chip bg-color">链表</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/09/14/%E6%95%B0%E5%AD%A6-Matlab/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="Matlab">
+                        
+                        <span class="card-title">Matlab</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-14
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%95%B0%E5%AD%A6/" class="post-category">
+                                    数学
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%95%B0%E5%AD%A6/">
+                        <span class="chip bg-color">数学</span>
                     </a>
                     
                 </div>
