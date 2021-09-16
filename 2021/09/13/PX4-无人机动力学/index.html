@@ -450,7 +450,7 @@
 \frac{\sqrt{3}}{2}\\ 
 0
 \end{bmatrix}</script><p>也可以看成是$\mathcal{A}$中的向量$\mathbf{p}=\begin{bmatrix}1&amp;0&amp;0\end{bmatrix}^\mathrm{T}$绕$z$轴旋转$60^{\circ}$得到向量$\mathbf{q}=\begin{bmatrix}\frac{1}{2} &amp;\frac{\sqrt{3}}{2}&amp; 0\end{bmatrix}^\mathrm{T}$</p>
-<h2 id="姿态运动学方程"><a href="#姿态运动学方程" class="headerlink" title="姿态运动学方程"></a>姿态运动学方程</h2><p>对$\mathbf{q}=R\mathbf{p}$微分可得</p>
+<h2 id="旋转矩阵姿态运动学方程"><a href="#旋转矩阵姿态运动学方程" class="headerlink" title="旋转矩阵姿态运动学方程"></a>旋转矩阵姿态运动学方程</h2><p>对$\mathbf{q}=R\mathbf{p}$微分可得</p>
 <script type="math/tex; mode=display">\dot{\mathbf{q}}=\dot{R}\mathbf{p}</script><p>$\dot{\mathbf{q}}$是惯性系下的速度<br>两边同乘以$R^\mathrm{T}$，可得</p>
 <script type="math/tex; mode=display">R^\mathrm{T}\dot{\mathbf{q}}=R^\mathrm{T}\dot{R}\mathbf{p}</script><p>将方程转换到体轴系下，$R^\mathrm{T}\dot{\mathbf{q}}$是体轴系下的速度，根据</p>
 <script type="math/tex; mode=display">\dot{r}=\omega \times r</script><p>或者写成反对称阵形式</p>
@@ -471,7 +471,91 @@ R(u, \phi) = Icos\phi + uu^\mathrm{T}(1-cos\phi) + \hat{u}sin\phi</script><p>$\h
  z &  0 & -x \\
 -y &  x &  0
 \end{bmatrix}</script><p>即当已知旋转轴和旋转角度后，就可以通过Rodrigues公式求出旋转矩阵</p>
-<h2 id="四元数"><a href="#四元数" class="headerlink" title="四元数"></a>四元数</h2><script type="math/tex; mode=display">
+<h2 id="欧拉角"><a href="#欧拉角" class="headerlink" title="欧拉角"></a>欧拉角</h2><p><img src="/2021/09/13/PX4-%E6%97%A0%E4%BA%BA%E6%9C%BA%E5%8A%A8%E5%8A%9B%E5%AD%A6/euler00.png" alt></p>
+<p>根据Rodrigues公式，可以写出绕$z$轴、$y$轴、$x$轴的旋转矩阵</p>
+<p>绕$z$轴旋转$\psi$</p>
+<script type="math/tex; mode=display">
+R(z,\psi) = 
+\begin{bmatrix}
+ cos\psi & -sin\psi &  0 \\
+ sin\psi &  cos\psi & 0 \\
+0 &  0 &  1
+\end{bmatrix}</script><p>绕$y$轴旋转$\theta$</p>
+<script type="math/tex; mode=display">
+R(y,\theta) = 
+\begin{bmatrix}
+ cos\theta & 0 &  sin\theta \\
+ 0 &  1 & 0 \\
+ -sin\theta &  0 &  cos\theta
+\end{bmatrix}</script><p>绕$x$轴旋转$\phi$</p>
+<script type="math/tex; mode=display">
+R(x,\phi) = 
+\begin{bmatrix}
+ 1 & 0 &  0 \\
+ 0 & cos\phi & -sin\phi \\
+ 0 &  sin\phi &  cos\phi
+\end{bmatrix}</script><p>按Z-Y-X的顺序组成三次旋转的复合旋转矩阵</p>
+<script type="math/tex; mode=display">
+R(z,\psi)R(y,\theta)R(x,\phi) = 
+\begin{bmatrix}
+cos\psi cos\theta&cos\psi sin\theta \sin\phi-sin\psi cos\phi&cos\psi sin\theta cos\phi+sin\psi sin\phi\\
+sin\psi cos\theta&sin\psi sin\theta sin\phi+cos\psi cos\phi&sin\psi sin\theta cos\phi-cos\psi sin\phi\\
+-sin\theta&cos\theta sin\phi&cos\theta cos\phi
+\end{bmatrix}</script><p>这里每个旋转矩阵都是在新的坐标系中描述的，所以是右乘<br>如果是相对于原始坐标系，就要左乘。所以也可以看成是相对于原始坐标系的描述的X-Y-Z旋转复合</p>
+<h3 id="欧拉角姿态运动方程"><a href="#欧拉角姿态运动方程" class="headerlink" title="欧拉角姿态运动方程"></a>欧拉角姿态运动方程</h3><p><img src="/2021/09/13/PX4-%E6%97%A0%E4%BA%BA%E6%9C%BA%E5%8A%A8%E5%8A%9B%E5%AD%A6/euler.png" alt></p>
+<p>机体角速度可以表示为</p>
+<script type="math/tex; mode=display">
+\mathbf{\omega}= \begin{bmatrix}\mathbf{i}_3 & \mathbf{j}_3 & \mathbf{k}_3\end{bmatrix}
+\begin{bmatrix}p \\ q \\ r\end{bmatrix}</script><p>可以分解为三次变换的欧拉角速度组合</p>
+<script type="math/tex; mode=display">
+\mathbf{\omega} = \dot{\psi}\mathbf{k}_1 + \dot{\theta}\mathbf{j}_2 + \dot{\phi}\mathbf{i}_3</script><p>因为</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}\mathbf{i}_3 & \mathbf{j}_3 & \mathbf{k}_3\end{bmatrix} = 
+\begin{bmatrix}\mathbf{i}_2 & \mathbf{j}_2 & \mathbf{k}_2\end{bmatrix} R_{32}</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}\mathbf{i}_2 & \mathbf{j}_2 & \mathbf{k}_2\end{bmatrix} = 
+\begin{bmatrix}\mathbf{i}_3 & \mathbf{j}_3 & \mathbf{k}_3\end{bmatrix} R_{32}^\mathrm{T}</script><p>所以</p>
+<script type="math/tex; mode=display">
+\mathbf{j}_2 = 
+\begin{bmatrix}\mathbf{i}_3 & \mathbf{j}_3 & \mathbf{k}_3\end{bmatrix}
+\begin{bmatrix}0 \\ cos\phi \\ -sin\phi \end{bmatrix}</script><p>同理</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}\mathbf{i}_3 & \mathbf{j}_3 & \mathbf{k}_3\end{bmatrix} = 
+\begin{bmatrix}\mathbf{i}_1 & \mathbf{j}_1 & \mathbf{k}_1\end{bmatrix} R_{21}R_{32}</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}\mathbf{i}_1 & \mathbf{j}_1 & \mathbf{k}_1\end{bmatrix} = 
+\begin{bmatrix}\mathbf{i}_3 & \mathbf{j}_3 & \mathbf{k}_3\end{bmatrix} 
+R_{32}^{\mathrm{T}} R_{21}^{\mathrm{T}}</script><p>所以</p>
+<script type="math/tex; mode=display">
+\mathbf{k}_1 = 
+\begin{bmatrix}\mathbf{i}_3 & \mathbf{j}_3 & \mathbf{k}_3\end{bmatrix}
+\begin{bmatrix}-sin\theta \\ sin\phi cos\theta \\ cos\phi cos\theta \end{bmatrix}</script><p>组合起来就是</p>
+<script type="math/tex; mode=display">
+\dot{\psi}\begin{bmatrix}-sin\theta \\ sin\phi cos\theta \\ cos\phi cos\theta \end{bmatrix} + 
+\dot{\theta}\begin{bmatrix}0 \\ cos\phi \\ -sin\phi \end{bmatrix} +
+\dot{\phi}\begin{bmatrix}1 \\ 0 \\ 0 \end{bmatrix} = 
+\begin{bmatrix}
+1 & 0 & -sin\theta \\
+0 & cos\phi & sin\phi cos\theta \\
+0 & -sin\phi & cos\phi cos\theta
+\end{bmatrix}
+\begin{bmatrix}\dot{\phi} \\ \dot{\theta} \\ \dot{\psi}\end{bmatrix}</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}p \\ q \\ r\end{bmatrix} = 
+\begin{bmatrix}
+1 & 0 & -sin\theta \\
+0 & cos\phi & sin\phi cos\theta \\
+0 & -sin\phi & cos\phi cos\theta
+\end{bmatrix}
+\begin{bmatrix}\dot{\phi} \\ \dot{\theta} \\ \dot{\psi}\end{bmatrix}</script><p>也可以写成</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}\dot{\phi} \\ \dot{\theta} \\ \dot{\psi}\end{bmatrix} = 
+\begin{bmatrix}
+1 & sin\phi tan\theta & cos\phi tan\theta \\
+0 & cos\phi & -sin\phi \\
+0 & sin\phi/cos\theta & cos\phi/cos\theta
+\end{bmatrix}
+\begin{bmatrix}p \\ q \\ r\end{bmatrix}</script><h2 id="四元数"><a href="#四元数" class="headerlink" title="四元数"></a>四元数</h2><script type="math/tex; mode=display">
 q = (q_0, q_1, q_2, q_3)</script><p>或写成</p>
 <script type="math/tex; mode=display">
 q = (q_0, \mathbf{q})</script><p>加减法</p>
@@ -480,7 +564,9 @@ p \pm q = (q_0 \pm q_0, \mathbf{p} \pm \mathbf{q})</script><p>乘法</p>
 <script type="math/tex; mode=display">
 p \otimes q = (p_0q_0-\mathbf{p}^\mathrm{T}\mathbf{q}, p_0\mathbf{q}+q_0\mathbf{p}+\mathbf{p} \times \mathbf{q})</script><p>共轭</p>
 <script type="math/tex; mode=display">
-q^{*} = (q_0, -\mathbf{q})</script><p>已知旋转轴$u=\begin{bmatrix}u_1&amp;u_2&amp;u_3\end{bmatrix}^\mathrm{T}$和旋转角度$\phi$，可以写出四元数</p>
+q^{*} = (q_0, -\mathbf{q})</script><p>逆</p>
+<script type="math/tex; mode=display">
+q^{-1} = \frac{q^{*}}{||q||}</script><p>已知旋转轴$u=\begin{bmatrix}u_1&amp;u_2&amp;u_3\end{bmatrix}^\mathrm{T}$和旋转角度$\phi$，可以写出四元数</p>
 <script type="math/tex; mode=display">
 q = (cos(\frac{\phi}{2}), u_1sin(\frac{\phi}{2}), u_2sin(\frac{\phi}{2}), u_3sin(\frac{\phi}{2}))</script><p>要对一个向量$p$进行旋转，先将向量写成四元数形式$p=(0, \mathbf{p})$，再左乘四元数$q$，右乘四元数的共轭$q^{-1}$</p>
 <script type="math/tex; mode=display">
@@ -488,7 +574,28 @@ p^{\prime} = qpq^{*} = (0, \mathbf{p^{\prime}})</script><p>如果$q_1$是坐标�
 <script type="math/tex; mode=display">
 q = q_2q_1</script><p>如果$q_1$是坐标系$\mathcal{A}$的四元数，旋转之后得到坐标系$\mathcal{B}$，$q_2$是坐标系$\mathcal{B}$的四元数，则两次旋转的复合是</p>
 <script type="math/tex; mode=display">
-q = q_1q_2</script><h3 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h3><h4 id="坐标变换"><a href="#坐标变换" class="headerlink" title="坐标变换"></a>坐标变换</h4><p><img src="/2021/09/13/PX4-%E6%97%A0%E4%BA%BA%E6%9C%BA%E5%8A%A8%E5%8A%9B%E5%AD%A6/example.png" alt></p>
+q = q_1q_2</script><h3 id="四元数姿态运动方程"><a href="#四元数姿态运动方程" class="headerlink" title="四元数姿态运动方程"></a>四元数姿态运动方程</h3><script type="math/tex; mode=display">
+\dot{q} = \frac{\mathbf{\omega}}{2} q</script><p>写成矩阵形式</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+\dot{q_0} \\
+\dot{q_1} \\
+\dot{q_2} \\
+\dot{q_3} \\
+\end{bmatrix} = 
+\frac{1}{2}
+\begin{bmatrix}
+0 & -\omega_x & -\omega_y & -\omega_z \\
+\omega_x & 0 & \omega_z & -\omega_y \\
+\omega_y & -\omega_z & 0 & \omega_x \\
+\omega_z & \omega_y & -\omega_x & 0
+\end{bmatrix}
+\begin{bmatrix}
+q_0 \\
+q_1 \\
+q_2 \\
+q_3 \\
+\end{bmatrix}</script><h3 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h3><h4 id="坐标变换"><a href="#坐标变换" class="headerlink" title="坐标变换"></a>坐标变换</h4><p><img src="/2021/09/13/PX4-%E6%97%A0%E4%BA%BA%E6%9C%BA%E5%8A%A8%E5%8A%9B%E5%AD%A6/example.png" alt></p>
 <p>旋转轴$u=\begin{bmatrix}0&amp;0&amp;1\end{bmatrix}^\mathrm{T}$，旋转角度$60^{\circ}$</p>
 <script type="math/tex; mode=display">
 \mathbf{q} = \begin{bmatrix}\frac{\sqrt{3}}{2} \\ 0 \\ 0 \\ \frac{1}{2}\end{bmatrix}</script><p>$q$在坐标系$\mathcal{A}$中的表示为</p>
