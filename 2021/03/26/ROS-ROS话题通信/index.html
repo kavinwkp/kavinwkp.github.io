@@ -492,51 +492,51 @@ float64<span class="token punctuation">[</span><span class="token punctuation">]
 <span class="token function">add_executable</span><span class="token punctuation">(</span>talker src<span class="token operator">/</span>talker<span class="token punctuation">.</span>cpp<span class="token punctuation">)</span>
 
 <span class="token function">target_link_libraries</span><span class="token punctuation">(</span>talker $<span class="token punctuation">&#123;</span>catkin_LIBRARIES<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><h3 id="发布者"><a href="#发布者" class="headerlink" title="发布者"></a>发布者</h3><pre class="line-numbers language-py" data-language="py"><code class="language-py">#! &#x2F;usr&#x2F;bin&#x2F;env python
-# -*- coding: utf-8 -*-
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><h3 id="发布者"><a href="#发布者" class="headerlink" title="发布者"></a>发布者</h3><pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token comment">#! /usr/bin/env python</span>
+<span class="token comment"># -*- coding: utf-8 -*-</span>
 
-import rospy
-from std_msgs.msg import String
-from test_msgs.msg import Position
-
-
-def talker():
-    rospy.init_node(&#39;py_talker&#39;, anonymous&#x3D;True)
-    Pos_pub &#x3D; rospy.Publisher(&#39;&#x2F;test&#x2F;Position&#39;, Position, queue_size&#x3D;10)
-    rate &#x3D; rospy.Rate(10)
-    pos &#x3D; Position()
-    pos.x &#x3D; 10
-    pos.y &#x3D; 20
-    while not rospy.is_shutdown():
-        pos.x +&#x3D; 1
-        pos.y +&#x3D; 2
-        rospy.loginfo(pos)
-        Pos_pub.publish(pos)
-        rate.sleep()
+<span class="token keyword">import</span> rospy
+<span class="token keyword">from</span> std_msgs<span class="token punctuation">.</span>msg <span class="token keyword">import</span> String
+<span class="token keyword">from</span> test_msgs<span class="token punctuation">.</span>msg <span class="token keyword">import</span> Position
 
 
-if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
-    try:
-        talker()
-    except rospy.ROSInterruptException:pass<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="订阅者"><a href="#订阅者" class="headerlink" title="订阅者"></a>订阅者</h3><pre class="line-numbers language-py" data-language="py"><code class="language-py">#! &#x2F;usr&#x2F;bin&#x2F;env python
-# -*- coding: utf-8 -*-
+<span class="token keyword">def</span> <span class="token function">talker</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    rospy<span class="token punctuation">.</span>init_node<span class="token punctuation">(</span><span class="token string">'py_talker'</span><span class="token punctuation">,</span> anonymous<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    Pos_pub <span class="token operator">=</span> rospy<span class="token punctuation">.</span>Publisher<span class="token punctuation">(</span><span class="token string">'/test/Position'</span><span class="token punctuation">,</span> Position<span class="token punctuation">,</span> queue_size<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">)</span>
+    rate <span class="token operator">=</span> rospy<span class="token punctuation">.</span>Rate<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
+    pos <span class="token operator">=</span> Position<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    pos<span class="token punctuation">.</span>x <span class="token operator">=</span> <span class="token number">10</span>
+    pos<span class="token punctuation">.</span>y <span class="token operator">=</span> <span class="token number">20</span>
+    <span class="token keyword">while</span> <span class="token keyword">not</span> rospy<span class="token punctuation">.</span>is_shutdown<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        pos<span class="token punctuation">.</span>x <span class="token operator">+=</span> <span class="token number">1</span>
+        pos<span class="token punctuation">.</span>y <span class="token operator">+=</span> <span class="token number">2</span>
+        rospy<span class="token punctuation">.</span>loginfo<span class="token punctuation">(</span>pos<span class="token punctuation">)</span>
+        Pos_pub<span class="token punctuation">.</span>publish<span class="token punctuation">(</span>pos<span class="token punctuation">)</span>
+        rate<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
-import rospy
-from test_msgs.msg import Position
 
-def callback(msg):
-    rospy.loginfo(&#39;Receive: %f, %f&#39;, msg.x, msg.y)
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        talker<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">except</span> rospy<span class="token punctuation">.</span>ROSInterruptException<span class="token punctuation">:</span><span class="token keyword">pass</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="订阅者"><a href="#订阅者" class="headerlink" title="订阅者"></a>订阅者</h3><pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token comment">#! /usr/bin/env python</span>
+<span class="token comment"># -*- coding: utf-8 -*-</span>
 
-def listener():
-    rospy.init_node(&#39;py_listener&#39;, anonymous&#x3D;True)
-    rospy.Subscriber(&#39;&#x2F;test&#x2F;Position&#39;, Position, callback)
-    rospy.spin()
+<span class="token keyword">import</span> rospy
+<span class="token keyword">from</span> test_msgs<span class="token punctuation">.</span>msg <span class="token keyword">import</span> Position
 
-if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
-    try:
-        listener()
-    except rospy.ROSInitException:pass<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">def</span> <span class="token function">callback</span><span class="token punctuation">(</span>msg<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    rospy<span class="token punctuation">.</span>loginfo<span class="token punctuation">(</span><span class="token string">'Receive: %f, %f'</span><span class="token punctuation">,</span> msg<span class="token punctuation">.</span>x<span class="token punctuation">,</span> msg<span class="token punctuation">.</span>y<span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">listener</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    rospy<span class="token punctuation">.</span>init_node<span class="token punctuation">(</span><span class="token string">'py_listener'</span><span class="token punctuation">,</span> anonymous<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    rospy<span class="token punctuation">.</span>Subscriber<span class="token punctuation">(</span><span class="token string">'/test/Position'</span><span class="token punctuation">,</span> Position<span class="token punctuation">,</span> callback<span class="token punctuation">)</span>
+    rospy<span class="token punctuation">.</span>spin<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        listener<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">except</span> rospy<span class="token punctuation">.</span>ROSInitException<span class="token punctuation">:</span><span class="token keyword">pass</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
