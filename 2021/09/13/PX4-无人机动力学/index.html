@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="无人机动力学, kavin">
+    <meta name="keywords" content="无人机动力学, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>无人机动力学 | kavin</title>
+    <title>无人机动力学 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -43,7 +43,7 @@
                     
                     <img src="/medias/kavin.jpg" class="logo-img" alt="LOGO">
                     
-                    <span class="logo-span">kavin</span>
+                    <span class="logo-span">kunpeng</span>
                 </a>
             </div>
             
@@ -142,7 +142,7 @@
         
         <img src="/medias/kavin.jpg" class="logo-img circle responsive-img">
         
-        <div class="logo-name">kavin</div>
+        <div class="logo-name">kunpeng</div>
         <div class="logo-desc">
             
             个人技术博客
@@ -450,7 +450,7 @@
 \frac{\sqrt{3}}{2}\\ 
 0
 \end{bmatrix}</script><p>也可以看成是$\mathcal{A}$中的向量$\mathbf{p}=\begin{bmatrix}1&amp;0&amp;0\end{bmatrix}^\mathrm{T}$绕$z$轴旋转$60^{\circ}$得到向量$\mathbf{q}=\begin{bmatrix}\frac{1}{2} &amp;\frac{\sqrt{3}}{2}&amp; 0\end{bmatrix}^\mathrm{T}$</p>
-<h2 id="旋转矩阵姿态运动学方程"><a href="#旋转矩阵姿态运动学方程" class="headerlink" title="旋转矩阵姿态运动学方程"></a>旋转矩阵姿态运动学方程</h2><p>对$\mathbf{q}=R\mathbf{p}$微分可得</p>
+<h3 id="旋转矩阵姿态运动学方程"><a href="#旋转矩阵姿态运动学方程" class="headerlink" title="旋转矩阵姿态运动学方程"></a>旋转矩阵姿态运动学方程</h3><p>对$\mathbf{q}=R\mathbf{p}$微分可得</p>
 <script type="math/tex; mode=display">\dot{\mathbf{q}}=\dot{R}\mathbf{p}</script><p>$\dot{\mathbf{q}}$是惯性系下的速度<br>两边同乘以$R^\mathrm{T}$，可得</p>
 <script type="math/tex; mode=display">R^\mathrm{T}\dot{\mathbf{q}}=R^\mathrm{T}\dot{R}\mathbf{p}</script><p>将方程转换到体轴系下，$R^\mathrm{T}\dot{\mathbf{q}}$是体轴系下的速度，根据</p>
 <script type="math/tex; mode=display">\dot{r}=\omega \times r</script><p>或者写成反对称阵形式</p>
@@ -475,28 +475,28 @@ R(u, \phi) = Icos\phi + uu^\mathrm{T}(1-cos\phi) + \hat{u}sin\phi</script><p>$\h
 <p>根据Rodrigues公式，可以写出绕$z$轴、$y$轴、$x$轴的旋转矩阵</p>
 <p>绕$z$轴旋转$\psi$</p>
 <script type="math/tex; mode=display">
-R(z,\psi) = 
+R_Z(\psi) = 
 \begin{bmatrix}
  cos\psi & -sin\psi &  0 \\
  sin\psi &  cos\psi & 0 \\
 0 &  0 &  1
 \end{bmatrix}</script><p>绕$y$轴旋转$\theta$</p>
 <script type="math/tex; mode=display">
-R(y,\theta) = 
+R_Y(\theta) = 
 \begin{bmatrix}
  cos\theta & 0 &  sin\theta \\
  0 &  1 & 0 \\
  -sin\theta &  0 &  cos\theta
 \end{bmatrix}</script><p>绕$x$轴旋转$\phi$</p>
 <script type="math/tex; mode=display">
-R(x,\phi) = 
+R_X(\phi) = 
 \begin{bmatrix}
  1 & 0 &  0 \\
  0 & cos\phi & -sin\phi \\
  0 &  sin\phi &  cos\phi
 \end{bmatrix}</script><p>按Z-Y-X的顺序组成三次旋转的复合旋转矩阵</p>
 <script type="math/tex; mode=display">
-R(z,\psi)R(y,\theta)R(x,\phi) = 
+R_Z(\psi)R_Y(\theta)R_X(\phi) = 
 \begin{bmatrix}
 cos\psi cos\theta&cos\psi sin\theta \sin\phi-sin\psi cos\phi&cos\psi sin\theta cos\phi+sin\psi sin\phi\\
 sin\psi cos\theta&sin\psi sin\theta sin\phi+cos\psi cos\phi&sin\psi sin\theta cos\phi-cos\psi sin\phi\\
@@ -595,6 +595,23 @@ q_0 \\
 q_1 \\
 q_2 \\
 q_3 \\
+\end{bmatrix}</script><h3 id="四元数转欧拉角"><a href="#四元数转欧拉角" class="headerlink" title="四元数转欧拉角"></a>四元数转欧拉角</h3><script type="math/tex; mode=display">
+\begin{bmatrix}
+\phi \\ 
+\theta \\
+\psi
+\end{bmatrix} = 
+\begin{bmatrix}
+arctan(\frac{2(q_0q_1+q_2q_3)}{1-2(q_1^2+q_2^2)}) \\
+arcsin(2(q_0q_2-q_1q_3)) \\
+arctan(\frac{q_0q_3+q_1q_2}{1-2(q_2^2+q_3^2)})
+\end{bmatrix}</script><h3 id="四元数表示旋转矩阵"><a href="#四元数表示旋转矩阵" class="headerlink" title="四元数表示旋转矩阵"></a>四元数表示旋转矩阵</h3><p>坐标系$\mathcal{A}$到坐标系$\mathcal{B}$的旋转用四元数描述是$q$<br>则旋转矩阵可以表示为</p>
+<script type="math/tex; mode=display">
+R^A_B = 
+\begin{bmatrix}
+q_0^2+q_1^2-q_2^2-q_3^2 & 2(q_1q_2-q_0q_3) & 2(q_1q_3+q_0q_2) \\
+2(q_1q_2 + q_0q_3) & q_0^2-q_1^2+q_2^2-q_3^2 & 2(q_2q_3-q_0q_1) \\
+2(q_1q_3-q_0q_2) & 2(q_2q_3+q_0q_1) & q_0^2-q_1^2-q_2^2+q_3^2
 \end{bmatrix}</script><h3 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h3><h4 id="坐标变换"><a href="#坐标变换" class="headerlink" title="坐标变换"></a>坐标变换</h4><p><img src="/2021/09/13/PX4-%E6%97%A0%E4%BA%BA%E6%9C%BA%E5%8A%A8%E5%8A%9B%E5%AD%A6/example.png" alt></p>
 <p>旋转轴$u=\begin{bmatrix}0&amp;0&amp;1\end{bmatrix}^\mathrm{T}$，旋转角度$60^{\circ}$</p>
 <script type="math/tex; mode=display">
@@ -657,7 +674,7 @@ end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">kavin</a>
+                    <a href="/about" rel="external nofollow noreferrer">kunpeng</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -680,7 +697,7 @@ end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">kavin</a>
+                    <a href="/about" target="_blank">kunpeng</a>
                     !
                 </span>
             </div>
@@ -1118,7 +1135,7 @@ end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                 <span id="year">2019-2021</span>
             
             <span id="year">2019</span>
-            <a href="/about" target="_blank">kavin</a>
+            <a href="/about" target="_blank">kunpeng</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
