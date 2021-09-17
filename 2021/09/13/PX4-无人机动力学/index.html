@@ -595,7 +595,35 @@ q_0 \\
 q_1 \\
 q_2 \\
 q_3 \\
-\end{bmatrix}</script><h3 id="四元数转欧拉角"><a href="#四元数转欧拉角" class="headerlink" title="四元数转欧拉角"></a>四元数转欧拉角</h3><script type="math/tex; mode=display">
+\end{bmatrix}</script><h4 id="一阶龙格库塔求解"><a href="#一阶龙格库塔求解" class="headerlink" title="一阶龙格库塔求解"></a>一阶龙格库塔求解</h4><script type="math/tex; mode=display">
+\begin{bmatrix}
+q_0 \\
+q_1 \\
+q_2 \\
+q_3 \\
+\end{bmatrix}_{t+\Delta t} = 
+\begin{bmatrix}
+q_0 \\
+q_1 \\
+q_2 \\
+q_3 \\
+\end{bmatrix}_t + \frac{\Delta t}{2} 
+\begin{bmatrix}
+0 & -\omega_x & -\omega_y & -\omega_z \\
+\omega_x & 0 & \omega_z & -\omega_y \\
+\omega_y & -\omega_z & 0 & \omega_x \\
+\omega_z & \omega_y & -\omega_x & 0
+\end{bmatrix}
+\begin{bmatrix}
+q_0 \\
+q_1 \\
+q_2 \\
+q_3 \\
+\end{bmatrix}_t</script><p>代码实现<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">q0 <span class="token operator">=</span> q0 <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token operator">-</span>q1<span class="token operator">*</span>wx <span class="token operator">-</span> q2<span class="token operator">*</span>wy <span class="token operator">-</span> q3<span class="token operator">*</span>wz<span class="token punctuation">)</span><span class="token operator">*</span>halfT<span class="token punctuation">;</span>
+q1 <span class="token operator">=</span> q1 <span class="token operator">+</span> <span class="token punctuation">(</span>q0<span class="token operator">*</span>wx <span class="token operator">+</span> q2<span class="token operator">*</span>wz <span class="token operator">-</span> q3<span class="token operator">*</span>wy<span class="token punctuation">)</span><span class="token operator">*</span>halfT<span class="token punctuation">;</span>
+q2 <span class="token operator">=</span> q2 <span class="token operator">+</span> <span class="token punctuation">(</span>q0<span class="token operator">*</span>wy <span class="token operator">-</span> q1<span class="token operator">*</span>wz <span class="token operator">+</span> q3<span class="token operator">*</span>wx<span class="token punctuation">)</span><span class="token operator">*</span>halfT<span class="token punctuation">;</span>
+q3 <span class="token operator">=</span> q3 <span class="token operator">+</span> <span class="token punctuation">(</span>q0<span class="token operator">*</span>wz <span class="token operator">+</span> q1<span class="token operator">*</span>wy <span class="token operator">-</span> q2<span class="token operator">*</span>wx<span class="token punctuation">)</span><span class="token operator">*</span>halfT<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></p>
+<h3 id="四元数转欧拉角"><a href="#四元数转欧拉角" class="headerlink" title="四元数转欧拉角"></a>四元数转欧拉角</h3><script type="math/tex; mode=display">
 \begin{bmatrix}
 \phi \\ 
 \theta \\
@@ -604,7 +632,7 @@ q_3 \\
 \begin{bmatrix}
 arctan(\frac{2(q_0q_1+q_2q_3)}{1-2(q_1^2+q_2^2)}) \\
 arcsin(2(q_0q_2-q_1q_3)) \\
-arctan(\frac{q_0q_3+q_1q_2}{1-2(q_2^2+q_3^2)})
+arctan(\frac{2(q_0q_3+q_1q_2)}{1-2(q_2^2+q_3^2)})
 \end{bmatrix}</script><h3 id="四元数表示旋转矩阵"><a href="#四元数表示旋转矩阵" class="headerlink" title="四元数表示旋转矩阵"></a>四元数表示旋转矩阵</h3><p>坐标系$\mathcal{A}$到坐标系$\mathcal{B}$的旋转用四元数描述是$q$<br>则旋转矩阵可以表示为</p>
 <script type="math/tex; mode=display">
 R^A_B = 
