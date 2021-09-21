@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="PX4_pos_estimator, kunpeng">
+    <meta name="keywords" content="多旋翼文献, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>PX4_pos_estimator | kunpeng</title>
+    <title>多旋翼文献 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">PX4_pos_estimator</h1>
+                    <h1 class="description center-align post-title">多旋翼文献</h1>
                 </div>
             </div>
         </div>
@@ -368,8 +368,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%97%A0%E4%BA%BA%E6%9C%BA/">
-                                <span class="chip bg-color">无人机</span>
+                            <a href="/tags/%E5%A4%9A%E6%97%8B%E7%BF%BC/">
+                                <span class="chip bg-color">多旋翼</span>
                             </a>
                         
                     </div>
@@ -380,8 +380,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%97%A0%E4%BA%BA%E6%9C%BA/" class="post-category">
-                                无人机
+                            <a href="/categories/%E5%A4%9A%E6%97%8B%E7%BF%BC/" class="post-category">
+                                多旋翼
                             </a>
                         
                     </div>
@@ -393,7 +393,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-26
+                    2021-07-18
                 </div>
                 
 
@@ -417,88 +417,11 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <!-- toc -->
-<h2 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h2><h3 id="相关参数"><a href="#相关参数" class="headerlink" title="相关参数"></a>相关参数</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> input_source<span class="token punctuation">;</span>
-<span class="token keyword">float</span> rate_hz<span class="token punctuation">;</span>
-Eigen<span class="token operator">::</span>Vector3f pos_offset<span class="token punctuation">;</span>
-<span class="token keyword">float</span> yaw_offset<span class="token punctuation">;</span>
-string object_name<span class="token punctuation">;</span>
-ros<span class="token operator">::</span>Time last_timestamp<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="laser定位相关"><a href="#laser定位相关" class="headerlink" title="laser定位相关"></a>laser定位相关</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Eigen<span class="token operator">::</span>Vector3d pos_drone_laser<span class="token punctuation">;</span> <span class="token comment">//无人机当前位置 (laser)</span>
-Eigen<span class="token operator">::</span>Quaterniond q_laser<span class="token punctuation">;</span>
-Eigen<span class="token operator">::</span>Vector3d Euler_laser<span class="token punctuation">;</span> <span class="token comment">//无人机当前姿态(laser)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h3 id="T265"><a href="#T265" class="headerlink" title="T265"></a>T265</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Eigen<span class="token operator">::</span>Vector3d pos_drone_t265<span class="token punctuation">;</span>
-Eigen<span class="token operator">::</span>Quaterniond q_t265<span class="token punctuation">;</span>
-Eigen<span class="token operator">::</span>Vector3d Euler_t265<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h3 id="gazebo真值相关"><a href="#gazebo真值相关" class="headerlink" title="gazebo真值相关"></a>gazebo真值相关</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Eigen<span class="token operator">::</span>Vector3d pos_drone_gazebo<span class="token punctuation">;</span>
-Eigen<span class="token operator">::</span>Quaterniond q_gazebo<span class="token punctuation">;</span>
-Eigen<span class="token operator">::</span>Vector3d Euler_gazebo<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h3 id="SLAM相关"><a href="#SLAM相关" class="headerlink" title="SLAM相关"></a>SLAM相关</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Eigen<span class="token operator">::</span>Vector3d pos_drone_slam<span class="token punctuation">;</span>
-Eigen<span class="token operator">::</span>Quaterniond q_slam<span class="token punctuation">;</span>
-Eigen<span class="token operator">::</span>Vector3d Euler_slam<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h3 id="发布相关变量"><a href="#发布相关变量" class="headerlink" title="发布相关变量"></a>发布相关变量</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">geometry_msgs<span class="token operator">::</span>TransformStamped laser<span class="token punctuation">;</span> <span class="token comment">//当前时刻cartorgrapher发布的数据</span>
-ros<span class="token operator">::</span>Publisher vision_pub<span class="token punctuation">;</span>
-ros<span class="token operator">::</span>Publisher drone_state_pub<span class="token punctuation">;</span>
-ros<span class="token operator">::</span>Publisher message_pub<span class="token punctuation">;</span>
-ros<span class="token operator">::</span>Publisher odom_pub<span class="token punctuation">;</span>
-ros<span class="token operator">::</span>Publisher trajectory_pub<span class="token punctuation">;</span>
-prometheus_msgs<span class="token operator">::</span>Message message<span class="token punctuation">;</span>
-prometheus_msgs<span class="token operator">::</span>DroneState Drone_State<span class="token punctuation">;</span>
-nav_msgs<span class="token operator">::</span>Odometry Drone_odom<span class="token punctuation">;</span>
-std<span class="token operator">::</span>vector<span class="token operator">&lt;</span>geometry_msgs<span class="token operator">::</span>PoseStamped<span class="token operator">></span> posehistory_vector_<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h2><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ros<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"px4_pos_estimator"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-ros<span class="token operator">::</span>NodeHandle <span class="token function">nh</span><span class="token punctuation">(</span><span class="token string">"~"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h3 id="读取参数表中的参数"><a href="#读取参数表中的参数" class="headerlink" title="读取参数表中的参数"></a>读取参数表中的参数</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">//读取参数表中的参数</span>
-<span class="token comment">// 定位数据输入源 0 for vicon， 1 for 激光SLAM, 2 for gazebo ground truth, 3 for T265 ,  9 for outdoor </span>
-nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"input_source"</span><span class="token punctuation">,</span> input_source<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">//　程序执行频率</span>
-nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"rate_hz"</span><span class="token punctuation">,</span> rate_hz<span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">//　定位设备偏移量</span>
-nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"offset_x"</span><span class="token punctuation">,</span> pos_offset<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"offset_y"</span><span class="token punctuation">,</span> pos_offset<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"offset_z"</span><span class="token punctuation">,</span> pos_offset<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"offset_yaw"</span><span class="token punctuation">,</span> yaw_offset<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="订阅"><a href="#订阅" class="headerlink" title="订阅"></a>订阅</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 【订阅】cartographer估计位置</span>
-ros<span class="token operator">::</span>Subscriber laser_sub <span class="token operator">=</span> nh<span class="token punctuation">.</span>subscribe<span class="token operator">&lt;</span>tf2_msgs<span class="token operator">::</span>TFMessage<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"/tf"</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> laser_cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 【订阅】t265估计位置</span>
-ros<span class="token operator">::</span>Subscriber t265_sub <span class="token operator">=</span> nh<span class="token punctuation">.</span>subscribe<span class="token operator">&lt;</span>nav_msgs<span class="token operator">::</span>Odometry<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"/t265/odom/sample"</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> t265_cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 【订阅】gazebo仿真真值</span>
-ros<span class="token operator">::</span>Subscriber gazebo_sub <span class="token operator">=</span> nh<span class="token punctuation">.</span>subscribe<span class="token operator">&lt;</span>nav_msgs<span class="token operator">::</span>Odometry<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"/prometheus/ground_truth/p300_basic"</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> gazebo_cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 【订阅】SLAM估计位姿</span>
-ros<span class="token operator">::</span>Subscriber slam_sub <span class="token operator">=</span> nh<span class="token punctuation">.</span>subscribe<span class="token operator">&lt;</span>geometry_msgs<span class="token operator">::</span>PoseStamped<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"/slam/pose"</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> slam_cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 10秒定时打印，以确保程序在正确运行</span>
-ros<span class="token operator">::</span>Timer timer <span class="token operator">=</span> nh<span class="token punctuation">.</span><span class="token function">createTimer</span><span class="token punctuation">(</span>ros<span class="token operator">::</span><span class="token function">Duration</span><span class="token punctuation">(</span><span class="token number">10.0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> timerCallback<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h3><h4 id="laser-cb"><a href="#laser-cb" class="headerlink" title="laser_cb"></a>laser_cb</h4><h4 id="gazebo-cb"><a href="#gazebo-cb" class="headerlink" title="gazebo_cb"></a>gazebo_cb</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">pos_drone_gazebo <span class="token operator">=</span> <span class="token class-name">Eigen</span><span class="token operator">::</span><span class="token function">Vector3d</span><span class="token punctuation">(</span>msg<span class="token operator">-></span>pose<span class="token punctuation">.</span>pose<span class="token punctuation">.</span>position<span class="token punctuation">.</span>x<span class="token punctuation">,</span> msg<span class="token operator">-></span>pose<span class="token punctuation">.</span>pose<span class="token punctuation">.</span>position<span class="token punctuation">.</span>y<span class="token punctuation">,</span> msg<span class="token operator">-></span>pose<span class="token punctuation">.</span>pose<span class="token punctuation">.</span>position<span class="token punctuation">.</span>z<span class="token punctuation">)</span><span class="token punctuation">;</span>
-q_gazebo <span class="token operator">=</span> <span class="token class-name">Eigen</span><span class="token operator">::</span><span class="token function">Quaterniond</span><span class="token punctuation">(</span>msg<span class="token operator">-></span>pose<span class="token punctuation">.</span>pose<span class="token punctuation">.</span>oriention<span class="token punctuation">.</span>w<span class="token punctuation">,</span> msg<span class="token operator">-></span>pose<span class="token punctuation">.</span>pose<span class="token punctuation">.</span>oriention<span class="token punctuation">.</span>x<span class="token punctuation">,</span> msg<span class="token operator">-></span>pose<span class="token punctuation">.</span>pose<span class="token punctuation">.</span>oriention<span class="token punctuation">.</span>y<span class="token punctuation">,</span> msg<span class="token operator">-></span>pose<span class="token punctuation">.</span>pose<span class="token punctuation">.</span>oriention<span class="token punctuation">.</span>z<span class="token punctuation">)</span><span class="token punctuation">;</span>
-Euler_gazebo <span class="token operator">=</span> <span class="token function">quaterniond_to_euler</span><span class="token punctuation">(</span>q_gazebo<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h4 id="slam-cb"><a href="#slam-cb" class="headerlink" title="slam_cb"></a>slam_cb</h4><h4 id="t265-cb"><a href="#t265-cb" class="headerlink" title="t265_cb"></a>t265_cb</h4><h4 id="timerCallback"><a href="#timerCallback" class="headerlink" title="timerCallback"></a>timerCallback</h4><h3 id="用于与mavros通讯的类，通过mavros接收来至飞控的消息【飞控-gt-mavros-gt-本程序】"><a href="#用于与mavros通讯的类，通过mavros接收来至飞控的消息【飞控-gt-mavros-gt-本程序】" class="headerlink" title="用于与mavros通讯的类，通过mavros接收来至飞控的消息【飞控-&gt;mavros-&gt;本程序】"></a>用于与mavros通讯的类，通过mavros接收来至飞控的消息【飞控-&gt;mavros-&gt;本程序】</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">state_from_mavros _state_from_mavros<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h4 id="state-from-mavros订阅的话题"><a href="#state-from-mavros订阅的话题" class="headerlink" title="state_from_mavros订阅的话题"></a>state_from_mavros订阅的话题</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 【订阅】无人机当前状态 - 来自飞控</span>
-state_sub <span class="token operator">=</span> state_nh<span class="token punctuation">.</span>subscribe<span class="token operator">&lt;</span>mavros_msgs<span class="token operator">::</span>State<span class="token operator">></span><span class="token punctuation">(</span>uav_name <span class="token operator">+</span> <span class="token string">"/mavros/state"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>state_from_mavros<span class="token operator">::</span>state_cb<span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 【订阅】无人机当前状态 - 来自飞控</span>
-extended_state_sub <span class="token operator">=</span> state_nh<span class="token punctuation">.</span>subscribe<span class="token operator">&lt;</span>mavros_msgs<span class="token operator">::</span>ExtendedState<span class="token operator">></span><span class="token punctuation">(</span>uav_name <span class="token operator">+</span> <span class="token string">"/mavros/extended_state"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>state_from_mavros<span class="token operator">::</span>extended_state_cb<span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 【订阅】无人机当前位置 坐标系:ENU系 （此处注意，所有状态量在飞控中均为NED系，但在ros中mavros将其转换为ENU系处理。所以，在ROS中，所有和mavros交互的量都为ENU系）</span>
-position_sub <span class="token operator">=</span> state_nh<span class="token punctuation">.</span>subscribe<span class="token operator">&lt;</span>geometry_msgs<span class="token operator">::</span>PoseStamped<span class="token operator">></span><span class="token punctuation">(</span>uav_name <span class="token operator">+</span> <span class="token string">"/mavros/local_position/pose"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>state_from_mavros<span class="token operator">::</span>pos_cb<span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 【订阅】无人机当前速度 坐标系:ENU系</span>
-velocity_sub <span class="token operator">=</span> state_nh<span class="token punctuation">.</span>subscribe<span class="token operator">&lt;</span>geometry_msgs<span class="token operator">::</span>TwistStamped<span class="token operator">></span><span class="token punctuation">(</span>uav_name <span class="token operator">+</span> <span class="token string">"/mavros/local_position/velocity_local"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>state_from_mavros<span class="token operator">::</span>vel_cb<span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 【订阅】无人机当前欧拉角 坐标系:ENU系</span>
-attitude_sub <span class="token operator">=</span> state_nh<span class="token punctuation">.</span>subscribe<span class="token operator">&lt;</span>sensor_msgs<span class="token operator">::</span>Imu<span class="token operator">></span><span class="token punctuation">(</span>uav_name <span class="token operator">+</span> <span class="token string">"/mavros/imu/data"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>state_from_mavros<span class="token operator">::</span>att_cb<span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-<span class="token comment">// 【订阅】无人机相对高度 此订阅仅针对户外实验</span>
-alt_sub <span class="token operator">=</span> state_nh<span class="token punctuation">.</span>subscribe<span class="token operator">&lt;</span>std_msgs<span class="token operator">::</span>Float64<span class="token operator">></span><span class="token punctuation">(</span>uav_name <span class="token operator">+</span> <span class="token string">"/mavros/global_position/rel_alt"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>state_from_mavros<span class="token operator">::</span>alt_cb<span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="主循环"><a href="#主循环" class="headerlink" title="主循环"></a>主循环</h3><h4 id="send-to-fcu"><a href="#send-to-fcu" class="headerlink" title="send_to_fcu();"></a><code>send_to_fcu();</code></h4><ul>
-<li>将采集的机载设备的定位信息及偏航角信息发送至飞控，根据参数<code>input_source</code>选择定位信息来源</li>
-</ul>
-<h4 id="pub-to-nodes-state-from-mavros-DroneState"><a href="#pub-to-nodes-state-from-mavros-DroneState" class="headerlink" title="pub_to_nodes(_state_from_mavros._DroneState);"></a><code>pub_to_nodes(_state_from_mavros._DroneState);</code></h4><ul>
-<li>发布无人机状态至其他节点  </li>
-<li>发布无人机当前<code>odometry</code>,用于导航及<code>rviz</code>显示</li>
-<li>发布无人机运动轨迹，用于<code>rviz</code>显示<center>
-<img src="/2021/03/26/PX4-PX4-pos-estimator/PX4.png#pic_center" width="100%" height="100%" alt="test">
-<br>
-<div style="color:orange; border-bottom: 1px solid #d9d9d9;
-display: inline-block;
-color: #999;
-padding: 2px;">rqt_graph</div>
-</center></li>
-</ul>
+                <h2 id="无人机文献"><a href="#无人机文献" class="headerlink" title="无人机文献"></a>无人机文献</h2><h4 id="记录一些好的句子，提高英语表达能力。"><a href="#记录一些好的句子，提高英语表达能力。" class="headerlink" title="记录一些好的句子，提高英语表达能力。"></a>记录一些好的句子，提高英语表达能力。</h4><p>However, most research fails to <strong>account</strong> adequately <strong>for</strong> limited energy on each UAV, which <strong>involves in</strong> many factors such as different operations for performing a task and various movement patterns besides the distance and turns that have been commonly considered.<br>然而，大多数研究未能充分<strong>考虑</strong>每架无人机上有限的能量，这<strong>涉及</strong>许多因素，例如执行任务的不同操作以及除了通常考虑的距离和转弯之外的各种运动模式。</p>
+<p>By contrast, we conduct a series of experiments to obtain the energy model of UAVs.<br>相比之下，我们进行了一系列实验来获得无人机的能量模型。</p>
+<p>Unmanned aerial vehicles (UAVs) are receiving increased attention by humanitarian organizations as they can help overcoming <strong>last-mile distribution problems</strong>.<br>无人驾驶飞行器越来越受到人道主义组织的关注，因为它们有助于克服<strong>最后一英里的分配问题</strong></p>
+<p>Energy–aware drone routing problems are considered in [8,11,28] where the energy consumption of the drone is assumed to depend on one or more of the flight related parameters: payload, speed, distance and altitude.<br>在[8,11,28]中考虑了能量感知无人机航路问题，其中假设无人机的能量消耗取决于一个或多个飞行相关参数：有效载荷、速度、距离和高度。</p>
+<p>We <strong>mathematically</strong> derive and experimentally validate an energy consumption model for multirotor drones, demonstrating that energy consumption varies approximately linearly with payload and battery weight.<br>我们<strong>从数学上</strong>推导并通过实验验证了多旋翼无人机的能耗模型，证明了能耗随有效载荷和电池重量近似线性变化。</p>
 
                 
             </div>
@@ -525,7 +448,7 @@ padding: 2px;">rqt_graph</div>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/03/26/PX4-PX4-pos-estimator/">http://example.com/2021/03/26/PX4-PX4-pos-estimator/</a>
+                    <a href="http://example.com/2021/07/18/%E5%A4%9A%E6%97%8B%E7%BF%BC-%E6%97%A0%E4%BA%BA%E6%9C%BA%E6%96%87%E7%8C%AE/">http://example.com/2021/07/18/%E5%A4%9A%E6%97%8B%E7%BF%BC-%E6%97%A0%E4%BA%BA%E6%9C%BA%E6%96%87%E7%8C%AE/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -563,8 +486,8 @@ padding: 2px;">rqt_graph</div>
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%97%A0%E4%BA%BA%E6%9C%BA/">
-                                    <span class="chip bg-color">无人机</span>
+                                <a href="/tags/%E5%A4%9A%E6%97%8B%E7%BF%BC/">
+                                    <span class="chip bg-color">多旋翼</span>
                                 </a>
                             
                         </div>
@@ -740,13 +663,13 @@ padding: 2px;">rqt_graph</div>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/26/PX4-PX4/">
+                <a href="/2021/07/19/LeetCode-513-%E6%89%BE%E6%A0%91%E5%B7%A6%E4%B8%8B%E8%A7%92%E7%9A%84%E5%80%BC/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="PX4">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="513-找树左下角的值">
                         
-                        <span class="card-title">PX4</span>
+                        <span class="card-title">513-找树左下角的值</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -757,14 +680,14 @@ padding: 2px;">rqt_graph</div>
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-03-26
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-07-19
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%97%A0%E4%BA%BA%E6%9C%BA/" class="post-category">
-                                    无人机
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
                                 </a>
                             
                             
@@ -774,8 +697,8 @@ padding: 2px;">rqt_graph</div>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%97%A0%E4%BA%BA%E6%9C%BA/">
-                        <span class="chip bg-color">无人机</span>
+                    <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">
+                        <span class="chip bg-color">二叉树</span>
                     </a>
                     
                 </div>
@@ -789,13 +712,13 @@ padding: 2px;">rqt_graph</div>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/26/PX4-PX4-sender/">
+                <a href="/2021/07/17/LeetCode-112-%E8%B7%AF%E5%BE%84%E6%80%BB%E5%92%8C/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="PX4_sender">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="112-路径总和">
                         
-                        <span class="card-title">PX4_sender</span>
+                        <span class="card-title">112-路径总和</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -806,14 +729,14 @@ padding: 2px;">rqt_graph</div>
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-26
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-17
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%97%A0%E4%BA%BA%E6%9C%BA/" class="post-category">
-                                    无人机
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
                                 </a>
                             
                             
@@ -823,8 +746,12 @@ padding: 2px;">rqt_graph</div>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%97%A0%E4%BA%BA%E6%9C%BA/">
-                        <span class="chip bg-color">无人机</span>
+                    <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">
+                        <span class="chip bg-color">二叉树</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%9B%9E%E6%BA%AF/">
+                        <span class="chip bg-color">回溯</span>
                     </a>
                     
                 </div>
