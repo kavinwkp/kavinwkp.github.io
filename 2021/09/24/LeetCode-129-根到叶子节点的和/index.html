@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="Eigen_Quaternion, kunpeng">
+    <meta name="keywords" content="129-根到叶子节点的和, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Eigen_Quaternion | kunpeng</title>
+    <title>129-根到叶子节点的和 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Eigen_Quaternion</h1>
+                    <h1 class="description center-align post-title">129-根到叶子节点的和</h1>
                 </div>
             </div>
         </div>
@@ -368,14 +368,23 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Eigen/">
-                                <span class="chip bg-color">Eigen</span>
+                            <a href="/tags/%E5%9B%9E%E6%BA%AF/">
+                                <span class="chip bg-color">回溯</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/LeetCode/" class="post-category">
+                                LeetCode
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -384,7 +393,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-21
+                    2021-09-24
                 </div>
                 
 
@@ -408,55 +417,64 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <!-- toc -->
-<h2 id="旋转向量到旋转矩阵"><a href="#旋转向量到旋转矩阵" class="headerlink" title="旋转向量到旋转矩阵"></a>旋转向量到旋转矩阵</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">double</span> alpha <span class="token operator">=</span> M_PI <span class="token operator">/</span> <span class="token number">3</span><span class="token punctuation">;</span>
-AngleAxisd <span class="token function">rotation_vector</span><span class="token punctuation">(</span>alpha<span class="token punctuation">,</span> <span class="token function">Vector3d</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// x轴: 1 0 0</span>
-<span class="token comment">// y轴: 0 1 0</span>
-<span class="token comment">// z轴: 0 0 1</span>
-
-MatrixXd rotation_matrix<span class="token punctuation">;</span>
-
-rotation_matrix <span class="token operator">=</span> rotation_vector<span class="token punctuation">.</span><span class="token function">matrix</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// rotation_matrix = rotation_vector.toRotationMatrix();</span>
-
-cout <span class="token operator">&lt;&lt;</span> rotation_matrix <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">// 1         0         0</span>
-<span class="token comment">// 0       0.5 -0.866025</span>
-<span class="token comment">// 0  0.866025       0.5</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="旋转向量到欧拉角"><a href="#旋转向量到欧拉角" class="headerlink" title="旋转向量到欧拉角"></a>旋转向量到欧拉角</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Vector3d eulerAngle <span class="token operator">=</span> rotation_vector<span class="token punctuation">.</span><span class="token function">matrix</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">eulerAngles</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// ZYX: 2, 1, 0</span>
-
-cout <span class="token operator">&lt;&lt;</span> eulerAngle <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">//      0</span>
-<span class="token comment">//     -0</span>
-<span class="token comment">// 1.0472</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="旋转向量到四元数"><a href="#旋转向量到四元数" class="headerlink" title="旋转向量到四元数"></a>旋转向量到四元数</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Quaterniond <span class="token function">quaternion</span><span class="token punctuation">(</span>rotation_vector<span class="token punctuation">)</span><span class="token punctuation">;</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">coeffs</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">//      0.5</span>
-<span class="token comment">//        0</span>
-<span class="token comment">//        0</span>
-<span class="token comment">// 0.866025</span>
-
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">x</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">y</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">z</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">w</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">// 0.5</span>
-<span class="token comment">// 0</span>
-<span class="token comment">// 0</span>
-<span class="token comment">// 0.866025</span>
-
-Quaterniond quaternion2<span class="token punctuation">;</span>
-quaternion2 <span class="token operator">=</span> rotation_vector<span class="token punctuation">;</span>  <span class="token comment">// 重载了'='</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion2<span class="token punctuation">.</span><span class="token function">coeffs</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">//      0.5</span>
-<span class="token comment">//        0</span>
-<span class="token comment">//        0</span>
-<span class="token comment">// 0.866025</span>
-
-<span class="token comment">// 四元数的初始化</span>
-Quaterniond <span class="token function">quaternion</span><span class="token punctuation">(</span>w<span class="token punctuation">,</span> x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> z<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <h2 id="LeetCode-129-Sum-Root-to-Leaf-Numbers"><a href="#LeetCode-129-Sum-Root-to-Leaf-Numbers" class="headerlink" title="LeetCode 129. Sum Root to Leaf Numbers"></a>LeetCode 129. Sum Root to Leaf Numbers</h2><p>You are given the <code>root</code> of a binary tree containing digits from <code>0</code> to <code>9</code> only.</p>
+<p>Each root-to-leaf path in the tree represents a number.</p>
+<p>For example, the root-to-leaf path <code>1 -&gt; 2 -&gt; 3</code> represents the number <code>123</code>.<br>Return <em>the total sum of all root-to-leaf numbers</em>. Test cases are generated so that the answer will fit in a 32-bit integer.</p>
+<p>A leaf node is a node with no children.</p>
+<p>Example 1:</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> root <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span>
+Output<span class="token operator">:</span> <span class="token number">25</span>
+Explanation<span class="token operator">:</span>
+The root<span class="token operator">-</span>to<span class="token operator">-</span>leaf path <span class="token number">1</span><span class="token operator">-></span><span class="token number">2</span> represents the number <span class="token number">12.</span>
+The root<span class="token operator">-</span>to<span class="token operator">-</span>leaf path <span class="token number">1</span><span class="token operator">-></span><span class="token number">3</span> represents the number <span class="token number">13.</span>
+Therefore<span class="token punctuation">,</span> sum <span class="token operator">=</span> <span class="token number">12</span> <span class="token operator">+</span> <span class="token number">13</span> <span class="token operator">=</span> <span class="token number">25.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="method-回溯"><a href="#method-回溯" class="headerlink" title="method: 回溯"></a>method: 回溯</h2><p>每条根到叶子节点的路径都可以组成一个数字，求这些数字的和</p>
+<p>简单的回溯，可以先加上节点的值，再往这个节点递归</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> res <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">traversal</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token operator">-></span>left <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        res <span class="token operator">+=</span> sum<span class="token punctuation">;</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        sum <span class="token operator">=</span> sum <span class="token operator">*</span> <span class="token number">10</span> <span class="token operator">+</span> root<span class="token operator">-></span>left<span class="token operator">-></span>val<span class="token punctuation">;</span>
+        <span class="token function">traversal</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        sum <span class="token operator">/=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        sum <span class="token operator">=</span> sum <span class="token operator">*</span> <span class="token number">10</span> <span class="token operator">+</span> root<span class="token operator">-></span>right<span class="token operator">-></span>val<span class="token punctuation">;</span>
+        <span class="token function">traversal</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        sum <span class="token operator">/=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">int</span> <span class="token function">sumNumbers</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    sum <span class="token operator">=</span> root<span class="token operator">-></span>val<span class="token punctuation">;</span>    <span class="token comment">// 先取值</span>
+    <span class="token function">traversal</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 再递归</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>也可以先往这个节点递归，再加上这个节点的值</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> res <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">traversal</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    sum <span class="token operator">=</span> sum <span class="token operator">*</span> <span class="token number">10</span> <span class="token operator">+</span> root<span class="token operator">-></span>val<span class="token punctuation">;</span>     <span class="token comment">// 再取值</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token operator">-></span>left <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        res <span class="token operator">+=</span> sum<span class="token punctuation">;</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">traversal</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        sum <span class="token operator">/=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">traversal</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        sum <span class="token operator">/=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">int</span> <span class="token function">sumNumbers</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">traversal</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 先递归</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -482,7 +500,7 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/03/21/Eigen-Eigen-Quaternion/">http://example.com/2021/03/21/Eigen-Eigen-Quaternion/</a>
+                    <a href="http://example.com/2021/09/24/LeetCode-129-%E6%A0%B9%E5%88%B0%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9%E7%9A%84%E5%92%8C/">http://example.com/2021/09/24/LeetCode-129-%E6%A0%B9%E5%88%B0%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9%E7%9A%84%E5%92%8C/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -520,8 +538,8 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Eigen/">
-                                    <span class="chip bg-color">Eigen</span>
+                                <a href="/tags/%E5%9B%9E%E6%BA%AF/">
+                                    <span class="chip bg-color">回溯</span>
                                 </a>
                             
                         </div>
@@ -693,17 +711,18 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/03/21/Eigen-Eigen-2/">
+                <a href="/2021/09/24/LeetCode-129-%E6%A0%B9%E5%88%B0%E5%8F%B6%E5%AD%90%E8%8A%82%E7%82%B9%E7%9A%84%E5%92%8C/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Eigen_2">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="129-根到叶子节点的和">
                         
-                        <span class="card-title">Eigen_2</span>
+                        <span class="card-title">129-根到叶子节点的和</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -713,22 +732,27 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-03-21
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-24
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kunpeng
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Eigen/">
-                        <span class="chip bg-color">Eigen</span>
+                    <a href="/tags/%E5%9B%9E%E6%BA%AF/">
+                        <span class="chip bg-color">回溯</span>
                     </a>
                     
                 </div>
@@ -742,13 +766,13 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/21/Eigen-Eigen-%E5%90%91%E9%87%8F/">
+                <a href="/2021/09/24/LeetCode-84-%E6%9F%B1%E5%BD%A2%E5%9B%BE%E4%B8%AD%E6%9C%80%E5%A4%A7%E7%9F%A9%E5%BD%A2/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Eigen_向量">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="84-柱形图中最大矩形">
                         
-                        <span class="card-title">Eigen_向量</span>
+                        <span class="card-title">84-柱形图中最大矩形</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -759,12 +783,16 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-24
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kunpeng
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -772,8 +800,8 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Eigen/">
-                        <span class="chip bg-color">Eigen</span>
+                    <a href="/tags/%E5%8D%95%E8%B0%83%E6%A0%88/">
+                        <span class="chip bg-color">单调栈</span>
                     </a>
                     
                 </div>
