@@ -417,144 +417,144 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token keyword">import</span> cv2 <span class="token keyword">as</span> cv
-<span class="token keyword">from</span> matplotlib <span class="token keyword">import</span> pyplot <span class="token keyword">as</span> plt
-<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
-<span class="token keyword">from</span> numpy<span class="token punctuation">.</span>linalg <span class="token keyword">import</span> inv
+                <pre class="line-numbers language-py" data-language="py"><code class="language-py">import cv2 as cv
+from matplotlib import pyplot as plt
+import numpy as np
+from numpy.linalg import inv
 
-<span class="token triple-quoted-string string">""" 求两直线交点 """</span>
-<span class="token keyword">def</span> <span class="token function">intersection</span><span class="token punctuation">(</span>line1<span class="token punctuation">,</span> line2<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment"># [x1, y1, x2, y2]</span>
-    a1 <span class="token operator">=</span> line1<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">-</span> line1<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span>    <span class="token comment"># a = y1 - y2</span>
-    b1 <span class="token operator">=</span> line1<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">-</span> line1<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>    <span class="token comment"># b = x2 - x1</span>
-    c1 <span class="token operator">=</span> line1<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">*</span> line1<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">-</span> line1<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">*</span> line1<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>    <span class="token comment"># c = x1 * y2 - x2 * y1</span>
-    a2 <span class="token operator">=</span> line2<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">-</span> line2<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span>    <span class="token comment"># a = y1 - y2</span>
-    b2 <span class="token operator">=</span> line2<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">-</span> line2<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>    <span class="token comment"># b = x2 - x1</span>
-    c2 <span class="token operator">=</span> line2<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">*</span> line2<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">-</span> line2<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">*</span> line2<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>    <span class="token comment"># c = x1 * y2 - x2 * y1</span>
-    A <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span>a1<span class="token punctuation">,</span> b1<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>a2<span class="token punctuation">,</span> b2<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-    B <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span>c1<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>c2<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-    pt <span class="token operator">=</span> np<span class="token punctuation">.</span>dot<span class="token punctuation">(</span>inv<span class="token punctuation">(</span>A<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">-</span>B<span class="token punctuation">)</span>
-    x <span class="token operator">=</span> pt<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span>
-    y <span class="token operator">=</span> pt<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span>
-    <span class="token keyword">return</span> <span class="token punctuation">[</span>x<span class="token punctuation">,</span> y<span class="token punctuation">]</span>
-
-
-src <span class="token operator">=</span> cv<span class="token punctuation">.</span>imread<span class="token punctuation">(</span><span class="token string">"images/2.png"</span><span class="token punctuation">)</span>
-mat <span class="token operator">=</span> src<span class="token punctuation">.</span>copy<span class="token punctuation">(</span><span class="token punctuation">)</span>
-gray <span class="token operator">=</span> cv<span class="token punctuation">.</span>cvtColor<span class="token punctuation">(</span>src<span class="token punctuation">,</span> cv<span class="token punctuation">.</span>COLOR_BGR2GRAY<span class="token punctuation">)</span>
-blur <span class="token operator">=</span> cv<span class="token punctuation">.</span>blur<span class="token punctuation">(</span>gray<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token comment"># plt.figure(1)</span>
-<span class="token comment"># plt.imshow(blur, cmap="binary")</span>
-
-kernel <span class="token operator">=</span> np<span class="token punctuation">.</span>ones<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span> np<span class="token punctuation">.</span>int8<span class="token punctuation">)</span>
-
-dilate <span class="token operator">=</span> cv<span class="token punctuation">.</span>dilate<span class="token punctuation">(</span>blur<span class="token punctuation">,</span> kernel<span class="token punctuation">)</span>
-
-<span class="token triple-quoted-string string">""" 二值化 """</span>
-ret<span class="token punctuation">,</span> binary <span class="token operator">=</span> cv<span class="token punctuation">.</span>threshold<span class="token punctuation">(</span>dilate<span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">120</span><span class="token punctuation">,</span> cv<span class="token punctuation">.</span>THRESH_BINARY_INV<span class="token punctuation">)</span>
-<span class="token comment"># plt.figure(2)</span>
-<span class="token comment"># plt.imshow(binary, cmap="binary")</span>
-
-<span class="token triple-quoted-string string">""" 求轮廓 """</span>
-contours<span class="token punctuation">,</span> hierarchy <span class="token operator">=</span> cv<span class="token punctuation">.</span>findContours<span class="token punctuation">(</span>binary<span class="token punctuation">,</span> cv<span class="token punctuation">.</span>RETR_TREE<span class="token punctuation">,</span> cv<span class="token punctuation">.</span>CHAIN_APPROX_SIMPLE<span class="token punctuation">)</span>
-
-<span class="token comment"># print('len:', len(contours))</span>
-cnt <span class="token operator">=</span> contours<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
-<span class="token comment"># cv.drawContours(src, [cnt], -1, (0, 0, 255), 2)</span>
-<span class="token triple-quoted-string string">""" 找到满足周长条件的轮廓 """</span>
-<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>contours<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    cnt <span class="token operator">=</span> contours<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-    perimeter <span class="token operator">=</span> cv<span class="token punctuation">.</span>arcLength<span class="token punctuation">(</span>cnt<span class="token punctuation">,</span> <span class="token boolean">True</span><span class="token punctuation">)</span>
-    <span class="token keyword">if</span> <span class="token number">2500</span> <span class="token operator">&lt;</span> perimeter <span class="token operator">&lt;</span> <span class="token number">3500</span><span class="token punctuation">:</span>
-        <span class="token keyword">print</span><span class="token punctuation">(</span>perimeter<span class="token punctuation">)</span>
-        <span class="token comment"># cv.drawContours(src, [cnt], -1, (0, 255, 255), 2)</span>
-        <span class="token keyword">break</span>
-<span class="token comment"># plt.figure(2)</span>
-<span class="token comment"># plt.imshow(src[:, :, ::-1])</span>
-<span class="token triple-quoted-string string">""" 求凸包 """</span>
-hull <span class="token operator">=</span> cv<span class="token punctuation">.</span>convexHull<span class="token punctuation">(</span>cnt<span class="token punctuation">)</span>
-
-img <span class="token operator">=</span> np<span class="token punctuation">.</span>ones<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">720</span><span class="token punctuation">,</span> <span class="token number">1280</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>np<span class="token punctuation">.</span>uint8<span class="token punctuation">)</span>
-
-<span class="token comment"># print(type(gray))   # &lt;class 'numpy.ndarray'></span>
-<span class="token comment"># print(gray.shape)   # (720, 1280)</span>
-<span class="token comment"># print(type(img))    # &lt;class 'numpy.ndarray'></span>
-<span class="token comment"># print(img.shape)    # (720, 1280)</span>
-
-<span class="token comment"># cv.drawContours(src, [hull], -1, (255, 0, 0), 3)</span>
-<span class="token comment"># print(len(hull))</span>
-<span class="token triple-quoted-string string">""" 在另一张图上画出凸包 """</span>
-cv<span class="token punctuation">.</span>drawContours<span class="token punctuation">(</span>img<span class="token punctuation">,</span> <span class="token punctuation">[</span>hull<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
-img_gray <span class="token operator">=</span> cv<span class="token punctuation">.</span>cvtColor<span class="token punctuation">(</span>img<span class="token punctuation">,</span> cv<span class="token punctuation">.</span>COLOR_BGR2GRAY<span class="token punctuation">)</span>
-
-<span class="token triple-quoted-string string">""" 二值化 """</span>
-_<span class="token punctuation">,</span> img_binary <span class="token operator">=</span> cv<span class="token punctuation">.</span>threshold<span class="token punctuation">(</span>img_gray<span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> cv<span class="token punctuation">.</span>THRESH_BINARY<span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>figure<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>img_binary<span class="token punctuation">,</span> cmap<span class="token operator">=</span><span class="token string">"binary"</span><span class="token punctuation">)</span>
-<span class="token comment">#### cv.imwrite("images/img.png", img_binary)</span>
-
-<span class="token triple-quoted-string string">""" 霍夫线检测 """</span>
-lines <span class="token operator">=</span> cv<span class="token punctuation">.</span>HoughLines<span class="token punctuation">(</span>img_binary<span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> np<span class="token punctuation">.</span>pi<span class="token operator">/</span><span class="token number">180</span><span class="token punctuation">,</span> <span class="token number">250</span><span class="token punctuation">)</span>
-
-<span class="token keyword">print</span><span class="token punctuation">(</span>lines<span class="token punctuation">.</span>shape<span class="token punctuation">)</span>      <span class="token comment"># (8, 1, 2)</span>
-lines <span class="token operator">=</span> np<span class="token punctuation">.</span>squeeze<span class="token punctuation">(</span>lines<span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>lines<span class="token punctuation">.</span>shape<span class="token punctuation">)</span>      <span class="token comment"># (8, 2)</span>
-
-<span class="token triple-quoted-string string">""" K-means对四种线分类 """</span>
-criteria <span class="token operator">=</span> <span class="token punctuation">(</span>cv<span class="token punctuation">.</span>TERM_CRITERIA_EPS <span class="token operator">+</span> cv<span class="token punctuation">.</span>TERM_CRITERIA_MAX_ITER<span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">)</span>
-ret<span class="token punctuation">,</span>label<span class="token punctuation">,</span>center <span class="token operator">=</span> cv<span class="token punctuation">.</span>kmeans<span class="token punctuation">(</span>lines<span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token boolean">None</span><span class="token punctuation">,</span> criteria<span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> cv<span class="token punctuation">.</span>KMEANS_RANDOM_CENTERS<span class="token punctuation">)</span>
-<span class="token comment"># print(center.shape)   # (4, 2)</span>
-line_point <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>center<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    rho<span class="token punctuation">,</span> theta <span class="token operator">=</span> center<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-    a <span class="token operator">=</span> np<span class="token punctuation">.</span>cos<span class="token punctuation">(</span>theta<span class="token punctuation">)</span>
-    b <span class="token operator">=</span> np<span class="token punctuation">.</span>sin<span class="token punctuation">(</span>theta<span class="token punctuation">)</span>
-    x0 <span class="token operator">=</span> rho <span class="token operator">*</span> a
-    y0 <span class="token operator">=</span> rho <span class="token operator">*</span> b
-    x1 <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span>x0 <span class="token operator">+</span> <span class="token number">2000</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token operator">-</span>b<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    y1 <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span>y0 <span class="token operator">+</span> <span class="token number">2000</span> <span class="token operator">*</span> a<span class="token punctuation">)</span>
-    x2 <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span>x0 <span class="token operator">-</span> <span class="token number">2000</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token operator">-</span>b<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    y2 <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span>y0 <span class="token operator">-</span> <span class="token number">2000</span> <span class="token operator">*</span> a<span class="token punctuation">)</span>
-    line_point<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">[</span>x1<span class="token punctuation">,</span> y1<span class="token punctuation">,</span> x2<span class="token punctuation">,</span> y2<span class="token punctuation">]</span><span class="token punctuation">)</span>
-    cv<span class="token punctuation">.</span>line<span class="token punctuation">(</span>img<span class="token punctuation">,</span> <span class="token punctuation">(</span>x1<span class="token punctuation">,</span> y1<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>x2<span class="token punctuation">,</span> y2<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
-<span class="token comment"># print(line_point)</span>
-<span class="token triple-quoted-string string">""" 求4条线的4个交点 """</span>
-pt <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    pt<span class="token punctuation">.</span>append<span class="token punctuation">(</span>intersection<span class="token punctuation">(</span>line_point<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> line_point<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    pt<span class="token punctuation">.</span>append<span class="token punctuation">(</span>intersection<span class="token punctuation">(</span>line_point<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> line_point<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>pt<span class="token punctuation">)</span>
-points <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>pt<span class="token punctuation">,</span> dtype<span class="token operator">=</span><span class="token builtin">int</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>points<span class="token punctuation">.</span>shape<span class="token punctuation">)</span>     <span class="token comment"># (4, 2)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>points<span class="token punctuation">)</span>
-<span class="token comment"># for i in range(points.shape[0]):</span>
-<span class="token comment">#     cv.circle(img, (points[i, 0], points[i, 1]), 8, (0, 255, 0), -1)</span>
-<span class="token triple-quoted-string string">""" 画出4个交点 """</span>
-<span class="token keyword">for</span> pt <span class="token keyword">in</span> points<span class="token punctuation">:</span>
-    cv<span class="token punctuation">.</span>circle<span class="token punctuation">(</span>img<span class="token punctuation">,</span> <span class="token punctuation">(</span>pt<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> pt<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
-
-plt<span class="token punctuation">.</span>figure<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>img<span class="token punctuation">)</span>
-<span class="token comment"># cv.imwrite("images/lines.png", img)</span>
-
-<span class="token triple-quoted-string string">""" 对4个交点进行排序，因为分类的顺序是随机的 """</span>
-idx <span class="token operator">=</span> np<span class="token punctuation">.</span>lexsort<span class="token punctuation">(</span><span class="token punctuation">[</span>points<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-tr_points <span class="token operator">=</span> points<span class="token punctuation">[</span>idx<span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">]</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>tr_points<span class="token punctuation">)</span>
-
-<span class="token triple-quoted-string string">""" 利用找到的4隔点进行透射变换 """</span>
-dst_width <span class="token operator">=</span> <span class="token number">800</span>
-dst_height <span class="token operator">=</span> <span class="token number">600</span>
-pts1 <span class="token operator">=</span> np<span class="token punctuation">.</span>float32<span class="token punctuation">(</span><span class="token punctuation">[</span>tr_points<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> tr_points<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> tr_points<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> tr_points<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-pts2 <span class="token operator">=</span> np<span class="token punctuation">.</span>float32<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>dst_width<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>dst_width<span class="token punctuation">,</span> dst_height<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> dst_height<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-M <span class="token operator">=</span> cv<span class="token punctuation">.</span>getPerspectiveTransform<span class="token punctuation">(</span>pts1<span class="token punctuation">,</span> pts2<span class="token punctuation">)</span>
-dst <span class="token operator">=</span> cv<span class="token punctuation">.</span>warpPerspective<span class="token punctuation">(</span>mat<span class="token punctuation">,</span> M<span class="token punctuation">,</span> <span class="token punctuation">(</span>dst_width<span class="token punctuation">,</span> dst_height<span class="token punctuation">)</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>figure<span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span>dst<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span>imwrite<span class="token punctuation">(</span><span class="token string">'images/dst_2.png'</span><span class="token punctuation">,</span> dst<span class="token punctuation">)</span>
+&quot;&quot;&quot; 求两直线交点 &quot;&quot;&quot;
+def intersection(line1, line2):
+    # [x1, y1, x2, y2]
+    a1 &#x3D; line1[1] - line1[3]    # a &#x3D; y1 - y2
+    b1 &#x3D; line1[2] - line1[0]    # b &#x3D; x2 - x1
+    c1 &#x3D; line1[0] * line1[3] - line1[2] * line1[1]    # c &#x3D; x1 * y2 - x2 * y1
+    a2 &#x3D; line2[1] - line2[3]    # a &#x3D; y1 - y2
+    b2 &#x3D; line2[2] - line2[0]    # b &#x3D; x2 - x1
+    c2 &#x3D; line2[0] * line2[3] - line2[2] * line2[1]    # c &#x3D; x1 * y2 - x2 * y1
+    A &#x3D; np.array([[a1, b1], [a2, b2]])
+    B &#x3D; np.array([[c1], [c2]])
+    pt &#x3D; np.dot(inv(A), -B)
+    x &#x3D; pt[0, 0]
+    y &#x3D; pt[1, 0]
+    return [x, y]
 
 
-plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+src &#x3D; cv.imread(&quot;images&#x2F;2.png&quot;)
+mat &#x3D; src.copy()
+gray &#x3D; cv.cvtColor(src, cv.COLOR_BGR2GRAY)
+blur &#x3D; cv.blur(gray, (5, 5))
+# plt.figure(1)
+# plt.imshow(blur, cmap&#x3D;&quot;binary&quot;)
+
+kernel &#x3D; np.ones((10, 10), np.int8)
+
+dilate &#x3D; cv.dilate(blur, kernel)
+
+&quot;&quot;&quot; 二值化 &quot;&quot;&quot;
+ret, binary &#x3D; cv.threshold(dilate, 100, 120, cv.THRESH_BINARY_INV)
+# plt.figure(2)
+# plt.imshow(binary, cmap&#x3D;&quot;binary&quot;)
+
+&quot;&quot;&quot; 求轮廓 &quot;&quot;&quot;
+contours, hierarchy &#x3D; cv.findContours(binary, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
+
+# print(&#39;len:&#39;, len(contours))
+cnt &#x3D; contours[0]
+# cv.drawContours(src, [cnt], -1, (0, 0, 255), 2)
+&quot;&quot;&quot; 找到满足周长条件的轮廓 &quot;&quot;&quot;
+for i in range(len(contours)):
+    cnt &#x3D; contours[i]
+    perimeter &#x3D; cv.arcLength(cnt, True)
+    if 2500 &lt; perimeter &lt; 3500:
+        print(perimeter)
+        # cv.drawContours(src, [cnt], -1, (0, 255, 255), 2)
+        break
+# plt.figure(2)
+# plt.imshow(src[:, :, ::-1])
+&quot;&quot;&quot; 求凸包 &quot;&quot;&quot;
+hull &#x3D; cv.convexHull(cnt)
+
+img &#x3D; np.ones((720, 1280, 3), dtype&#x3D;np.uint8)
+
+# print(type(gray))   # &lt;class &#39;numpy.ndarray&#39;&gt;
+# print(gray.shape)   # (720, 1280)
+# print(type(img))    # &lt;class &#39;numpy.ndarray&#39;&gt;
+# print(img.shape)    # (720, 1280)
+
+# cv.drawContours(src, [hull], -1, (255, 0, 0), 3)
+# print(len(hull))
+&quot;&quot;&quot; 在另一张图上画出凸包 &quot;&quot;&quot;
+cv.drawContours(img, [hull], -1, (0, 0, 255), 2)
+img_gray &#x3D; cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+
+&quot;&quot;&quot; 二值化 &quot;&quot;&quot;
+_, img_binary &#x3D; cv.threshold(img_gray, 50, 100, cv.THRESH_BINARY)
+plt.figure(3)
+plt.imshow(img_binary, cmap&#x3D;&quot;binary&quot;)
+#### cv.imwrite(&quot;images&#x2F;img.png&quot;, img_binary)
+
+&quot;&quot;&quot; 霍夫线检测 &quot;&quot;&quot;
+lines &#x3D; cv.HoughLines(img_binary, 1.0, np.pi&#x2F;180, 250)
+
+print(lines.shape)      # (8, 1, 2)
+lines &#x3D; np.squeeze(lines)
+print(lines.shape)      # (8, 2)
+
+&quot;&quot;&quot; K-means对四种线分类 &quot;&quot;&quot;
+criteria &#x3D; (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 10, 1.0)
+ret,label,center &#x3D; cv.kmeans(lines, 4, None, criteria, 10, cv.KMEANS_RANDOM_CENTERS)
+# print(center.shape)   # (4, 2)
+line_point &#x3D; []
+for i in range(center.shape[0]):
+    rho, theta &#x3D; center[i]
+    a &#x3D; np.cos(theta)
+    b &#x3D; np.sin(theta)
+    x0 &#x3D; rho * a
+    y0 &#x3D; rho * b
+    x1 &#x3D; int(x0 + 2000 * (-b))
+    y1 &#x3D; int(y0 + 2000 * a)
+    x2 &#x3D; int(x0 - 2000 * (-b))
+    y2 &#x3D; int(y0 - 2000 * a)
+    line_point.append([x1, y1, x2, y2])
+    cv.line(img, (x1, y1), (x2, y2), (255, 0, 255), 4)
+# print(line_point)
+&quot;&quot;&quot; 求4条线的4个交点 &quot;&quot;&quot;
+pt &#x3D; []
+for i in range(2):
+    pt.append(intersection(line_point[i], line_point[2]))
+    pt.append(intersection(line_point[i], line_point[3]))
+print(pt)
+points &#x3D; np.array(pt, dtype&#x3D;int)
+print(points.shape)     # (4, 2)
+print(points)
+# for i in range(points.shape[0]):
+#     cv.circle(img, (points[i, 0], points[i, 1]), 8, (0, 255, 0), -1)
+&quot;&quot;&quot; 画出4个交点 &quot;&quot;&quot;
+for pt in points:
+    cv.circle(img, (pt[0], pt[1]), 6, (0, 255, 0), -1)
+
+plt.figure(5)
+plt.imshow(img)
+# cv.imwrite(&quot;images&#x2F;lines.png&quot;, img)
+
+&quot;&quot;&quot; 对4个交点进行排序，因为分类的顺序是随机的 &quot;&quot;&quot;
+idx &#x3D; np.lexsort([points[:, 0]])
+tr_points &#x3D; points[idx, :]
+print(tr_points)
+
+&quot;&quot;&quot; 利用找到的4隔点进行透射变换 &quot;&quot;&quot;
+dst_width &#x3D; 800
+dst_height &#x3D; 600
+pts1 &#x3D; np.float32([tr_points[0], tr_points[3], tr_points[2], tr_points[1]])
+pts2 &#x3D; np.float32([[0, 0], [dst_width, 0], [dst_width, dst_height], [0, dst_height]])
+M &#x3D; cv.getPerspectiveTransform(pts1, pts2)
+dst &#x3D; cv.warpPerspective(mat, M, (dst_width, dst_height))
+plt.figure(6)
+plt.imshow(dst[:, :, ::-1])
+cv.imwrite(&#39;images&#x2F;dst_2.png&#39;, dst)
+
+
+plt.show()
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <center>
 <img src="/2021/04/12/OpenCV-OpenCV-Panel/1.png#pic_center" width="100%" height="100%" alt="test">
