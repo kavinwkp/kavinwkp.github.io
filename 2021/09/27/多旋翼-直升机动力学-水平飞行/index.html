@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="多旋翼动力学, kunpeng">
+    <meta name="keywords" content="直升机动力学-水平飞行, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>多旋翼动力学 | kunpeng</title>
+    <title>直升机动力学-水平飞行 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">多旋翼动力学</h1>
+                    <h1 class="description center-align post-title">直升机动力学-水平飞行</h1>
                 </div>
             </div>
         </div>
@@ -393,7 +393,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-09-21
+                    2021-09-27
                 </div>
                 
 
@@ -417,77 +417,19 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="多旋翼动量定理"><a href="#多旋翼动量定理" class="headerlink" title="多旋翼动量定理"></a>多旋翼动量定理</h2><h3 id="惯性系"><a href="#惯性系" class="headerlink" title="惯性系"></a>惯性系</h3><script type="math/tex; mode=display">
-m\dot{v} = mg + R \sum_{k=1}^{4}{F_k}</script><p>因为$F_k$是体轴系下多旋翼的升力，所以要左乘旋转矩阵转换到地理坐标系下<br>同时，因为$F_k$都是垂直于机体平面，沿体轴$z_b$方向，所以旋转矩阵只需要最后一列，展开写就是</p>
-<script type="math/tex; mode=display">m
-\begin{bmatrix}
-\ddot{x} \\ \ddot{y} \\ \ddot{z}
-\end{bmatrix} = m
-\begin{bmatrix}
-0 \\ 0 \\ g
-\end{bmatrix} + 
-(f_1+f_2+f_3+f_4)
-\begin{bmatrix}
-cos\psi sin\theta cos\phi + sin\psi sin\phi \\
-sin\psi sin\theta cos\phi - sin\phi cos\psi \\
-cos\theta cos\phi
-\end{bmatrix}</script><h3 id="体轴系"><a href="#体轴系" class="headerlink" title="体轴系"></a>体轴系</h3><script type="math/tex; mode=display">
-m(\dot{v} + \hat{\omega}_b v) = R^\mathrm{T}mg + \sum_{k=1}^{4}{F_k}</script><p>$mg$是地理坐标系下的，左乘旋转矩阵的转置转换到体轴系</p>
-<p>写成矩阵形式，体轴系下角速度为$\omega_b = \begin{bmatrix}p &amp; q &amp; r\end{bmatrix}^\mathrm{T}$</p>
+                <h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>$t_{cD}$：相对于桨盘轴（disc axes）的推力系数，$t_{cD}=\frac{T_D}{\rho sA\Omega^2 R^2}$</p>
+<p>$\bar{V}$：无量纲化前飞速度，除以推力速度，$\bar{V}=\frac{V}{v_0}=\hat{V}\frac{\Omega R}{v_0} \approx \mu_D \frac{\Omega R}{v_0}$</p>
+<p>$\hat{V}$：前飞速度与叶尖速度的比值，$\hat{V}=\frac{V}{\Omega R}$</p>
+<p>$v_{i0}$：平均诱导速度</p>
+<p>$\bar{v_{i0}}$：无量纲化平均诱导速度，$\bar{v_{i0}}=\frac{v_{i0}}{v_0}$</p>
+<p>$v_0$：悬停时的平均诱导速度（推力速度），$v_0=\sqrt{\frac{T}{2\rho A}}$</p>
+<p>$\mu$：气流平行于桨盘平面的速度分量与叶尖速度的比值$\mu = \frac{V_\infty \cos \alpha_D}{\Omega R} \approx \frac{V_\infty}{\Omega R}\approx \hat{V}$</p>
+<p>$\lambda_i$：悬停参数，$\lambda_i=\frac{v_{i0}}{\Omega R} or \frac{v_i}{\Omega R}$</p>
+<h2 id="诱导功率"><a href="#诱导功率" class="headerlink" title="诱导功率"></a>诱导功率</h2><p>Thrust = (mass flow rate) * change in induced velocity</p>
 <script type="math/tex; mode=display">
-m
-\begin{bmatrix}
-\dot{u} \\ \dot{v} \\ \dot{w}
-\end{bmatrix} + m
-\begin{bmatrix}
-qw - rv \\ 
-ru - pw \\
-pv - qw
-\end{bmatrix} = 
-mg
-\begin{bmatrix}
--sin\theta \\
-cos\theta sin\phi \\
-cos\theta cos\phi
-\end{bmatrix} - 
-\begin{bmatrix}
-0 \\ 0 \\ f_1 + f_2 + f_3 + f_4
-\end{bmatrix}</script><h2 id="多旋翼动量矩定理"><a href="#多旋翼动量矩定理" class="headerlink" title="多旋翼动量矩定理"></a>多旋翼动量矩定理</h2><h3 id="体轴系-1"><a href="#体轴系-1" class="headerlink" title="体轴系"></a>体轴系</h3><p><img src="/2023/09/21/%E5%A4%9A%E6%97%8B%E7%BF%BC-%E5%A4%9A%E6%97%8B%E7%BF%BC%E5%8A%A8%E5%8A%9B%E5%AD%A6/multirotor.png" alt></p>
-<script type="math/tex; mode=display">
-I\dot{\omega} + \hat{\omega} I \omega = \sum_{k=1}^{4}{r_k \times F_k} - \hat{\omega} \sum_{k=1}^{4}{I_k\omega_k} - \sum_{k=1}^{4}{\tilde{\tau}_k}</script><p>这里定义$z$轴垂直于机身向下<br>$\hat{\omega} \sum_{k=1}^{4}{I_k\omega_k}$称为陀螺力矩</p>
-<p>$\omega_1 = \begin{bmatrix}0\\0\\ -\Omega_1 \end{bmatrix}\quad\omega_2 = \begin{bmatrix}0\\0\\ -\Omega_2 \end{bmatrix}\quad\omega_3 = \begin{bmatrix}0\\0\\ \Omega_3 \end{bmatrix}\quad\omega_4 = \begin{bmatrix}0\\0\\ \Omega_4 \end{bmatrix}$<br>$I_k$是螺旋桨的转动惯量，因为旋翼角速度垂直于自身，所以只需考虑旋翼$z$轴的转动惯量<br>所以</p>
-<script type="math/tex; mode=display">I_k = 
-\begin{bmatrix}
-0 & 0 & 0 \\
-0 & 0 & 0 \\
-0 & 0 & I_r
-\end{bmatrix}</script><p>所以</p>
-<script type="math/tex; mode=display">
-\sum_{k=1}^{4}{I_k\omega_k} = I_r
-\begin{bmatrix}
-0 \\ 0 \\ -\Omega_1-\Omega_2+\Omega_3+\Omega_4
-\end{bmatrix} \\
-\hat{\omega} \sum_{k=1}^{4}{I_k\omega_k} = I_r
-\begin{bmatrix}
-0 & -r & q \\
-r & 0 & -p \\
--q & p & 0 
-\end{bmatrix}
-\begin{bmatrix}
-0 \\ 0 \\ -\Omega_1-\Omega_2+\Omega_3+\Omega_4
-\end{bmatrix} = 
-\begin{bmatrix}
-I_r q (-\Omega_1-\Omega_2+\Omega_3+\Omega_4) \\
-I_r p (\Omega_1+\Omega_2-\Omega_3-\Omega_4) \\
-0
-\end{bmatrix}</script><p>$\tilde{\tau}_k$是电机给螺旋桨的扭矩<br>$\tilde{\tau}_1 = \begin{bmatrix}0\\0\\ -\tau_1 \end{bmatrix}\quad\tilde{\tau}_2 = \begin{bmatrix}0\\0\\ -\tau_2 \end{bmatrix}\quad\tilde{\tau}_3 = \begin{bmatrix}0\\0\\ \tau_3 \end{bmatrix}\quad\tilde{\tau}_4 = \begin{bmatrix}0\\0\\ \tau_4 \end{bmatrix}$</p>
-<p>所以机体动量矩定理展开就是</p>
-<script type="math/tex; mode=display">
-\begin{align*}
-  & I_x\dot{p} + (I_z-I_y)qr = \frac{\sqrt{2}}{4}l(-f_1+f_2+f_3-f_4) + I_rq(\Omega_1+\Omega_2-\Omega_3-\Omega_4) \\
-  & I_y\dot{q} + (I_x-I_z)pr = \frac{\sqrt{2}}{4}l(f_1-f_2+f_3-f_4) - I_rp(\Omega_1+\Omega_2-\Omega_3-\Omega_4) \\
-  & I_z\dot{r} + (I_y-I_x)pq = \tau_1 + \tau_2 - \tau_3 - \tau_4 \\
-\end{align*}</script>
+T = (2v)\rho A \sqrt{(V_\infty cos \alpha_{TPP})^2 + (V_\infty sin \alpha_{TPP} + v)^2}</script><p>$v$: 诱导速度<br>$\alpha_{TPP}$: 气流与桨盘平面的夹角<br>$V_\infty$: 气流速度</p>
+<p>近似处理：$\alpha_{TPP} \approx 0, \cos \alpha_{TPP} \approx 1, \sin \alpha_{TPP} \approx 0$</p>
+
                 
             </div>
             <hr/>
@@ -513,7 +455,7 @@ I_r p (\Omega_1+\Omega_2-\Omega_3-\Omega_4) \\
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2023/09/21/%E5%A4%9A%E6%97%8B%E7%BF%BC-%E5%A4%9A%E6%97%8B%E7%BF%BC%E5%8A%A8%E5%8A%9B%E5%AD%A6/">http://example.com/2023/09/21/%E5%A4%9A%E6%97%8B%E7%BF%BC-%E5%A4%9A%E6%97%8B%E7%BF%BC%E5%8A%A8%E5%8A%9B%E5%AD%A6/</a>
+                    <a href="http://example.com/2021/09/27/%E5%A4%9A%E6%97%8B%E7%BF%BC-%E7%9B%B4%E5%8D%87%E6%9C%BA%E5%8A%A8%E5%8A%9B%E5%AD%A6-%E6%B0%B4%E5%B9%B3%E9%A3%9E%E8%A1%8C/">http://example.com/2021/09/27/%E5%A4%9A%E6%97%8B%E7%BF%BC-%E7%9B%B4%E5%8D%87%E6%9C%BA%E5%8A%A8%E5%8A%9B%E5%AD%A6-%E6%B0%B4%E5%B9%B3%E9%A3%9E%E8%A1%8C/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -728,13 +670,13 @@ I_r p (\Omega_1+\Omega_2-\Omega_3-\Omega_4) \\
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/09/27/%E5%A4%9A%E6%97%8B%E7%BF%BC-%E7%9B%B4%E5%8D%87%E6%9C%BA%E5%8A%A8%E5%8A%9B%E5%AD%A6-%E6%B0%B4%E5%B9%B3%E9%A3%9E%E8%A1%8C/">
+                <a href="/2021/09/28/%E6%95%B0%E5%AD%A6-Python%E7%AC%A6%E5%8F%B7%E6%96%B9%E7%A8%8B/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="直升机动力学-水平飞行">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Python符号方程">
                         
-                        <span class="card-title">直升机动力学-水平飞行</span>
+                        <span class="card-title">Python符号方程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -745,14 +687,14 @@ I_r p (\Omega_1+\Omega_2-\Omega_3-\Omega_4) \\
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-09-27
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-28
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%A4%9A%E6%97%8B%E7%BF%BC/" class="post-category">
-                                    多旋翼
+                            <a href="/categories/%E6%95%B0%E5%AD%A6/" class="post-category">
+                                    数学
                                 </a>
                             
                             
@@ -762,8 +704,12 @@ I_r p (\Omega_1+\Omega_2-\Omega_3-\Omega_4) \\
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%A4%9A%E6%97%8B%E7%BF%BC/">
-                        <span class="chip bg-color">多旋翼</span>
+                    <a href="/tags/%E6%95%B0%E5%AD%A6/">
+                        <span class="chip bg-color">数学</span>
+                    </a>
+                    
+                    <a href="/tags/Python/">
+                        <span class="chip bg-color">Python</span>
                     </a>
                     
                 </div>
@@ -777,13 +723,13 @@ I_r p (\Omega_1+\Omega_2-\Omega_3-\Omega_4) \\
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/09/13/%E5%A4%9A%E6%97%8B%E7%BF%BC-%E5%A4%9A%E6%97%8B%E7%BF%BC%E8%BF%90%E5%8A%A8%E5%AD%A6/">
+                <a href="/2021/09/27/LeetCode-73-%E7%9F%A9%E9%98%B5%E7%BD%AE%E9%9B%B6/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="无人机运动学">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="73-矩阵置零">
                         
-                        <span class="card-title">无人机运动学</span>
+                        <span class="card-title">73-矩阵置零</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -794,14 +740,14 @@ I_r p (\Omega_1+\Omega_2-\Omega_3-\Omega_4) \\
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-09-13
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-27
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%A4%9A%E6%97%8B%E7%BF%BC/" class="post-category">
-                                    多旋翼
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
                                 </a>
                             
                             
@@ -811,8 +757,8 @@ I_r p (\Omega_1+\Omega_2-\Omega_3-\Omega_4) \\
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%A4%9A%E6%97%8B%E7%BF%BC/">
-                        <span class="chip bg-color">多旋翼</span>
+                    <a href="/tags/%E6%A8%A1%E6%8B%9F/">
+                        <span class="chip bg-color">模拟</span>
                     </a>
                     
                 </div>
