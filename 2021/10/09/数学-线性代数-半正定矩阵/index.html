@@ -417,7 +417,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>半正定矩阵的定义为：给定一个大小为$n \times n$的实对称矩阵$M$，若对于任意长度为$n$的非零向量$X$，有$X^{T}MX \ge 0$恒成立，则矩阵$M$是一个<strong>半正定矩阵</strong></p>
+                <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>半正定矩阵的定义为：给定一个大小为$n \times n$的实对称矩阵$M$，若对于任意长度为$n$的非零向量$X$，有$X^{T}MX \ge 0$恒成立，则矩阵$M$是一个<strong>半正定矩阵</strong>，若有$X^{T}MX &gt; 0$恒成立，则矩阵$M$是一个<strong>正定矩阵</strong></p>
 <p>理解：<br>$X$是<strong>向量</strong>，$M$看成<strong>变换矩阵</strong><br>向量左乘矩阵，相当于对向量做<strong>线性变换</strong>，记变换后的结果为$Y$，则半正定矩阵可写成：$X^{T}Y \ge 0$，即为两个向量的内积，根据向量夹角公式有</p>
 <script type="math/tex; mode=display">
 cos\theta = \frac{X^{T} Y}{||X|| \cdot ||Y||}</script><p>所以半正定矩阵的含义：向量$X$经过$M$矩阵变换后的结果与自身的夹角小于等于$90^{\circ}$，这样的矩阵称为半正定矩阵</p>
@@ -438,7 +438,14 @@ D <span class="token operator">=</span>
          <span class="token number">0</span>         <span class="token number">0</span>   <span class="token operator">-</span><span class="token number">0.0000</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>有负的特征值，所以A不是半正定矩阵</p>
 <h3 id="行列式判断"><a href="#行列式判断" class="headerlink" title="行列式判断"></a>行列式判断</h3><p>如果矩阵$M$的行列式$|M|$的各阶顺序主子式都大于0，则矩阵$M$为正定矩阵<br>如果奇数阶为负，偶数阶为正，则矩阵$M$为负定矩阵</p>
-<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><p>对于多元函数$f(\bm{x})$，如果$\bm{x}_k$是驻点，也就是$\nabla f(\bm{x}_k) = 0$，那么</p>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><p>多元函数$f(\bm{x})$在点$\bm{x}_k$取极值的必要条件是</p>
+<script type="math/tex; mode=display">
+\nabla f(\bm{x}_k) = 0</script><p>在$\bm{x}_k$点泰勒展开</p>
+<script type="math/tex; mode=display">
+f(\bm{x}) - f(\bm{x}_k) \approx [\nabla f(\bm{x}_k)]^{\mathrm{T}}[\bm{x} - \bm{x}_k] + \frac{1}{2} [\bm{x} - \bm{x}_k]^{\mathrm{T}} \bm{H}(\bm{x}_k) [\bm{x} - \bm{x}_k]</script><p>令$\Delta \bm{x} = \bm{x} - \bm{x}_k$，代入可得</p>
+<script type="math/tex; mode=display">
+f(\bm{x}) - f(\bm{x}_k) \approx \frac{1}{2} \Delta \bm{x}^{\mathrm{T}} \bm{H}(\bm{x}_k) \Delta \bm{x}</script><p>要让$\bm{x}_k$为极小值点，就必须保证$\bm{x}_k$领域内的一切$\bm{x}$，恒有$f(\bm{x}_k) &lt; f(\bm{x})$，也就是$\Delta \bm{x}^{\mathrm{T}} \bm{H}(\bm{x}_k) \Delta \bm{x} &gt; 0$，也就是$\bm{H}(\bm{x}_k)$必须为正定矩阵<br>类似的，若要保证$\bm{x}_k$为极大值点，$\bm{H}(\bm{x}_k)$必须为负定矩阵</p>
+<p><strong>总结</strong><br>对于多元函数$f(\bm{x})$，如果$\bm{x}_k$是驻点，也就是$\nabla f(\bm{x}_k) = 0$，那么</p>
 <ul>
 <li>若$\bm{H}(\bm{x}_k)$为正定矩阵，则$\bm{x}_k$为极小值</li>
 <li>若$\bm{H}(\bm{x}_k)$为负定矩阵，则$\bm{x}_k$为极大值</li>
@@ -467,9 +474,9 @@ minval <span class="token operator">=</span> <span class="token function">min</s
 <span class="token function">x2</span><span class="token punctuation">(</span>row<span class="token punctuation">,</span> column<span class="token punctuation">)</span>
 <span class="token function">mesh</span><span class="token punctuation">(</span>x1<span class="token punctuation">,</span> x2<span class="token punctuation">,</span> f<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><img src="/2021/10/09/%E6%95%B0%E5%AD%A6-%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0-%E5%8D%8A%E6%AD%A3%E5%AE%9A%E7%9F%A9%E9%98%B5/ff.png" alt></p>
-<pre class="line-numbers language-none"><code class="language-none">minval &#x3D; -4
-x1 &#x3D; 3
-x2 &#x3D; 2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">minval <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">4</span>
+x1 <span class="token operator">=</span> <span class="token number">3</span>
+x2 <span class="token operator">=</span> <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -706,18 +713,17 @@ x2 &#x3D; 2<span aria-hidden="true" class="line-numbers-rows"><span></span><span
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/10/09/%E6%95%B0%E5%AD%A6-%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0-%E5%8D%8A%E6%AD%A3%E5%AE%9A%E7%9F%A9%E9%98%B5/">
+                <a href="/2021/10/09/%E6%95%B0%E5%AD%A6-%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0-%E7%89%B9%E5%BE%81%E5%80%BC%E4%B8%8E%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="半正定矩阵">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="特征值与特征向量">
                         
-                        <span class="card-title">半正定矩阵</span>
+                        <span class="card-title">特征值与特征向量</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -727,9 +733,9 @@ x2 &#x3D; 2<span aria-hidden="true" class="line-numbers-rows"><span></span><span
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-09
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-09
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -742,7 +748,6 @@ x2 &#x3D; 2<span aria-hidden="true" class="line-numbers-rows"><span></span><span
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
