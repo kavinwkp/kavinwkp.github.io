@@ -418,7 +418,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h3 id="Discrete-Random-Variable"><a href="#Discrete-Random-Variable" class="headerlink" title="Discrete Random Variable"></a>Discrete Random Variable</h3><p>离散型随机变量，随机变量的取值是有穷可列举的<br>通常用大写字母表示随机变量，用小写字母表示随机变量的观测值</p>
-<h4 id="Probabolity-Mass-Function"><a href="#Probabolity-Mass-Function" class="headerlink" title="Probabolity Mass Function"></a>Probabolity Mass Function</h4><p>直译为概率质量函数，中文译为<strong>概率分布</strong>，表明随机变量有哪几种取值可能，每种所对应的概率是多少，所以严格来讲应该叫<strong>离散型随机变量值分布与概率分布</strong></p>
+<h4 id="Probabolity-Mass-Function"><a href="#Probabolity-Mass-Function" class="headerlink" title="Probabolity Mass Function"></a>Probabolity Mass Function</h4><p>直译为概率质量函数，教科书常用<strong>概率分布</strong>，表明随机变量有哪几种取值可能，每种所对应的概率是多少，所以严格来讲应该叫<strong>离散型随机变量值分布与概率分布</strong></p>
 <p>用数学语言来讲，<strong>概率分布</strong>是表示所有$P(X=x)$或$p(x)$的图、表、公式</p>
 <p>例如抛骰子</p>
 <p><img src="/2021/10/14/%E6%95%B0%E5%AD%A6-%E6%A6%82%E7%8E%87%E8%AE%BA-%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0/table2.png" alt></p>
@@ -431,10 +431,12 @@ color: #999;
 padding: 2px;">概率分布</div>
 </center>
 
-<h4 id="Cumulative-Distribution-Function"><a href="#Cumulative-Distribution-Function" class="headerlink" title="Cumulative Distribution Function"></a>Cumulative Distribution Function</h4><p>直译为<strong>累计分布函数</strong>，中文直接叫<strong>分布函数</strong>，是对概率分布的<strong>累加</strong></p>
+<h4 id="Cumulative-Distribution-Function"><a href="#Cumulative-Distribution-Function" class="headerlink" title="Cumulative Distribution Function"></a>Cumulative Distribution Function</h4><p>直译为<strong>累计分布函数</strong>，教科书直接叫<strong>分布函数</strong>，是对概率分布的<strong>累加</strong></p>
 <p><img src="/2021/10/14/%E6%95%B0%E5%AD%A6-%E6%A6%82%E7%8E%87%E8%AE%BA-%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0/222.png" alt></p>
 <p>可以看到</p>
-<script type="math/tex; mode=display">F(x = 4) = P(X \leq 4) = \sum_{x_i=1}^{4}p(x_i)</script><h3 id="Continuous-Random-Variable"><a href="#Continuous-Random-Variable" class="headerlink" title="Continuous Random Variable"></a>Continuous Random Variable</h3><p>连续型随机变量</p>
+<script type="math/tex; mode=display">F_X(x = 4) = \mathbb{P}(X \leq 4) = \sum_{x_i=1}^{4}p(x_i)</script><h4 id="Expectation"><a href="#Expectation" class="headerlink" title="Expectation"></a>Expectation</h4><p>对于离散随机变量$X$，函数$h(X)$关于变量$X$的期望是</p>
+<script type="math/tex; mode=display">
+\mathbb{E}_{X\sim p(\cdot)}[h(X)] = \sum_{x \in \mathcal{X}}p(x) \cdot h(x)</script><h3 id="Continuous-Random-Variable"><a href="#Continuous-Random-Variable" class="headerlink" title="Continuous Random Variable"></a>Continuous Random Variable</h3><p>连续型随机变量</p>
 <h4 id="Probability-Density-Function"><a href="#Probability-Density-Function" class="headerlink" title="Probability Density Function"></a>Probability Density Function</h4><p>连续型随机变量的概率分布，称为<strong>概率密度函数</strong></p>
 <p>性质：</p>
 <ol>
@@ -444,9 +446,18 @@ padding: 2px;">概率分布</div>
 </ol>
 <script type="math/tex; mode=display">
 P(a < X \leq b) = \int_{a}^{b}f(t)dt = F(b) - F(a)</script><h4 id="Cumulative-Distribution-Function-1"><a href="#Cumulative-Distribution-Function-1" class="headerlink" title="Cumulative Distribution Function"></a>Cumulative Distribution Function</h4><p>连续型随机变量也是叫<strong>分布函数</strong>，由概率密度函数积分得到</p>
-<script type="math/tex; mode=display">F(x) = \int_{-\infty}^{x}f(t)ft</script><p><img src="/2021/10/14/%E6%95%B0%E5%AD%A6-%E6%A6%82%E7%8E%87%E8%AE%BA-%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0/222333.png" alt></p>
+<script type="math/tex; mode=display">F_X(x) = \int_{-\infty}^{x}p(u)du</script><p><img src="/2021/10/14/%E6%95%B0%E5%AD%A6-%E6%A6%82%E7%8E%87%E8%AE%BA-%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0/222333.png" alt></p>
 <p>所以，概率密度函数与横轴的面积就是对应分布函数的函数值</p>
-
+<h4 id="Expectation-1"><a href="#Expectation-1" class="headerlink" title="Expectation"></a>Expectation</h4><p>对于连续随机变量$X$，函数$h(X)$关于变量$X$的期望是</p>
+<script type="math/tex; mode=display">
+\mathbb{E}_{X\sim p(\cdot)}[h(X)] = \int_{\mathcal{X}}p(x) \cdot h(x) dx</script><p>对某个随机随机变量求期望就可以消掉该变量</p>
+<p>例如：$g(X,Y)=\frac{1}{5}XY$为二元函数，$X$的取值范围为$[0,10]$，概率密度函数为$p(x)=\frac{1}{10}$，对$X$求期望</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\mathbb{E}_{X}[g(X,Y)] &= \int_{\mathcal{X}}g(x, Y) \cdot p(x) dx \\
+&= \int_{0}^{10}\frac{1}{5}xY \cdot \frac{1}{10} dx \\
+&= Y
+\end{align*}</script>
                 
             </div>
             <hr/>
