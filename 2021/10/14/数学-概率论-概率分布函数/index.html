@@ -445,19 +445,40 @@ padding: 2px;">概率分布</div>
 <li>连续型随机变量的取值为区间$(a, b]$，其概率等于概率密度函数在相应区间上的面积</li>
 </ol>
 <script type="math/tex; mode=display">
-P(a < X \leq b) = \int_{a}^{b}f(t)dt = F(b) - F(a)</script><h4 id="Cumulative-Distribution-Function-1"><a href="#Cumulative-Distribution-Function-1" class="headerlink" title="Cumulative Distribution Function"></a>Cumulative Distribution Function</h4><p>连续型随机变量也是叫<strong>分布函数</strong>，由概率密度函数积分得到</p>
-<script type="math/tex; mode=display">F_X(x) = \int_{-\infty}^{x}p(u)du</script><p><img src="/2021/10/14/%E6%95%B0%E5%AD%A6-%E6%A6%82%E7%8E%87%E8%AE%BA-%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0/222333.png" alt></p>
+\mathbb{P}\left\{a < X \leq b\right\} = F_X(b) - F_X(a) = \int_{a}^{b}f(x)dx</script><h4 id="Cumulative-Distribution-Function-1"><a href="#Cumulative-Distribution-Function-1" class="headerlink" title="Cumulative Distribution Function"></a>Cumulative Distribution Function</h4><p>连续型随机变量也是叫<strong>分布函数</strong>，由概率密度函数积分得到</p>
+<script type="math/tex; mode=display">\mathbb{P} \left\{X \leq x\right\} = F_X(x) = \int_{-\infty}^{x}f(u)du</script><p><img src="/2021/10/14/%E6%95%B0%E5%AD%A6-%E6%A6%82%E7%8E%87%E8%AE%BA-%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0/222333.png" alt></p>
 <p>所以，概率密度函数与横轴的面积就是对应分布函数的函数值</p>
-<h4 id="Expectation-1"><a href="#Expectation-1" class="headerlink" title="Expectation"></a>Expectation</h4><p>对于连续随机变量$X$，函数$h(X)$关于变量$X$的期望是</p>
+<h4 id="Expectation-Mean"><a href="#Expectation-Mean" class="headerlink" title="Expectation/Mean"></a>Expectation/Mean</h4><p>对于连续随机变量$X$，概率密度函数为$p(x)$，对$X$求期望</p>
 <script type="math/tex; mode=display">
-\mathbb{E}_{X\sim p(\cdot)}[h(X)] = \int_{\mathcal{X}}p(x) \cdot h(x) dx</script><p>对某个随机随机变量求期望就可以消掉该变量</p>
+\mathbb{E}_{X \sim p(\cdot)}[X] = \int_{\mathcal{X}} x \cdot p(x) dx</script><p>花体$\mathcal{X}$是随机变量$X$的取值范围</p>
+<p>函数$h(X)$关于变量$X$的期望是</p>
+<script type="math/tex; mode=display">
+\mathbb{E}_{X\sim p(\cdot)}[h(X)] = \int_{\mathcal{X}} h(x) \cdot p(x) dx</script><p>对某个随机随机变量求期望就可以消掉该变量</p>
 <p>例如：$g(X,Y)=\frac{1}{5}XY$为二元函数，$X$的取值范围为$[0,10]$，概率密度函数为$p(x)=\frac{1}{10}$，对$X$求期望</p>
 <script type="math/tex; mode=display">
 \begin{align*}
-\mathbb{E}_{X}[g(X,Y)] &= \int_{\mathcal{X}}g(x, Y) \cdot p(x) dx \\
+\mathbb{E}_{X \sim p(\cdot) }[g(X,Y)] &= \int_{\mathcal{X}}g(x, Y) \cdot p(x) dx \\
 &= \int_{0}^{10}\frac{1}{5}xY \cdot \frac{1}{10} dx \\
 &= Y
-\end{align*}</script>
+\end{align*}</script><p>可以看到，结果是不含随机变量$X$的，只包含随机变量$Y$</p>
+<h4 id="Conditional-Expectation-Mean"><a href="#Conditional-Expectation-Mean" class="headerlink" title="Conditional Expectation/Mean"></a>Conditional Expectation/Mean</h4><p>如果在$Y=y$条件下$X$的条件概率密度函数为$f(x|Y=y)$，那么$X$的条件期望为</p>
+<script type="math/tex; mode=display">
+\mathbb{E}_{X \sim f(\cdot | Y=y)} [X|Y=y] = \int_{\mathcal{X}} x \cdot f(x | Y=y) dx</script><p>或者直接写成</p>
+<script type="math/tex; mode=display">
+\mathbb{E}_{X \sim f(\cdot | y)} [X|Y=y] = \int_{\mathcal{X}} x \cdot f(x | y) dx</script><p>从这里可以看出来，对$X$求期望会消掉$X$，所以条件期望$\mathbb{E}[X|Y=y]$的结果是一个$Y=y$条件下的确定的值<br>如果$Y$没有取值，那$\mathbb{E}[X|Y]$依然是一个关于$Y$的随机变量，有概率密度为$f(y)$，就可以求期望</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\mathbb{E}_{Y \sim p(\cdot)}[\mathbb{E} [X|Y] ] 
+&= \int_{\mathcal{Y}} \int_{\mathcal{X}} x f(x|y) dx \cdot f(y) dy \\
+&= \int_{\mathcal{Y}} \int_{\mathcal{X}} x \cdot {\color{Tomato}f(x|y) f(y)} dx  dy \\
+&= \int_{\mathcal{Y}} \int_{\mathcal{X}} x f(x,y) dy \\
+&= \mathbb{E}[X]
+\end{align*}</script><p>这里用到了贝叶斯公式</p>
+<script type="math/tex; mode=display">
+f(x|y) = \frac{f(x, y)}{f(y)}</script><script type="math/tex; mode=display">
+\begin{aligned}
+    \color{Tomato}{f(x|y)}
+\end{aligned}</script>
                 
             </div>
             <hr/>
