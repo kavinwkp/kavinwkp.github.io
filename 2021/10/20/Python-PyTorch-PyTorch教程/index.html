@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="Python符号方程, kunpeng">
+    <meta name="keywords" content="PyTorch教程, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Python符号方程 | kunpeng</title>
+    <title>PyTorch教程 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Python符号方程</h1>
+                    <h1 class="description center-align post-title">PyTorch教程</h1>
                 </div>
             </div>
         </div>
@@ -368,12 +368,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%95%B0%E5%AD%A6/">
-                                <span class="chip bg-color">数学</span>
-                            </a>
-                        
-                            <a href="/tags/Python/">
-                                <span class="chip bg-color">Python</span>
+                            <a href="/tags/PyTorch/">
+                                <span class="chip bg-color">PyTorch</span>
                             </a>
                         
                     </div>
@@ -384,8 +380,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%95%B0%E5%AD%A6/" class="post-category">
-                                数学
+                            <a href="/categories/Python/" class="post-category">
+                                Python
                             </a>
                         
                     </div>
@@ -397,7 +393,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-09-28
+                    2021-10-20
                 </div>
                 
 
@@ -421,29 +417,189 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="sympy求解符号方程"><a href="#sympy求解符号方程" class="headerlink" title="sympy求解符号方程"></a>sympy求解符号方程</h2><p><code>sympy.solve()</code>求解方程<br><code>evalf</code>代入数值</p>
-<pre class="line-numbers language-py" data-language="py"><code class="language-py">import sympy
+                <p>查看<code>torch</code>版本号</p>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token keyword">print</span><span class="token punctuation">(</span>torch<span class="token punctuation">.</span>__version__<span class="token punctuation">)</span>
+<span class="token comment"># 1.9.1+cu111</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="张量初始化"><a href="#张量初始化" class="headerlink" title="张量初始化"></a>张量初始化</h2><ol>
+<li>直接从数据初始化</li>
+</ol>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">data <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+x_data <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>x_data<span class="token punctuation">)</span>
+<span class="token comment"># tensor([[1, 2],</span>
+<span class="token comment">#         [3, 4]])</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol>
+<li>从numpy初始化</li>
+</ol>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">np_array <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>np_array<span class="token punctuation">)</span>
+<span class="token comment"># [[1 2]</span>
+<span class="token comment">#  [3 4]]</span>
+x_np <span class="token operator">=</span> torch<span class="token punctuation">.</span>from_numpy<span class="token punctuation">(</span>np_array<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>x_np<span class="token punctuation">)</span>
+<span class="token comment"># tensor([[1, 2],</span>
+<span class="token comment">#         [3, 4]], dtype=torch.int32)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol>
+<li>从另一个torch初始化</li>
+</ol>
+<p><code>ones_like</code>会保持和原始数据同样的大小，数值替换为1<br>指定<code>dtype</code>可以修改数据类型</p>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">x_ones <span class="token operator">=</span> torch<span class="token punctuation">.</span>ones_like<span class="token punctuation">(</span>x_data<span class="token punctuation">)</span> <span class="token comment"># 返回的tensor默认具有相同的torch.dtype和torch.device</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Ones Tensor: \n </span><span class="token interpolation"><span class="token punctuation">&#123;</span>x_ones<span class="token punctuation">&#125;</span></span><span class="token string"> \n"</span></span><span class="token punctuation">)</span>
+<span class="token comment"># Ones Tensor: </span>
+<span class="token comment">#  tensor([[1, 1],</span>
+<span class="token comment">#         [1, 1]]) </span>
 
-sympy.init_printing()
+x_rand <span class="token operator">=</span> torch<span class="token punctuation">.</span>rand_like<span class="token punctuation">(</span>x_data<span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span><span class="token builtin">float</span><span class="token punctuation">)</span> <span class="token comment"># 指定新的数据类型</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Random Tensor: \n </span><span class="token interpolation"><span class="token punctuation">&#123;</span>x_rand<span class="token punctuation">&#125;</span></span><span class="token string"> \n"</span></span><span class="token punctuation">)</span>
+<span class="token comment"># Random Tensor: </span>
+<span class="token comment">#  tensor([[0.5542, 0.4023],</span>
+<span class="token comment">#         [0.5633, 0.9819]]) </span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol>
+<li>指定大小创建</li>
+</ol>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">shape <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span><span class="token punctuation">)</span>
+rand_tensor <span class="token operator">=</span> torch<span class="token punctuation">.</span>rand<span class="token punctuation">(</span>shape<span class="token punctuation">)</span>
+ones_tensor <span class="token operator">=</span> torch<span class="token punctuation">.</span>ones<span class="token punctuation">(</span>shape<span class="token punctuation">)</span>
+zeros_tensor <span class="token operator">=</span> torch<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>shape<span class="token punctuation">)</span>
 
-a, b, c, x &#x3D; sympy.symbols(&#39;a, b, c, x&#39;)
-func &#x3D; a * x * x + b * x + c
-print(&#39;符号解:&#39;, sympy.solve(func, x))
-print(&#39;数值解:&#39;, sympy.solve(func.evalf(subs&#x3D;&#123;a: 1, b: -3, c: 2&#125;), x))
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Random Tensor: \n </span><span class="token interpolation"><span class="token punctuation">&#123;</span>rand_tensor<span class="token punctuation">&#125;</span></span><span class="token string"> \n"</span></span><span class="token punctuation">)</span>
+<span class="token comment"># Random Tensor: </span>
+<span class="token comment">#  tensor([[0.5704, 0.2910, 0.4899],</span>
+<span class="token comment">#         [0.9169, 0.8592, 0.7099]]) </span>
 
-符号解: [(-b + sqrt(-4*a*c + b**2))&#x2F;(2*a), -(b + sqrt(-4*a*c + b**2))&#x2F;(2*a)]
-数值解: [1.00000000000000, 2.00000000000000]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>也可以这样写</p>
-<pre class="line-numbers language-py" data-language="py"><code class="language-py">a, b, c, x &#x3D; sympy.symbols(&#39;a, b, c, x&#39;)
-func &#x3D; a * x * x + b * x + c
-res &#x3D; sympy.solve(func, x)
-print(res)
-print(res[0].subs([(a, 1), (b, -3), (c, 2)]))
-print(res[1].subs([(a, 1), (b, -3), (c, 2)]))
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Ones Tensor: \n </span><span class="token interpolation"><span class="token punctuation">&#123;</span>ones_tensor<span class="token punctuation">&#125;</span></span><span class="token string"> \n"</span></span><span class="token punctuation">)</span>
+<span class="token comment"># Ones Tensor: </span>
+<span class="token comment">#  tensor([[1., 1., 1.],</span>
+<span class="token comment">#         [1., 1., 1.]]) </span>
 
-符号解: [(-b + sqrt(-4*a*c + b**2))&#x2F;(2*a), -(b + sqrt(-4*a*c + b**2))&#x2F;(2*a)]
-2
-1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Zeros Tensor: \n </span><span class="token interpolation"><span class="token punctuation">&#123;</span>zeros_tensor<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token comment"># Zeros Tensor: </span>
+<span class="token comment">#  tensor([[0., 0., 0.],</span>
+<span class="token comment">#         [0., 0., 0.]])</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="张量属性"><a href="#张量属性" class="headerlink" title="张量属性"></a>张量属性</h2><ul>
+<li><code>shape</code>：张量大小</li>
+<li><code>dtype</code>：张量数据类型</li>
+<li><code>device</code>：存储在什么设备上</li>
+</ul>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">tensor <span class="token operator">=</span> torch<span class="token punctuation">.</span>rand<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Shape of tensor: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>tensor<span class="token punctuation">.</span>shape<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Datatype of tensor: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>tensor<span class="token punctuation">.</span>dtype<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Device tensor is stored on: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>tensor<span class="token punctuation">.</span>device<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token comment"># Shape of tensor: torch.Size([3, 4])</span>
+<span class="token comment"># Datatype of tensor: torch.float32</span>
+<span class="token comment"># Device tensor is stored on: cpu</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="张量操作"><a href="#张量操作" class="headerlink" title="张量操作"></a>张量操作</h2><ol>
+<li>移动到<code>GPU</code></li>
+</ol>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token keyword">if</span> torch<span class="token punctuation">.</span>cuda<span class="token punctuation">.</span>is_available<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+  tensor <span class="token operator">=</span> tensor<span class="token punctuation">.</span>to<span class="token punctuation">(</span><span class="token string">'cuda'</span><span class="token punctuation">)</span>
+  <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Device tensor is stored on: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>tensor<span class="token punctuation">.</span>device<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token comment"># Device tensor is stored on: cuda:0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<ol>
+<li>和<code>numpy</code>类似的索引</li>
+</ol>
+<p>第1列赋值为0<br><pre class="line-numbers language-py" data-language="py"><code class="language-py">tensor <span class="token operator">=</span> torch<span class="token punctuation">.</span>ones<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
+tensor<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>tensor<span class="token punctuation">)</span>
+<span class="token comment"># tensor([[1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1.]])</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<ol>
+<li>连接多个张量</li>
+</ol>
+<p>按列连接<br><pre class="line-numbers language-py" data-language="py"><code class="language-py">t1 <span class="token operator">=</span> torch<span class="token punctuation">.</span>cat<span class="token punctuation">(</span><span class="token punctuation">[</span>tensor<span class="token punctuation">,</span> tensor<span class="token punctuation">,</span> tensor<span class="token punctuation">]</span><span class="token punctuation">,</span> dim<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>t1<span class="token punctuation">)</span>
+<span class="token comment"># tensor([[1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1.]])</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<p>按行连接<br><pre class="line-numbers language-py" data-language="py"><code class="language-py">t1 <span class="token operator">=</span> torch<span class="token punctuation">.</span>cat<span class="token punctuation">(</span><span class="token punctuation">[</span>tensor<span class="token punctuation">,</span> tensor<span class="token punctuation">,</span> tensor<span class="token punctuation">]</span><span class="token punctuation">,</span> dim<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>t1<span class="token punctuation">)</span>
+<span class="token comment"># tensor([[1., 0., 1., 1., 1., 0., 1., 1., 1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1., 1., 0., 1., 1., 1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1., 1., 0., 1., 1., 1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1., 1., 0., 1., 1., 1., 0., 1., 1.]])</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<ol>
+<li>张量相乘</li>
+</ol>
+<p>对应元素相乘<br><pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"tensor.mul(tensor) \n </span><span class="token interpolation"><span class="token punctuation">&#123;</span>tensor<span class="token punctuation">.</span>mul<span class="token punctuation">(</span>tensor<span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string"> \n"</span></span><span class="token punctuation">)</span>
+<span class="token comment"># tensor.mul(tensor) </span>
+<span class="token comment">#  tensor([[1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1.]]) </span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"tensor * tensor \n </span><span class="token interpolation"><span class="token punctuation">&#123;</span>tensor <span class="token operator">*</span> tensor<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token comment"># tensor * tensor </span>
+<span class="token comment">#  tensor([[1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1.]])</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<p>矩阵乘法</p>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"tensor.matmul(tensor.T) \n </span><span class="token interpolation"><span class="token punctuation">&#123;</span>tensor<span class="token punctuation">.</span>matmul<span class="token punctuation">(</span>tensor<span class="token punctuation">.</span>T<span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string"> \n"</span></span><span class="token punctuation">)</span>
+<span class="token comment"># tensor.matmul(tensor.T) </span>
+<span class="token comment">#  tensor([[3., 3., 3., 3.],</span>
+<span class="token comment">#         [3., 3., 3., 3.],</span>
+<span class="token comment">#         [3., 3., 3., 3.],</span>
+<span class="token comment">#         [3., 3., 3., 3.]]) </span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"tensor @ tensor.T \n </span><span class="token interpolation"><span class="token punctuation">&#123;</span>tensor @ tensor<span class="token punctuation">.</span>T<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token comment"># tensor @ tensor.T </span>
+<span class="token comment">#  tensor([[3., 3., 3., 3.],</span>
+<span class="token comment">#         [3., 3., 3., 3.],</span>
+<span class="token comment">#         [3., 3., 3., 3.],</span>
+<span class="token comment">#         [3., 3., 3., 3.]])</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol>
+<li>直接更改元素</li>
+</ol>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token keyword">print</span><span class="token punctuation">(</span>tensor<span class="token punctuation">,</span> <span class="token string">"\n"</span><span class="token punctuation">)</span>
+<span class="token comment"># tensor([[1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1.],</span>
+<span class="token comment">#         [1., 0., 1., 1.]]) </span>
+
+tensor<span class="token punctuation">.</span>add_<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>tensor<span class="token punctuation">)</span>
+<span class="token comment"># tensor([[6., 5., 6., 6.],</span>
+<span class="token comment">#         [6., 5., 6., 6.],</span>
+<span class="token comment">#         [6., 5., 6., 6.],</span>
+<span class="token comment">#         [6., 5., 6., 6.]])</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>注</strong>：<code>PyTorch</code>操作<code>inplace</code>版本都有后缀<code>_</code>, 例如<code>x.copy_(y), x.t_()</code></p>
+<h2 id="与numpy的转换"><a href="#与numpy的转换" class="headerlink" title="与numpy的转换"></a>与numpy的转换</h2><pre class="line-numbers language-py" data-language="py"><code class="language-py">t <span class="token operator">=</span> torch<span class="token punctuation">.</span>ones<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"t: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>t<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token comment"># t: tensor([1., 1., 1., 1., 1.])</span>
+n <span class="token operator">=</span> t<span class="token punctuation">.</span>numpy<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"n: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>n<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token comment"># n: [1. 1. 1. 1. 1.]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>张量与<code>numpy</code>共享存储空间，<code>tensor</code>改变，<code>numpy</code>也会改变</p>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">t<span class="token punctuation">.</span>add_<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"t: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>t<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token comment"># t: tensor([2., 2., 2., 2., 2.])</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"n: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>n<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token comment"># n: [2. 2. 2. 2. 2.]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>numpy</code>转为<code>tensor</code></p>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">n <span class="token operator">=</span> np<span class="token punctuation">.</span>ones<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"n: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>n<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token comment"># n: [1. 1. 1. 1. 1.]</span>
+t <span class="token operator">=</span> torch<span class="token punctuation">.</span>from_numpy<span class="token punctuation">(</span>n<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"t: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>t<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token comment"># t: tensor([1., 1., 1., 1., 1.], dtype=torch.float64)</span>
+
+np<span class="token punctuation">.</span>add<span class="token punctuation">(</span>n<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> out<span class="token operator">=</span>n<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"n: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>n<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token comment"># n: [2. 2. 2. 2. 2.]</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"t: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>t<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token comment"># t: tensor([2., 2., 2., 2., 2.], dtype=torch.float64)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
                 
             </div>
             <hr/>
@@ -469,7 +625,7 @@ print(res[1].subs([(a, 1), (b, -3), (c, 2)]))
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/09/28/Python-Python%E7%AC%A6%E5%8F%B7%E6%96%B9%E7%A8%8B/">http://example.com/2021/09/28/Python-Python%E7%AC%A6%E5%8F%B7%E6%96%B9%E7%A8%8B/</a>
+                    <a href="http://example.com/2021/10/20/Python-PyTorch-PyTorch%E6%95%99%E7%A8%8B/">http://example.com/2021/10/20/Python-PyTorch-PyTorch%E6%95%99%E7%A8%8B/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -507,12 +663,8 @@ print(res[1].subs([(a, 1), (b, -3), (c, 2)]))
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%95%B0%E5%AD%A6/">
-                                    <span class="chip bg-color">数学</span>
-                                </a>
-                            
-                                <a href="/tags/Python/">
-                                    <span class="chip bg-color">Python</span>
+                                <a href="/tags/PyTorch/">
+                                    <span class="chip bg-color">PyTorch</span>
                                 </a>
                             
                         </div>
@@ -684,17 +836,18 @@ print(res[1].subs([(a, 1), (b, -3), (c, 2)]))
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/09/28/LeetCode-43-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E4%B9%98/">
+                <a href="/2021/10/20/Python-PyTorch-PyTorch%E6%95%99%E7%A8%8B/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="字符串相乘">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="PyTorch教程">
                         
-                        <span class="card-title">字符串相乘</span>
+                        <span class="card-title">PyTorch教程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -704,26 +857,27 @@ print(res[1].subs([(a, 1), (b, -3), (c, 2)]))
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-28
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-20
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/LeetCode/" class="post-category">
-                                    LeetCode
+                            <a href="/categories/Python/" class="post-category">
+                                    Python
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%A8%A1%E6%8B%9F/">
-                        <span class="chip bg-color">模拟</span>
+                    <a href="/tags/PyTorch/">
+                        <span class="chip bg-color">PyTorch</span>
                     </a>
                     
                 </div>
@@ -737,13 +891,13 @@ print(res[1].subs([(a, 1), (b, -3), (c, 2)]))
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/09/27/LeetCode-73-%E7%9F%A9%E9%98%B5%E7%BD%AE%E9%9B%B6/">
+                <a href="/2021/10/16/Python-%E6%B7%B1%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B5%85%E6%8B%B7%E8%B4%9D/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="73-矩阵置零">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="深拷贝与浅拷贝">
                         
-                        <span class="card-title">73-矩阵置零</span>
+                        <span class="card-title">深拷贝与浅拷贝</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -754,14 +908,14 @@ print(res[1].subs([(a, 1), (b, -3), (c, 2)]))
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-16
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/LeetCode/" class="post-category">
-                                    LeetCode
+                            <a href="/categories/Python/" class="post-category">
+                                    Python
                                 </a>
                             
                             
@@ -771,8 +925,8 @@ print(res[1].subs([(a, 1), (b, -3), (c, 2)]))
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%A8%A1%E6%8B%9F/">
-                        <span class="chip bg-color">模拟</span>
+                    <a href="/tags/Python/">
+                        <span class="chip bg-color">Python</span>
                     </a>
                     
                 </div>
