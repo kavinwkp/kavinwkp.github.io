@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="概率分布函数, kunpeng">
+    <meta name="keywords" content="协方差, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>概率分布函数 | kunpeng</title>
+    <title>协方差 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">概率分布函数</h1>
+                    <h1 class="description center-align post-title">协方差</h1>
                 </div>
             </div>
         </div>
@@ -393,7 +393,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-10-14
+                    2021-10-21
                 </div>
                 
 
@@ -417,65 +417,76 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="Discrete-Random-Variable"><a href="#Discrete-Random-Variable" class="headerlink" title="Discrete Random Variable"></a>Discrete Random Variable</h3><p>离散型随机变量，随机变量的取值是有穷可列举的<br>通常用大写字母表示随机变量，用小写字母表示随机变量的观测值</p>
-<h4 id="Probabolity-Mass-Function"><a href="#Probabolity-Mass-Function" class="headerlink" title="Probabolity Mass Function"></a>Probabolity Mass Function</h4><p>直译为概率质量函数，教科书常用<strong>概率分布</strong>，表明随机变量有哪几种取值可能，每种所对应的概率是多少，所以严格来讲应该叫<strong>离散型随机变量值分布与概率分布</strong></p>
-<p>用数学语言来讲，<strong>概率分布</strong>是表示所有$P(X=x)$或$p(x)$的图、表、公式</p>
-<p>例如抛骰子</p>
-<p><img src="/2021/10/14/%E6%95%B0%E5%AD%A6-%E6%A6%82%E7%8E%87%E8%AE%BA-%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0/table2.png" alt></p>
-<center>
-<img src="/2021/10/14/%E6%95%B0%E5%AD%A6-%E6%A6%82%E7%8E%87%E8%AE%BA-%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0/111.png#pic_center" width="50%" height="50%">
-<br>
-<div style="color:orange; border-bottom: 1px solid #d9d9d9;
-display: inline-block;
-color: #999;
-padding: 2px;">概率分布</div>
+                <h2 id="协方差定义"><a href="#协方差定义" class="headerlink" title="协方差定义"></a>协方差定义</h2><p>$X,Y$是两个随机变量，$X,Y$的协方差<code>covariance</code>定义为</p>
+<script type="math/tex; mode=display">
+cov(X,Y) = \mathbb{E}[(X-\mu_x)(Y-\mu_y)]</script><p>其中，$\mathbb{E}[X]=\mu_x$</p>
+<h2 id="协方差矩阵定义"><a href="#协方差矩阵定义" class="headerlink" title="协方差矩阵定义"></a>协方差矩阵定义</h2><p>这里默认每一行是一个观测值，每一列是一个随机变量</p>
+<script type="math/tex; mode=display">
+\mathbf{X} = 
+\begin{bmatrix}
+    a_{11} & a_{12} & \dots & a_{1n} \\
+    a_{21} & a_{22} & \dots & a_{2n} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    a_{m1} & a_{m2} & \dots & a_{mn} \\
+\end{bmatrix}_{m \times n} = 
+\begin{bmatrix}
+    \mathbf{c_{1}} & \mathbf{c_{2}} & \dots & \mathbf{c_{n}} \\
+\end{bmatrix}</script><p>协方差矩阵为</p>
+<script type="math/tex; mode=display">
+cov = \frac{1}{m-1}
+\begin{bmatrix}
+    cov(c_1,c_1) & cov(c_1,c_2) & \dots & cov(c_1,c_n) \\
+    cov(c_2,c_1) & cov(c_2,c_2) & \dots & cov(c_2,c_n) \\
+    \vdots & \vdots & \ddots & \vdots \\
+    cov(c_m,c_1) & cov(c_m,c_2) & \dots & cov(c_m,c_n) \\
+\end{bmatrix}</script><p>从这里也可以看出来，协方差矩阵是对称矩阵</p>
+<p><strong>例子</strong>：</p>
+<script type="math/tex; mode=display">
+\mathbf{X} = 
+\begin{bmatrix}
+    1 & 2 & 3 \\
+    3 & 1 & 1 \\
+\end{bmatrix} = 
+\begin{bmatrix}
+    \mathbf{c_{1}} & \mathbf{c_{2}} & \mathbf{c_{3}} \\
+\end{bmatrix}</script><ul>
+<li>求每个随机变量的均值</li>
+</ul>
+<script type="math/tex; mode=display">
+\mathbf{\bar{c}} = 
+\begin{bmatrix}
+    \mathbf{\bar{c}_{1}} & \mathbf{\bar{c}_{2}} & \mathbf{\bar{c}_{3}} \\
+\end{bmatrix} = 
+\begin{bmatrix}
+    2 & 1.5 & 2 \\
+\end{bmatrix}</script><ul>
+<li>$\mathbf{X}$的每一列减去均值</li>
+</ul>
+<script type="math/tex; mode=display">
+\mathbf{X} = 
+\begin{bmatrix}
+    -1 & 0.5 & 1 \\
+    1 & -0.5 & -1 \\
+\end{bmatrix}</script><ul>
+<li>计算协方差矩阵</li>
+</ul>
+<script type="math/tex; mode=display">
+cov = \frac{1}{m-1}\mathbf{X}^T \mathbf{X} = 
+\frac{1}{2}
+\begin{bmatrix}
+    2 & -1 & -2 \\
+    -1 & 0.5 & 1 \\
+    -2 & 1 & 2 \\
+\end{bmatrix}</script><h2 id="协方差的意义"><a href="#协方差的意义" class="headerlink" title="协方差的意义"></a>协方差的意义</h2><center>
+<img src="/2021/10/21/%E6%95%B0%E5%AD%A6-%E6%A6%82%E7%8E%87%E8%AE%BA-%E5%8D%8F%E6%96%B9%E5%B7%AE/111.png#pic_center" width="80%" height="80%" alt="正相关">
 </center>
 
-<h4 id="Cumulative-Distribution-Function"><a href="#Cumulative-Distribution-Function" class="headerlink" title="Cumulative Distribution Function"></a>Cumulative Distribution Function</h4><p>直译为<strong>累计分布函数</strong>，教科书直接叫<strong>分布函数</strong>，是对概率分布的<strong>累加</strong></p>
-<p><img src="/2021/10/14/%E6%95%B0%E5%AD%A6-%E6%A6%82%E7%8E%87%E8%AE%BA-%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0/222.png" alt></p>
-<p>可以看到</p>
-<script type="math/tex; mode=display">F_X(x = 4) = \mathbb{P}(X \leq 4) = \sum_{x_i=1}^{4}p(x_i)</script><h4 id="Expectation-Mean"><a href="#Expectation-Mean" class="headerlink" title="Expectation/Mean"></a>Expectation/Mean</h4><p>对于离散随机变量$X$，函数$h(X)$关于变量$X$的期望是</p>
-<script type="math/tex; mode=display">
-\mathbb{E}_{X\sim p(\cdot)}[h(X)] = \sum_{x \in \mathcal{X}}p(x) \cdot h(x)</script><h3 id="Continuous-Random-Variable"><a href="#Continuous-Random-Variable" class="headerlink" title="Continuous Random Variable"></a>Continuous Random Variable</h3><p>连续型随机变量</p>
-<h4 id="Probability-Density-Function"><a href="#Probability-Density-Function" class="headerlink" title="Probability Density Function"></a>Probability Density Function</h4><p>连续型随机变量的概率分布，称为<strong>概率密度函数</strong></p>
-<p>性质：</p>
-<ol>
-<li>函数值大于等于0</li>
-<li>在区间$(-\infty, +\infty)$上的积分为1</li>
-<li>连续型随机变量的取值为区间$(a, b]$，其概率等于概率密度函数在相应区间上的面积</li>
-</ol>
-<script type="math/tex; mode=display">
-\mathbb{P}\left\{a < X \leq b\right\} = F_X(b) - F_X(a) = \int_{a}^{b}f(x)dx</script><h4 id="Cumulative-Distribution-Function-1"><a href="#Cumulative-Distribution-Function-1" class="headerlink" title="Cumulative Distribution Function"></a>Cumulative Distribution Function</h4><p>连续型随机变量也是叫<strong>分布函数</strong>，由概率密度函数积分得到</p>
-<script type="math/tex; mode=display">\mathbb{P} \left\{X \leq x\right\} = F_X(x) = \int_{-\infty}^{x}f(u)du</script><p><img src="/2021/10/14/%E6%95%B0%E5%AD%A6-%E6%A6%82%E7%8E%87%E8%AE%BA-%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0/222333.png" alt></p>
-<p>所以，概率密度函数与横轴的面积就是对应分布函数的函数值</p>
-<h4 id="Expectation-Mean-1"><a href="#Expectation-Mean-1" class="headerlink" title="Expectation/Mean"></a>Expectation/Mean</h4><p>对于连续随机变量$X$，概率密度函数为$p(x)$，对$X$求期望</p>
-<script type="math/tex; mode=display">
-\mathbb{E}_{X \sim p(\cdot)}[X] = \int_{\mathcal{X}} x \cdot p(x) dx</script><p>花体$\mathcal{X}$是随机变量$X$的取值范围</p>
-<p>函数$h(X)$关于变量$X$的期望是</p>
-<script type="math/tex; mode=display">
-\mathbb{E}_{X\sim p(\cdot)}[h(X)] = \int_{\mathcal{X}} h(x) \cdot p(x) dx</script><p>对某个随机随机变量求期望就可以消掉该变量</p>
-<p>例如：$g(X,Y)=\frac{1}{5}XY$为二元函数，$X$的取值范围为$[0,10]$，概率密度函数为$p(x)=\frac{1}{10}$，对$X$求期望</p>
-<script type="math/tex; mode=display">
-\begin{align*}
-\mathbb{E}_{X \sim p(\cdot) }[g(X,Y)] &= \int_{\mathcal{X}}g(x, Y) \cdot p(x) dx \\
-&= \int_{0}^{10}\frac{1}{5}xY \cdot \frac{1}{10} dx \\
-&= Y
-\end{align*}</script><p>可以看到，结果是不含随机变量$X$的，只包含随机变量$Y$</p>
-<h4 id="Conditional-Expectation-Mean"><a href="#Conditional-Expectation-Mean" class="headerlink" title="Conditional Expectation/Mean"></a>Conditional Expectation/Mean</h4><p>如果在$Y=y$条件下$X$的条件概率密度函数为$f(x|Y=y)$，那么$X$的条件期望为</p>
-<script type="math/tex; mode=display">
-\mathbb{E}_{X \sim f(\cdot | Y=y)} [X|Y=y] = \int_{\mathcal{X}} x \cdot f(x | Y=y) dx</script><p>或者直接写成</p>
-<script type="math/tex; mode=display">
-\mathbb{E}_{X \sim f(\cdot | y)} [X|Y=y] = \int_{\mathcal{X}} x \cdot f(x | y) dx</script><p>从这里可以看出来，对$X$求期望会消掉$X$，所以条件期望$\mathbb{E}[X|Y=y]$的结果是一个$Y=y$条件下的确定的值<br>如果$Y$没有取值，那$\mathbb{E}[X|Y]$依然是一个关于$Y$的随机变量，有概率密度为$f(y)$，就可以求期望</p>
-<script type="math/tex; mode=display">
-\begin{align*}
-\mathbb{E}_{Y \sim p(\cdot)} [\mathbb{E} [X|Y] ] 
-&= \int_{\mathcal{Y}} {\color{teal}{\int_{\mathcal{X}} x f(x|y) dx}} \cdot f(y) dy \\
-&= \int_{\mathcal{Y}} \int_{\mathcal{X}} x \cdot {\color{Tomato}{f(x|y)f(y)}} dx  dy \\
-&= \int_{\mathcal{Y}} \int_{\mathcal{X}} x {\color{Tomato}{f(x,y)}} dy \\
-&= \mathbb{E}\left[X\right]
-\end{align*}</script><p>这里用到了贝叶斯公式</p>
-<script type="math/tex; mode=display">
-f(x|y) = \frac{f(x, y)}{f(y)}</script>
+<center>
+<img src="/2021/10/21/%E6%95%B0%E5%AD%A6-%E6%A6%82%E7%8E%87%E8%AE%BA-%E5%8D%8F%E6%96%B9%E5%B7%AE/222.png#pic_center" width="80%" height="80%" alt="负相关">
+</center>
+
+<p>在图中的区域（1）中，有 $X&gt;\mathbb{E}X,Y&gt;\mathbb{E}Y$，所以$(X-\mathbb{E}X)(Y-\mathbb{E}Y)&gt;0$<br>在图中的区域（2）中，有 $X&lt;\mathbb{E}X,Y&gt;\mathbb{E}Y$，所以$(X-\mathbb{E}X)(Y-\mathbb{E}Y)<0$ 在图中的区域（3）中，有 $x<\mathbb{e}x,y<\mathbb{e}y$，所以$(x-\mathbb{e}x)(y-\mathbb{e}y)>0$<br>在图中的区域（4）中，有 $X&gt;\mathbb{E}X,Y&lt;\mathbb{E}Y$，所以$(X-\mathbb{E}X)(Y-\mathbb{E}Y)&lt;0$</0$></p>
+
                 
             </div>
             <hr/>
@@ -501,7 +512,7 @@ f(x|y) = \frac{f(x, y)}{f(y)}</script>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/10/14/%E6%95%B0%E5%AD%A6-%E6%A6%82%E7%8E%87%E8%AE%BA-%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0/">http://example.com/2021/10/14/%E6%95%B0%E5%AD%A6-%E6%A6%82%E7%8E%87%E8%AE%BA-%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0/</a>
+                    <a href="http://example.com/2021/10/21/%E6%95%B0%E5%AD%A6-%E6%A6%82%E7%8E%87%E8%AE%BA-%E5%8D%8F%E6%96%B9%E5%B7%AE/">http://example.com/2021/10/21/%E6%95%B0%E5%AD%A6-%E6%A6%82%E7%8E%87%E8%AE%BA-%E5%8D%8F%E6%96%B9%E5%B7%AE/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -712,17 +723,18 @@ f(x|y) = \frac{f(x, y)}{f(y)}</script>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/10/16/Python-%E6%B7%B1%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B5%85%E6%8B%B7%E8%B4%9D/">
+                <a href="/2021/10/21/%E6%95%B0%E5%AD%A6-%E6%A6%82%E7%8E%87%E8%AE%BA-%E5%8D%8F%E6%96%B9%E5%B7%AE/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="深拷贝与浅拷贝">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="协方差">
                         
-                        <span class="card-title">深拷贝与浅拷贝</span>
+                        <span class="card-title">协方差</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -732,9 +744,59 @@ f(x|y) = \frac{f(x, y)}{f(y)}</script>
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-16
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-21
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%A6%82%E7%8E%87%E8%AE%BA/" class="post-category">
+                                    概率论
+                                </a>
+                            
+                            
                         </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%A6%82%E7%8E%87%E8%AE%BA/">
+                        <span class="chip bg-color">概率论</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/10/20/Python-PyTorch-PyTorch%E6%95%99%E7%A8%8B/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="PyTorch教程">
+                        
+                        <span class="card-title">PyTorch教程</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-20
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -750,57 +812,8 @@ f(x|y) = \frac{f(x, y)}{f(y)}</script>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Python/">
-                        <span class="chip bg-color">Python</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/10/10/Linux-%E6%96%87%E4%BB%B6/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="文件">
-                        
-                        <span class="card-title">文件</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-10
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Linux/" class="post-category">
-                                    Linux
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Linux/">
-                        <span class="chip bg-color">Linux</span>
+                    <a href="/tags/PyTorch/">
+                        <span class="chip bg-color">PyTorch</span>
                     </a>
                     
                 </div>
