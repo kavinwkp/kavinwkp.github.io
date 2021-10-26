@@ -417,7 +417,9 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>(1) reshape</p>
+                <ul>
+<li>reshape</li>
+</ul>
 <pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token builtin">input</span> <span class="token operator">=</span> torch<span class="token punctuation">.</span>arange<span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">)</span>
 <span class="token comment"># tensor([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11])</span>
 
@@ -425,20 +427,47 @@
 <span class="token comment"># tensor([[ 0,  1,  2,  3],</span>
 <span class="token comment">#         [ 4,  5,  6,  7],</span>
 <span class="token comment">#         [ 8,  9, 10, 11]])</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>(2) flatness</p>
+<ul>
+<li>view</li>
+</ul>
+<p>返回一个张量，数据与输入张量相同，大小不同</p>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">x <span class="token operator">=</span> torch<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
+<span class="token comment"># tensor([[ 1.5941, -0.1812],</span>
+<span class="token comment">#         [ 0.5612,  1.5465]])</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment"># torch.Size([2, 2])</span>
+
+y <span class="token operator">=</span> x<span class="token punctuation">.</span>view<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span>   <span class="token comment"># 数据是一样的</span>
+<span class="token comment"># tensor([ 1.5941, -0.1812,  0.5612,  1.5465])</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>y<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment"># 大小可以改变</span>
+<span class="token comment"># torch.Size([4])</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>flatness</li>
+</ul>
 <pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token builtin">input</span> <span class="token operator">=</span> torch<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>arange<span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token comment"># tensor([[0, 1, 2],</span>
 <span class="token comment">#         [3, 4, 5]])</span>
 
 output <span class="token operator">=</span> torch<span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">)</span>
 <span class="token comment"># tensor([0, 1, 2, 3, 4, 5])</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>(3) argmax</p>
+<ul>
+<li>argmax</li>
+</ul>
 <pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token builtin">input</span> <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
                       <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
 
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">.</span>argmax<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment"># 每行最大值下标</span>
 tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>(4) Sequential</p>
+<ul>
+<li>manual_seed</li>
+</ul>
+<p>随机数种子，每次运行的结果都是一样的</p>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">seed <span class="token operator">=</span> <span class="token number">111</span>
+torch<span class="token punctuation">.</span>manual_seed<span class="token punctuation">(</span>seed<span class="token punctuation">)</span>
+<span class="token comment"># tensor([[0.7156, 0.9140]])</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>Sequential</li>
+</ul>
 <pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token keyword">class</span> <span class="token class-name">CNN</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
     <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
         <span class="token builtin">super</span><span class="token punctuation">(</span>CNN<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>

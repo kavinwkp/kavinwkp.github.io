@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="数组复制, kunpeng">
+    <meta name="keywords" content="常用方法, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>数组复制 | kunpeng</title>
+    <title>常用方法 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">数组复制</h1>
+                    <h1 class="description center-align post-title">常用方法</h1>
                 </div>
             </div>
         </div>
@@ -377,6 +377,15 @@
                 </div>
                 <div class="col s5 right-align">
                     
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Python/" class="post-category">
+                                Python
+                            </a>
+                        
+                    </div>
+                    
                 </div>
             </div>
 
@@ -384,7 +393,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-05-17
+                    2021-10-24
                 </div>
                 
 
@@ -408,27 +417,17 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="浅复制"><a href="#浅复制" class="headerlink" title="浅复制"></a>浅复制</h2><p>如果只用赋值运算符，实现的是浅复制，类似于两个指针指向同一块内存区域，对一个的修改会影响到另一个<br><pre class="line-numbers language-py" data-language="py"><code class="language-py">a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span>
-b <span class="token operator">=</span> a
-a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">100</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span>
-<span class="token punctuation">[</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
-<h2 id="list-的解决方法"><a href="#list-的解决方法" class="headerlink" title="list()的解决方法"></a>list()的解决方法</h2><p>改成<code>b=a[:]</code>就可以了<br><pre class="line-numbers language-py" data-language="py"><code class="language-py">a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span>
-b <span class="token operator">=</span> a<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
-a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">100</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span>
-<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
-<h2 id="np-array-的解决方法"><a href="#np-array-的解决方法" class="headerlink" title="np.array()的解决方法"></a>np.array()的解决方法</h2><p>但是，这对<code>list</code>有用，对<code>np.array</code>没用<br><pre class="line-numbers language-py" data-language="py"><code class="language-py">a <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-b <span class="token operator">=</span> a<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
-a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">100</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span>
-<span class="token punctuation">[</span><span class="token number">100</span>   <span class="token number">2</span>   <span class="token number">3</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
-<h2 id="copy-函数实现深复制"><a href="#copy-函数实现深复制" class="headerlink" title="copy()函数实现深复制"></a>copy()函数实现深复制</h2><p>需要用<code>copy()</code>函数<br><pre class="line-numbers language-py" data-language="py"><code class="language-py">a <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-b <span class="token operator">=</span> a<span class="token punctuation">.</span>copy<span class="token punctuation">(</span><span class="token punctuation">)</span>
-a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">100</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span>
-<span class="token punctuation">[</span><span class="token number">1</span> <span class="token number">2</span> <span class="token number">3</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
-
+                <ul>
+<li>enumerate</li>
+</ul>
+<p>同时遍历下标和元素</p>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span>
+<span class="token keyword">for</span> i<span class="token punctuation">,</span> num <span class="token keyword">in</span> <span class="token builtin">enumerate</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> num<span class="token punctuation">)</span>
+<span class="token number">0</span> <span class="token number">1</span>
+<span class="token number">1</span> <span class="token number">2</span>
+<span class="token number">2</span> <span class="token number">3</span>
+<span class="token number">3</span> <span class="token number">4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -454,7 +453,7 @@ a<span class="token punctuation">[</span><span class="token number">0</span><spa
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/05/17/Python-%E6%95%B0%E7%BB%84-%E6%95%B0%E7%BB%84%E5%A4%8D%E5%88%B6/">http://example.com/2021/05/17/Python-%E6%95%B0%E7%BB%84-%E6%95%B0%E7%BB%84%E5%A4%8D%E5%88%B6/</a>
+                    <a href="http://example.com/2021/10/24/Python-%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/">http://example.com/2021/10/24/Python-%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -669,13 +668,13 @@ a<span class="token punctuation">[</span><span class="token number">0</span><spa
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/05/19/C-Primer-2-1-%E5%9F%BA%E6%9C%AC%E5%86%85%E7%BD%AE%E7%B1%BB%E5%9E%8B/">
+                <a href="/2021/10/25/LeetCode-115-%E6%9C%80%E5%B0%8F%E6%A0%88/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="2.1-基本内置类型">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="最小栈">
                         
-                        <span class="card-title">2.1-基本内置类型</span>
+                        <span class="card-title">最小栈</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -686,12 +685,16 @@ a<span class="token punctuation">[</span><span class="token number">0</span><spa
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-05-19
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-25
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kunpeng
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -699,8 +702,8 @@ a<span class="token punctuation">[</span><span class="token number">0</span><spa
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/C-Primer/">
-                        <span class="chip bg-color">C++Primer</span>
+                    <a href="/tags/%E6%A0%88/">
+                        <span class="chip bg-color">栈</span>
                     </a>
                     
                 </div>
@@ -714,13 +717,13 @@ a<span class="token punctuation">[</span><span class="token number">0</span><spa
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/05/15/C-Primer-14-9-%E9%87%8D%E8%BD%BD%E3%80%81%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6/">
+                <a href="/2021/10/23/Python-PyTorch-conda%E7%8E%AF%E5%A2%83/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="14.9-重载、类型转换与运算符">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="conda环境">
                         
-                        <span class="card-title">14.9-重载、类型转换与运算符</span>
+                        <span class="card-title">conda环境</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -731,12 +734,16 @@ a<span class="token punctuation">[</span><span class="token number">0</span><spa
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-15
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-23
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kunpeng
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Python/" class="post-category">
+                                    Python
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -744,8 +751,8 @@ a<span class="token punctuation">[</span><span class="token number">0</span><spa
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/C-Primer/">
-                        <span class="chip bg-color">C++Primer</span>
+                    <a href="/tags/Python/">
+                        <span class="chip bg-color">Python</span>
                     </a>
                     
                 </div>
