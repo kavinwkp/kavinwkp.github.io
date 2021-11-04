@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="13-拷贝控制, kunpeng">
+    <meta name="keywords" content="13.6-象移动, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>13-拷贝控制 | kunpeng</title>
+    <title>13.6-象移动 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">13-拷贝控制</h1>
+                    <h1 class="description center-align post-title">13.6-象移动</h1>
                 </div>
             </div>
         </div>
@@ -393,7 +393,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-10-26
+                    2021-11-04
                 </div>
                 
 
@@ -417,58 +417,58 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="13-1-拷贝、赋值与销毁"><a href="#13-1-拷贝、赋值与销毁" class="headerlink" title="13.1 拷贝、赋值与销毁"></a>13.1 拷贝、赋值与销毁</h2><h3 id="13-1-1-copy-constructor"><a href="#13-1-1-copy-constructor" class="headerlink" title="13.1.1 copy constructor"></a>13.1.1 copy constructor</h3><p>拷贝构造函数</p>
-<p>第一个参数是引用类型<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">Foo</span><span class="token punctuation">(</span><span class="token keyword">const</span> Foo<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></p>
-<p>代码示例</p>
+                <h2 id="13-6-对象移动"><a href="#13-6-对象移动" class="headerlink" title="13.6 对象移动"></a>13.6 对象移动</h2><p>有时候对象拷贝之后就立即销毁了，如果只是移动而不是拷贝对象会大幅度提升性能，因为移动不用重新分配内存和拷贝数据</p>
+<ul>
+<li>标准库容器、<code>string</code>和<code>shared_ptr</code>类既支持移动也支持拷贝，<code>IO</code>类和<code>unique_ptr</code>类可以移动但不能拷贝</li>
+</ul>
+<h3 id="13-6-1-右值引用"><a href="#13-6-1-右值引用" class="headerlink" title="13.6.1 右值引用"></a>13.6.1 右值引用</h3><p>右值引用只能绑定到一个将要销毁的对象，可以自由地将一个右值引用的资源移动到另一个对象中</p>
+<p>对于常规的左值引用，不能将其绑定到要求转换的表达式、字面常量或是返回右值的表达式。右值引用则相反，但不能直接绑定到一个左值上</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token operator">&amp;</span>r1 <span class="token operator">=</span> i<span class="token punctuation">;</span>            <span class="token comment">// OK, 左值引用</span>
+<span class="token keyword">int</span> <span class="token operator">&amp;&amp;</span>r2 <span class="token operator">=</span> i<span class="token punctuation">;</span>           <span class="token comment">// Err, 不能将右值引用绑定到左值</span>
+<span class="token keyword">int</span> <span class="token operator">&amp;</span>r3 <span class="token operator">=</span> i <span class="token operator">*</span> <span class="token number">10</span><span class="token punctuation">;</span>       <span class="token comment">// Err, i*42是一个右值</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> <span class="token operator">&amp;</span>r3 <span class="token operator">=</span> i <span class="token operator">*</span> <span class="token number">10</span><span class="token punctuation">;</span> <span class="token comment">// OK, 可以将const引用绑定到右值</span>
+<span class="token keyword">int</span> <span class="token operator">&amp;&amp;</span>r4 <span class="token operator">=</span> i <span class="token operator">*</span> <span class="token number">10</span><span class="token punctuation">;</span>      <span class="token comment">// OK, 右值引用</span>
+cout <span class="token operator">&lt;&lt;</span> r4 <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>     <span class="token comment">// 100</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>返回左值引用的函数，连同赋值、下标、解引用和前置递增/递减运算符，都是左值</li>
+<li>返回非引用类型的函数，连同算术、关系、位以及后置递增/递减运算符，都生成右值</li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span><span class="token operator">&amp;</span> <span class="token function">func1</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">&amp;</span> num<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    num <span class="token operator">=</span> num <span class="token operator">*</span> num<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> num<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">int</span> <span class="token function">func2</span><span class="token punctuation">(</span><span class="token keyword">int</span> num<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> num <span class="token operator">*</span> num<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> <span class="token operator">&amp;</span>ref1 <span class="token operator">=</span> <span class="token function">func1</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 返回左值</span>
+    cout <span class="token operator">&lt;&lt;</span> ref1 <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>   <span class="token comment">// 25</span>
+
+    <span class="token keyword">int</span> b <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> <span class="token operator">&amp;&amp;</span>ref2 <span class="token operator">=</span> <span class="token function">func2</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 返回右值</span>
+    cout <span class="token operator">&lt;&lt;</span> ref2 <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>   <span class="token comment">// 16</span>
+
+    <span class="token keyword">const</span> <span class="token keyword">int</span> <span class="token operator">&amp;</span>ref3 <span class="token operator">=</span> <span class="token function">func2</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// const引用可以绑定右值</span>
+    cout <span class="token operator">&lt;&lt;</span> ref3 <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>       <span class="token comment">// 16</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>右值引用指向将要被销毁的对象，所以，我们可以从绑定到右值引用的对象“窃取”状态</p>
+<p><strong>变量是左值</strong></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token operator">&amp;&amp;</span>r1 <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token operator">&amp;&amp;</span>r2 <span class="token operator">=</span> r1<span class="token punctuation">;</span>  <span class="token comment">// Err, r1是左值，尽管r1是右值引用，但还是一个变量</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="move函数"><a href="#move函数" class="headerlink" title="move函数"></a>move函数</h4><p>可以显式地将一个左值转换为对应的右值引用类型<br>可以用<code>move</code>函数来获得绑定到左值上的右值引用</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token operator">&amp;&amp;</span>r1 <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token operator">&amp;&amp;</span>r2 <span class="token operator">=</span> std<span class="token operator">::</span><span class="token function">move</span><span class="token punctuation">(</span>r1<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// OK</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>调用<code>move</code>之后，除了对<code>r1</code>赋值或销毁外，不能再使用它</p>
+<h3 id="13-6-2-移动构造函数和移动赋值运算符"><a href="#13-6-2-移动构造函数和移动赋值运算符" class="headerlink" title="13.6.2 移动构造函数和移动赋值运算符"></a>13.6.2 移动构造函数和移动赋值运算符</h3><h4 id="移动构造函数"><a href="#移动构造函数" class="headerlink" title="移动构造函数"></a>移动构造函数</h4><p>移动构造函数的参数是右值引用，新对象接管源对象的资源之后，把源对象的指针置空，使其成为可析构的状态</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Person</span>
 <span class="token punctuation">&#123;</span>
-<span class="token keyword">private</span><span class="token operator">:</span>
-    string name<span class="token punctuation">;</span>
-    <span class="token keyword">int</span> age<span class="token punctuation">;</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token function">Person</span><span class="token punctuation">(</span>string name<span class="token punctuation">,</span> <span class="token keyword">int</span> age<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">name</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">age</span><span class="token punctuation">(</span>age<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-    <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">const</span> Person<span class="token operator">&amp;</span> rhs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        name <span class="token operator">=</span> rhs<span class="token punctuation">.</span>name<span class="token punctuation">;</span>
-        age <span class="token operator">=</span> rhs<span class="token punctuation">.</span>age<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    Person <span class="token function">p1</span><span class="token punctuation">(</span><span class="token string">"kavin"</span><span class="token punctuation">,</span> <span class="token number">23</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 调用自定义构造函数</span>
-    Person <span class="token function">p2</span><span class="token punctuation">(</span>p1<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 调用拷贝构造函数</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="13-1-2-copy-assignment-operator"><a href="#13-1-2-copy-assignment-operator" class="headerlink" title="13.1.2 copy-assignment operator"></a>13.1.2 copy-assignment operator</h3><p>拷贝赋值运算符</p>
-<p>参数是类类型的<code>const</code>引用<br>返回值是指向其左侧运算对象的引用</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Foo<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> foo<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>代码示例</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Person</span> <span class="token punctuation">&#123;</span>
-<span class="token keyword">private</span><span class="token operator">:</span>
-    string name<span class="token punctuation">;</span>
-    <span class="token keyword">int</span> age<span class="token punctuation">;</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token function">Person</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-    <span class="token function">Person</span><span class="token punctuation">(</span>string name<span class="token punctuation">,</span> <span class="token keyword">int</span> age<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">name</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">age</span><span class="token punctuation">(</span>age<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-    Person<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> Person<span class="token operator">&amp;</span> rhs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        name <span class="token operator">=</span> rhs<span class="token punctuation">.</span>name<span class="token punctuation">;</span>
-        age <span class="token operator">=</span> rhs<span class="token punctuation">.</span>age<span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    Person <span class="token function">p1</span><span class="token punctuation">(</span><span class="token string">"kavin"</span><span class="token punctuation">,</span> <span class="token number">23</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 调用自定义构造函数</span>
-    Person p2<span class="token punctuation">;</span>  <span class="token comment">// 调用默认构造函数</span>
-    p2 <span class="token operator">=</span> p1<span class="token punctuation">;</span>    <span class="token comment">// 调用拷贝赋值运算符</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="13-3-3-destructor"><a href="#13-3-3-destructor" class="headerlink" title="13.3.3 destructor"></a>13.3.3 destructor</h3><p>析构函数</p>
-<p>不接受参数，也没有返回值<br>不能被重载<br>对一个给定类，只会有唯一一个析构函数<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token operator">~</span><span class="token function">Foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br>在一个析构函数中，首先执行<strong>函数体</strong>，然后<strong>销毁成员</strong>，成员按初始化顺序的逆序销毁</p>
-<p>如果一个类需要析构函数，那肯定也需要拷贝构造函数和拷贝赋值运算符，尤其是含有动态分配内存的类，因为合成析构函数不会delete一个指针数据成员</p>
-<h2 id="13-2-拷贝控制与资源管理"><a href="#13-2-拷贝控制与资源管理" class="headerlink" title="13.2 拷贝控制与资源管理"></a>13.2 拷贝控制与资源管理</h2><h3 id="13-2-1-行为像值的类"><a href="#13-2-1-行为像值的类" class="headerlink" title="13.2.1 行为像值的类"></a>13.2.1 行为像值的类</h3><p>拷贝的时候需要拷贝资源</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Person</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">private</span><span class="token operator">:</span>
     string <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
     <span class="token keyword">int</span> age<span class="token punctuation">;</span>
@@ -476,68 +476,61 @@
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">const</span> string <span class="token operator">&amp;</span>s <span class="token operator">=</span> <span class="token function">string</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">ptr</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token function">string</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">age</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
     <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">const</span> Person <span class="token operator">&amp;</span>p<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">ptr</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token function">string</span><span class="token punctuation">(</span><span class="token operator">*</span>p<span class="token punctuation">.</span>ptr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">age</span><span class="token punctuation">(</span>p<span class="token punctuation">.</span>age<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-    Person<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> Person<span class="token operator">&amp;</span> rhs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    Person <span class="token operator">&amp;</span><span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> Person <span class="token operator">&amp;</span>rhs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         cout <span class="token operator">&lt;&lt;</span> <span class="token string">"copy assignment"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
         <span class="token keyword">auto</span> newptr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">string</span><span class="token punctuation">(</span><span class="token operator">*</span>rhs<span class="token punctuation">.</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">delete</span> ptr<span class="token punctuation">;</span>     <span class="token comment">// 释放当前对象的资源</span>
-        ptr <span class="token operator">=</span> newptr<span class="token punctuation">;</span>   <span class="token comment">// 指针指向新的资源</span>
+        <span class="token keyword">delete</span> ptr<span class="token punctuation">;</span>   <span class="token comment">// 释放当前对象的资源</span>
+        ptr <span class="token operator">=</span> newptr<span class="token punctuation">;</span> <span class="token comment">// 指针指向新的资源</span>
         age <span class="token operator">=</span> rhs<span class="token punctuation">.</span>age<span class="token punctuation">;</span>
         <span class="token keyword">return</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-    <span class="token operator">~</span><span class="token function">Person</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">delete</span> ptr<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+
+    <span class="token function">Person</span><span class="token punctuation">(</span>Person <span class="token operator">&amp;&amp;</span>p<span class="token punctuation">)</span> <span class="token keyword">noexcept</span> <span class="token comment">// 移动操作不应抛出异常</span>
+        <span class="token operator">:</span> <span class="token function">ptr</span><span class="token punctuation">(</span>p<span class="token punctuation">.</span>ptr<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">age</span><span class="token punctuation">(</span>p<span class="token punctuation">.</span>age<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"move constructor"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+        p<span class="token punctuation">.</span>ptr <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span> <span class="token comment">// 源对象的指针置空</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token operator">~</span><span class="token function">Person</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">delete</span> ptr<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
 <span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    Person <span class="token function">p1</span><span class="token punctuation">(</span><span class="token string">"kavin"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    Person p2<span class="token punctuation">;</span>
-    p2 <span class="token operator">=</span> p1<span class="token punctuation">;</span>
+    Person p1<span class="token punctuation">;</span>
+    Person p2 <span class="token operator">=</span> std<span class="token operator">::</span><span class="token function">move</span><span class="token punctuation">(</span>p1<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
-<span class="token comment">// copy assignment</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="13-2-2-行为像指针的类"><a href="#13-2-2-行为像指针的类" class="headerlink" title="13.2.2 行为像指针的类"></a>13.2.2 行为像指针的类</h3><p>只需要拷贝指针，赋值运算后的对象指向同一个内存区域<br>需要用一个引用计数变量记录资源被多少对象所拥有，当计数为0时要释放资源</p>
+move constructor<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="移动赋值运算符"><a href="#移动赋值运算符" class="headerlink" title="移动赋值运算符"></a>移动赋值运算符</h4><p>先释放自身的资源，接管源对象的资源，再把源对象的指针置空</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Person</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">private</span><span class="token operator">:</span>
     string <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
     <span class="token keyword">int</span> age<span class="token punctuation">;</span>
-    size_t <span class="token operator">*</span>use<span class="token punctuation">;</span>
 
 <span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">const</span> string <span class="token operator">&amp;</span>s <span class="token operator">=</span> <span class="token function">string</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">ptr</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token function">string</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">age</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">use</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token function">size_t</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-    <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">const</span> Person <span class="token operator">&amp;</span>p<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">ptr</span><span class="token punctuation">(</span>p<span class="token punctuation">.</span>ptr<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">age</span><span class="token punctuation">(</span>p<span class="token punctuation">.</span>age<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">use</span><span class="token punctuation">(</span>p<span class="token punctuation">.</span>use<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token operator">*</span>use<span class="token operator">++</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
-    Person<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> Person<span class="token operator">&amp;</span> rhs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token operator">++</span><span class="token operator">*</span>rhs<span class="token punctuation">.</span>use<span class="token punctuation">;</span>         <span class="token comment">// 先递增左侧对象的引用计数</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">--</span><span class="token operator">*</span>use <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>  <span class="token comment">// 再递减右侧对象的引用计数</span>
+    Person<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span>Person <span class="token operator">&amp;&amp;</span>rhs<span class="token punctuation">)</span> <span class="token keyword">noexcept</span> <span class="token punctuation">&#123;</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"move copy assignment"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span> <span class="token operator">!=</span> <span class="token operator">&amp;</span>rhs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
             <span class="token keyword">delete</span> ptr<span class="token punctuation">;</span>
-            <span class="token keyword">delete</span> use<span class="token punctuation">;</span>
+            ptr <span class="token operator">=</span> rhs<span class="token punctuation">.</span>ptr<span class="token punctuation">;</span>
+            age <span class="token operator">=</span> rhs<span class="token punctuation">.</span>age<span class="token punctuation">;</span>
+            rhs<span class="token punctuation">.</span>ptr <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span>
-        ptr <span class="token operator">=</span> rhs<span class="token punctuation">.</span>ptr<span class="token punctuation">;</span>
-        age <span class="token operator">=</span> rhs<span class="token punctuation">.</span>age<span class="token punctuation">;</span>
-        use <span class="token operator">=</span> rhs<span class="token punctuation">.</span>use<span class="token punctuation">;</span>
         <span class="token keyword">return</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-    <span class="token operator">~</span><span class="token function">Person</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">--</span><span class="token operator">*</span>use <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>  <span class="token comment">// 引用计数为0就释放资源</span>
-            <span class="token keyword">delete</span> ptr<span class="token punctuation">;</span>
-            <span class="token keyword">delete</span> use<span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">void</span> <span class="token function">info</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-<span class="token keyword">void</span> <span class="token class-name">Person</span><span class="token operator">::</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>ptr <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>use <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+Person <span class="token function">func</span><span class="token punctuation">(</span>Person<span class="token operator">&amp;</span> p<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>    <span class="token comment">// 函数返回右值</span>
+    <span class="token keyword">return</span> p<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 
 <span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    Person <span class="token function">p1</span><span class="token punctuation">(</span><span class="token string">"kavin"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    Person p2<span class="token punctuation">;</span>
-    p2 <span class="token operator">=</span> p1<span class="token punctuation">;</span>
-    p2<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Person p1<span class="token punctuation">,</span> p2<span class="token punctuation">;</span>
+    p2 <span class="token operator">=</span> <span class="token function">func</span><span class="token punctuation">(</span>p1<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
-<span class="token comment">// kavin</span>
-<span class="token comment">// 2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+move copy assignment<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -563,7 +556,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/10/26/C-Primer-13-%E6%8B%B7%E8%B4%9D%E6%8E%A7%E5%88%B6/">http://example.com/2021/10/26/C-Primer-13-%E6%8B%B7%E8%B4%9D%E6%8E%A7%E5%88%B6/</a>
+                    <a href="http://example.com/2021/11/04/C-Primer-13-6-%E5%AF%B9%E8%B1%A1%E7%A7%BB%E5%8A%A8/">http://example.com/2021/11/04/C-Primer-13-6-%E5%AF%B9%E8%B1%A1%E7%A7%BB%E5%8A%A8/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -774,17 +767,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/11/02/LeetCode-116-%E5%A1%AB%E5%85%85%E5%8F%B3%E4%BE%A7%E6%8C%87%E9%92%88/">
+                <a href="/2021/11/04/C-Primer-13-6-%E5%AF%B9%E8%B1%A1%E7%A7%BB%E5%8A%A8/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="116-填充右侧指针">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="13.6-象移动">
                         
-                        <span class="card-title">116-填充右侧指针</span>
+                        <span class="card-title">13.6-象移动</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -794,26 +788,27 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-02
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-04
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/LeetCode/" class="post-category">
-                                    LeetCode
+                            <a href="/categories/C/" class="post-category">
+                                    C++
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">
-                        <span class="chip bg-color">二叉树</span>
+                    <a href="/tags/C-Primer/">
+                        <span class="chip bg-color">C++Primer</span>
                     </a>
                     
                 </div>
@@ -827,13 +822,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/10/26/LeetCode-75-%E9%A2%9C%E8%89%B2%E5%88%86%E7%B1%BB/">
+                <a href="/2021/11/04/LeetCode-62-%E4%B8%8D%E5%90%8C%E8%B7%AF%E5%BE%84/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="75-颜色分类">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="62-不同路径">
                         
-                        <span class="card-title">75-颜色分类</span>
+                        <span class="card-title">62-不同路径</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -844,7 +839,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-26
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-04
                             </span>
                         <span class="publish-author">
                             
@@ -861,8 +856,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%A8%A1%E6%8B%9F/">
-                        <span class="chip bg-color">模拟</span>
+                    <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                        <span class="chip bg-color">动态规划</span>
                     </a>
                     
                 </div>
