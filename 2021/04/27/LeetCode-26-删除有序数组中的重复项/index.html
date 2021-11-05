@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -425,63 +425,63 @@
 <p>Given an integer array nums <code>sorted in non-decreasing order</code>, <code>remove the duplicates</code> in-place such that each unique element appears only <code>once</code>. The <code>relative order</code> of the elements should be kept the <code>same</code>.</p>
 <p>Return k after placing the final result in the first k slots of nums.</p>
 <p>Do not allocate extra space for another array. You must do this by modifying the input array in-place with $O(1)$ extra memory.</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入：nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span>
-输出：<span class="token number">2</span><span class="token punctuation">,</span> nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span>
-解释：函数应该返回新的长度 <span class="token number">2</span> ，并且原数组 nums 的前两个元素被修改为 <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入：nums &#x3D; [1,1,2]
+输出：2, nums &#x3D; [1,2]
+解释：函数应该返回新的长度 2 ，并且原数组 nums 的前两个元素被修改为 1, 2。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <h2 id="method-1-用STL提供的算法unique和erase"><a href="#method-1-用STL提供的算法unique和erase" class="headerlink" title="method 1: 用STL提供的算法unique和erase"></a>method 1: 用STL提供的算法unique和erase</h2><p><code>unique</code>可以把重复的那些元素移动到后面去，<code>it</code>指向重复的第一个元素<br>因为他要的是<code>vector</code>的长度，所以直接返回有用部分的长度就可以了，不用删除</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">removeDuplicates</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">auto</span> it <span class="token operator">=</span> <span class="token function">unique</span><span class="token punctuation">(</span>nums<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> nums<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token function">distance</span><span class="token punctuation">(</span>nums<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> it<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int removeDuplicates(vector&lt;int&gt;&amp; nums) &#123;
+    auto it &#x3D; unique(nums.begin(), nums.end());
+    return distance(nums.begin(), it);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="method-2-快慢指针"><a href="#method-2-快慢指针" class="headerlink" title="method 2: 快慢指针"></a>method 2: 快慢指针</h2><p>快指针指向的元素与慢指针<code>-1</code>的元素相比较</p>
 <ul>
 <li>相同，快指针<code>+1</code>，慢指针不动</li>
 <li>不同，快指针赋值给慢指针，都<code>+1</code></li>
 </ul>
 <p>时间复杂度：$O(n)$<br>空间复杂度：$O(1)$</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">removeDuplicates</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> fast <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> slow <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>fast <span class="token operator">&lt;</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>fast<span class="token punctuation">]</span> <span class="token operator">!=</span> nums<span class="token punctuation">[</span>slow <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            nums<span class="token punctuation">[</span>slow<span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span>fast<span class="token punctuation">]</span><span class="token punctuation">;</span>
-            slow<span class="token operator">++</span><span class="token punctuation">;</span>
-            fast<span class="token operator">++</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">else</span> fast<span class="token operator">++</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> slow<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int removeDuplicates(vector&lt;int&gt;&amp; nums) &#123;
+    if (nums.size() &#x3D;&#x3D; 0) return 0;
+    int fast &#x3D; 1, slow &#x3D; 1;
+    while (fast &lt; nums.size()) &#123;
+        if (nums[fast] !&#x3D; nums[slow - 1]) &#123;
+            nums[slow] &#x3D; nums[fast];
+            slow++;
+            fast++;
+        &#125;
+        else fast++;
+    &#125;
+    return slow;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="LeetCode-80-Remove-Duplicates-from-Sorted-Array-II"><a href="#LeetCode-80-Remove-Duplicates-from-Sorted-Array-II" class="headerlink" title="LeetCode 80. Remove Duplicates from Sorted Array II"></a>LeetCode 80. Remove Duplicates from Sorted Array II</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/">LeetCode</a></p>
 <p>Given an integer array nums <code>sorted in non-decreasing order</code>, remove some duplicates in-place such that each unique element appears <code>at most twice</code>. The <code>relative order</code> of the elements should be kept the <code>same</code>.</p>
 <h2 id="method-快慢指针"><a href="#method-快慢指针" class="headerlink" title="method: 快慢指针"></a>method: 快慢指针</h2><p>原理一样，只是快指针与慢指针<code>-2</code>的元素相比较</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">removeDuplicates</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">return</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> fast <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> slow <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>fast <span class="token operator">&lt;</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>fast<span class="token punctuation">]</span> <span class="token operator">!=</span> nums<span class="token punctuation">[</span>slow <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            nums<span class="token punctuation">[</span>slow<span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span>fast<span class="token punctuation">]</span><span class="token punctuation">;</span>
-            slow<span class="token operator">++</span><span class="token punctuation">;</span>
-            fast<span class="token operator">++</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">else</span> fast<span class="token operator">++</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> slow<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int removeDuplicates(vector&lt;int&gt;&amp; nums) &#123;
+    if (nums.size() &lt; 2) return nums.size();
+    int fast &#x3D; 2, slow &#x3D; 2;
+    while (fast &lt; nums.size()) &#123;
+        if (nums[fast] !&#x3D; nums[slow - 2]) &#123;
+            nums[slow] &#x3D; nums[fast];
+            slow++;
+            fast++;
+        &#125;
+        else fast++;
+    &#125;
+    return slow;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果是允许<code>N</code>个元素重复，快指针与慢指针<code>-N</code>的元素相比较</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">removeDuplicates</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> N<span class="token punctuation">)</span> <span class="token keyword">return</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> fast <span class="token operator">=</span> N<span class="token punctuation">,</span> slow <span class="token operator">=</span> N<span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>fast <span class="token operator">&lt;</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>fast<span class="token punctuation">]</span> <span class="token operator">!=</span> nums<span class="token punctuation">[</span>slow <span class="token operator">-</span> N<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            nums<span class="token punctuation">[</span>slow<span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span>fast<span class="token punctuation">]</span><span class="token punctuation">;</span>
-            slow<span class="token operator">++</span><span class="token punctuation">;</span>
-            fast<span class="token operator">++</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">else</span> fast<span class="token operator">++</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> slow<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int removeDuplicates(vector&lt;int&gt;&amp; nums) &#123;
+    if (nums.size() &lt; N) return nums.size();
+    int fast &#x3D; N, slow &#x3D; N;
+    while (fast &lt; nums.size()) &#123;
+        if (nums[fast] !&#x3D; nums[slow - N]) &#123;
+            nums[slow] &#x3D; nums[fast];
+            slow++;
+            fast++;
+        &#125;
+        else fast++;
+    &#125;
+    return slow;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -426,16 +426,16 @@
 <p>Return the merged tree.</p>
 <p>Note: The merging process must start from the root nodes of both trees.</p>
 <p><img src="/2021/09/05/LeetCode-617-%E5%90%88%E5%B9%B6%E4%BA%8C%E5%8F%89%E6%A0%91/617.jpg" alt></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> root1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span> root2 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">]</span>
-Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h2 id="method-递归"><a href="#method-递归" class="headerlink" title="method: 递归"></a>method: 递归</h2><p>递归结束条件：如果一个节点为空，返回另一棵树的节点，如果他也是空，那这个位置就是空节点<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode<span class="token operator">*</span> <span class="token function">mergeTrees</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root1<span class="token punctuation">,</span> TreeNode<span class="token operator">*</span> root2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>root1 <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span> root2<span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>root2 <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span> root1<span class="token punctuation">;</span>
-    root1<span class="token operator">-></span>val <span class="token operator">+=</span> root2<span class="token operator">-></span>val<span class="token punctuation">;</span>
-    root1<span class="token operator">-></span>left <span class="token operator">=</span> <span class="token function">mergeTrees</span><span class="token punctuation">(</span>root1<span class="token operator">-></span>left<span class="token punctuation">,</span> root2<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    root1<span class="token operator">-></span>right <span class="token operator">=</span> <span class="token function">mergeTrees</span><span class="token punctuation">(</span>root1<span class="token operator">-></span>right<span class="token punctuation">,</span> root2<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> root1<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: root1 &#x3D; [1,3,2,5], root2 &#x3D; [2,1,3,null,4,null,7]
+Output: [3,4,5,5,4,null,7]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="method-递归"><a href="#method-递归" class="headerlink" title="method: 递归"></a>method: 递归</h2><p>递归结束条件：如果一个节点为空，返回另一棵树的节点，如果他也是空，那这个位置就是空节点<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* mergeTrees(TreeNode* root1, TreeNode* root2) &#123;
+    if (root1 &#x3D;&#x3D; nullptr) return root2;
+    if (root2 &#x3D;&#x3D; nullptr) return root1;
+    root1-&gt;val +&#x3D; root2-&gt;val;
+    root1-&gt;left &#x3D; mergeTrees(root1-&gt;left, root2-&gt;left);
+    root1-&gt;right &#x3D; mergeTrees(root1-&gt;right, root2-&gt;right);
+    return root1;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
 
                 
             </div>

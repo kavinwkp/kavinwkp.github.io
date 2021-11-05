@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -418,76 +418,76 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="剑指-Offer-58-I-翻转单词顺序"><a href="#剑指-Offer-58-I-翻转单词顺序" class="headerlink" title="剑指 Offer 58 - I. 翻转单词顺序"></a>剑指 Offer 58 - I. 翻转单词顺序</h2><p>输入一个英文句子，翻转句子中单词的顺序，但单词内字符的顺序不变。为简单起见，标点符号和普通字母一样处理。</p>
-<p>示例 1：<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入<span class="token operator">:</span> <span class="token string">"the sky is blue"</span>
-输出<span class="token operator">:</span> <span class="token string">"blue is sky the"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>示例 2：<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入<span class="token operator">:</span> <span class="token string">"  hello world!  "</span>
-输出<span class="token operator">:</span> <span class="token string">"world! hello"</span>
-解释<span class="token operator">:</span> 输入字符串可以在前面或者后面包含多余的空格，但是反转后的字符不能包括。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
+<p>示例 1：<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入: &quot;the sky is blue&quot;
+输出: &quot;blue is sky the&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>示例 2：<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入: &quot;  hello world!  &quot;
+输出: &quot;world! hello&quot;
+解释: 输入字符串可以在前面或者后面包含多余的空格，但是反转后的字符不能包括。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
 <h2 id="method-1"><a href="#method-1" class="headerlink" title="method 1"></a>method 1</h2><p>用双指针把单词找出来，按逆序重新添加到新的串中<br>时间复杂度：$O(n)$<br>空间复杂度：$O(n)$</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string <span class="token function">reverseWords</span><span class="token punctuation">(</span>string s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    string res<span class="token punctuation">;</span>
-    <span class="token keyword">int</span> l <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> r <span class="token operator">=</span> l<span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>l <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">while</span> <span class="token punctuation">(</span>l <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token function">isspace</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> l<span class="token operator">++</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>l <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            r <span class="token operator">=</span> l<span class="token punctuation">;</span>
-            <span class="token keyword">while</span> <span class="token punctuation">(</span>r <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token function">isspace</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> r<span class="token operator">++</span><span class="token punctuation">;</span>
-            res <span class="token operator">=</span> <span class="token string">' '</span> <span class="token operator">+</span> s<span class="token punctuation">.</span><span class="token function">substr</span><span class="token punctuation">(</span>l<span class="token punctuation">,</span> r <span class="token operator">-</span> l<span class="token punctuation">)</span> <span class="token operator">+</span> res<span class="token punctuation">;</span>
-            l <span class="token operator">=</span> r<span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>res<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> res<span class="token punctuation">.</span><span class="token function">erase</span><span class="token punctuation">(</span>res<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 删掉第一个空格</span>
-    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string reverseWords(string s) &#123;
+    string res;
+    int l &#x3D; 0, r &#x3D; l;
+    while (l &lt; s.size()) &#123;
+        while (l &lt; s.size() &amp;&amp; isspace(s[l])) l++;
+        if (l &lt; s.size()) &#123;
+            r &#x3D; l;
+            while (r &lt; s.size() &amp;&amp; !isspace(s[r])) r++;
+            res &#x3D; &#39; &#39; + s.substr(l, r - l) + res;
+            l &#x3D; r;
+        &#125;
+    &#125;
+    if (res.size()) res.erase(res.begin()); &#x2F;&#x2F; 删掉第一个空格
+    return res;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="method-2-不使用额外空间"><a href="#method-2-不使用额外空间" class="headerlink" title="method 2: 不使用额外空间"></a>method 2: 不使用额外空间</h2><ol>
 <li>删除字符串中多余的空格</li>
 <li>反转整个字符串</li>
 <li>反转每个单词，跟<code>method 1</code>一样，找到单词区间<code>[l, r-1]</code></li>
 </ol>
 <p>时间复杂度：$O(n)$<br>空间复杂度：$O(1)$</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">reverse</span><span class="token punctuation">(</span>string<span class="token operator">&amp;</span> s<span class="token punctuation">,</span> <span class="token keyword">int</span> start<span class="token punctuation">,</span> <span class="token keyword">int</span> end<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>start <span class="token operator">&lt;</span> end<span class="token punctuation">)</span> <span class="token function">swap</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>start<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">,</span> s<span class="token punctuation">[</span>end<span class="token operator">--</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void reverse(string&amp; s, int start, int end) &#123;
+    while (start &lt; end) swap(s[start++], s[end--]);
+&#125;
 
-<span class="token keyword">void</span> <span class="token function">removeExtraSpaces</span><span class="token punctuation">(</span>string<span class="token operator">&amp;</span> s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> fast <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> slow <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>fast <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> s<span class="token punctuation">[</span>fast<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">' '</span><span class="token punctuation">)</span> fast<span class="token operator">++</span><span class="token punctuation">;</span>   <span class="token comment">// 前面的空格</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span> fast <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>fast<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>fast <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">>=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> s<span class="token punctuation">[</span>fast <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">==</span> s<span class="token punctuation">[</span>fast<span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> s<span class="token punctuation">[</span>fast<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">' '</span><span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>    <span class="token comment">// 跳过相连的空格</span>
-        <span class="token keyword">else</span> s<span class="token punctuation">[</span>slow<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> s<span class="token punctuation">[</span>fast<span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>slow <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">>=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> s<span class="token punctuation">[</span>slow <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">' '</span><span class="token punctuation">)</span> s<span class="token punctuation">.</span><span class="token function">resize</span><span class="token punctuation">(</span>slow <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">else</span> s<span class="token punctuation">.</span><span class="token function">resize</span><span class="token punctuation">(</span>slow<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 末尾如果有空格，也要删掉</span>
-<span class="token punctuation">&#125;</span>
+void removeExtraSpaces(string&amp; s) &#123;
+    int fast &#x3D; 0, slow &#x3D; 0;
+    while (fast &lt; s.size() &amp;&amp; s[fast] &#x3D;&#x3D; &#39; &#39;) fast++;   &#x2F;&#x2F; 前面的空格
+    for (; fast &lt; s.size(); ++fast) &#123;
+        if (fast - 1 &gt;&#x3D; 0 &amp;&amp; s[fast - 1] &#x3D;&#x3D; s[fast] &amp;&amp; s[fast] &#x3D;&#x3D; &#39; &#39;) continue;    &#x2F;&#x2F; 跳过相连的空格
+        else s[slow++] &#x3D; s[fast];
+    &#125;
+    if (slow - 1 &gt;&#x3D; 0 &amp;&amp; s[slow - 1] &#x3D;&#x3D; &#39; &#39;) s.resize(slow - 1);
+    else s.resize(slow);    &#x2F;&#x2F; 末尾如果有空格，也要删掉
+&#125;
 
-string <span class="token function">reverseWords</span><span class="token punctuation">(</span>string s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">removeExtraSpaces</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">reverse</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">int</span> j <span class="token operator">=</span> i<span class="token punctuation">;</span>
-        <span class="token keyword">while</span> <span class="token punctuation">(</span>j <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> s<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">!=</span> <span class="token string">' '</span><span class="token punctuation">)</span> j<span class="token operator">++</span><span class="token punctuation">;</span>
-        <span class="token function">reverse</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> i<span class="token punctuation">,</span> j <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        i <span class="token operator">=</span> j<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> s<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+string reverseWords(string s) &#123;
+    removeExtraSpaces(s);
+    reverse(s, 0, s.size() - 1);
+    for (int i &#x3D; 0; i &lt; s.size(); ++i) &#123;
+        int j &#x3D; i;
+        while (j &lt; s.size() &amp;&amp; s[j] !&#x3D; &#39; &#39;) j++;
+        reverse(s, i, j - 1);
+        i &#x3D; j;
+    &#125;
+    return s;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="剑指-Offer-58-II-左旋转字符串"><a href="#剑指-Offer-58-II-左旋转字符串" class="headerlink" title="剑指 Offer 58 - II. 左旋转字符串"></a>剑指 Offer 58 - II. 左旋转字符串</h2><p>字符串的左旋转操作是把字符串前面的若干个字符转移到字符串的尾部。请定义一个函数实现字符串左旋转操作的功能。</p>
-<p>示例 1：<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入<span class="token operator">:</span> s <span class="token operator">=</span> <span class="token string">"abcdefg"</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">2</span>
-输出<span class="token operator">:</span> <span class="token string">"cdefgab"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p>示例 1：<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入: s &#x3D; &quot;abcdefg&quot;, k &#x3D; 2
+输出: &quot;cdefgab&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><ul>
 <li>反转<code>[0, k)</code></li>
 <li>反转<code>[k, end)</code></li>
 <li>反转整个字符串</li>
 </ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">reverse</span><span class="token punctuation">(</span>string<span class="token operator">&amp;</span> s<span class="token punctuation">,</span> <span class="token keyword">int</span> start<span class="token punctuation">,</span> <span class="token keyword">int</span> end<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>start <span class="token operator">&lt;</span> end<span class="token punctuation">)</span> <span class="token function">swap</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>start<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">,</span> s<span class="token punctuation">[</span>end<span class="token operator">--</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void reverse(string&amp; s, int start, int end) &#123;
+    while (start &lt; end) swap(s[start++], s[end--]);
+&#125;
 
-string <span class="token function">reverseLeftWords</span><span class="token punctuation">(</span>string s<span class="token punctuation">,</span> <span class="token keyword">int</span> k<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">reverse</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> k <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">reverse</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> k<span class="token punctuation">,</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">reverse</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> s<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+string reverseLeftWords(string s, int k) &#123;
+    reverse(s, 0, k - 1);
+    reverse(s, k, s.size() - 1);
+    reverse(s, 0, s.size() - 1);
+    return s;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

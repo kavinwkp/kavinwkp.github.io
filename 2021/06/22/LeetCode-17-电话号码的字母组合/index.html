@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -425,8 +425,8 @@
 <p>Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in <code>any order</code>.</p>
 <p>A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.</p>
 <p><img src="/2021/06/22/LeetCode-17-%E7%94%B5%E8%AF%9D%E5%8F%B7%E7%A0%81%E7%9A%84%E5%AD%97%E6%AF%8D%E7%BB%84%E5%90%88/11.png" width="50%" height="50%"></p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> digits <span class="token operator">=</span> <span class="token string">"23"</span>
-Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"ad"</span><span class="token punctuation">,</span><span class="token string">"ae"</span><span class="token punctuation">,</span><span class="token string">"af"</span><span class="token punctuation">,</span><span class="token string">"bd"</span><span class="token punctuation">,</span><span class="token string">"be"</span><span class="token punctuation">,</span><span class="token string">"bf"</span><span class="token punctuation">,</span><span class="token string">"cd"</span><span class="token punctuation">,</span><span class="token string">"ce"</span><span class="token punctuation">,</span><span class="token string">"cf"</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: digits &#x3D; &quot;23&quot;
+Output: [&quot;ad&quot;,&quot;ae&quot;,&quot;af&quot;,&quot;bd&quot;,&quot;be&quot;,&quot;bf&quot;,&quot;cd&quot;,&quot;ce&quot;,&quot;cf&quot;]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h2 id="method-回溯"><a href="#method-回溯" class="headerlink" title="method: 回溯"></a>method: 回溯</h2><p>回溯三部曲：</p>
 <ul>
 <li>确定回溯函数参数<br>对于给定的数字进行遍历，抓出每个数字对应的字符串，所以参数是给定的数字<code>digits</code>和遍历的下标<code>index</code></li>
@@ -437,42 +437,42 @@ Output<span class="token operator">:</span> <span class="token punctuation">[</s
 <img src="/2021/06/22/LeetCode-17-%E7%94%B5%E8%AF%9D%E5%8F%B7%E7%A0%81%E7%9A%84%E5%AD%97%E6%AF%8D%E7%BB%84%E5%90%88/111.png#pic_center" width="100%" height="100%">
 </center>
 
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
-<span class="token keyword">private</span><span class="token operator">:</span>
-    <span class="token keyword">const</span> string letterMap<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
-        <span class="token string">""</span><span class="token punctuation">,</span>
-        <span class="token string">""</span><span class="token punctuation">,</span>
-        <span class="token string">"abc"</span><span class="token punctuation">,</span>
-        <span class="token string">"def"</span><span class="token punctuation">,</span>
-        <span class="token string">"ghi"</span><span class="token punctuation">,</span>
-        <span class="token string">"jkl"</span><span class="token punctuation">,</span>
-        <span class="token string">"mno"</span><span class="token punctuation">,</span>
-        <span class="token string">"pqrs"</span><span class="token punctuation">,</span>
-        <span class="token string">"tuv"</span><span class="token punctuation">,</span>
-        <span class="token string">"wxyz"</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>  <span class="token comment">// 数字与字母对应关系</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    vector<span class="token operator">&lt;</span>string<span class="token operator">></span> ret<span class="token punctuation">;</span>
-    string s<span class="token punctuation">;</span>
-    <span class="token keyword">void</span> <span class="token function">dfs</span><span class="token punctuation">(</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span> digits<span class="token punctuation">,</span> <span class="token keyword">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">==</span> digits<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            ret<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">int</span> number <span class="token operator">=</span> digits<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
-        string letters <span class="token operator">=</span> letterMap<span class="token punctuation">[</span>number<span class="token punctuation">]</span><span class="token punctuation">;</span>     <span class="token comment">// 拿到字母</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> letters<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            s<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>letters<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token function">dfs</span><span class="token punctuation">(</span>digits<span class="token punctuation">,</span> index <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            s<span class="token punctuation">.</span><span class="token function">pop_back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-    vector<span class="token operator">&lt;</span>string<span class="token operator">></span> <span class="token function">letterCombinations</span><span class="token punctuation">(</span>string digits<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>digits<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
-        <span class="token function">dfs</span><span class="token punctuation">(</span>digits<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">class Solution &#123;
+private:
+    const string letterMap[10] &#x3D; &#123;
+        &quot;&quot;,
+        &quot;&quot;,
+        &quot;abc&quot;,
+        &quot;def&quot;,
+        &quot;ghi&quot;,
+        &quot;jkl&quot;,
+        &quot;mno&quot;,
+        &quot;pqrs&quot;,
+        &quot;tuv&quot;,
+        &quot;wxyz&quot;
+    &#125;;  &#x2F;&#x2F; 数字与字母对应关系
+public:
+    vector&lt;string&gt; ret;
+    string s;
+    void dfs(const string&amp; digits, int index) &#123;
+        if (index &#x3D;&#x3D; digits.size()) &#123;
+            ret.push_back(s);
+            return;
+        &#125;
+        int number &#x3D; digits[index] - &#39;0&#39;;
+        string letters &#x3D; letterMap[number];     &#x2F;&#x2F; 拿到字母
+        for (int i &#x3D; 0; i &lt; letters.size(); ++i) &#123;
+            s.push_back(letters[i]);
+            dfs(digits, index + 1);
+            s.pop_back();
+        &#125;
+    &#125;
+    vector&lt;string&gt; letterCombinations(string digits) &#123;
+        if (digits.size() &#x3D;&#x3D; 0) return ret;
+        dfs(digits, 0);
+        return ret;
+    &#125;
+&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

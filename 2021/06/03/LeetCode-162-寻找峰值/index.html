@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -422,33 +422,33 @@
 <p>Given an integer array <code>nums</code>, find a <code>peak</code> element, and return its <strong>index</strong>. If the array contains multiple peaks, return the index to any of the peaks.</p>
 <p>You may imagine that <code>nums[-1] = nums[n] = -∞</code>.</p>
 <p>You must write an algorithm that runs in $O(logn)$ time.</p>
-<p>示例 1：<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入：nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span>
-输出：<span class="token number">2</span>
-解释：<span class="token number">3</span> 是峰值元素，你的函数应该返回其索引 <span class="token number">2</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><br>示例 2：<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入：nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">]</span>
-输出：<span class="token number">1</span> 或 <span class="token number">5</span> 
-解释：你的函数可以返回索引 <span class="token number">1</span>，其峰值元素为 <span class="token number">2</span>；
-     或者返回索引 <span class="token number">5</span>， 其峰值元素为 <span class="token number">6</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></p>
+<p>示例 1：<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入：nums &#x3D; [1,2,3,1]
+输出：2
+解释：3 是峰值元素，你的函数应该返回其索引 2。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><br>示例 2：<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入：nums &#x3D; [1,2,1,3,5,6,4]
+输出：1 或 5 
+解释：你的函数可以返回索引 1，其峰值元素为 2；
+     或者返回索引 5， 其峰值元素为 6。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></p>
 <h2 id="method-二分模板一"><a href="#method-二分模板一" class="headerlink" title="method: 二分模板一"></a>method: 二分模板一</h2><p>如果<code>mid</code>比<code>mid+1</code>大，说明峰值在左边，所以<code>r=mid</code><br>如果<code>mid</code>比<code>mid+1</code>小，说明峰值在右边，所以<code>l=mid+1</code></p>
 <p>考虑边界条件，<code>l</code>指向倒数第二个元素，<code>r</code>指向最后一个元素，<code>mid</code>是<code>l</code><br>如果满足条件，则<code>r = mid = l</code>，退出，结果正确<br>如果不满足，则<code>l = mid + 1 = r</code>，退出，结果也正确</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">findPeakElement</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> l <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> r <span class="token operator">=</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>l <span class="token operator">&lt;</span> r<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">int</span> mid <span class="token operator">=</span> l <span class="token operator">+</span> r <span class="token operator">>></span> <span class="token number">1</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">></span> nums<span class="token punctuation">[</span>mid <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> r <span class="token operator">=</span> mid<span class="token punctuation">;</span>
-        <span class="token keyword">else</span> l <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> r<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int findPeakElement(vector&lt;int&gt;&amp; nums) &#123;
+    int l &#x3D; 0, r &#x3D; nums.size() - 1;
+    while (l &lt; r) &#123;
+        int mid &#x3D; l + r &gt;&gt; 1;
+        if (nums[mid] &gt; nums[mid + 1]) r &#x3D; mid;
+        else l &#x3D; mid + 1;
+    &#125;
+    return r;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="也可以用模板二"><a href="#也可以用模板二" class="headerlink" title="也可以用模板二"></a>也可以用模板二</h2><p>模板二是上取整，所以和<code>mid-1</code>比较不会越界</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">findPeakElement</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> l <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> r <span class="token operator">=</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>l <span class="token operator">&lt;</span> r<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">int</span> mid <span class="token operator">=</span> l <span class="token operator">+</span> r <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">>></span> <span class="token number">1</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">></span> nums<span class="token punctuation">[</span>mid <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> l <span class="token operator">=</span> mid<span class="token punctuation">;</span>
-        <span class="token keyword">else</span> r <span class="token operator">=</span> mid <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> l<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int findPeakElement(vector&lt;int&gt;&amp; nums) &#123;
+    int l &#x3D; 0, r &#x3D; nums.size() - 1;
+    while (l &lt; r) &#123;
+        int mid &#x3D; l + r + 1 &gt;&gt; 1;
+        if (nums[mid] &gt; nums[mid - 1]) l &#x3D; mid;
+        else r &#x3D; mid - 1;
+    &#125;
+    return l;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

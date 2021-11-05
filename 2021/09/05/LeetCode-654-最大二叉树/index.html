@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -424,51 +424,51 @@
                 <h2 id="LeetCode-654-Maximum-Binary-Tree"><a href="#LeetCode-654-Maximum-Binary-Tree" class="headerlink" title="LeetCode 654. Maximum Binary Tree"></a>LeetCode 654. Maximum Binary Tree</h2><p>You are given an integer array <strong>nums</strong> with no duplicates. A <strong>maximum binary tree</strong> can be built recursively from nums using the following algorithm:</p>
 <p>Create a root node whose value is the maximum value in nums.<br>Recursively build the left subtree on the subarray prefix to the left of the maximum value.<br>Recursively build the right subtree on the subarray suffix to the right of the maximum value.<br>Return the maximum binary tree built from nums.</p>
 <p><img src="/2021/09/05/LeetCode-654-%E6%9C%80%E5%A4%A7%E4%BA%8C%E5%8F%89%E6%A0%91/654.jpg" alt></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span>
-Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: nums &#x3D; [3,2,1,6,0,5]
+Output: [6,3,5,null,2,0,null,null,1]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <h2 id="method-递归"><a href="#method-递归" class="headerlink" title="method: 递归"></a>method: 递归</h2><p>递归参数：一个数组<br>返回值：二叉树节点指针<br>递归结束条件：如果数组大小为1，返回以该元素构成的节点<br>单层递归逻辑：找到数组最大值，最大值左边的数组构造左子树，最大值右边的数组构造右子树</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode<span class="token operator">*</span> <span class="token function">constructMaximumBinaryTree</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    TreeNode<span class="token operator">*</span> root <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">TreeNode</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        root<span class="token operator">-></span>val <span class="token operator">=</span> nums<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> root<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">int</span> maxIndex <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> maxValue <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>   <span class="token comment">// 找到最大元素和下标</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">>=</span> maxValue<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            maxValue <span class="token operator">=</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
-            maxIndex <span class="token operator">=</span> i<span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-    root<span class="token operator">-></span>val <span class="token operator">=</span> maxValue<span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>maxIndex <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>     <span class="token comment">// 这里确定了数组肯定大于等于1，左闭右开</span>
-        vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">leftNums</span><span class="token punctuation">(</span>nums<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> nums<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> maxIndex<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        root<span class="token operator">-></span>left <span class="token operator">=</span> <span class="token function">constructMaximumBinaryTree</span><span class="token punctuation">(</span>leftNums<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>maxIndex <span class="token operator">&lt;</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">rightNums</span><span class="token punctuation">(</span>nums<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> maxIndex <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> nums<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        root<span class="token operator">-></span>right <span class="token operator">=</span> <span class="token function">constructMaximumBinaryTree</span><span class="token punctuation">(</span>rightNums<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> root<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* constructMaximumBinaryTree(vector&lt;int&gt;&amp; nums) &#123;
+    TreeNode* root &#x3D; new TreeNode(0);
+    if (nums.size() &#x3D;&#x3D; 1) &#123;
+        root-&gt;val &#x3D; nums[0];
+        return root;
+    &#125;
+    int maxIndex &#x3D; 0;
+    int maxValue &#x3D; 0;   &#x2F;&#x2F; 找到最大元素和下标
+    for (int i &#x3D; 0; i &lt; nums.size(); i++) &#123;
+        if (nums[i] &gt;&#x3D; maxValue) &#123;
+            maxValue &#x3D; nums[i];
+            maxIndex &#x3D; i;
+        &#125;
+    &#125;
+    root-&gt;val &#x3D; maxValue;
+    if (maxIndex &gt; 0) &#123;     &#x2F;&#x2F; 这里确定了数组肯定大于等于1，左闭右开
+        vector&lt;int&gt; leftNums(nums.begin(), nums.begin() + maxIndex);
+        root-&gt;left &#x3D; constructMaximumBinaryTree(leftNums);
+    &#125;
+    if (maxIndex &lt; nums.size() - 1) &#123;
+        vector&lt;int&gt; rightNums(nums.begin() + maxIndex + 1, nums.end());
+        root-&gt;right &#x3D; constructMaximumBinaryTree(rightNums);
+    &#125;
+    return root;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h2><p>可以直接传下标，不用再构造数组</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode<span class="token operator">*</span> <span class="token function">traversal</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">,</span> <span class="token keyword">int</span> begin<span class="token punctuation">,</span> <span class="token keyword">int</span> end<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>begin <span class="token operator">>=</span> end<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>   <span class="token comment">// 最大值在最右边或最左边</span>
-    <span class="token keyword">int</span> maxIndex <span class="token operator">=</span> begin<span class="token punctuation">;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> begin <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> end<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">></span> nums<span class="token punctuation">[</span>maxIndex<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            maxIndex <span class="token operator">=</span> i<span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-    TreeNode<span class="token operator">*</span> root <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">TreeNode</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>maxIndex<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    root<span class="token operator">-></span>left <span class="token operator">=</span> <span class="token function">traversal</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> begin<span class="token punctuation">,</span> maxIndex<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 左闭右开</span>
-    root<span class="token operator">-></span>right <span class="token operator">=</span> <span class="token function">traversal</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> maxIndex <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> end<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> root<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-TreeNode<span class="token operator">*</span> <span class="token function">constructMaximumBinaryTree</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> <span class="token function">traversal</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* traversal(vector&lt;int&gt;&amp; nums, int begin, int end) &#123;
+    if (begin &gt;&#x3D; end) return nullptr;   &#x2F;&#x2F; 最大值在最右边或最左边
+    int maxIndex &#x3D; begin;
+    for (int i &#x3D; begin + 1; i &lt; end; i++) &#123;
+        if (nums[i] &gt; nums[maxIndex]) &#123;
+            maxIndex &#x3D; i;
+        &#125;
+    &#125;
+    TreeNode* root &#x3D; new TreeNode(nums[maxIndex]);
+    root-&gt;left &#x3D; traversal(nums, begin, maxIndex);  &#x2F;&#x2F; 左闭右开
+    root-&gt;right &#x3D; traversal(nums, maxIndex + 1, end);
+    return root;
+&#125;
+TreeNode* constructMaximumBinaryTree(vector&lt;int&gt;&amp; nums) &#123;
+    return traversal(nums, 0, nums.size());
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

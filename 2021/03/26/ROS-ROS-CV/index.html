@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -368,12 +368,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/ROS/">
-                                <span class="chip bg-color">ROS</span>
-                            </a>
-                        
                             <a href="/tags/OpenCV/">
                                 <span class="chip bg-color">OpenCV</span>
+                            </a>
+                        
+                            <a href="/tags/ROS/">
+                                <span class="chip bg-color">ROS</span>
                             </a>
                         
                     </div>
@@ -413,116 +413,116 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!-- toc -->
-<h2 id="OpenCV-3-3-1"><a href="#OpenCV-3-3-1" class="headerlink" title="OpenCV 3.3.1"></a>OpenCV 3.3.1</h2><h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> build <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> build
-<span class="token function">mkdir</span> installed
-cmake -DCMAKE_BUILD_TYPE<span class="token operator">=</span>RELEASE -DCMAKE_INSTALL_PREFIX<span class="token operator">=</span>~/Library/opencv-3.3.1/build/installed -DWITH_CUDA<span class="token operator">=</span>OFF -DBUILD_DOCS<span class="token operator">=</span>OFF -DBUILD_EXAMPLES<span class="token operator">=</span>OFF -DBUILD_TESTS<span class="token operator">=</span>OFF -DBUILD_PERF_TESTS<span class="token operator">=</span>OFF -DOPENCV_EXTRA_MODULES_PATH<span class="token operator">=</span><span class="token punctuation">..</span>/opencv_contrib/modules <span class="token punctuation">..</span>
-<span class="token function">make</span> -j4
-<span class="token function">sudo</span> <span class="token function">make</span> <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="修改系统默认版本"><a href="#修改系统默认版本" class="headerlink" title="修改系统默认版本"></a>修改系统默认版本</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> ~/.bashrc
-<span class="token builtin class-name">export</span> <span class="token assign-left variable">PKG_CONFIG_PATH</span><span class="token operator">=</span>~/Library/opencv-3.3.1/build/installed/lib/pkgconfig
-<span class="token builtin class-name">export</span> <span class="token assign-left variable">LD_LIBRARY_PATH</span><span class="token operator">=</span>~/Library/opencv-3.3.1/build/installed/lib
-<span class="token builtin class-name">source</span> ~/.bashrc<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="OpenCV-3-3-1"><a href="#OpenCV-3-3-1" class="headerlink" title="OpenCV 3.3.1"></a>OpenCV 3.3.1</h2><h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mkdir build &amp;&amp; cd build
+mkdir installed
+cmake -DCMAKE_BUILD_TYPE&#x3D;RELEASE -DCMAKE_INSTALL_PREFIX&#x3D;~&#x2F;Library&#x2F;opencv-3.3.1&#x2F;build&#x2F;installed -DWITH_CUDA&#x3D;OFF -DBUILD_DOCS&#x3D;OFF -DBUILD_EXAMPLES&#x3D;OFF -DBUILD_TESTS&#x3D;OFF -DBUILD_PERF_TESTS&#x3D;OFF -DOPENCV_EXTRA_MODULES_PATH&#x3D;..&#x2F;opencv_contrib&#x2F;modules ..
+make -j4
+sudo make install<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="修改系统默认版本"><a href="#修改系统默认版本" class="headerlink" title="修改系统默认版本"></a>修改系统默认版本</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">vim ~&#x2F;.bashrc
+export PKG_CONFIG_PATH&#x3D;~&#x2F;Library&#x2F;opencv-3.3.1&#x2F;build&#x2F;installed&#x2F;lib&#x2F;pkgconfig
+export LD_LIBRARY_PATH&#x3D;~&#x2F;Library&#x2F;opencv-3.3.1&#x2F;build&#x2F;installed&#x2F;lib
+source ~&#x2F;.bashrc<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="版本确认"><a href="#版本确认" class="headerlink" title="版本确认"></a>版本确认</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pkg-config --modversion opencv
-<span class="token number">3.3</span>.1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+3.3.1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>查看头文件位置<br><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pkg-config --cflags opencv
--I/home/kavin/Library/opencv-3.3.1/build/installed/include/opencv
--I/home/kavin/Library/opencv-3.3.1/build/installed/include<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
+-I&#x2F;home&#x2F;kavin&#x2F;Library&#x2F;opencv-3.3.1&#x2F;build&#x2F;installed&#x2F;include&#x2F;opencv
+-I&#x2F;home&#x2F;kavin&#x2F;Library&#x2F;opencv-3.3.1&#x2F;build&#x2F;installed&#x2F;include<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
 <p>查看库文件<br><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pkg-config --libs opencv
--L/home/kavin/Library/opencv-3.3.1/build/installed/lib -lopencv_stitching -lopencv_superres -lopencv_videostab -lopencv_photo -lopencv_aruco 
+-L&#x2F;home&#x2F;kavin&#x2F;Library&#x2F;opencv-3.3.1&#x2F;build&#x2F;installed&#x2F;lib -lopencv_stitching -lopencv_superres -lopencv_videostab -lopencv_photo -lopencv_aruco 
 -lopencv_bgsegm -lopencv_bioinspired -lopencv_ccalib -lopencv_dpm -lopencv_face -lopencv_freetype -lopencv_fuzzy -lopencv_hdf -lopencv_img_hash 
 -lopencv_line_descriptor -lopencv_optflow -lopencv_reg -lopencv_rgbd -lopencv_saliency -lopencv_sfm -lopencv_stereo -lopencv_structured_light -lopencv_viz -lopencv_phase_unwrapping 
 -lopencv_surface_matching -lopencv_tracking -lopencv_datasets -lopencv_text -lopencv_dnn -lopencv_plot -lopencv_xfeatures2d -lopencv_shape -lopencv_video -lopencv_ml -lopencv_ximgproc 
 -lopencv_calib3d -lopencv_features2d -lopencv_highgui -lopencv_videoio -lopencv_flann -lopencv_xobjdetect -lopencv_imgcodecs -lopencv_objdetect 
 -lopencv_xphoto -lopencv_imgproc -lopencv_core<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
 <h3 id="CMakeLists指定版本"><a href="#CMakeLists指定版本" class="headerlink" title="CMakeLists指定版本"></a>CMakeLists指定版本</h3><p>不修改默认是在<code>/usr</code>查找</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">set<span class="token punctuation">(</span>OpenCV_DIR <span class="token string">"~/Library/opencv-3.3.1/build/installed/OpenCV"</span><span class="token punctuation">)</span>
-find_package<span class="token punctuation">(</span>OpenCV REQUIRED<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">set(OpenCV_DIR &quot;~&#x2F;Library&#x2F;opencv-3.3.1&#x2F;build&#x2F;installed&#x2F;OpenCV&quot;)
+find_package(OpenCV REQUIRED)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <h2 id="发布图像"><a href="#发布图像" class="headerlink" title="发布图像"></a>发布图像</h2><p>使用<code>image_transport</code>进行图像话题发布订阅</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">image_transport<span class="token operator">::</span>ImageTransport <span class="token function">it</span><span class="token punctuation">(</span>nh<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">//用句柄初始化image_transport</span>
-image_transport<span class="token operator">::</span>Publisher image_pub <span class="token operator">=</span> it<span class="token punctuation">.</span><span class="token function">advertise</span><span class="token punctuation">(</span><span class="token string">"image_topic"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">//cv::Mat通过cv_bridge::CvImage转换为sensor_msgs::ImagePtr</span>
-sensor_msgs<span class="token operator">::</span>ImagePtr msg <span class="token operator">=</span> cv_bridge<span class="token operator">::</span><span class="token function">CvImage</span><span class="token punctuation">(</span>std_msgs<span class="token operator">::</span><span class="token function">Header</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"bgr8"</span><span class="token punctuation">,</span> image<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toImageMsg</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;image_transport/image_transport.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;opencv2/highgui/highgui.hpp></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;opencv2/core/core.hpp></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;cv_bridge/cv_bridge.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">image_transport::ImageTransport it(nh);     &#x2F;&#x2F;用句柄初始化image_transport
+image_transport::Publisher image_pub &#x3D; it.advertise(&quot;image_topic&quot;, 10);
+&#x2F;&#x2F;cv::Mat通过cv_bridge::CvImage转换为sensor_msgs::ImagePtr
+sensor_msgs::ImagePtr msg &#x3D; cv_bridge::CvImage(std_msgs::Header(), &quot;bgr8&quot;, image).toImageMsg();<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"># include &lt;ros&#x2F;ros.h&gt;
+# include &lt;image_transport&#x2F;image_transport.h&gt;
+# include &lt;opencv2&#x2F;highgui&#x2F;highgui.hpp&gt;
+# include &lt;opencv2&#x2F;core&#x2F;core.hpp&gt;
+# include &lt;cv_bridge&#x2F;cv_bridge.h&gt;
+# include &lt;iostream&gt;
 
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> cv<span class="token punctuation">;</span>
+using namespace std;
+using namespace cv;
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    ros<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"image_pub_node"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>NodeHandle nh<span class="token punctuation">;</span>
-    image_transport<span class="token operator">::</span>ImageTransport <span class="token function">it</span><span class="token punctuation">(</span>nh<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    image_transport<span class="token operator">::</span>Publisher image_pub <span class="token operator">=</span> it<span class="token punctuation">.</span><span class="token function">advertise</span><span class="token punctuation">(</span><span class="token string">"image_topic"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    Mat image <span class="token operator">=</span> <span class="token function">imread</span><span class="token punctuation">(</span><span class="token string">"/home/kavin/Pictures/test.png"</span><span class="token punctuation">,</span> IMREAD_COLOR<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>image<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
-        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"can't find picture"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    sensor_msgs<span class="token operator">::</span>ImagePtr msg <span class="token operator">=</span> cv_bridge<span class="token operator">::</span><span class="token function">CvImage</span><span class="token punctuation">(</span>std_msgs<span class="token operator">::</span><span class="token function">Header</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"bgr8"</span><span class="token punctuation">,</span> image<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toImageMsg</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>Rate <span class="token function">loop_rate</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span><span class="token punctuation">(</span>nh<span class="token punctuation">.</span><span class="token function">ok</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
-        image_pub<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span>msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"publish an image"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        loop_rate<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="接收图像"><a href="#接收图像" class="headerlink" title="接收图像"></a>接收图像</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">image_transport<span class="token operator">::</span>Subscriber image_sub <span class="token operator">=</span> it<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token string">"/simple_camera/image_raw"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> image_topic_cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">//sensor_msgs话题通过cv_bridge::toCvCopy转换为cv::Mat指针</span>
-cv_bridge<span class="token operator">::</span>CvImagePtr cv_ptr <span class="token operator">=</span> cv_bridge<span class="token operator">::</span><span class="token function">toCvCopy</span><span class="token punctuation">(</span>msg<span class="token punctuation">,</span> sensor_msgs<span class="token operator">::</span>image_encodings<span class="token operator">::</span>BGR8<span class="token punctuation">)</span><span class="token punctuation">;</span>
-Mat colorImg <span class="token operator">=</span> cv_ptr<span class="token operator">-></span>image<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="源代码-1"><a href="#源代码-1" class="headerlink" title="源代码"></a>源代码</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sensor_msgs/image_encodings.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;image_transport/image_transport.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;opencv2/opencv.hpp></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cv_bridge/cv_bridge.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> cv<span class="token punctuation">;</span>
-Mat colorImg<span class="token punctuation">;</span>
+int main(int argc, char** argv)
+&#123;
+    ros::init(argc, argv, &quot;image_pub_node&quot;);
+    ros::NodeHandle nh;
+    image_transport::ImageTransport it(nh);
+    image_transport::Publisher image_pub &#x3D; it.advertise(&quot;image_topic&quot;, 10);
+    Mat image &#x3D; imread(&quot;&#x2F;home&#x2F;kavin&#x2F;Pictures&#x2F;test.png&quot;, IMREAD_COLOR);
+    if (image.empty())
+    &#123;
+        cout &lt;&lt; &quot;can&#39;t find picture&quot; &lt;&lt; endl;
+        return -1;
+    &#125;
+    sensor_msgs::ImagePtr msg &#x3D; cv_bridge::CvImage(std_msgs::Header(), &quot;bgr8&quot;, image).toImageMsg();
+    ros::Rate loop_rate(1);
+    while(nh.ok())
+    &#123;
+        image_pub.publish(msg);
+        ROS_INFO(&quot;publish an image&quot;);
+        loop_rate.sleep();
+    &#125;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="接收图像"><a href="#接收图像" class="headerlink" title="接收图像"></a>接收图像</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">image_transport::Subscriber image_sub &#x3D; it.subscribe(&quot;&#x2F;simple_camera&#x2F;image_raw&quot;, 1, image_topic_cb);
+&#x2F;&#x2F;sensor_msgs话题通过cv_bridge::toCvCopy转换为cv::Mat指针
+cv_bridge::CvImagePtr cv_ptr &#x3D; cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
+Mat colorImg &#x3D; cv_ptr-&gt;image;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="源代码-1"><a href="#源代码-1" class="headerlink" title="源代码"></a>源代码</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;ros&#x2F;ros.h&gt;
+#include &lt;sensor_msgs&#x2F;image_encodings.h&gt;
+#include &lt;image_transport&#x2F;image_transport.h&gt;
+#include &lt;opencv2&#x2F;opencv.hpp&gt;
+#include &lt;cv_bridge&#x2F;cv_bridge.h&gt;
+#include &lt;iostream&gt;
+using namespace std;
+using namespace cv;
+Mat colorImg;
 
-<span class="token keyword">void</span> <span class="token function">image_topic_cb</span><span class="token punctuation">(</span><span class="token keyword">const</span> sensor_msgs<span class="token operator">::</span>ImageConstPtr<span class="token operator">&amp;</span> msg<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    <span class="token keyword">try</span>
-    <span class="token punctuation">&#123;</span>
-        <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"Receive an image successfully"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        cv_bridge<span class="token operator">::</span>CvImagePtr cv_ptr <span class="token operator">=</span> cv_bridge<span class="token operator">::</span><span class="token function">toCvCopy</span><span class="token punctuation">(</span>msg<span class="token punctuation">,</span> sensor_msgs<span class="token operator">::</span>image_encodings<span class="token operator">::</span>BGR8<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        colorImg <span class="token operator">=</span> cv_ptr<span class="token operator">-></span>image<span class="token punctuation">;</span>
-        <span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"image"</span><span class="token punctuation">,</span> colorImg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        Mat grayImg<span class="token punctuation">;</span>
-        <span class="token function">cvtColor</span><span class="token punctuation">(</span>colorImg<span class="token punctuation">,</span> grayImg<span class="token punctuation">,</span> COLOR_BGR2GRAY<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"gray"</span><span class="token punctuation">,</span> grayImg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+void image_topic_cb(const sensor_msgs::ImageConstPtr&amp; msg)
+&#123;
+    try
+    &#123;
+        ROS_INFO(&quot;Receive an image successfully&quot;);
+        cv_bridge::CvImagePtr cv_ptr &#x3D; cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
+        colorImg &#x3D; cv_ptr-&gt;image;
+        imshow(&quot;image&quot;, colorImg);
+        Mat grayImg;
+        cvtColor(colorImg, grayImg, COLOR_BGR2GRAY);
+        imshow(&quot;gray&quot;, grayImg);
 
-        <span class="token comment">// cv::imshow("image", cv_bridge::toCvShare(msg, "bgr8")->image);</span>
-        <span class="token comment">// cv::waitKey(10);</span>
-    <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span><span class="token punctuation">(</span>cv_bridge<span class="token operator">::</span>Exception<span class="token operator">&amp;</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        std<span class="token operator">::</span>cerr <span class="token operator">&lt;&lt;</span> e<span class="token punctuation">.</span><span class="token function">what</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
+        &#x2F;&#x2F; cv::imshow(&quot;image&quot;, cv_bridge::toCvShare(msg, &quot;bgr8&quot;)-&gt;image);
+        &#x2F;&#x2F; cv::waitKey(10);
+    &#125; catch(cv_bridge::Exception&amp; e) &#123;
+        std::cerr &lt;&lt; e.what() &lt;&lt; std::endl;
+    &#125;
+&#125;
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    ros<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"image_sub"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>NodeHandle nh<span class="token punctuation">;</span>
-    image_transport<span class="token operator">::</span>ImageTransport <span class="token function">it</span><span class="token punctuation">(</span>nh<span class="token punctuation">)</span><span class="token punctuation">;</span>
+int main(int argc, char** argv)
+&#123;
+    ros::init(argc, argv, &quot;image_sub&quot;);
+    ros::NodeHandle nh;
+    image_transport::ImageTransport it(nh);
 
-    <span class="token function">namedWindow</span><span class="token punctuation">(</span><span class="token string">"image"</span><span class="token punctuation">,</span> CV_WINDOW_AUTOSIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">namedWindow</span><span class="token punctuation">(</span><span class="token string">"gray"</span><span class="token punctuation">,</span> CV_WINDOW_AUTOSIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">startWindowThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    namedWindow(&quot;image&quot;, CV_WINDOW_AUTOSIZE);
+    namedWindow(&quot;gray&quot;, CV_WINDOW_AUTOSIZE);
+    startWindowThread();
 
-    image_transport<span class="token operator">::</span>Subscriber image_sub <span class="token operator">=</span> it<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token string">"/simple_camera/image_raw"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> image_topic_cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span><span class="token function">spin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">destroyWindow</span><span class="token punctuation">(</span><span class="token string">"image"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">destroyWindow</span><span class="token punctuation">(</span><span class="token string">"gray"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    image_transport::Subscriber image_sub &#x3D; it.subscribe(&quot;&#x2F;simple_camera&#x2F;image_raw&quot;, 1, image_topic_cb);
+    ros::spin();
+    destroyWindow(&quot;image&quot;);
+    destroyWindow(&quot;gray&quot;);
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><pre class="line-numbers language-py" data-language="py"><code class="language-py">#! &#x2F;usr&#x2F;bin&#x2F;env python
 # coding&#x3D;utf-8
 
@@ -612,12 +612,12 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/ROS/">
-                                    <span class="chip bg-color">ROS</span>
-                                </a>
-                            
                                 <a href="/tags/OpenCV/">
                                     <span class="chip bg-color">OpenCV</span>
+                                </a>
+                            
+                                <a href="/tags/ROS/">
+                                    <span class="chip bg-color">ROS</span>
                                 </a>
                             
                         </div>

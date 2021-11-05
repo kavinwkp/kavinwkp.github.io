@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -409,54 +409,54 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!-- toc -->
-<h2 id="旋转向量到旋转矩阵"><a href="#旋转向量到旋转矩阵" class="headerlink" title="旋转向量到旋转矩阵"></a>旋转向量到旋转矩阵</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">double</span> alpha <span class="token operator">=</span> M_PI <span class="token operator">/</span> <span class="token number">3</span><span class="token punctuation">;</span>
-AngleAxisd <span class="token function">rotation_vector</span><span class="token punctuation">(</span>alpha<span class="token punctuation">,</span> <span class="token function">Vector3d</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// x轴: 1 0 0</span>
-<span class="token comment">// y轴: 0 1 0</span>
-<span class="token comment">// z轴: 0 0 1</span>
+<h2 id="旋转向量到旋转矩阵"><a href="#旋转向量到旋转矩阵" class="headerlink" title="旋转向量到旋转矩阵"></a>旋转向量到旋转矩阵</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">double alpha &#x3D; M_PI &#x2F; 3;
+AngleAxisd rotation_vector(alpha, Vector3d(1, 0, 0));
+&#x2F;&#x2F; x轴: 1 0 0
+&#x2F;&#x2F; y轴: 0 1 0
+&#x2F;&#x2F; z轴: 0 0 1
 
-MatrixXd rotation_matrix<span class="token punctuation">;</span>
+MatrixXd rotation_matrix;
 
-rotation_matrix <span class="token operator">=</span> rotation_vector<span class="token punctuation">.</span><span class="token function">matrix</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// rotation_matrix = rotation_vector.toRotationMatrix();</span>
+rotation_matrix &#x3D; rotation_vector.matrix();
+&#x2F;&#x2F; rotation_matrix &#x3D; rotation_vector.toRotationMatrix();
 
-cout <span class="token operator">&lt;&lt;</span> rotation_matrix <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">// 1         0         0</span>
-<span class="token comment">// 0       0.5 -0.866025</span>
-<span class="token comment">// 0  0.866025       0.5</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="旋转向量到欧拉角"><a href="#旋转向量到欧拉角" class="headerlink" title="旋转向量到欧拉角"></a>旋转向量到欧拉角</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Vector3d eulerAngle <span class="token operator">=</span> rotation_vector<span class="token punctuation">.</span><span class="token function">matrix</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">eulerAngles</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// ZYX: 2, 1, 0</span>
+cout &lt;&lt; rotation_matrix &lt;&lt; endl;
+&#x2F;&#x2F; 1         0         0
+&#x2F;&#x2F; 0       0.5 -0.866025
+&#x2F;&#x2F; 0  0.866025       0.5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="旋转向量到欧拉角"><a href="#旋转向量到欧拉角" class="headerlink" title="旋转向量到欧拉角"></a>旋转向量到欧拉角</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Vector3d eulerAngle &#x3D; rotation_vector.matrix().eulerAngles(2, 1, 0);
+&#x2F;&#x2F; ZYX: 2, 1, 0
 
-cout <span class="token operator">&lt;&lt;</span> eulerAngle <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">//      0</span>
-<span class="token comment">//     -0</span>
-<span class="token comment">// 1.0472</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="旋转向量到四元数"><a href="#旋转向量到四元数" class="headerlink" title="旋转向量到四元数"></a>旋转向量到四元数</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Quaterniond <span class="token function">quaternion</span><span class="token punctuation">(</span>rotation_vector<span class="token punctuation">)</span><span class="token punctuation">;</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">coeffs</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">//      0.5</span>
-<span class="token comment">//        0</span>
-<span class="token comment">//        0</span>
-<span class="token comment">// 0.866025</span>
+cout &lt;&lt; eulerAngle &lt;&lt; endl;
+&#x2F;&#x2F;      0
+&#x2F;&#x2F;     -0
+&#x2F;&#x2F; 1.0472<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="旋转向量到四元数"><a href="#旋转向量到四元数" class="headerlink" title="旋转向量到四元数"></a>旋转向量到四元数</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Quaterniond quaternion(rotation_vector);
+cout &lt;&lt; quaternion.coeffs() &lt;&lt; endl;
+&#x2F;&#x2F;      0.5
+&#x2F;&#x2F;        0
+&#x2F;&#x2F;        0
+&#x2F;&#x2F; 0.866025
 
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">x</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">y</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">z</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">w</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">// 0.5</span>
-<span class="token comment">// 0</span>
-<span class="token comment">// 0</span>
-<span class="token comment">// 0.866025</span>
+cout &lt;&lt; quaternion.x() &lt;&lt; endl;
+cout &lt;&lt; quaternion.y() &lt;&lt; endl;
+cout &lt;&lt; quaternion.z() &lt;&lt; endl;
+cout &lt;&lt; quaternion.w() &lt;&lt; endl;
+&#x2F;&#x2F; 0.5
+&#x2F;&#x2F; 0
+&#x2F;&#x2F; 0
+&#x2F;&#x2F; 0.866025
 
-Quaterniond quaternion2<span class="token punctuation">;</span>
-quaternion2 <span class="token operator">=</span> rotation_vector<span class="token punctuation">;</span>  <span class="token comment">// 重载了'='</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion2<span class="token punctuation">.</span><span class="token function">coeffs</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">//      0.5</span>
-<span class="token comment">//        0</span>
-<span class="token comment">//        0</span>
-<span class="token comment">// 0.866025</span>
+Quaterniond quaternion2;
+quaternion2 &#x3D; rotation_vector;  &#x2F;&#x2F; 重载了&#39;&#x3D;&#39;
+cout &lt;&lt; quaternion2.coeffs() &lt;&lt; endl;
+&#x2F;&#x2F;      0.5
+&#x2F;&#x2F;        0
+&#x2F;&#x2F;        0
+&#x2F;&#x2F; 0.866025
 
-<span class="token comment">// 四元数的初始化</span>
-Quaterniond <span class="token function">quaternion</span><span class="token punctuation">(</span>w<span class="token punctuation">,</span> x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> z<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+&#x2F;&#x2F; 四元数的初始化
+Quaterniond quaternion(w, x, y, z);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -697,13 +697,13 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/21/Eigen-Eigen-1/">
+                <a href="/2021/03/21/Eigen-Eigen-2/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Eigen_1">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Eigen_2">
                         
-                        <span class="card-title">Eigen_1</span>
+                        <span class="card-title">Eigen_2</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -742,13 +742,13 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/21/Eigen-Eigen-2/">
+                <a href="/2021/03/21/Eigen-Eigen-%E5%90%91%E9%87%8F/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Eigen_2">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Eigen_向量">
                         
-                        <span class="card-title">Eigen_2</span>
+                        <span class="card-title">Eigen_向量</span>
                     </div>
                 </a>
                 <div class="card-content article-content">

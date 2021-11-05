@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -423,57 +423,57 @@
             <div id="articleContent">
                 <h2 id="LeetCode-206-Reverse-Linked-List"><a href="#LeetCode-206-Reverse-Linked-List" class="headerlink" title="LeetCode 206. Reverse Linked List"></a>LeetCode 206. Reverse Linked List</h2><p>同<a target="_blank" rel="noopener" href="https://kavinwkp.github.io/2021/05/25/%E5%89%91%E6%8C%87Offer-24-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/">剑指Offer</a></p>
 <p>Given the head of a singly linked list, <strong>reverse</strong> the list, and return the reversed list.</p>
-<p>Example 1:<br><img src="/2021/09/15/LeetCode-206-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/206.jpg" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> head <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span>
-Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
-<h2 id="method-递归"><a href="#method-递归" class="headerlink" title="method: 递归"></a>method: 递归</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode<span class="token operator">*</span> <span class="token function">reverseList</span><span class="token punctuation">(</span>ListNode<span class="token operator">*</span> head<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>head <span class="token operator">||</span> <span class="token operator">!</span>head<span class="token operator">-></span>next<span class="token punctuation">)</span> <span class="token keyword">return</span> head<span class="token punctuation">;</span>
-    ListNode <span class="token operator">*</span>newHead <span class="token operator">=</span> <span class="token function">reverseList</span><span class="token punctuation">(</span>head<span class="token operator">-></span>next<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    head<span class="token operator">-></span>next<span class="token operator">-></span>next <span class="token operator">=</span> head<span class="token punctuation">;</span>
-    head<span class="token operator">-></span>next <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> newHead<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>Example 1:<br><img src="/2021/09/15/LeetCode-206-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/206.jpg" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: head &#x3D; [1,2,3,4,5]
+Output: [5,4,3,2,1]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<h2 id="method-递归"><a href="#method-递归" class="headerlink" title="method: 递归"></a>method: 递归</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode* reverseList(ListNode* head) &#123;
+    if (!head || !head-&gt;next) return head;
+    ListNode *newHead &#x3D; reverseList(head-&gt;next);
+    head-&gt;next-&gt;next &#x3D; head;
+    head-&gt;next &#x3D; nullptr;
+    return newHead;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="LeetCode-92-Reverse-Linked-List-II"><a href="#LeetCode-92-Reverse-Linked-List-II" class="headerlink" title="LeetCode 92. Reverse Linked List II"></a>LeetCode 92. Reverse Linked List II</h2><p>Given the head of a singly linked list and two integers <code>left</code> and <code>right</code> where <code>left &lt;= right</code>, reverse the nodes of the list from position left to position right, and return the reversed list.</p>
-<p>Example 1:<br><img src="/2021/09/15/LeetCode-206-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/92.jpg" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> head <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span> left <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> right <span class="token operator">=</span> <span class="token number">4</span>
-Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><img src="/2021/09/15/LeetCode-206-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/92.jpg" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: head &#x3D; [1,2,3,4,5], left &#x3D; 2, right &#x3D; 4
+Output: [1,4,3,2,5]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h2 id="method-1-递归"><a href="#method-1-递归" class="headerlink" title="method 1: 递归"></a>method 1: 递归</h2><p>跟反转链表一样，只是加一个计数器，记录递归的深度</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode <span class="token operator">*</span>rightNode <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
-ListNode<span class="token operator">*</span> <span class="token function">traversal</span><span class="token punctuation">(</span>ListNode <span class="token operator">*</span>head<span class="token punctuation">,</span> <span class="token keyword">int</span> cnt<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>cnt <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        rightNode <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>
-        <span class="token keyword">return</span> head<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    ListNode <span class="token operator">*</span>newHead <span class="token operator">=</span> <span class="token function">traversal</span><span class="token punctuation">(</span>head<span class="token operator">-></span>next<span class="token punctuation">,</span> cnt<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    head<span class="token operator">-></span>next<span class="token operator">-></span>next <span class="token operator">=</span> head<span class="token punctuation">;</span>
-    head<span class="token operator">-></span>next <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> newHead<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-ListNode<span class="token operator">*</span> <span class="token function">reverseBetween</span><span class="token punctuation">(</span>ListNode<span class="token operator">*</span> head<span class="token punctuation">,</span> <span class="token keyword">int</span> left<span class="token punctuation">,</span> <span class="token keyword">int</span> right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> offset <span class="token operator">=</span> right <span class="token operator">-</span> left<span class="token punctuation">;</span>
-    ListNode <span class="token operator">*</span>dummy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">ListNode</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> head<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    head <span class="token operator">=</span> dummy<span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">--</span>left<span class="token punctuation">)</span> head <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>
-    ListNode <span class="token operator">*</span>leftNode <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>
-    head<span class="token operator">-></span>next <span class="token operator">=</span> <span class="token function">traversal</span><span class="token punctuation">(</span>head<span class="token operator">-></span>next<span class="token punctuation">,</span> offset<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    leftNode<span class="token operator">-></span>next <span class="token operator">=</span> rightNode<span class="token punctuation">;</span>
-    <span class="token keyword">return</span> dummy<span class="token operator">-></span>next<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="method-2-模拟"><a href="#method-2-模拟" class="headerlink" title="method 2: 模拟"></a>method 2: 模拟</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode<span class="token operator">*</span> <span class="token function">reverseBetween</span><span class="token punctuation">(</span>ListNode<span class="token operator">*</span> head<span class="token punctuation">,</span> <span class="token keyword">int</span> left<span class="token punctuation">,</span> <span class="token keyword">int</span> right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> len <span class="token operator">=</span> right <span class="token operator">-</span> left<span class="token punctuation">;</span>
-    ListNode <span class="token operator">*</span>dummy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">ListNode</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> head<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    head <span class="token operator">=</span> dummy<span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">--</span>left<span class="token punctuation">)</span> head <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span> 
-    ListNode <span class="token operator">*</span>pre <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>
-    ListNode <span class="token operator">*</span>cur <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token operator">-></span>next<span class="token punctuation">;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> len<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        ListNode <span class="token operator">*</span>tmp <span class="token operator">=</span> cur<span class="token operator">-></span>next<span class="token punctuation">;</span>
-        cur<span class="token operator">-></span>next <span class="token operator">=</span> pre<span class="token punctuation">;</span>
-        pre <span class="token operator">=</span> cur<span class="token punctuation">;</span>
-        cur <span class="token operator">=</span> tmp<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    head<span class="token operator">-></span>next<span class="token operator">-></span>next <span class="token operator">=</span> cur<span class="token punctuation">;</span>
-    head<span class="token operator">-></span>next <span class="token operator">=</span> pre<span class="token punctuation">;</span>
-    <span class="token keyword">return</span> dummy<span class="token operator">-></span>next<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode *rightNode &#x3D; nullptr;
+ListNode* traversal(ListNode *head, int cnt) &#123;
+    if (cnt &#x3D;&#x3D; 0) &#123;
+        rightNode &#x3D; head-&gt;next;
+        return head;
+    &#125;
+    ListNode *newHead &#x3D; traversal(head-&gt;next, cnt-1);
+    head-&gt;next-&gt;next &#x3D; head;
+    head-&gt;next &#x3D; nullptr;
+    return newHead;
+&#125;
+ListNode* reverseBetween(ListNode* head, int left, int right) &#123;
+    int offset &#x3D; right - left;
+    ListNode *dummy &#x3D; new ListNode(0, head);
+    head &#x3D; dummy;
+    while (--left) head &#x3D; head-&gt;next;
+    ListNode *leftNode &#x3D; head-&gt;next;
+    head-&gt;next &#x3D; traversal(head-&gt;next, offset);
+    leftNode-&gt;next &#x3D; rightNode;
+    return dummy-&gt;next;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="method-2-模拟"><a href="#method-2-模拟" class="headerlink" title="method 2: 模拟"></a>method 2: 模拟</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode* reverseBetween(ListNode* head, int left, int right) &#123;
+    int len &#x3D; right - left;
+    ListNode *dummy &#x3D; new ListNode(0, head);
+    head &#x3D; dummy;
+    while (--left) head &#x3D; head-&gt;next; 
+    ListNode *pre &#x3D; head-&gt;next;
+    ListNode *cur &#x3D; head-&gt;next-&gt;next;
+    for (int i &#x3D; 0; i &lt; len; i++) &#123;
+        ListNode *tmp &#x3D; cur-&gt;next;
+        cur-&gt;next &#x3D; pre;
+        pre &#x3D; cur;
+        cur &#x3D; tmp;
+    &#125;
+    head-&gt;next-&gt;next &#x3D; cur;
+    head-&gt;next &#x3D; pre;
+    return dummy-&gt;next;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

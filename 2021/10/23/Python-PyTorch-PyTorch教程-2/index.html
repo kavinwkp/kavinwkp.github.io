@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -420,79 +420,79 @@
                 <ul>
 <li>reshape</li>
 </ul>
-<pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token builtin">input</span> <span class="token operator">=</span> torch<span class="token punctuation">.</span>arange<span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">)</span>
-<span class="token comment"># tensor([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11])</span>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">input &#x3D; torch.arange(12)
+# tensor([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11])
 
-<span class="token builtin">input</span> <span class="token operator">=</span> torch<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token comment"># tensor([[ 0,  1,  2,  3],</span>
-<span class="token comment">#         [ 4,  5,  6,  7],</span>
-<span class="token comment">#         [ 8,  9, 10, 11]])</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+input &#x3D; torch.reshape(input, (3, 4))
+# tensor([[ 0,  1,  2,  3],
+#         [ 4,  5,  6,  7],
+#         [ 8,  9, 10, 11]])<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>view</li>
 </ul>
 <p>返回一个张量，数据与输入张量相同，大小不同</p>
-<pre class="line-numbers language-py" data-language="py"><code class="language-py">x <span class="token operator">=</span> torch<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span>
-<span class="token comment"># tensor([[ 1.5941, -0.1812],</span>
-<span class="token comment">#         [ 0.5612,  1.5465]])</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token comment"># torch.Size([2, 2])</span>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">x &#x3D; torch.randn(2, 2)
+# tensor([[ 1.5941, -0.1812],
+#         [ 0.5612,  1.5465]])
+print(x.size())
+# torch.Size([2, 2])
 
-y <span class="token operator">=</span> x<span class="token punctuation">.</span>view<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span>   <span class="token comment"># 数据是一样的</span>
-<span class="token comment"># tensor([ 1.5941, -0.1812,  0.5612,  1.5465])</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>y<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment"># 大小可以改变</span>
-<span class="token comment"># torch.Size([4])</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+y &#x3D; x.view(4)   # 数据是一样的
+# tensor([ 1.5941, -0.1812,  0.5612,  1.5465])
+print(y.size()) # 大小可以改变
+# torch.Size([4])<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>flatness</li>
 </ul>
-<pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token builtin">input</span> <span class="token operator">=</span> torch<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>arange<span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token comment"># tensor([[0, 1, 2],</span>
-<span class="token comment">#         [3, 4, 5]])</span>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">input &#x3D; torch.reshape(torch.arange(6), (2, 3))
+# tensor([[0, 1, 2],
+#         [3, 4, 5]])
 
-output <span class="token operator">=</span> torch<span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">)</span>
-<span class="token comment"># tensor([0, 1, 2, 3, 4, 5])</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+output &#x3D; torch.flatten(input)
+# tensor([0, 1, 2, 3, 4, 5])<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>argmax</li>
 </ul>
-<pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token builtin">input</span> <span class="token operator">=</span> torch<span class="token punctuation">.</span>tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-                      <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">input &#x3D; torch.tensor([[1, 3, 5],
+                      [4, 8, 0]])
 
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">.</span>argmax<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment"># 每行最大值下标</span>
-tensor<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+print(input.argmax(1))  # 每行最大值下标
+tensor([2, 1])<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>manual_seed</li>
 </ul>
 <p>随机数种子，每次运行的结果都是一样的</p>
-<pre class="line-numbers language-py" data-language="py"><code class="language-py">seed <span class="token operator">=</span> <span class="token number">111</span>
-torch<span class="token punctuation">.</span>manual_seed<span class="token punctuation">(</span>seed<span class="token punctuation">)</span>
-<span class="token comment"># tensor([[0.7156, 0.9140]])</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">seed &#x3D; 111
+torch.manual_seed(seed)
+# tensor([[0.7156, 0.9140]])<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>Sequential</li>
 </ul>
-<pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token keyword">class</span> <span class="token class-name">CNN</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token builtin">super</span><span class="token punctuation">(</span>CNN<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        self<span class="token punctuation">.</span>model1 <span class="token operator">=</span> Sequential<span class="token punctuation">(</span>
-            Conv2d<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            MaxPool2d<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            Conv2d<span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            MaxPool2d<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            Conv2d<span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">,</span> <span class="token number">64</span><span class="token punctuation">,</span> kernel_size<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            MaxPool2d<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            Flatten<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            Linear<span class="token punctuation">(</span><span class="token number">1024</span><span class="token punctuation">,</span> <span class="token number">64</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            Linear<span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span>
-        <span class="token punctuation">)</span>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">class CNN(nn.Module):
+    def __init__(self):
+        super(CNN, self).__init__()
+        self.model1 &#x3D; Sequential(
+            Conv2d(3, 32, kernel_size&#x3D;(5, 5), padding&#x3D;2),
+            MaxPool2d(2),
+            Conv2d(32, 32, kernel_size&#x3D;(5, 5), padding&#x3D;2),
+            MaxPool2d(2),
+            Conv2d(32, 64, kernel_size&#x3D;(5, 5), padding&#x3D;2),
+            MaxPool2d(2),
+            Flatten(),
+            Linear(1024, 64),
+            Linear(64, 10)
+        )
 
-    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        x <span class="token operator">=</span> self<span class="token punctuation">.</span>model1<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
-        <span class="token keyword">return</span> x
+    def forward(self, x):
+        x &#x3D; self.model1(x)
+        return x
 
 
-model <span class="token operator">=</span> CNN<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token builtin">input</span> <span class="token operator">=</span> torch<span class="token punctuation">.</span>ones<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">64</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-output <span class="token operator">=</span> model<span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>output<span class="token punctuation">.</span>shape<span class="token punctuation">)</span>
-<span class="token comment"># torch.Size([64, 10])</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+model &#x3D; CNN()
+input &#x3D; torch.ones((64, 3, 32, 32))
+output &#x3D; model(input)
+print(output.shape)
+# torch.Size([64, 10])<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

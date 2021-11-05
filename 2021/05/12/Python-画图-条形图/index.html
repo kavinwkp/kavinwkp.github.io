@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -418,44 +418,44 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>不同y轴的图例表示方法</p>
-<pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
-<span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword">as</span> plt
-<span class="token keyword">from</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword">import</span> MultipleLocator
-<span class="token keyword">from</span> matplotlib <span class="token keyword">import</span> rc
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.pyplot import MultipleLocator
+from matplotlib import rc
 
 
-num_list1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">152.8</span><span class="token punctuation">,</span><span class="token number">122.23</span><span class="token punctuation">,</span><span class="token number">101.9</span><span class="token punctuation">,</span><span class="token number">87.31</span><span class="token punctuation">,</span><span class="token number">76.4</span><span class="token punctuation">,</span><span class="token number">68</span><span class="token punctuation">,</span><span class="token number">61.15</span><span class="token punctuation">,</span><span class="token number">55.6</span><span class="token punctuation">,</span><span class="token number">52.41</span><span class="token punctuation">]</span>
-num_list2 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">23393.3</span><span class="token punctuation">,</span><span class="token number">17956.2</span><span class="token punctuation">,</span><span class="token number">14406</span><span class="token punctuation">,</span><span class="token number">11938.7</span><span class="token punctuation">,</span><span class="token number">10180.5</span><span class="token punctuation">,</span><span class="token number">8899.45</span><span class="token punctuation">,</span><span class="token number">7917.17</span><span class="token punctuation">,</span><span class="token number">7178.32</span><span class="token punctuation">,</span><span class="token number">6832.4</span><span class="token punctuation">]</span>
-<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>num_list2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    num_list2<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">/=</span> <span class="token number">1000</span>
+num_list1 &#x3D; [152.8,122.23,101.9,87.31,76.4,68,61.15,55.6,52.41]
+num_list2 &#x3D; [23393.3,17956.2,14406,11938.7,10180.5,8899.45,7917.17,7178.32,6832.4]
+for i in range(len(num_list2)):
+    num_list2[i] &#x2F;&#x3D; 1000
 
-fig <span class="token operator">=</span> plt<span class="token punctuation">.</span>figure<span class="token punctuation">(</span><span class="token punctuation">)</span>
-ax <span class="token operator">=</span> fig<span class="token punctuation">.</span>add_subplot<span class="token punctuation">(</span><span class="token number">111</span><span class="token punctuation">)</span>
+fig &#x3D; plt.figure()
+ax &#x3D; fig.add_subplot(111)
 
-x <span class="token operator">=</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">13</span><span class="token punctuation">)</span>
-ax<span class="token punctuation">.</span>bar<span class="token punctuation">(</span>x<span class="token operator">=</span>x<span class="token punctuation">,</span> height<span class="token operator">=</span>num_list1<span class="token punctuation">,</span> width<span class="token operator">=</span><span class="token number">0.4</span><span class="token punctuation">,</span> alpha<span class="token operator">=</span><span class="token number">0.8</span><span class="token punctuation">,</span> color<span class="token operator">=</span><span class="token string">'#00a6ac'</span><span class="token punctuation">,</span> label<span class="token operator">=</span><span class="token string">'time(s)'</span><span class="token punctuation">)</span>
+x &#x3D; range(4, 13)
+ax.bar(x&#x3D;x, height&#x3D;num_list1, width&#x3D;0.4, alpha&#x3D;0.8, color&#x3D;&#39;#00a6ac&#39;, label&#x3D;&#39;time(s)&#39;)
 
-ax2 <span class="token operator">=</span> ax<span class="token punctuation">.</span>twinx<span class="token punctuation">(</span><span class="token punctuation">)</span>
-ax2<span class="token punctuation">.</span>bar<span class="token punctuation">(</span>x<span class="token operator">=</span><span class="token punctuation">[</span>i <span class="token operator">+</span> <span class="token number">0.4</span> <span class="token keyword">for</span> i <span class="token keyword">in</span> x<span class="token punctuation">]</span><span class="token punctuation">,</span> height<span class="token operator">=</span>num_list2<span class="token punctuation">,</span> width<span class="token operator">=</span><span class="token number">0.4</span><span class="token punctuation">,</span> color<span class="token operator">=</span><span class="token string">'#d71345'</span><span class="token punctuation">,</span> label<span class="token operator">=</span><span class="token string">'Energy Consumption(kJ)'</span><span class="token punctuation">)</span>
+ax2 &#x3D; ax.twinx()
+ax2.bar(x&#x3D;[i + 0.4 for i in x], height&#x3D;num_list2, width&#x3D;0.4, color&#x3D;&#39;#d71345&#39;, label&#x3D;&#39;Energy Consumption(kJ)&#39;)
 
-fig<span class="token punctuation">.</span>legend<span class="token punctuation">(</span>loc<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> bbox_to_anchor<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> bbox_transform<span class="token operator">=</span>ax<span class="token punctuation">.</span>transAxes<span class="token punctuation">)</span>
+fig.legend(loc&#x3D;1, bbox_to_anchor&#x3D;(1,1), bbox_transform&#x3D;ax.transAxes)
 
-font <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token string">'family'</span><span class="token punctuation">:</span> <span class="token string">'Arial'</span><span class="token punctuation">,</span> <span class="token string">'weight'</span><span class="token punctuation">:</span> <span class="token string">'normal'</span><span class="token punctuation">,</span> <span class="token string">'size'</span><span class="token punctuation">:</span> <span class="token number">20</span><span class="token punctuation">&#125;</span>
-ax<span class="token punctuation">.</span>set_xlabel<span class="token punctuation">(</span><span class="token string">"Maximal Speed(m/s)"</span><span class="token punctuation">,</span> font<span class="token punctuation">)</span>
-ax<span class="token punctuation">.</span>set_ylabel<span class="token punctuation">(</span><span class="token string">'Time(s)'</span><span class="token punctuation">,</span> font<span class="token punctuation">)</span>
+font &#x3D; &#123;&#39;family&#39;: &#39;Arial&#39;, &#39;weight&#39;: &#39;normal&#39;, &#39;size&#39;: 20&#125;
+ax.set_xlabel(&quot;Maximal Speed(m&#x2F;s)&quot;, font)
+ax.set_ylabel(&#39;Time(s)&#39;, font)
 
-x_locator <span class="token operator">=</span> MultipleLocator<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>      <span class="token comment"># 横轴间隔</span>
-ax<span class="token punctuation">.</span>xaxis<span class="token punctuation">.</span>set_major_locator<span class="token punctuation">(</span>x_locator<span class="token punctuation">)</span>
-ax<span class="token punctuation">.</span>spines<span class="token punctuation">[</span><span class="token string">'top'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>set_linewidth<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>   <span class="token comment"># 边框加粗</span>
-ax<span class="token punctuation">.</span>spines<span class="token punctuation">[</span><span class="token string">'bottom'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>set_linewidth<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
-ax<span class="token punctuation">.</span>spines<span class="token punctuation">[</span><span class="token string">'left'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>set_linewidth<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
-ax<span class="token punctuation">.</span>spines<span class="token punctuation">[</span><span class="token string">'right'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>set_linewidth<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+x_locator &#x3D; MultipleLocator(1)      # 横轴间隔
+ax.xaxis.set_major_locator(x_locator)
+ax.spines[&#39;top&#39;].set_linewidth(2)   # 边框加粗
+ax.spines[&#39;bottom&#39;].set_linewidth(2)
+ax.spines[&#39;left&#39;].set_linewidth(2)
+ax.spines[&#39;right&#39;].set_linewidth(2)
 
-font2 <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token string">'family'</span><span class="token punctuation">:</span> <span class="token string">'Arial'</span><span class="token punctuation">,</span> <span class="token string">'weight'</span><span class="token punctuation">:</span> <span class="token string">'normal'</span><span class="token punctuation">,</span> <span class="token string">'size'</span><span class="token punctuation">:</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token string">'color'</span><span class="token punctuation">:</span><span class="token string">'#d71345'</span><span class="token punctuation">&#125;</span>
+font2 &#x3D; &#123;&#39;family&#39;: &#39;Arial&#39;, &#39;weight&#39;: &#39;normal&#39;, &#39;size&#39;: 20, &#39;color&#39;:&#39;#d71345&#39;&#125;
 
-ax2<span class="token punctuation">.</span>set_ylabel<span class="token punctuation">(</span><span class="token string">'Energy Consumption(kJ)'</span><span class="token punctuation">,</span> font2<span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>tick_params<span class="token punctuation">(</span>axis<span class="token operator">=</span><span class="token string">'y'</span><span class="token punctuation">,</span> colors<span class="token operator">=</span><span class="token string">'#d71345'</span><span class="token punctuation">)</span>
-plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+ax2.set_ylabel(&#39;Energy Consumption(kJ)&#39;, font2)
+plt.tick_params(axis&#x3D;&#39;y&#39;, colors&#x3D;&#39;#d71345&#39;)
+plt.show()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <center>
 <img src="/2021/05/12/Python-%E7%94%BB%E5%9B%BE-%E6%9D%A1%E5%BD%A2%E5%9B%BE/1.png#pic_center" width="80%" height="80%" alt="test">
 </center>

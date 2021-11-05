@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -418,32 +418,32 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="LeetCode-637-Average-of-Levels-in-Binary-Tree"><a href="#LeetCode-637-Average-of-Levels-in-Binary-Tree" class="headerlink" title="LeetCode 637. Average of Levels in Binary Tree"></a>LeetCode 637. Average of Levels in Binary Tree</h2><p>Given the root of a binary tree, return the <strong>average value</strong> of the nodes on <strong>each level</strong> in the form of an array. Answers within $10^{-5}$ of the actual answer will be accepted.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> 
-    <span class="token number">3</span>
-   <span class="token operator">/</span> \
-  <span class="token number">9</span>  <span class="token number">20</span>
-    <span class="token operator">/</span>  \
-   <span class="token number">15</span>   <span class="token number">7</span>
-Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">3.00000</span><span class="token punctuation">,</span><span class="token number">14.50000</span><span class="token punctuation">,</span><span class="token number">11.00000</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: 
+    3
+   &#x2F; \
+  9  20
+    &#x2F;  \
+   15   7
+Output: [3.00000,14.50000,11.00000]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
 <h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>记录每层的节点总和，遍历完一层后记录平均值</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token operator">></span> <span class="token function">averageOfLevels</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    vector<span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token operator">></span> ret<span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>root <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
-    queue<span class="token operator">&lt;</span>TreeNode<span class="token operator">*</span><span class="token operator">></span> q<span class="token punctuation">;</span>
-    q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>q<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">int</span> size <span class="token operator">=</span> q<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">double</span> sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            TreeNode<span class="token operator">*</span> cur <span class="token operator">=</span> q<span class="token punctuation">.</span><span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            q<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            sum <span class="token operator">+=</span> cur<span class="token operator">-></span>val<span class="token punctuation">;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>cur<span class="token operator">-></span>left<span class="token punctuation">)</span> q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>cur<span class="token operator">-></span>right<span class="token punctuation">)</span> q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        ret<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>sum <span class="token operator">/</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> ret<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector&lt;double&gt; averageOfLevels(TreeNode* root) &#123;
+    vector&lt;double&gt; ret;
+    if (root &#x3D;&#x3D; nullptr) return ret;
+    queue&lt;TreeNode*&gt; q;
+    q.push(root);
+    while (!q.empty()) &#123;
+        int size &#x3D; q.size();
+        double sum &#x3D; 0;
+        for (int i &#x3D; 0; i &lt; size; ++i) &#123;
+            TreeNode* cur &#x3D; q.front();
+            q.pop();
+            sum +&#x3D; cur-&gt;val;
+            if (cur-&gt;left) q.push(cur-&gt;left);
+            if (cur-&gt;right) q.push(cur-&gt;right);
+        &#125;
+        ret.push_back(sum &#x2F; size);
+    &#125;
+    return ret;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

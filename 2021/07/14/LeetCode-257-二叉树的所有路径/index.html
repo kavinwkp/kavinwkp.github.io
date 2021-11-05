@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -424,46 +424,46 @@
                 <h2 id="LeetCode-257-Binary-Tree-Paths"><a href="#LeetCode-257-Binary-Tree-Paths" class="headerlink" title="LeetCode 257. Binary Tree Paths"></a>LeetCode 257. Binary Tree Paths</h2><p>Given the root of a binary tree, return all <strong>root-to-leaf</strong> paths in any order.</p>
 <p>A leaf is a node with no children.</p>
 <p>Example 1:</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> root <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span>
-   <span class="token number">1</span>
- <span class="token operator">/</span>   \
-<span class="token number">2</span>     <span class="token number">3</span>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: root &#x3D; [1,2,3,null,5]
+   1
+ &#x2F;   \
+2     3
  \
-  <span class="token number">5</span>
-Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"1->2->5"</span><span class="token punctuation">,</span><span class="token string">"1->3"</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  5
+Output: [&quot;1-&gt;2-&gt;5&quot;,&quot;1-&gt;3&quot;]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="method-回溯"><a href="#method-回溯" class="headerlink" title="method: 回溯"></a>method: 回溯</h2><p>用<code>vector</code>存储路径和回溯比较方便，后面再转成<code>string</code></p>
 <ul>
 <li>函数参数和返回值：前序遍历的当前节点，存储路径的path和存储最终结果的ret，都要是引用，无返回值</li>
 <li>递归结束条件：节点为叶子节点</li>
 <li>左右子树非空才进行递归，回溯时要把左右子树的节点<code>pop</code>出来</li>
 </ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">traversal</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">,</span> vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> path<span class="token punctuation">,</span> vector<span class="token operator">&lt;</span>string<span class="token operator">></span><span class="token operator">&amp;</span> ret<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    path<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>root<span class="token operator">-></span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 已经保证节点非空</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token operator">-></span>left <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        string s<span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> path<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            s <span class="token operator">+=</span> <span class="token function">to_string</span><span class="token punctuation">(</span>path<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            s <span class="token operator">+=</span> <span class="token string">"->"</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        s <span class="token operator">+=</span> <span class="token function">to_string</span><span class="token punctuation">(</span>path<span class="token punctuation">.</span><span class="token function">back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        ret<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token function">traversal</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">,</span> path<span class="token punctuation">,</span> ret<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        path<span class="token punctuation">.</span><span class="token function">pop_back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token function">traversal</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">,</span> path<span class="token punctuation">,</span> ret<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        path<span class="token punctuation">.</span><span class="token function">pop_back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-vector<span class="token operator">&lt;</span>string<span class="token operator">></span> <span class="token function">binaryTreePaths</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> path<span class="token punctuation">;</span>
-    vector<span class="token operator">&lt;</span>string<span class="token operator">></span> ret<span class="token punctuation">;</span>
-    <span class="token function">traversal</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span> path<span class="token punctuation">,</span> ret<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void traversal(TreeNode* root, vector&lt;int&gt;&amp; path, vector&lt;string&gt;&amp; ret) &#123;
+    path.push_back(root-&gt;val);  &#x2F;&#x2F; 已经保证节点非空
+    if (!root-&gt;left &amp;&amp; !root-&gt;right) &#123;
+        string s;
+        for (int i &#x3D; 0; i &lt; path.size() - 1; ++i) &#123;
+            s +&#x3D; to_string(path[i]);
+            s +&#x3D; &quot;-&gt;&quot;;
+        &#125;
+        s +&#x3D; to_string(path.back());
+        ret.push_back(s);
+        return;
+    &#125;
+    if (root-&gt;left) &#123;
+        traversal(root-&gt;left, path, ret);
+        path.pop_back();
+    &#125;
+    if (root-&gt;right) &#123;
+        traversal(root-&gt;right, path, ret);
+        path.pop_back();
+    &#125;
+&#125;
+vector&lt;string&gt; binaryTreePaths(TreeNode* root) &#123;
+    vector&lt;int&gt; path;
+    vector&lt;string&gt; ret;
+    traversal(root, path, ret);
+    return ret;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -418,23 +418,23 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="LeetCode-147-Insertion-Sort-List"><a href="#LeetCode-147-Insertion-Sort-List" class="headerlink" title="LeetCode 147. Insertion Sort List"></a>LeetCode 147. Insertion Sort List</h2><p>Given the <code>head</code> of a singly linked list, <code>sort</code> the list using <code>insertion sort</code>, and return the sorted list’s head.</p>
-<p><img src="/2021/09/25/LeetCode-147-%E9%93%BE%E8%A1%A8%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F/147.jpg" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> head <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span>
-Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p><img src="/2021/09/25/LeetCode-147-%E9%93%BE%E8%A1%A8%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F/147.jpg" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: head &#x3D; [4,2,1,3]
+Output: [1,2,3,4]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h2 id="method"><a href="#method" class="headerlink" title="method:"></a>method:</h2><p><code>head</code>指向要插入的元素，<code>pre</code>遍历已排序的链表，找到第一个大于<code>head-&gt;val</code>的元素或者最末尾的元素，插入<code>head</code></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode<span class="token operator">*</span> <span class="token function">insertionSortList</span><span class="token punctuation">(</span>ListNode<span class="token operator">*</span> head<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    ListNode <span class="token operator">*</span>dummy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">ListNode</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ListNode <span class="token operator">*</span>pre <span class="token operator">=</span> dummy<span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>head<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        ListNode <span class="token operator">*</span>tmp <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>
-        <span class="token keyword">while</span> <span class="token punctuation">(</span>pre<span class="token operator">-></span>next <span class="token operator">&amp;&amp;</span> pre<span class="token operator">-></span>next<span class="token operator">-></span>val <span class="token operator">&lt;</span> head<span class="token operator">-></span>val<span class="token punctuation">)</span> 
-            pre <span class="token operator">=</span> pre<span class="token operator">-></span>next<span class="token punctuation">;</span>
-        head<span class="token operator">-></span>next <span class="token operator">=</span> pre<span class="token operator">-></span>next<span class="token punctuation">;</span>
-        pre<span class="token operator">-></span>next <span class="token operator">=</span> head<span class="token punctuation">;</span>
-        head <span class="token operator">=</span> tmp<span class="token punctuation">;</span>
-        pre <span class="token operator">=</span> dummy<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> dummy<span class="token operator">-></span>next<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode* insertionSortList(ListNode* head) &#123;
+    ListNode *dummy &#x3D; new ListNode(0);
+    ListNode *pre &#x3D; dummy;
+    while (head) &#123;
+        ListNode *tmp &#x3D; head-&gt;next;
+        while (pre-&gt;next &amp;&amp; pre-&gt;next-&gt;val &lt; head-&gt;val) 
+            pre &#x3D; pre-&gt;next;
+        head-&gt;next &#x3D; pre-&gt;next;
+        pre-&gt;next &#x3D; head;
+        head &#x3D; tmp;
+        pre &#x3D; dummy;
+    &#125;
+    return dummy-&gt;next;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

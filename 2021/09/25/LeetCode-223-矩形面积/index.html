@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -423,17 +423,17 @@
 <p>Example 1:</p>
 <p><img src="/2021/09/25/LeetCode-223-%E7%9F%A9%E5%BD%A2%E9%9D%A2%E7%A7%AF/223.png" alt></p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Rectangle Area
-Input<span class="token operator">:</span> ax1 <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">,</span> ay1 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> ax2 <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">,</span> ay2 <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">,</span> bx1 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> by1 <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> bx2 <span class="token operator">=</span> <span class="token number">9</span><span class="token punctuation">,</span> by2 <span class="token operator">=</span> <span class="token number">2</span>
-Output<span class="token operator">:</span> <span class="token number">45</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+Input: ax1 &#x3D; -3, ay1 &#x3D; 0, ax2 &#x3D; 3, ay2 &#x3D; 4, bx1 &#x3D; 0, by1 &#x3D; -1, bx2 &#x3D; 9, by2 &#x3D; 2
+Output: 45<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>要计算出重叠部分的面积，再用总面积减去重叠面积</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">computeArea</span><span class="token punctuation">(</span><span class="token keyword">int</span> ax1<span class="token punctuation">,</span> <span class="token keyword">int</span> ay1<span class="token punctuation">,</span> <span class="token keyword">int</span> ax2<span class="token punctuation">,</span> <span class="token keyword">int</span> ay2<span class="token punctuation">,</span> <span class="token keyword">int</span> bx1<span class="token punctuation">,</span> <span class="token keyword">int</span> by1<span class="token punctuation">,</span> <span class="token keyword">int</span> bx2<span class="token punctuation">,</span> <span class="token keyword">int</span> by2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> area <span class="token operator">=</span> <span class="token punctuation">(</span>ax2<span class="token operator">-</span>ax1<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>ay2<span class="token operator">-</span>ay1<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token punctuation">(</span>bx2<span class="token operator">-</span>bx1<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>by2<span class="token operator">-</span>by1<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> dx <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>ax2<span class="token punctuation">,</span> bx2<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token function">max</span><span class="token punctuation">(</span>ax1<span class="token punctuation">,</span> bx1<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>dx <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> area<span class="token punctuation">;</span>    <span class="token comment">// x方向没有重叠</span>
-    <span class="token keyword">int</span> dy <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>ay2<span class="token punctuation">,</span> by2<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token function">max</span><span class="token punctuation">(</span>ay1<span class="token punctuation">,</span> by1<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>dy <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> area<span class="token punctuation">;</span>    <span class="token comment">// y方向没有重叠</span>
-    <span class="token keyword">return</span> area <span class="token operator">-</span> dx <span class="token operator">*</span> dy<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int computeArea(int ax1, int ay1, int ax2, int ay2, int bx1, int by1, int bx2, int by2) &#123;
+    int area &#x3D; (ax2-ax1) * (ay2-ay1) + (bx2-bx1) * (by2-by1);
+    int dx &#x3D; min(ax2, bx2) - max(ax1, bx1);
+    if (dx &lt; 0) return area;    &#x2F;&#x2F; x方向没有重叠
+    int dy &#x3D; min(ay2, by2) - max(ay1, by1);
+    if (dy &lt; 0) return area;    &#x2F;&#x2F; y方向没有重叠
+    return area - dx * dy;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

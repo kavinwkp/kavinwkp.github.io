@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -418,24 +418,24 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="LeetCode-530-Minimum-Absolute-Difference-in-BST"><a href="#LeetCode-530-Minimum-Absolute-Difference-in-BST" class="headerlink" title="LeetCode 530. Minimum Absolute Difference in BST"></a>LeetCode 530. Minimum Absolute Difference in BST</h2><p>Given the root of a Binary Search Tree (BST), return the <strong>minimum absolute difference</strong> between the values of any two different nodes in the tree.</p>
-<p>Example 1:<br><img src="/2021/09/11/LeetCode-530-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E6%9C%80%E5%B0%8F%E7%BB%9D%E5%AF%B9%E5%B7%AE/530.jpg" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> root <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span>
-Output<span class="token operator">:</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><img src="/2021/09/11/LeetCode-530-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E6%9C%80%E5%B0%8F%E7%BB%9D%E5%AF%B9%E5%B7%AE/530.jpg" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: root &#x3D; [4,2,6,1,3]
+Output: 1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h2 id="method-递归"><a href="#method-递归" class="headerlink" title="method: 递归"></a>method: 递归</h2><p>相当于遍历一个有序数组，求出两两之前的差值，更新其最小值</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode <span class="token operator">*</span>pre <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
-<span class="token keyword">int</span> result <span class="token operator">=</span> INT_MAX<span class="token punctuation">;</span>
-<span class="token keyword">void</span> <span class="token function">traversal</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
-    <span class="token function">traversal</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>pre<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        result <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> root<span class="token operator">-></span>val <span class="token operator">-</span> pre<span class="token operator">-></span>val<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 更新最小值</span>
-    <span class="token punctuation">&#125;</span>
-    pre <span class="token operator">=</span> root<span class="token punctuation">;</span>
-    <span class="token function">traversal</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span class="token keyword">int</span> <span class="token function">getMinimumDifference</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">traversal</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> result<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode *pre &#x3D; nullptr;
+int result &#x3D; INT_MAX;
+void traversal(TreeNode* root) &#123;
+    if (!root) return;
+    traversal(root-&gt;left);
+    if (pre) &#123;
+        result &#x3D; min(result, root-&gt;val - pre-&gt;val); &#x2F;&#x2F; 更新最小值
+    &#125;
+    pre &#x3D; root;
+    traversal(root-&gt;right);
+&#125;
+int getMinimumDifference(TreeNode* root) &#123;
+    traversal(root);
+    return result;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

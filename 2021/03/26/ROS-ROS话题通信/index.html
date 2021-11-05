@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -409,89 +409,89 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!-- toc -->
-<h2 id="容易出错的地方"><a href="#容易出错的地方" class="headerlink" title="容易出错的地方"></a>容易出错的地方</h2><h3 id="链接catkin的库"><a href="#链接catkin的库" class="headerlink" title="链接catkin的库"></a>链接catkin的库</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">target_link_libraries</span><span class="token punctuation">(</span>main $<span class="token punctuation">&#123;</span>catkin_LIBRARIES<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="使用自定义头文件，前面加包名"><a href="#使用自定义头文件，前面加包名" class="headerlink" title="使用自定义头文件，前面加包名"></a>使用自定义头文件，前面加包名</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"package_name/xxx.h"</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="容易出错的地方"><a href="#容易出错的地方" class="headerlink" title="容易出错的地方"></a>容易出错的地方</h2><h3 id="链接catkin的库"><a href="#链接catkin的库" class="headerlink" title="链接catkin的库"></a>链接catkin的库</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">target_link_libraries(main $&#123;catkin_LIBRARIES&#125;)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="使用自定义头文件，前面加包名"><a href="#使用自定义头文件，前面加包名" class="headerlink" title="使用自定义头文件，前面加包名"></a>使用自定义头文件，前面加包名</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &quot;package_name&#x2F;xxx.h&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h3 id="CMakeLists-txt"><a href="#CMakeLists-txt" class="headerlink" title="CMakeLists.txt"></a>CMakeLists.txt</h3><p>如果有自定义类，需要包含头文件和链接库</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 头文件位置</span>
-<span class="token function">include_libraries</span><span class="token punctuation">(</span>include<span class="token punctuation">)</span>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&#x2F;&#x2F; 头文件位置
+include_libraries(include)
 
-<span class="token comment">// 添加库文件</span>
-<span class="token function">add_libraries</span><span class="token punctuation">(</span>Student STATIC src<span class="token operator">/</span>Student<span class="token punctuation">.</span>cpp<span class="token punctuation">)</span>
+&#x2F;&#x2F; 添加库文件
+add_libraries(Student STATIC src&#x2F;Student.cpp)
 
-<span class="token comment">// 链接</span>
-<span class="token function">target_link_libraries</span><span class="token punctuation">(</span>main Student<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="std-msgs的数据类型"><a href="#std-msgs的数据类型" class="headerlink" title="std_msgs的数据类型"></a>std_msgs的数据类型</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;std_msgs/Float64.h></span></span>
+&#x2F;&#x2F; 链接
+target_link_libraries(main Student)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="std-msgs的数据类型"><a href="#std-msgs的数据类型" class="headerlink" title="std_msgs的数据类型"></a>std_msgs的数据类型</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;std_msgs&#x2F;Float64.h&gt;
 float64 data
 
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;std_msgs/Float64MultiArray.h></span></span>
-float64<span class="token punctuation">[</span><span class="token punctuation">]</span> data  <span class="token comment">// 这种可变数组就相当于vector</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><h3 id="发布者-talker"><a href="#发布者-talker" class="headerlink" title="发布者 talker"></a>发布者 talker</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    ros<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"talker"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 节点名</span>
-    ros<span class="token operator">::</span>NodeHandle n<span class="token punctuation">;</span>                  <span class="token comment">// 句柄</span>
-    ros<span class="token operator">::</span>Publisher pub <span class="token operator">=</span> n<span class="token punctuation">.</span>advertise<span class="token operator">&lt;</span>std_msgs<span class="token operator">::</span>Float64<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"chatting"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">// 往chatting话题上发消息，数据类型是std_msgs::Float64</span>
-    std_msgs<span class="token operator">::</span>Float64 input<span class="token punctuation">;</span>
-    input<span class="token punctuation">.</span>data <span class="token operator">=</span> <span class="token number">0.0</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>Rate <span class="token function">loop_rate</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 1s发一次</span>
-    <span class="token keyword">while</span><span class="token punctuation">(</span>ros<span class="token operator">::</span><span class="token function">ok</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
-        input<span class="token punctuation">.</span>data <span class="token operator">+=</span> <span class="token number">0.1</span><span class="token punctuation">;</span>
-        pub<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span>input<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        loop_rate<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
+#include &lt;std_msgs&#x2F;Float64MultiArray.h&gt;
+float64[] data  &#x2F;&#x2F; 这种可变数组就相当于vector<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><h3 id="发布者-talker"><a href="#发布者-talker" class="headerlink" title="发布者 talker"></a>发布者 talker</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int main(int argc, char** argv)
+&#123;
+    ros::init(argc, argv, &quot;talker&quot;);    &#x2F;&#x2F; 节点名
+    ros::NodeHandle n;                  &#x2F;&#x2F; 句柄
+    ros::Publisher pub &#x3D; n.advertise&lt;std_msgs::Float64&gt;(&quot;chatting&quot;, 10);
+    &#x2F;&#x2F; 往chatting话题上发消息，数据类型是std_msgs::Float64
+    std_msgs::Float64 input;
+    input.data &#x3D; 0.0;
+    ros::Rate loop_rate(1);     &#x2F;&#x2F; 1s发一次
+    while(ros::ok())
+    &#123;
+        input.data +&#x3D; 0.1;
+        pub.publish(input);
+        loop_rate.sleep();
+    &#125;
+&#125;
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>不同数据类型<code>std_msgs::Float64MultiArray</code></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    ros<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"talker"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>NodeHandle n<span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>Publisher pub <span class="token operator">=</span> n<span class="token punctuation">.</span>advertise<span class="token operator">&lt;</span>std_msgs<span class="token operator">::</span>Float64MultiArray<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"chatting"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>Rate <span class="token function">loop_rate</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">double</span> arr<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">14</span><span class="token punctuation">,</span> <span class="token number">15</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-    std<span class="token operator">::</span>vector<span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token operator">></span> <span class="token function">vi</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> arr<span class="token operator">+</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// float64就是double</span>
-    std_msgs<span class="token operator">::</span>Float64MultiArray input_float<span class="token punctuation">;</span>
-    input_float<span class="token punctuation">.</span>data <span class="token operator">=</span> vi<span class="token punctuation">;</span>
-    <span class="token keyword">while</span><span class="token punctuation">(</span>ros<span class="token operator">::</span><span class="token function">ok</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span><span class="token operator">&amp;</span> i <span class="token operator">:</span> input_float<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
-            std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> i <span class="token operator">&lt;&lt;</span> <span class="token string">" "</span><span class="token punctuation">;</span>
-        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
-        pub<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span>input_float<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        loop_rate<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="订阅者-listener"><a href="#订阅者-listener" class="headerlink" title="订阅者 listener"></a>订阅者 listener</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">chatting_cb</span><span class="token punctuation">(</span><span class="token keyword">const</span> std_msgs<span class="token operator">::</span>Float64<span class="token operator">::</span>ConstPtr<span class="token operator">&amp;</span> message<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"I receive the number: %f"</span><span class="token punctuation">,</span> message<span class="token operator">-></span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    ros<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"listener"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>NodeHandle n<span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>Subscribe sub <span class="token operator">=</span> n<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token string">"chatting"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> chatting_cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span><span class="token function">spin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 阻塞</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="CMakeLists-txt-1"><a href="#CMakeLists-txt-1" class="headerlink" title="CMakeLists.txt"></a>CMakeLists.txt</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">cmake_minimum_required</span><span class="token punctuation">(</span>VERSION <span class="token number">3.0</span><span class="token punctuation">.</span><span class="token number">2</span><span class="token punctuation">)</span>
-<span class="token function">project</span><span class="token punctuation">(</span>learning_communication<span class="token punctuation">)</span>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int main(int argc, char** argv)
+&#123;
+    ros::init(argc, argv, &quot;talker&quot;);
+    ros::NodeHandle n;
+    ros::Publisher pub &#x3D; n.advertise&lt;std_msgs::Float64MultiArray&gt;(&quot;chatting&quot;, 10);
+    ros::Rate loop_rate(1);
+    double arr[3] &#x3D; &#123;14, 15, 16&#125;;
+    std::vector&lt;double&gt; vi(arr, arr+3);     &#x2F;&#x2F; float64就是double
+    std_msgs::Float64MultiArray input_float;
+    input_float.data &#x3D; vi;
+    while(ros::ok())
+    &#123;
+        for (auto&amp; i : input_float.data)
+            std::cout &lt;&lt; i &lt;&lt; &quot; &quot;;
+        std::cout &lt;&lt; std::endl;
+        pub.publish(input_float);
+        loop_rate.sleep();
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="订阅者-listener"><a href="#订阅者-listener" class="headerlink" title="订阅者 listener"></a>订阅者 listener</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void chatting_cb(const std_msgs::Float64::ConstPtr&amp; message)
+&#123;
+    ROS_INFO(&quot;I receive the number: %f&quot;, message-&gt;data);
+&#125;
+int main(int argc, char** argv)
+&#123;
+    ros::init(argc, argv, &quot;listener&quot;);
+    ros::NodeHandle n;
+    ros::Subscribe sub &#x3D; n.subscribe(&quot;chatting&quot;, 1, chatting_cb);
+    ros::spin();    &#x2F;&#x2F; 阻塞
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="CMakeLists-txt-1"><a href="#CMakeLists-txt-1" class="headerlink" title="CMakeLists.txt"></a>CMakeLists.txt</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">cmake_minimum_required(VERSION 3.0.2)
+project(learning_communication)
 
-<span class="token function">find_package</span><span class="token punctuation">(</span>catkin REQUIRED COMPONENTS
+find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
-<span class="token punctuation">)</span>
+)
 
-<span class="token function">catkin_package</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+catkin_package()
 
-<span class="token function">include_directories</span><span class="token punctuation">(</span>
+include_directories(
   include
-  $<span class="token punctuation">&#123;</span>catkin_INCLUDE_DIRS<span class="token punctuation">&#125;</span>
-<span class="token punctuation">)</span>
+  $&#123;catkin_INCLUDE_DIRS&#125;
+)
 
-<span class="token function">add_executable</span><span class="token punctuation">(</span>talker src<span class="token operator">/</span>talker<span class="token punctuation">.</span>cpp<span class="token punctuation">)</span>
+add_executable(talker src&#x2F;talker.cpp)
 
-<span class="token function">target_link_libraries</span><span class="token punctuation">(</span>talker $<span class="token punctuation">&#123;</span>catkin_LIBRARIES<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+target_link_libraries(talker $&#123;catkin_LIBRARIES&#125;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><h3 id="发布者"><a href="#发布者" class="headerlink" title="发布者"></a>发布者</h3><pre class="line-numbers language-py" data-language="py"><code class="language-py">#! &#x2F;usr&#x2F;bin&#x2F;env python
 # -*- coding: utf-8 -*-
 
@@ -777,13 +777,13 @@ if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/26/ROS-ROS%E8%87%AA%E5%AE%9A%E4%B9%89srv/">
+                <a href="/2021/03/26/ROS-ROS%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="ROS自定义srv">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="ROS自定义类">
                         
-                        <span class="card-title">ROS自定义srv</span>
+                        <span class="card-title">ROS自定义类</span>
                     </div>
                 </a>
                 <div class="card-content article-content">

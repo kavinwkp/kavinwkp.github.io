@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -409,32 +409,32 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!-- toc -->
-<h2 id="rank-基本用法"><a href="#rank-基本用法" class="headerlink" title="rank()基本用法"></a><code>rank()</code>基本用法</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">JacobiSVD<span class="token operator">&lt;</span>MatrixXd<span class="token operator">></span> <span class="token function">svd</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">;</span>
-svd<span class="token punctuation">.</span><span class="token function">rank</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cstring></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Eigen/Dense"</span></span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> Eigen<span class="token punctuation">;</span>
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    MatrixXd <span class="token function">a</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    a <span class="token operator">&lt;&lt;</span> <span class="token number">1</span><span class="token punctuation">,</span>  <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span>
-         <span class="token number">3</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span>
-         <span class="token number">0</span><span class="token punctuation">,</span>  <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<h2 id="rank-基本用法"><a href="#rank-基本用法" class="headerlink" title="rank()基本用法"></a><code>rank()</code>基本用法</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">JacobiSVD&lt;MatrixXd&gt; svd(m);
+svd.rank()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &quot;Eigen&#x2F;Dense&quot;
+using namespace std;
+using namespace Eigen;
+int main()
+&#123;
+    MatrixXd a(3, 3);
+    a &lt;&lt; 1,  2, 0,
+         3, -1, 1,
+         0,  2, 0;
 
-    MatrixXd <span class="token function">b</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    b <span class="token operator">&lt;&lt;</span> <span class="token number">2</span><span class="token punctuation">,</span>
-        <span class="token number">1</span><span class="token punctuation">,</span>
-        <span class="token number">1</span><span class="token punctuation">;</span>
-    MatrixXd m <span class="token operator">=</span> <span class="token class-name">MatrixXd</span><span class="token operator">::</span><span class="token function">Zero</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    m<span class="token punctuation">.</span><span class="token function">col</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">=</span> b<span class="token punctuation">;</span>
-    m<span class="token punctuation">.</span><span class="token function">col</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">=</span> a <span class="token operator">*</span> b<span class="token punctuation">;</span>
-    m<span class="token punctuation">.</span><span class="token function">col</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">=</span> a <span class="token operator">*</span> a <span class="token operator">*</span> b<span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> m <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    JacobiSVD<span class="token operator">&lt;</span>MatrixXd<span class="token operator">></span> <span class="token function">svd</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> svd<span class="token punctuation">.</span><span class="token function">rank</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    MatrixXd b(3, 1);
+    b &lt;&lt; 2,
+        1,
+        1;
+    MatrixXd m &#x3D; MatrixXd::Zero(3, 3);
+    m.col(0) &#x3D; b;
+    m.col(1) &#x3D; a * b;
+    m.col(2) &#x3D; a * a * b;
+    cout &lt;&lt; m &lt;&lt; endl;
+    JacobiSVD&lt;MatrixXd&gt; svd(m);
+    cout &lt;&lt; svd.rank() &lt;&lt; endl;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

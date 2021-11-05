@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -419,41 +419,41 @@
             <div id="articleContent">
                 <h2 id="LeetCode-4-Median-of-Two-Sorted-Arrays"><a href="#LeetCode-4-Median-of-Two-Sorted-Arrays" class="headerlink" title="LeetCode 4. Median of Two Sorted Arrays"></a>LeetCode 4. Median of Two Sorted Arrays</h2><p>Given two <strong>sorted</strong> arrays <code>nums1</code> and <code>nums2</code> of size m and n respectively, return the <strong>median</strong> of the two sorted arrays.</p>
 <p>The overall run time complexity should be $O(log (m+n))$.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> nums1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> nums2 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>
-Output<span class="token operator">:</span> <span class="token number">2.00000</span>
-Explanation<span class="token operator">:</span> merged array <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">and</span> median is <span class="token number">2.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><br>Example 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> nums1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> nums2 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">]</span>
-Output<span class="token operator">:</span> <span class="token number">2.50000</span>
-Explanation<span class="token operator">:</span> merged array <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">and</span> median <span class="token function">is</span> <span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">+</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span> <span class="token operator">=</span> <span class="token number">2.5</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: nums1 &#x3D; [1,3], nums2 &#x3D; [2]
+Output: 2.00000
+Explanation: merged array &#x3D; [1,2,3] and median is 2.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><br>Example 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: nums1 &#x3D; [1,2], nums2 &#x3D; [3,4]
+Output: 2.50000
+Explanation: merged array &#x3D; [1,2,3,4] and median is (2 + 3) &#x2F; 2 &#x3D; 2.5.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
 <h2 id="method-二分法"><a href="#method-二分法" class="headerlink" title="method: 二分法"></a>method: 二分法</h2><p>二分法只要出现<code>l = mid</code>，不管是在<code>if</code>分支还是在<code>else</code>分支，<code>mid</code>的计算都要用<code>(l+r+1)/2</code></p>
 <p>让<code>nums1</code>是短的那条，以防计算<code>nums[j]</code>的时候越界</p>
 <p>知道了两个数组的大小，也就知道了合并后数组的中位数的位置，这里将偶数情况和奇数情况统一起来，都用<code>(m + n + 1) / 2</code>，让奇数情况的前半部分比后半部分多一个元素</p>
 <p>问题转化为在<code>nums1</code>中寻找合适的分割点，使得两个数组分割点左侧的元素都小于分割点右侧的元素</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">double</span> <span class="token function">findMedianSortedArrays</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums1<span class="token punctuation">,</span> vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>nums1<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> nums2<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token function">swap</span><span class="token punctuation">(</span>nums1<span class="token punctuation">,</span> nums2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">double findMedianSortedArrays(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) &#123;
+    if (nums1.size() &gt; nums2.size()) swap(nums1, nums2);
 
-    <span class="token keyword">int</span> m <span class="token operator">=</span> nums1<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> n <span class="token operator">=</span> nums2<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> totalLeft <span class="token operator">=</span> <span class="token punctuation">(</span>m <span class="token operator">+</span> n <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> l <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> r <span class="token operator">=</span> m<span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>l <span class="token operator">&lt;</span> r<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">int</span> i <span class="token operator">=</span> l <span class="token operator">+</span> r <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">>></span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">// nums1分割点</span>
-        <span class="token keyword">int</span> j <span class="token operator">=</span> totalLeft <span class="token operator">-</span> i<span class="token punctuation">;</span>  <span class="token comment">// nums2分割点</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>nums1<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">&lt;=</span> nums2<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> l <span class="token operator">=</span> i<span class="token punctuation">;</span>    <span class="token comment">// 满足条件l右移</span>
-        <span class="token keyword">else</span> r <span class="token operator">=</span> i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>     <span class="token comment">// 不满足条件r左移</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">int</span> i <span class="token operator">=</span> l<span class="token punctuation">;</span>
-    <span class="token keyword">int</span> j <span class="token operator">=</span> totalLeft <span class="token operator">-</span> i<span class="token punctuation">;</span>
-    <span class="token comment">// 四种极端情况</span>
-    <span class="token keyword">int</span> nums1Left <span class="token operator">=</span> <span class="token punctuation">(</span>i <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">?</span> INT_MIN <span class="token operator">:</span> nums1<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> nums1Right <span class="token operator">=</span> <span class="token punctuation">(</span>i <span class="token operator">==</span> m<span class="token punctuation">)</span> <span class="token operator">?</span> INT_MAX <span class="token operator">:</span> nums1<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> nums2Left <span class="token operator">=</span> <span class="token punctuation">(</span>j <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">?</span> INT_MIN <span class="token operator">:</span> nums2<span class="token punctuation">[</span>j <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> nums2Right <span class="token operator">=</span> <span class="token punctuation">(</span>j <span class="token operator">==</span> n<span class="token punctuation">)</span> <span class="token operator">?</span> INT_MAX <span class="token operator">:</span> nums2<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>m <span class="token operator">+</span> n<span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>  <span class="token comment">// 合并后是奇数</span>
-        <span class="token keyword">return</span> <span class="token function">max</span><span class="token punctuation">(</span>nums1Left<span class="token punctuation">,</span> nums2Left<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>  <span class="token comment">// 合并后是偶数</span>
-        <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token function">max</span><span class="token punctuation">(</span>nums1Left<span class="token punctuation">,</span> nums2Left<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">min</span><span class="token punctuation">(</span>nums1Right<span class="token punctuation">,</span> nums2Right<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2.0</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    int m &#x3D; nums1.size(), n &#x3D; nums2.size();
+    int totalLeft &#x3D; (m + n + 1) &#x2F; 2;
+    int l &#x3D; 0, r &#x3D; m;
+    while (l &lt; r) &#123;
+        int i &#x3D; l + r + 1 &gt;&gt; 1; &#x2F;&#x2F; nums1分割点
+        int j &#x3D; totalLeft - i;  &#x2F;&#x2F; nums2分割点
+        if (nums1[i - 1] &lt;&#x3D; nums2[j]) l &#x3D; i;    &#x2F;&#x2F; 满足条件l右移
+        else r &#x3D; i - 1;     &#x2F;&#x2F; 不满足条件r左移
+    &#125;
+    int i &#x3D; l;
+    int j &#x3D; totalLeft - i;
+    &#x2F;&#x2F; 四种极端情况
+    int nums1Left &#x3D; (i &#x3D;&#x3D; 0) ? INT_MIN : nums1[i - 1];
+    int nums1Right &#x3D; (i &#x3D;&#x3D; m) ? INT_MAX : nums1[i];
+    int nums2Left &#x3D; (j &#x3D;&#x3D; 0) ? INT_MIN : nums2[j - 1];
+    int nums2Right &#x3D; (j &#x3D;&#x3D; n) ? INT_MAX : nums2[j];
+    if ((m + n) % 2) &#123;  &#x2F;&#x2F; 合并后是奇数
+        return max(nums1Left, nums2Left);
+    &#125;
+    else &#123;  &#x2F;&#x2F; 合并后是偶数
+        return (max(nums1Left, nums2Left) + min(nums1Right, nums2Right)) &#x2F; 2.0;
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

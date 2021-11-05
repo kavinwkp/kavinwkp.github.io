@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -408,22 +408,22 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="ROS初始化"><a href="#ROS初始化" class="headerlink" title="ROS初始化"></a>ROS初始化</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">vim</span> /etc/hosts
-<span class="token number">185.199</span>.108.133 raw.githubusercontent.com<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">vim</span> /usr/lib/python2.7/dist-packages/rosdep2/sources_list.py
-<span class="token assign-left variable">url</span><span class="token operator">=</span><span class="token string">"https://ghproxy.com/"</span>+url<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+                <h2 id="ROS初始化"><a href="#ROS初始化" class="headerlink" title="ROS初始化"></a>ROS初始化</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">sudo vim &#x2F;etc&#x2F;hosts
+185.199.108.133 raw.githubusercontent.com<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">sudo vim &#x2F;usr&#x2F;lib&#x2F;python2.7&#x2F;dist-packages&#x2F;rosdep2&#x2F;sources_list.py
+url&#x3D;&quot;https:&#x2F;&#x2F;ghproxy.com&#x2F;&quot;+url<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p><img src="/2021/07/16/ROS-VSCode%E8%BF%90%E8%A1%8CROS/1.png" alt></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">vim</span> /usr/lib/python2.7/dist-packages/rosdistro/__init__.py
-DEFAULT_INDEX_URL <span class="token operator">=</span> <span class="token string">'https://ghproxy.com/https://raw.githubusercontent.com/ros/rosdistro/master/index-v4.yaml'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">sudo vim &#x2F;usr&#x2F;lib&#x2F;python2.7&#x2F;dist-packages&#x2F;rosdistro&#x2F;__init__.py
+DEFAULT_INDEX_URL &#x3D; &#39;https:&#x2F;&#x2F;ghproxy.com&#x2F;https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;ros&#x2F;rosdistro&#x2F;master&#x2F;index-v4.yaml&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p><img src="/2021/07/16/ROS-VSCode%E8%BF%90%E8%A1%8CROS/2.png" alt></p>
 <h2 id="VS-Code-for-ROS"><a href="#VS-Code-for-ROS" class="headerlink" title="VS Code for ROS"></a>VS Code for ROS</h2><p>新建工作空间和功能包</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> -p ~/catkin_ws/src
-<span class="token builtin class-name">cd</span> ~/catkin_ws/src
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">mkdir -p ~&#x2F;catkin_ws&#x2F;src
+cd ~&#x2F;catkin_ws&#x2F;src
 catkin_init_workspace
-<span class="token builtin class-name">cd</span> <span class="token punctuation">..</span>
+cd ..
 catkin_make
-<span class="token builtin class-name">cd</span> src
-catkin_create_pkg <span class="token operator">&lt;</span>功能包名称<span class="token operator">></span> std_msgs rospy roscpp<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+cd src
+catkin_create_pkg &lt;功能包名称&gt; std_msgs rospy roscpp<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="添加json文件"><a href="#添加json文件" class="headerlink" title="添加json文件"></a>添加json文件</h3><p>添加<code>c_cpp_properties.json</code>，找到<code>ROS</code>头文件目录</p>
 <pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token punctuation">&#123;</span>
   <span class="token string">"configurations"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
@@ -455,18 +455,18 @@ catkin_create_pkg <span class="token operator">&lt;</span>功能包名称<span c
         <span class="token string">"iostream"</span><span class="token operator">:</span> <span class="token string">"cpp"</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
-<h2 id="编译cv-bridge"><a href="#编译cv-bridge" class="headerlink" title="编译cv_bridge"></a>编译cv_bridge</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> python-catkin-tools python3-dev python3-catkin-pkg-modules python3-numpy python3-yaml ros-melodic-cv-bridge
-<span class="token function">mkdir</span> -p catkin_ws/src
-<span class="token builtin class-name">cd</span> catkin_ws
-catkin config -DPYTHON_EXECUTABLE<span class="token operator">=</span>/usr/bin/python3 -DPYTHON_INCLUDE_DIR<span class="token operator">=</span>/usr/include/python3.6m -DPYTHON_LIBRARY<span class="token operator">=</span>/usr/lib/x86_64-linux-gnu/libpython3.6m.so
-<span class="token function">git</span> clone https://github.com/ros-perception/vision_opencv.git src/vision_opencv
-<span class="token function">apt-cache</span> show ros-melodic-cv-bridge <span class="token operator">|</span> <span class="token function">grep</span> Version
-<span class="token builtin class-name">cd</span> src/vision_opencv/
-<span class="token function">git</span> checkout <span class="token number">1.13</span>.0
-<span class="token builtin class-name">cd</span> <span class="token punctuation">..</span>/<span class="token punctuation">..</span>/
+<h2 id="编译cv-bridge"><a href="#编译cv-bridge" class="headerlink" title="编译cv_bridge"></a>编译cv_bridge</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">sudo apt-get install python-catkin-tools python3-dev python3-catkin-pkg-modules python3-numpy python3-yaml ros-melodic-cv-bridge
+mkdir -p catkin_ws&#x2F;src
+cd catkin_ws
+catkin config -DPYTHON_EXECUTABLE&#x3D;&#x2F;usr&#x2F;bin&#x2F;python3 -DPYTHON_INCLUDE_DIR&#x3D;&#x2F;usr&#x2F;include&#x2F;python3.6m -DPYTHON_LIBRARY&#x3D;&#x2F;usr&#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libpython3.6m.so
+git clone https:&#x2F;&#x2F;github.com&#x2F;ros-perception&#x2F;vision_opencv.git src&#x2F;vision_opencv
+apt-cache show ros-melodic-cv-bridge | grep Version
+cd src&#x2F;vision_opencv&#x2F;
+git checkout 1.13.0
+cd ..&#x2F;..&#x2F;
 catkin build 或者 catkin build cv_bridge
-<span class="token builtin class-name">source</span> ~/catkin_ws/devel/setup.zsh --extend 
-<span class="token comment"># --extend 参数的作用是让这次的路径配置不影响之前配置好的路径，否则这一次source会覆盖掉之前配置的路径。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+source ~&#x2F;catkin_ws&#x2F;devel&#x2F;setup.zsh --extend 
+# --extend 参数的作用是让这次的路径配置不影响之前配置好的路径，否则这一次source会覆盖掉之前配置的路径。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

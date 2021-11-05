@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -422,31 +422,31 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="剑指-Offer-48-最长不含重复字符的子字符串"><a href="#剑指-Offer-48-最长不含重复字符的子字符串" class="headerlink" title="剑指 Offer 48. 最长不含重复字符的子字符串"></a>剑指 Offer 48. 最长不含重复字符的子字符串</h2><p>请从字符串中找出一个最长的不包含重复字符的子字符串，计算该最长子字符串的长度。</p>
-<p>示例 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入<span class="token operator">:</span> <span class="token string">"abcabcbb"</span>
-输出<span class="token operator">:</span> <span class="token number">3</span> 
-解释<span class="token operator">:</span> 因为无重复字符的最长子串是 <span class="token string">"abc"</span>，所以其长度为 <span class="token number">3</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
+<p>示例 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入: &quot;abcabcbb&quot;
+输出: 3 
+解释: 因为无重复字符的最长子串是 &quot;abc&quot;，所以其长度为 3。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
 <h2 id="method-双指针"><a href="#method-双指针" class="headerlink" title="method: 双指针"></a>method: 双指针</h2><p>用<code>[l, r)</code>维护一个不含重复元素的子串<br>利用<code>set</code>集合不含重复元素的特性<br>如果<code>r</code>所指的元素集合中已经存在，就把<code>l</code>所指的元素删除掉，再看<code>r</code>所指元素是否在集合中</p>
 <center>
 <img src="/2021/05/20/%E5%89%91%E6%8C%87Offer-48-%E6%9C%80%E9%95%BF%E4%B8%8D%E5%90%AB%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2/222.png#pic_center" width="100%" height="100%">
 </center>
 
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">lengthOfLongestSubstring</span><span class="token punctuation">(</span>string s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    set<span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token operator">></span> st<span class="token punctuation">;</span>
-    <span class="token keyword">unsigned</span> l <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> r <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">unsigned</span> res <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>r <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> l <span class="token operator">&lt;=</span> r<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>st<span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">==</span> st<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>    <span class="token comment">// 如果r所指元素不在集合中</span>
-            st<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            r<span class="token operator">++</span><span class="token punctuation">;</span>
-            res <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>res<span class="token punctuation">,</span> r <span class="token operator">-</span> l<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">// 串长度为(r-1)-l+1=r-l</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
-            st<span class="token punctuation">.</span><span class="token function">erase</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 删掉l所指的元素</span>
-            l<span class="token operator">++</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int lengthOfLongestSubstring(string s) &#123;
+    set&lt;char&gt; st;
+    unsigned l &#x3D; 0, r &#x3D; 0;
+    unsigned res &#x3D; 0;
+    while (r &lt; s.size() &amp;&amp; l &lt;&#x3D; r) &#123;
+        if (st.find(s[r]) &#x3D;&#x3D; st.end()) &#123;    &#x2F;&#x2F; 如果r所指元素不在集合中
+            st.insert(s[r]);
+            r++;
+            res &#x3D; max(res, r - l);      &#x2F;&#x2F; 串长度为(r-1)-l+1&#x3D;r-l
+        &#125;
+        else &#123;
+            st.erase(s[l]);     &#x2F;&#x2F; 删掉l所指的元素
+            l++;
+        &#125;
+    &#125;
+    return res;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

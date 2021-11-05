@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -422,11 +422,11 @@
 <p><img src="/2021/09/06/LeetCode-700-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%9A%84%E6%90%9C%E7%B4%A2/700.jpg" alt><br><pre class="line-numbers language-cp" data-language="cp"><code class="language-cp">Input: root &#x3D; [4,2,7,1,3], val &#x3D; 2
 Output: [2,1,3]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h2 id="method-递归"><a href="#method-递归" class="headerlink" title="method: 递归"></a>method: 递归</h2><p>递归结束条件：如果节点为空，说明没找到，返回空节点；如果等于<code>val</code>，说明找到，也返回当前节点<br>单层逻辑：当前节点值比<code>val</code>大，往左子树找，比<code>val</code>小，往右子树找</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode<span class="token operator">*</span> <span class="token function">searchBST</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">,</span> <span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root <span class="token operator">||</span> root<span class="token operator">-></span>val <span class="token operator">==</span> val<span class="token punctuation">)</span> <span class="token keyword">return</span> root<span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span>val <span class="token operator">></span> val<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">searchBST</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">,</span> val<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">else</span> <span class="token keyword">return</span> <span class="token function">searchBST</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">,</span> val<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* searchBST(TreeNode* root, int val) &#123;
+    if (!root || root-&gt;val &#x3D;&#x3D; val) return root;
+    if (root-&gt;val &gt; val) return searchBST(root-&gt;left, val);
+    else return searchBST(root-&gt;right, val);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

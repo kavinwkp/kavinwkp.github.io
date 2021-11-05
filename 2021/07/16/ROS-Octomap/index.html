@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -410,135 +410,135 @@
             <div id="articleContent">
                 <h2 id="Octomap"><a href="#Octomap" class="headerlink" title="Octomap"></a>Octomap</h2><p>可以将点云数据转换为栅格数据<code>(OccupancyGrid)</code></p>
 <h2 id="源文件"><a href="#源文件" class="headerlink" title="源文件"></a>源文件</h2><p>加载点云数据并发布话题<code>/pointcloud/output</code></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sstream></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;vector></span></span>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;sstream&gt;
+#include &lt;vector&gt;
 
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pcl/point_cloud.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pcl_conversions/pcl_conversions.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sensor_msgs/PointCloud2.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pcl/io/pcd_io.h></span></span>
+#include &lt;ros&#x2F;ros.h&gt;
+#include &lt;pcl&#x2F;point_cloud.h&gt;
+#include &lt;pcl_conversions&#x2F;pcl_conversions.h&gt;
+#include &lt;sensor_msgs&#x2F;PointCloud2.h&gt;
+#include &lt;pcl&#x2F;io&#x2F;pcd_io.h&gt;
 
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+using namespace std;
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    std<span class="token operator">::</span>string topic<span class="token punctuation">,</span> path<span class="token punctuation">,</span> frame_id<span class="token punctuation">;</span>
-    <span class="token keyword">int</span> hz <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+int main(int argc, char **argv)
+&#123;
+    std::string topic, path, frame_id;
+    int hz &#x3D; 5;
 
-    ros<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"publish_pointcloud"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>NodeHandle nh<span class="token punctuation">;</span>
+    ros::init(argc, argv, &quot;publish_pointcloud&quot;);
+    ros::NodeHandle nh;
 
-    nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span>std<span class="token operator">::</span>string<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"path"</span><span class="token punctuation">,</span> path<span class="token punctuation">,</span> <span class="token string">"/home/kavin/ROSProjects/ros_learning/catkin_ws_cv/src/publish_pointcloud/data/test2.pcd"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span>std<span class="token operator">::</span>string<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"frame_id"</span><span class="token punctuation">,</span> frame_id<span class="token punctuation">,</span> <span class="token string">"camera"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span>std<span class="token operator">::</span>string<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"topic"</span><span class="token punctuation">,</span> topic<span class="token punctuation">,</span> <span class="token string">"/pointcloud/output"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"hz"</span><span class="token punctuation">,</span> hz<span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    nh.param&lt;std::string&gt;(&quot;path&quot;, path, &quot;&#x2F;home&#x2F;kavin&#x2F;ROSProjects&#x2F;ros_learning&#x2F;catkin_ws_cv&#x2F;src&#x2F;publish_pointcloud&#x2F;data&#x2F;test2.pcd&quot;);
+    nh.param&lt;std::string&gt;(&quot;frame_id&quot;, frame_id, &quot;camera&quot;);
+    nh.param&lt;std::string&gt;(&quot;topic&quot;, topic, &quot;&#x2F;pointcloud&#x2F;output&quot;);
+    nh.param&lt;int&gt;(&quot;hz&quot;, hz, 5);
 
-    ros<span class="token operator">::</span>Publisher pcl_pub <span class="token operator">=</span> nh<span class="token punctuation">.</span>advertise<span class="token operator">&lt;</span>sensor_msgs<span class="token operator">::</span>PointCloud2<span class="token operator">></span><span class="token punctuation">(</span>topic<span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ros::Publisher pcl_pub &#x3D; nh.advertise&lt;sensor_msgs::PointCloud2&gt;(topic, 10);
 
-    pcl<span class="token operator">::</span>PointCloud<span class="token operator">&lt;</span>pcl<span class="token operator">::</span>PointXYZ<span class="token operator">></span> cloud<span class="token punctuation">;</span>
-    sensor_msgs<span class="token operator">::</span>PointCloud2 output<span class="token punctuation">;</span>
-    pcl<span class="token operator">::</span>io<span class="token operator">::</span><span class="token function">loadPCDFile</span><span class="token punctuation">(</span>path<span class="token punctuation">,</span> cloud<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    pcl<span class="token operator">::</span><span class="token function">toROSMsg</span><span class="token punctuation">(</span>cloud<span class="token punctuation">,</span> output<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 转换成ROS下的数据类型, 最终通过topic发布</span>
+    pcl::PointCloud&lt;pcl::PointXYZ&gt; cloud;
+    sensor_msgs::PointCloud2 output;
+    pcl::io::loadPCDFile(path, cloud);
+    pcl::toROSMsg(cloud, output); &#x2F;&#x2F; 转换成ROS下的数据类型, 最终通过topic发布
 
-    output<span class="token punctuation">.</span>header<span class="token punctuation">.</span>stamp <span class="token operator">=</span> ros<span class="token operator">::</span><span class="token class-name">Time</span><span class="token operator">::</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    output<span class="token punctuation">.</span>header<span class="token punctuation">.</span>frame_id <span class="token operator">=</span> frame_id<span class="token punctuation">;</span>
+    output.header.stamp &#x3D; ros::Time::now();
+    output.header.frame_id &#x3D; frame_id;
 
-    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"path = "</span> <span class="token operator">&lt;&lt;</span> path <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"frame_id = "</span> <span class="token operator">&lt;&lt;</span> frame_id <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"topic = "</span> <span class="token operator">&lt;&lt;</span> topic <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"hz = "</span> <span class="token operator">&lt;&lt;</span> hz <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    cout &lt;&lt; &quot;path &#x3D; &quot; &lt;&lt; path &lt;&lt; endl;
+    cout &lt;&lt; &quot;frame_id &#x3D; &quot; &lt;&lt; frame_id &lt;&lt; endl;
+    cout &lt;&lt; &quot;topic &#x3D; &quot; &lt;&lt; topic &lt;&lt; endl;
+    cout &lt;&lt; &quot;hz &#x3D; &quot; &lt;&lt; hz &lt;&lt; endl;
 
-    ros<span class="token operator">::</span>Rate <span class="token function">loop_rate</span><span class="token punctuation">(</span>hz<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>ros<span class="token operator">::</span><span class="token function">ok</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
-        pcl_pub<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span>output<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        ros<span class="token operator">::</span><span class="token function">spinOnce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        loop_rate<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="launch文件"><a href="#launch文件" class="headerlink" title="launch文件"></a>launch文件</h2><h3 id="启动octomap-server节点"><a href="#启动octomap-server节点" class="headerlink" title="启动octomap_server节点"></a>启动octomap_server节点</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token operator">&lt;</span>launch<span class="token operator">></span>
-  <span class="token operator">&lt;</span>node pkg<span class="token operator">=</span><span class="token string">"octomap_server"</span> type<span class="token operator">=</span><span class="token string">"octomap_server_node"</span> name<span class="token operator">=</span><span class="token string">"octomap_server"</span><span class="token operator">></span>
+    ros::Rate loop_rate(hz);
+    while (ros::ok())
+    &#123;
+        pcl_pub.publish(output);
+        ros::spinOnce();
+        loop_rate.sleep();
+    &#125;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="launch文件"><a href="#launch文件" class="headerlink" title="launch文件"></a>launch文件</h2><h3 id="启动octomap-server节点"><a href="#启动octomap-server节点" class="headerlink" title="启动octomap_server节点"></a>启动octomap_server节点</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&lt;launch&gt;
+  &lt;node pkg&#x3D;&quot;octomap_server&quot; type&#x3D;&quot;octomap_server_node&quot; name&#x3D;&quot;octomap_server&quot;&gt;
 
-    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> resolution in meters per pixel <span class="token operator">--</span><span class="token operator">></span>
-    <span class="token operator">&lt;</span>param name<span class="token operator">=</span><span class="token string">"resolution"</span> value<span class="token operator">=</span><span class="token string">"0.05"</span> <span class="token operator">/</span><span class="token operator">></span>
+    &lt;!-- resolution in meters per pixel --&gt;
+    &lt;param name&#x3D;&quot;resolution&quot; value&#x3D;&quot;0.05&quot; &#x2F;&gt;
 
-    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> name of the fixed frame<span class="token punctuation">,</span> needs to be <span class="token string">"/map"</span> <span class="token keyword">for</span> SLAM <span class="token operator">--</span><span class="token operator">></span>
-    <span class="token operator">&lt;</span>param name<span class="token operator">=</span><span class="token string">"frame_id"</span> type<span class="token operator">=</span><span class="token string">"string"</span> value<span class="token operator">=</span><span class="token string">"/camera"</span> <span class="token operator">/</span><span class="token operator">></span>
+    &lt;!-- name of the fixed frame, needs to be &quot;&#x2F;map&quot; for SLAM --&gt;
+    &lt;param name&#x3D;&quot;frame_id&quot; type&#x3D;&quot;string&quot; value&#x3D;&quot;&#x2F;camera&quot; &#x2F;&gt;
 
-    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> max range <span class="token operator">/</span> depth resolution of the kinect in meter <span class="token operator">--</span><span class="token operator">></span>
-    <span class="token operator">&lt;</span>param name<span class="token operator">=</span><span class="token string">"sensor_model/max_range"</span> value<span class="token operator">=</span><span class="token string">"100.0"</span> <span class="token operator">/</span><span class="token operator">></span>
-    <span class="token operator">&lt;</span>param name<span class="token operator">=</span><span class="token string">"latch"</span> value<span class="token operator">=</span><span class="token string">"true"</span> <span class="token operator">/</span><span class="token operator">></span>
+    &lt;!-- max range &#x2F; depth resolution of the kinect in meter --&gt;
+    &lt;param name&#x3D;&quot;sensor_model&#x2F;max_range&quot; value&#x3D;&quot;100.0&quot; &#x2F;&gt;
+    &lt;param name&#x3D;&quot;latch&quot; value&#x3D;&quot;true&quot; &#x2F;&gt;
 
-    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> max<span class="token operator">/</span>min height <span class="token keyword">for</span> occupancy map<span class="token punctuation">,</span> should be in meters <span class="token operator">--</span><span class="token operator">></span>
-    <span class="token operator">&lt;</span>param name<span class="token operator">=</span><span class="token string">"pointcloud_max_z"</span> value<span class="token operator">=</span><span class="token string">"1000"</span> <span class="token operator">/</span><span class="token operator">></span>
-    <span class="token operator">&lt;</span>param name<span class="token operator">=</span><span class="token string">"pointcloud_min_z"</span> value<span class="token operator">=</span><span class="token string">"0"</span> <span class="token operator">/</span><span class="token operator">></span>
+    &lt;!-- max&#x2F;min height for occupancy map, should be in meters --&gt;
+    &lt;param name&#x3D;&quot;pointcloud_max_z&quot; value&#x3D;&quot;1000&quot; &#x2F;&gt;
+    &lt;param name&#x3D;&quot;pointcloud_min_z&quot; value&#x3D;&quot;0&quot; &#x2F;&gt;
 
-    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> topic from where pointcloud2 messages are subscribed <span class="token operator">--</span><span class="token operator">></span>
-    <span class="token operator">&lt;</span>remap from<span class="token operator">=</span><span class="token string">"/cloud_in"</span> to<span class="token operator">=</span><span class="token string">"/pointcloud/output"</span> <span class="token operator">/</span><span class="token operator">></span>
+    &lt;!-- topic from where pointcloud2 messages are subscribed --&gt;
+    &lt;remap from&#x3D;&quot;&#x2F;cloud_in&quot; to&#x3D;&quot;&#x2F;pointcloud&#x2F;output&quot; &#x2F;&gt;
  
-  <span class="token operator">&lt;</span><span class="token operator">/</span>node<span class="token operator">></span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>launch<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="启动点云发布节点"><a href="#启动点云发布节点" class="headerlink" title="启动点云发布节点"></a>启动点云发布节点</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token operator">&lt;</span><span class="token operator">?</span>xml version<span class="token operator">=</span><span class="token string">"1.0"</span> encoding<span class="token operator">=</span><span class="token string">"UTF-8"</span><span class="token operator">?</span><span class="token operator">></span>
-<span class="token operator">&lt;</span>launch<span class="token operator">></span>
+  &lt;&#x2F;node&gt;
+&lt;&#x2F;launch&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="启动点云发布节点"><a href="#启动点云发布节点" class="headerlink" title="启动点云发布节点"></a>启动点云发布节点</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;
+&lt;launch&gt;
  
-  <span class="token operator">&lt;</span>node name<span class="token operator">=</span><span class="token string">"publish_pointcloud"</span> pkg<span class="token operator">=</span><span class="token string">"publish_pointcloud"</span> type<span class="token operator">=</span><span class="token string">"publish_pointcloud"</span><span class="token operator">></span>
-    <span class="token operator">&lt;</span>param name<span class="token operator">=</span><span class="token string">"path"</span> value<span class="token operator">=</span><span class="token string">"$(find publish_pointcloud)/data/test.pcd"</span> type<span class="token operator">=</span><span class="token string">"str"</span> <span class="token operator">/</span><span class="token operator">></span>
-    <span class="token operator">&lt;</span>param name<span class="token operator">=</span><span class="token string">"frame_id"</span> value<span class="token operator">=</span><span class="token string">"camera"</span> type<span class="token operator">=</span><span class="token string">"str"</span> <span class="token operator">/</span><span class="token operator">></span>
-    <span class="token operator">&lt;</span>param name<span class="token operator">=</span><span class="token string">"topic"</span> value<span class="token operator">=</span><span class="token string">"/pointcloud/output"</span> type<span class="token operator">=</span><span class="token string">"str"</span> <span class="token operator">/</span><span class="token operator">></span>
-    <span class="token operator">&lt;</span>param name<span class="token operator">=</span><span class="token string">"hz"</span> value<span class="token operator">=</span><span class="token string">"2"</span> type<span class="token operator">=</span><span class="token string">"int"</span> <span class="token operator">/</span><span class="token operator">></span>
-  <span class="token operator">&lt;</span><span class="token operator">/</span>node<span class="token operator">></span>
+  &lt;node name&#x3D;&quot;publish_pointcloud&quot; pkg&#x3D;&quot;publish_pointcloud&quot; type&#x3D;&quot;publish_pointcloud&quot;&gt;
+    &lt;param name&#x3D;&quot;path&quot; value&#x3D;&quot;$(find publish_pointcloud)&#x2F;data&#x2F;test.pcd&quot; type&#x3D;&quot;str&quot; &#x2F;&gt;
+    &lt;param name&#x3D;&quot;frame_id&quot; value&#x3D;&quot;camera&quot; type&#x3D;&quot;str&quot; &#x2F;&gt;
+    &lt;param name&#x3D;&quot;topic&quot; value&#x3D;&quot;&#x2F;pointcloud&#x2F;output&quot; type&#x3D;&quot;str&quot; &#x2F;&gt;
+    &lt;param name&#x3D;&quot;hz&quot; value&#x3D;&quot;2&quot; type&#x3D;&quot;int&quot; &#x2F;&gt;
+  &lt;&#x2F;node&gt;
 
-  <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> Load ocotmap launch <span class="token operator">--</span><span class="token operator">></span>
-  <span class="token operator">&lt;</span>include file<span class="token operator">=</span><span class="token string">"$(find publish_pointcloud)/launch/octomaptransform.launch"</span> <span class="token operator">/</span><span class="token operator">></span>
+  &lt;!-- Load ocotmap launch --&gt;
+  &lt;include file&#x3D;&quot;$(find publish_pointcloud)&#x2F;launch&#x2F;octomaptransform.launch&quot; &#x2F;&gt;
 
-  <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> RViz <span class="token operator">--</span><span class="token operator">></span>
-  <span class="token operator">&lt;</span>node pkg<span class="token operator">=</span><span class="token string">"rviz"</span> type<span class="token operator">=</span><span class="token string">"rviz"</span> name<span class="token operator">=</span><span class="token string">"$(anon rviz)"</span> respawn<span class="token operator">=</span><span class="token string">"false"</span> output<span class="token operator">=</span><span class="token string">"screen"</span> args<span class="token operator">=</span><span class="token string">"-d $(find publish_pointcloud)/rviz/OctomapShow.rviz"</span><span class="token operator">/</span><span class="token operator">></span>
+  &lt;!-- RViz --&gt;
+  &lt;node pkg&#x3D;&quot;rviz&quot; type&#x3D;&quot;rviz&quot; name&#x3D;&quot;$(anon rviz)&quot; respawn&#x3D;&quot;false&quot; output&#x3D;&quot;screen&quot; args&#x3D;&quot;-d $(find publish_pointcloud)&#x2F;rviz&#x2F;OctomapShow.rviz&quot;&#x2F;&gt;
 
-<span class="token operator">&lt;</span><span class="token operator">/</span>launch<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="CMakeLists-txt"><a href="#CMakeLists-txt" class="headerlink" title="CMakeLists.txt"></a>CMakeLists.txt</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">cmake_minimum_required</span><span class="token punctuation">(</span>VERSION <span class="token number">2.8</span><span class="token punctuation">.</span><span class="token number">3</span><span class="token punctuation">)</span>
-<span class="token function">project</span><span class="token punctuation">(</span>publish_pointcloud<span class="token punctuation">)</span>
+&lt;&#x2F;launch&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="CMakeLists-txt"><a href="#CMakeLists-txt" class="headerlink" title="CMakeLists.txt"></a>CMakeLists.txt</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">cmake_minimum_required(VERSION 2.8.3)
+project(publish_pointcloud)
 
-<span class="token function">find_package</span><span class="token punctuation">(</span>catkin REQUIRED COMPONENTS
+find_package(catkin REQUIRED COMPONENTS
     roscpp
     rospy
     std_msgs
     rostime 
     sensor_msgs 
     message_filters 
-<span class="token punctuation">)</span>
+)
 
-<span class="token function">set</span><span class="token punctuation">(</span>OpenCV_DIR <span class="token string">"~/Library/opencv-3.3.1/build"</span><span class="token punctuation">)</span>
-<span class="token function">find_package</span><span class="token punctuation">(</span>OpenCV REQUIRED<span class="token punctuation">)</span>
-<span class="token function">find_package</span><span class="token punctuation">(</span>OpenMP<span class="token punctuation">)</span>
-<span class="token function">find_package</span><span class="token punctuation">(</span>PCL REQUIRED<span class="token punctuation">)</span>
+set(OpenCV_DIR &quot;~&#x2F;Library&#x2F;opencv-3.3.1&#x2F;build&quot;)
+find_package(OpenCV REQUIRED)
+find_package(OpenMP)
+find_package(PCL REQUIRED)
 
-<span class="token function">catkin_package</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+catkin_package()
 
-<span class="token function">include_directories</span><span class="token punctuation">(</span>
-    $<span class="token punctuation">&#123;</span>catkin_INCLUDE_DIRS<span class="token punctuation">&#125;</span>
-    $<span class="token punctuation">&#123;</span>OpenCV_INCLUDE_DIRS<span class="token punctuation">&#125;</span>
-    $<span class="token punctuation">&#123;</span>PCL_INCLUDE_DIRS<span class="token punctuation">&#125;</span>
-<span class="token punctuation">)</span>
+include_directories(
+    $&#123;catkin_INCLUDE_DIRS&#125;
+    $&#123;OpenCV_INCLUDE_DIRS&#125;
+    $&#123;PCL_INCLUDE_DIRS&#125;
+)
 
-<span class="token comment">// 生成可执行文件</span>
-<span class="token function">add_executable</span><span class="token punctuation">(</span>publish_pointcloud src<span class="token operator">/</span>publish_pointcloud<span class="token punctuation">.</span>cpp<span class="token punctuation">)</span>
+&#x2F;&#x2F; 生成可执行文件
+add_executable(publish_pointcloud src&#x2F;publish_pointcloud.cpp)
 
-<span class="token comment">// 链接库文件</span>
-<span class="token function">target_link_libraries</span><span class="token punctuation">(</span>publish_pointcloud
-    $<span class="token punctuation">&#123;</span>catkin_LIBRARIES<span class="token punctuation">&#125;</span>
-    $<span class="token punctuation">&#123;</span>OpenCV_LIBRARIES<span class="token punctuation">&#125;</span>
-    $<span class="token punctuation">&#123;</span>PCL_LIBRARIES<span class="token punctuation">&#125;</span>
-<span class="token punctuation">)</span>
+&#x2F;&#x2F; 链接库文件
+target_link_libraries(publish_pointcloud
+    $&#123;catkin_LIBRARIES&#125;
+    $&#123;OpenCV_LIBRARIES&#125;
+    $&#123;PCL_LIBRARIES&#125;
+)
 
-<span class="token function">install</span><span class="token punctuation">(</span>TARGETS publish_pointcloud
-RUNTIME DESTINATION $<span class="token punctuation">&#123;</span>CATKIN_PACKAGE_BIN_DESTINATION<span class="token punctuation">&#125;</span>
-<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+install(TARGETS publish_pointcloud
+RUNTIME DESTINATION $&#123;CATKIN_PACKAGE_BIN_DESTINATION&#125;
+)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

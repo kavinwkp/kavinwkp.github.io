@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 
@@ -419,8 +419,8 @@
             <div id="articleContent">
                 <h2 id="LeetCode-54-Spiral-Matrix"><a href="#LeetCode-54-Spiral-Matrix" class="headerlink" title="LeetCode 54. Spiral Matrix"></a>LeetCode 54. Spiral Matrix</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/spiral-matrix/">LeetCode</a></p>
 <p>Given an <code>m x n</code> matrix, return all elements of the matrix in spiral order.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> matrix <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
-Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: matrix &#x3D; [[1,2,3],[4,5,6],[7,8,9]]
+Output: [1,2,3,6,9,8,7,4,5]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>先一圈一圈输出，注意区间<strong>左闭右开</strong>，最后</p>
 <ul>
 <li>没有元素剩余，直接返回</li>
@@ -428,65 +428,65 @@ Output<span class="token operator">:</span> <span class="token punctuation">[</s
 <li>剩一行或者一列，循环赋值</li>
 </ul>
 <p><code>(i, j)</code>都是从<code>(sx, sy)</code>开始的，<code>i--</code>和<code>j--</code>的时候不能小于<code>(sx, sy)</code><br>最后<code>(n1, m1)</code>会有6中情况<code>(0, 0), (n1, 0), (0, m1)</code>这三种不用管<br><code>(1, 1), (n1, 1), (1, m1)</code>这三种要继续赋值</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">spiralOrder</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">>></span><span class="token operator">&amp;</span> matrix<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> n <span class="token operator">=</span> matrix<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> m <span class="token operator">=</span> matrix<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">res</span><span class="token punctuation">(</span>n <span class="token operator">*</span> m<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> n1 <span class="token operator">=</span> n<span class="token punctuation">,</span> m1 <span class="token operator">=</span> m<span class="token punctuation">;</span>
-    <span class="token keyword">int</span> offset <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> startx <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> starty <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> cnt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>n1 <span class="token operator">></span> <span class="token number">1</span> <span class="token operator">&amp;&amp;</span> m1 <span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        i <span class="token operator">=</span> startx<span class="token punctuation">,</span> j <span class="token operator">=</span> starty<span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> starty <span class="token operator">+</span> m <span class="token operator">-</span> offset<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> res<span class="token punctuation">[</span>cnt<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> matrix<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> startx <span class="token operator">+</span> n <span class="token operator">-</span> offset<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> res<span class="token punctuation">[</span>cnt<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> matrix<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span> j <span class="token operator">></span> starty<span class="token punctuation">;</span> j<span class="token operator">--</span><span class="token punctuation">)</span> res<span class="token punctuation">[</span>cnt<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> matrix<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>  <span class="token comment">// 大于起始位置</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span> i <span class="token operator">></span> startx<span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span> res<span class="token punctuation">[</span>cnt<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> matrix<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        n1 <span class="token operator">-=</span> <span class="token number">2</span><span class="token punctuation">;</span>
-        m1 <span class="token operator">-=</span> <span class="token number">2</span><span class="token punctuation">;</span>
-        offset <span class="token operator">+=</span> <span class="token number">2</span><span class="token punctuation">;</span>
-        startx<span class="token operator">++</span><span class="token punctuation">;</span>
-        starty<span class="token operator">++</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    i <span class="token operator">=</span> startx<span class="token punctuation">,</span> j <span class="token operator">=</span> starty<span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>n1 <span class="token operator">==</span> <span class="token number">1</span> <span class="token operator">&amp;&amp;</span> m1 <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> res<span class="token punctuation">[</span>cnt<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> matrix<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>  <span class="token comment">// 剩一个</span>
-    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>n1 <span class="token operator">==</span> <span class="token number">1</span> <span class="token operator">&amp;&amp;</span> m1 <span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>   <span class="token comment">// 剩一行</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> starty <span class="token operator">+</span> m1<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> res<span class="token punctuation">[</span>cnt<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> matrix<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>n1 <span class="token operator">></span> <span class="token number">1</span> <span class="token operator">&amp;&amp;</span> m1 <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>   <span class="token comment">// 剩一列</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> startx <span class="token operator">+</span> n1<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> res<span class="token punctuation">[</span>cnt<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> matrix<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">else</span> <span class="token keyword">return</span> res<span class="token punctuation">;</span>    <span class="token comment">// 没剩下，直接返回</span>
-    <span class="token keyword">return</span> res<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector&lt;int&gt; spiralOrder(vector&lt;vector&lt;int&gt;&gt;&amp; matrix) &#123;
+    int n &#x3D; matrix.size(), m &#x3D; matrix[0].size();
+    vector&lt;int&gt; res(n * m, 0);
+    int n1 &#x3D; n, m1 &#x3D; m;
+    int offset &#x3D; 1;
+    int startx &#x3D; 0, starty &#x3D; 0;
+    int cnt &#x3D; 0;
+    int i &#x3D; 0, j &#x3D; 0;
+    while (n1 &gt; 1 &amp;&amp; m1 &gt; 1) &#123;
+        i &#x3D; startx, j &#x3D; starty;
+        for (; j &lt; starty + m - offset; j++) res[cnt++] &#x3D; matrix[i][j];
+        for (; i &lt; startx + n - offset; i++) res[cnt++] &#x3D; matrix[i][j];
+        for (; j &gt; starty; j--) res[cnt++] &#x3D; matrix[i][j];  &#x2F;&#x2F; 大于起始位置
+        for (; i &gt; startx; i--) res[cnt++] &#x3D; matrix[i][j];
+        n1 -&#x3D; 2;
+        m1 -&#x3D; 2;
+        offset +&#x3D; 2;
+        startx++;
+        starty++;
+    &#125;
+    i &#x3D; startx, j &#x3D; starty;
+    if (n1 &#x3D;&#x3D; 1 &amp;&amp; m1 &#x3D;&#x3D; 1) res[cnt++] &#x3D; matrix[i][j];  &#x2F;&#x2F; 剩一个
+    else if (n1 &#x3D;&#x3D; 1 &amp;&amp; m1 &gt; 1) &#123;   &#x2F;&#x2F; 剩一行
+        for (; j &lt; starty + m1; j++) res[cnt++] &#x3D; matrix[i][j];
+    &#125;
+    else if (n1 &gt; 1 &amp;&amp; m1 &#x3D;&#x3D; 1) &#123;   &#x2F;&#x2F; 剩一列
+        for (; i &lt; startx + n1; i++) res[cnt++] &#x3D; matrix[i][j];
+    &#125;
+    else return res;    &#x2F;&#x2F; 没剩下，直接返回
+    return res;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="LeetCode-59-Spiral-Matrix-II"><a href="#LeetCode-59-Spiral-Matrix-II" class="headerlink" title="LeetCode 59. Spiral Matrix II"></a>LeetCode 59. Spiral Matrix II</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/spiral-matrix-ii/">LeetCode</a></p>
 <p>Given a positive integer n, generate an <code>n x n</code> matrix filled with elements from <code>1 to n^2</code> in spiral order.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> n <span class="token operator">=</span> <span class="token number">3</span>
-Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: n &#x3D; 3
+Output: [[1,2,3],[8,9,4],[7,6,5]]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h2 id="method-模拟"><a href="#method-模拟" class="headerlink" title="method: 模拟"></a>method: 模拟</h2><p>一圈一圈地往里填数，每行每列都是固定的<strong>左闭右开</strong>区间</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">>></span> <span class="token function">generateMatrix</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    vector<span class="token operator">&lt;</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">>></span> <span class="token function">res</span><span class="token punctuation">(</span>n<span class="token punctuation">,</span> vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token punctuation">(</span>n<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> startx <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> starty <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">// 每圈的起始点</span>
-    <span class="token keyword">int</span> num <span class="token operator">=</span> n <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span>    <span class="token comment">// 总共需要填几圈</span>
-    <span class="token keyword">int</span> offset <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>     <span class="token comment">// 往里一层要减去的固定长度</span>
-    <span class="token keyword">int</span> count <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>num<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">int</span> i <span class="token operator">=</span> startx<span class="token punctuation">;</span>
-        <span class="token keyword">int</span> j <span class="token operator">=</span> starty<span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> starty <span class="token operator">+</span> n <span class="token operator">-</span> offset<span class="token punctuation">;</span> <span class="token operator">++</span>j<span class="token punctuation">)</span>    <span class="token comment">// 上行</span>
-            res<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> count<span class="token operator">++</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> startx <span class="token operator">+</span> n <span class="token operator">-</span> offset<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>    <span class="token comment">// 右列</span>
-            res<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> count<span class="token operator">++</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span> j <span class="token operator">></span> starty<span class="token punctuation">;</span> <span class="token operator">--</span>j<span class="token punctuation">)</span>     <span class="token comment">// 下行</span>
-            res<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> count<span class="token operator">++</span><span class="token punctuation">;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span> i <span class="token operator">></span> startx<span class="token punctuation">;</span> <span class="token operator">--</span>i<span class="token punctuation">)</span>     <span class="token comment">// 左列</span>
-            res<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> count<span class="token operator">++</span><span class="token punctuation">;</span>
-        startx<span class="token operator">++</span><span class="token punctuation">;</span>
-        starty<span class="token operator">++</span><span class="token punctuation">;</span>
-        offset <span class="token operator">+=</span> <span class="token number">2</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span> res<span class="token punctuation">[</span>startx<span class="token punctuation">]</span><span class="token punctuation">[</span>starty<span class="token punctuation">]</span> <span class="token operator">=</span> count<span class="token punctuation">;</span>
-    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector&lt;vector&lt;int&gt;&gt; generateMatrix(int n) &#123;
+    vector&lt;vector&lt;int&gt;&gt; res(n, vector&lt;int&gt;(n, 0));
+    int startx &#x3D; 0, starty &#x3D; 0; &#x2F;&#x2F; 每圈的起始点
+    int num &#x3D; n &#x2F; 2;    &#x2F;&#x2F; 总共需要填几圈
+    int offset &#x3D; 1;     &#x2F;&#x2F; 往里一层要减去的固定长度
+    int count &#x3D; 1;
+    while (num--) &#123;
+        int i &#x3D; startx;
+        int j &#x3D; starty;
+        for (; j &lt; starty + n - offset; ++j)    &#x2F;&#x2F; 上行
+            res[i][j] &#x3D; count++;
+        for (; i &lt; startx + n - offset; ++i)    &#x2F;&#x2F; 右列
+            res[i][j] &#x3D; count++;
+        for (; j &gt; starty; --j)     &#x2F;&#x2F; 下行
+            res[i][j] &#x3D; count++;
+        for (; i &gt; startx; --i)     &#x2F;&#x2F; 左列
+            res[i][j] &#x3D; count++;
+        startx++;
+        starty++;
+        offset +&#x3D; 2;
+    &#125;
+    if (n &amp; 1) res[startx][starty] &#x3D; count;
+    return res;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
