@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -425,45 +425,45 @@
 <p>Given head, the head of a linked list, determine if the linked list has a cycle in it.</p>
 <p>There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Internally, pos is used to denote the index of the node that tail’s next pointer is connected to. Note that pos is not passed as a parameter.</p>
 <p>Return <code>true</code> if there is a <code>cycle</code> in the linked list. Otherwise, return false.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: head &#x3D; [3,2,0,-4], pos &#x3D; 1
-Output: true
-Explanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> head <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span> pos <span class="token operator">=</span> <span class="token number">1</span>
+Output<span class="token operator">:</span> <span class="token boolean">true</span>
+Explanation<span class="token operator">:</span> There is a cycle in the linked list<span class="token punctuation">,</span> where the tail connects to the <span class="token number">1</span>st <span class="token function">node</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token operator">-</span>indexed<span class="token punctuation">)</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
 <h2 id="method-快慢指针"><a href="#method-快慢指针" class="headerlink" title="method: 快慢指针"></a>method: 快慢指针</h2><p>快指针一次走两格，慢指针一次走一格，如果有环，两个指针肯定会相遇</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">bool hasCycle(ListNode *head) &#123;
-    ListNode *fast &#x3D; head;
-    ListNode *slow &#x3D; head;
-    while (fast &amp;&amp; fast-&gt;next) &#123;
-        fast &#x3D; fast-&gt;next-&gt;next;
-        slow &#x3D; slow-&gt;next;
-        if (fast &#x3D;&#x3D; slow) return true;
-    &#125;
-    return false;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">bool</span> <span class="token function">hasCycle</span><span class="token punctuation">(</span>ListNode <span class="token operator">*</span>head<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    ListNode <span class="token operator">*</span>fast <span class="token operator">=</span> head<span class="token punctuation">;</span>
+    ListNode <span class="token operator">*</span>slow <span class="token operator">=</span> head<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>fast <span class="token operator">&amp;&amp;</span> fast<span class="token operator">-></span>next<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        fast <span class="token operator">=</span> fast<span class="token operator">-></span>next<span class="token operator">-></span>next<span class="token punctuation">;</span>
+        slow <span class="token operator">=</span> slow<span class="token operator">-></span>next<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>fast <span class="token operator">==</span> slow<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="LeetCode-142-Linked-List-Cycle-II"><a href="#LeetCode-142-Linked-List-Cycle-II" class="headerlink" title="LeetCode 142. Linked List Cycle II"></a>LeetCode 142. Linked List Cycle II</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/linked-list-cycle-ii/">LeetCode</a></p>
 <p>Given a linked list, return the <strong>node where the cycle begins</strong>. If there is no cycle, return null.</p>
 <p>There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Internally, pos is used to denote the index of the node that tail’s next pointer is connected to. Note that pos is not passed as a parameter.</p>
-<p>Example 1:<br><img src="/2021/06/06/LeetCode-141-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8/142.png" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: head &#x3D; [3,2,0,-4], pos &#x3D; 1
-Output: tail connects to node index 1
-Explanation: There is a cycle in the linked list, where tail connects to the second node.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><img src="/2021/06/06/LeetCode-141-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8/142.png" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> head <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span> pos <span class="token operator">=</span> <span class="token number">1</span>
+Output<span class="token operator">:</span> tail connects to node index <span class="token number">1</span>
+Explanation<span class="token operator">:</span> There is a cycle in the linked list<span class="token punctuation">,</span> where tail connects to the second node<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
 <h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>一个指针从快慢指针相遇地方开始遍历，一个从头开始遍历，相遇的节点就是环形的入口</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode *detectCycle(ListNode *head) &#123;
-    ListNode *fast &#x3D; head;
-    ListNode *slow &#x3D; head;
-    while (fast &amp;&amp; fast-&gt;next) &#123;
-        fast &#x3D; fast-&gt;next-&gt;next;
-        slow &#x3D; slow-&gt;next;
-        if (slow &#x3D;&#x3D; fast) &#123; &#x2F;&#x2F; 从相遇节点开始走
-            ListNode *l1 &#x3D; slow;
-            ListNode *l2 &#x3D; head;
-            while (l1 !&#x3D; l2) &#123;
-                l1 &#x3D; l1-&gt;next;
-                l2 &#x3D; l2-&gt;next;
-            &#125;
-            return l1;
-        &#125;
-    &#125;
-    return NULL;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode <span class="token operator">*</span><span class="token function">detectCycle</span><span class="token punctuation">(</span>ListNode <span class="token operator">*</span>head<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    ListNode <span class="token operator">*</span>fast <span class="token operator">=</span> head<span class="token punctuation">;</span>
+    ListNode <span class="token operator">*</span>slow <span class="token operator">=</span> head<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>fast <span class="token operator">&amp;&amp;</span> fast<span class="token operator">-></span>next<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        fast <span class="token operator">=</span> fast<span class="token operator">-></span>next<span class="token operator">-></span>next<span class="token punctuation">;</span>
+        slow <span class="token operator">=</span> slow<span class="token operator">-></span>next<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>slow <span class="token operator">==</span> fast<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 从相遇节点开始走</span>
+            ListNode <span class="token operator">*</span>l1 <span class="token operator">=</span> slow<span class="token punctuation">;</span>
+            ListNode <span class="token operator">*</span>l2 <span class="token operator">=</span> head<span class="token punctuation">;</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span>l1 <span class="token operator">!=</span> l2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                l1 <span class="token operator">=</span> l1<span class="token operator">-></span>next<span class="token punctuation">;</span>
+                l2 <span class="token operator">=</span> l2<span class="token operator">-></span>next<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token keyword">return</span> l1<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -419,39 +419,39 @@
             <div id="articleContent">
                 <h2 id="LeetCode-242-Valid-Anagram"><a href="#LeetCode-242-Valid-Anagram" class="headerlink" title="LeetCode 242. Valid Anagram"></a>LeetCode 242. Valid Anagram</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/valid-anagram/">LeetCode</a></p>
 <p>Given two strings s and t, return true if t is an anagram of s, and false otherwise.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: s &#x3D; &quot;anagram&quot;, t &#x3D; &quot;nagaram&quot;
-Output: true<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>Example 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: s &#x3D; &quot;rat&quot;, t &#x3D; &quot;car&quot;
-Output: false<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> s <span class="token operator">=</span> <span class="token string">"anagram"</span><span class="token punctuation">,</span> t <span class="token operator">=</span> <span class="token string">"nagaram"</span>
+Output<span class="token operator">:</span> <span class="token boolean">true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>Example 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> s <span class="token operator">=</span> <span class="token string">"rat"</span><span class="token punctuation">,</span> t <span class="token operator">=</span> <span class="token string">"car"</span>
+Output<span class="token operator">:</span> <span class="token boolean">false</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h2 id="题意解析"><a href="#题意解析" class="headerlink" title="题意解析"></a>题意解析</h2><p>就是看出现的字符数是不是一样的</p>
 <h2 id="method-哈希表"><a href="#method-哈希表" class="headerlink" title="method: 哈希表"></a>method: 哈希表</h2><p>用大小为26的数组存储每个字母出现的次数</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">bool isAnagram(string s, string t) &#123;
-    int num1[26] &#x3D; &#123;0&#125;;
-    int num2[26] &#x3D; &#123;0&#125;;
-    for (auto n : s) num1[n - &#39;a&#39;]++;
-    for (auto n : t) num2[n - &#39;a&#39;]++;
-    for (int i &#x3D; 0; i &lt; 26; ++i) &#123;
-        if (num1[i] !&#x3D; num2[i]) return false;
-    &#125;
-    return true;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">bool</span> <span class="token function">isAnagram</span><span class="token punctuation">(</span>string s<span class="token punctuation">,</span> string t<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> num1<span class="token punctuation">[</span><span class="token number">26</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> num2<span class="token punctuation">[</span><span class="token number">26</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> n <span class="token operator">:</span> s<span class="token punctuation">)</span> num1<span class="token punctuation">[</span>n <span class="token operator">-</span> <span class="token string">'a'</span><span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> n <span class="token operator">:</span> t<span class="token punctuation">)</span> num2<span class="token punctuation">[</span>n <span class="token operator">-</span> <span class="token string">'a'</span><span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">26</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>num1<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">!=</span> num2<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="LeetCode-383-Ransom-Note"><a href="#LeetCode-383-Ransom-Note" class="headerlink" title="LeetCode 383. Ransom Note"></a>LeetCode 383. Ransom Note</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/ransom-note/">LeetCode</a></p>
 <p>Given two stings ransomNote and magazine, return true if ransomNote can be <code>constructed from magazine</code> and false otherwise.</p>
 <p>Each letter in magazine can only be used once in ransomNote.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: ransomNote &#x3D; &quot;a&quot;, magazine &#x3D; &quot;b&quot;
-Output: false<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>Example 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: ransomNote &#x3D; &quot;aa&quot;, magazine &#x3D; &quot;ab&quot;
-Output: false<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>Example 3:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: ransomNote &#x3D; &quot;aa&quot;, magazine &#x3D; &quot;aab&quot;
-Output: true<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> ransomNote <span class="token operator">=</span> <span class="token string">"a"</span><span class="token punctuation">,</span> magazine <span class="token operator">=</span> <span class="token string">"b"</span>
+Output<span class="token operator">:</span> <span class="token boolean">false</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>Example 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> ransomNote <span class="token operator">=</span> <span class="token string">"aa"</span><span class="token punctuation">,</span> magazine <span class="token operator">=</span> <span class="token string">"ab"</span>
+Output<span class="token operator">:</span> <span class="token boolean">false</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>Example 3:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> ransomNote <span class="token operator">=</span> <span class="token string">"aa"</span><span class="token punctuation">,</span> magazine <span class="token operator">=</span> <span class="token string">"aab"</span>
+Output<span class="token operator">:</span> <span class="token boolean">true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h2 id="题意解析-1"><a href="#题意解析-1" class="headerlink" title="题意解析"></a>题意解析</h2><p>看<code>magazine</code>的字符是不是比<code>ransomNote</code>的字符多</p>
 <h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>同样用哈希表存字符出现次数</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">bool canConstruct(string ransomNote, string magazine) &#123;
-    int hash[26] &#x3D; &#123;0&#125;;
-    for (auto n : magazine) hash[n - &#39;a&#39;]++;
-    for (auto n : ransomNote) hash[n - &#39;a&#39;]--;
-    for (auto n : hash) &#123;
-        if (n &lt; 0) return false;
-    &#125;
-    return true;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">bool</span> <span class="token function">canConstruct</span><span class="token punctuation">(</span>string ransomNote<span class="token punctuation">,</span> string magazine<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> hash<span class="token punctuation">[</span><span class="token number">26</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> n <span class="token operator">:</span> magazine<span class="token punctuation">)</span> hash<span class="token punctuation">[</span>n <span class="token operator">-</span> <span class="token string">'a'</span><span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> n <span class="token operator">:</span> ransomNote<span class="token punctuation">)</span> hash<span class="token punctuation">[</span>n <span class="token operator">-</span> <span class="token string">'a'</span><span class="token punctuation">]</span><span class="token operator">--</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> n <span class="token operator">:</span> hash<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -421,12 +421,12 @@
 <p>We are given an array asteroids of integers representing asteroids in a row.</p>
 <p>For each asteroid, the absolute value represents its size, and the sign represents its direction (<code>positive meaning right, negative meaning left</code>). Each asteroid moves at the same speed.</p>
 <p>Find out the state of the asteroids after all collisions. If two asteroids meet, <code>the smaller one will explode</code>. If both are the same size, <code>both will explode</code>. Two asteroids moving in the same direction will never meet.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: asteroids &#x3D; [5,10,-5]
-Output: [5,10]
-Explanation: The 10 and -5 collide resulting in 10. The 5 and 10 never collide.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
-<p>Example 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: asteroids &#x3D; [8,-8]
-Output: []
-Explanation: The 8 and -8 collide exploding each other.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> asteroids <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">]</span>
+Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">]</span>
+Explanation<span class="token operator">:</span> The <span class="token number">10</span> <span class="token operator">and</span> <span class="token operator">-</span><span class="token number">5</span> collide resulting in <span class="token number">10.</span> The <span class="token number">5</span> <span class="token operator">and</span> <span class="token number">10</span> never collide<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
+<p>Example 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> asteroids <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">8</span><span class="token punctuation">]</span>
+Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+Explanation<span class="token operator">:</span> The <span class="token number">8</span> <span class="token operator">and</span> <span class="token operator">-</span><span class="token number">8</span> collide exploding each other<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
 <h2 id="method-栈"><a href="#method-栈" class="headerlink" title="method: 栈"></a>method: 栈</h2><ul>
 <li>正数就直接入栈</li>
 <li>负数要考虑几种情况<ul>
@@ -437,20 +437,20 @@ Explanation: The 8 and -8 collide exploding each other.<span aria-hidden="true" 
 </li>
 <li>最后把栈里的元素逆序存到<code>vector</code>里</li>
 </ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector&lt;int&gt; asteroidCollision(vector&lt;int&gt;&amp; nums) &#123;
-    stack&lt;int&gt; st;
-    for (int i &#x3D; 0; i &lt; nums.size(); ++i) &#123;
-        while (!st.empty() &amp;&amp; st.top() &gt; 0 &amp;&amp; st.top() &lt; -nums[i]) st.pop();
-        if (st.empty() || st.top() &lt; 0 || nums[i] &gt; 0) st.push(nums[i]);
-        else if (st.top() &#x3D;&#x3D; -nums[i]) st.pop();
-    &#125;
-    vector&lt;int&gt; ret(st.size());
-    for (int i &#x3D; st.size() - 1; i &gt;&#x3D; 0; --i) &#123;
-        ret[i] &#x3D; st.top();
-        st.pop();
-    &#125;
-    return ret;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">asteroidCollision</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    stack<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> st<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>st<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> st<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> st<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token operator">-</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> st<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>st<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">||</span> st<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">||</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> st<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>st<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token operator">-</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> st<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">ret</span><span class="token punctuation">(</span>st<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> st<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token operator">--</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        ret<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> st<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        st<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

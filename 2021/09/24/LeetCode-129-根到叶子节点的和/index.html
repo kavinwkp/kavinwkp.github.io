@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -422,59 +422,59 @@
 <p>For example, the root-to-leaf path <code>1 -&gt; 2 -&gt; 3</code> represents the number <code>123</code>.<br>Return <em>the total sum of all root-to-leaf numbers</em>. Test cases are generated so that the answer will fit in a 32-bit integer.</p>
 <p>A leaf node is a node with no children.</p>
 <p>Example 1:</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: root &#x3D; [1,2,3]
-Output: 25
-Explanation:
-The root-to-leaf path 1-&gt;2 represents the number 12.
-The root-to-leaf path 1-&gt;3 represents the number 13.
-Therefore, sum &#x3D; 12 + 13 &#x3D; 25.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> root <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span>
+Output<span class="token operator">:</span> <span class="token number">25</span>
+Explanation<span class="token operator">:</span>
+The root<span class="token operator">-</span>to<span class="token operator">-</span>leaf path <span class="token number">1</span><span class="token operator">-></span><span class="token number">2</span> represents the number <span class="token number">12.</span>
+The root<span class="token operator">-</span>to<span class="token operator">-</span>leaf path <span class="token number">1</span><span class="token operator">-></span><span class="token number">3</span> represents the number <span class="token number">13.</span>
+Therefore<span class="token punctuation">,</span> sum <span class="token operator">=</span> <span class="token number">12</span> <span class="token operator">+</span> <span class="token number">13</span> <span class="token operator">=</span> <span class="token number">25.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="method-回溯"><a href="#method-回溯" class="headerlink" title="method: 回溯"></a>method: 回溯</h2><p>每条根到叶子节点的路径都可以组成一个数字，求这些数字的和</p>
 <p>简单的回溯，可以先加上节点的值，再往这个节点递归</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int res &#x3D; 0;
-int sum &#x3D; 0;
-void traversal(TreeNode* root) &#123;
-    if (!root-&gt;left &amp;&amp; !root-&gt;right) &#123;
-        res +&#x3D; sum;
-        return;
-    &#125;
-    if (root-&gt;left) &#123;
-        sum &#x3D; sum * 10 + root-&gt;left-&gt;val;
-        traversal(root-&gt;left);
-        sum &#x2F;&#x3D; 10;
-    &#125;
-    if (root-&gt;right) &#123;
-        sum &#x3D; sum * 10 + root-&gt;right-&gt;val;
-        traversal(root-&gt;right);
-        sum &#x2F;&#x3D; 10;
-    &#125;
-&#125;
-int sumNumbers(TreeNode* root) &#123;
-    sum &#x3D; root-&gt;val;    &#x2F;&#x2F; 先取值
-    traversal(root);    &#x2F;&#x2F; 再递归
-    return res;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> res <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">traversal</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token operator">-></span>left <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        res <span class="token operator">+=</span> sum<span class="token punctuation">;</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        sum <span class="token operator">=</span> sum <span class="token operator">*</span> <span class="token number">10</span> <span class="token operator">+</span> root<span class="token operator">-></span>left<span class="token operator">-></span>val<span class="token punctuation">;</span>
+        <span class="token function">traversal</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        sum <span class="token operator">/=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        sum <span class="token operator">=</span> sum <span class="token operator">*</span> <span class="token number">10</span> <span class="token operator">+</span> root<span class="token operator">-></span>right<span class="token operator">-></span>val<span class="token punctuation">;</span>
+        <span class="token function">traversal</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        sum <span class="token operator">/=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">int</span> <span class="token function">sumNumbers</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    sum <span class="token operator">=</span> root<span class="token operator">-></span>val<span class="token punctuation">;</span>    <span class="token comment">// 先取值</span>
+    <span class="token function">traversal</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 再递归</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>也可以先往这个节点递归，再加上这个节点的值</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int res &#x3D; 0;
-int sum &#x3D; 0;
-void traversal(TreeNode* root) &#123;
-    sum &#x3D; sum * 10 + root-&gt;val;     &#x2F;&#x2F; 再取值
-    if (!root-&gt;left &amp;&amp; !root-&gt;right) &#123;
-        res +&#x3D; sum;
-        return;
-    &#125;
-    if (root-&gt;left) &#123;
-        traversal(root-&gt;left);
-        sum &#x2F;&#x3D; 10;
-    &#125;
-    if (root-&gt;right) &#123;
-        traversal(root-&gt;right);
-        sum &#x2F;&#x3D; 10;
-    &#125;
-&#125;
-int sumNumbers(TreeNode* root) &#123;
-    traversal(root);    &#x2F;&#x2F; 先递归
-    return res;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> res <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">traversal</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    sum <span class="token operator">=</span> sum <span class="token operator">*</span> <span class="token number">10</span> <span class="token operator">+</span> root<span class="token operator">-></span>val<span class="token punctuation">;</span>     <span class="token comment">// 再取值</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token operator">-></span>left <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        res <span class="token operator">+=</span> sum<span class="token punctuation">;</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">traversal</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        sum <span class="token operator">/=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">traversal</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        sum <span class="token operator">/=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">int</span> <span class="token function">sumNumbers</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">traversal</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 先递归</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

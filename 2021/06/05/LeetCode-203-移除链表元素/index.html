@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -423,31 +423,31 @@
             <div id="articleContent">
                 <h2 id="LeetCode-203-Remove-Linked-List-Elements"><a href="#LeetCode-203-Remove-Linked-List-Elements" class="headerlink" title="LeetCode 203. Remove Linked List Elements"></a>LeetCode 203. Remove Linked List Elements</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/remove-linked-list-elements/">LeetCode</a></p>
 <p>Given the head of a linked list and an integer val, remove all the nodes of the linked list that has <code>Node.val == val</code>, and return the new head.</p>
-<p>Example 1:<br><img src="/2021/06/05/LeetCode-203-%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0/203.jpg" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: head &#x3D; [1,2,6,3,4,5,6], val &#x3D; 6
-Output: [1,2,3,4,5]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><img src="/2021/06/05/LeetCode-203-%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0/203.jpg" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> head <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">,</span> val <span class="token operator">=</span> <span class="token number">6</span>
+Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h2 id="method-1-迭代"><a href="#method-1-迭代" class="headerlink" title="method 1: 迭代"></a>method 1: 迭代</h2><p>可能会连续删除多个元素，所以要用<code>while</code><br>因为会访问<code>next</code>的成员，所以必须确保<code>next</code>不为空</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode* removeElements(ListNode* head, int val) &#123;
-    if (!head) return head;
-    ListNode dummy;
-    dummy.next &#x3D; head;
-    head &#x3D; &amp;dummy;
-    while (head) &#123;
-        while (head-&gt;next &amp;&amp; head-&gt;next-&gt;val &#x3D;&#x3D; val) &#123;
-            head-&gt;next &#x3D; head-&gt;next-&gt;next;
-        &#125;
-        head &#x3D; head-&gt;next;
-    &#125;
-    return dummy.next;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode<span class="token operator">*</span> <span class="token function">removeElements</span><span class="token punctuation">(</span>ListNode<span class="token operator">*</span> head<span class="token punctuation">,</span> <span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>head<span class="token punctuation">)</span> <span class="token keyword">return</span> head<span class="token punctuation">;</span>
+    ListNode dummy<span class="token punctuation">;</span>
+    dummy<span class="token punctuation">.</span>next <span class="token operator">=</span> head<span class="token punctuation">;</span>
+    head <span class="token operator">=</span> <span class="token operator">&amp;</span>dummy<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>head<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>head<span class="token operator">-></span>next <span class="token operator">&amp;&amp;</span> head<span class="token operator">-></span>next<span class="token operator">-></span>val <span class="token operator">==</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            head<span class="token operator">-></span>next <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token operator">-></span>next<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        head <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> dummy<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="method-2-递归"><a href="#method-2-递归" class="headerlink" title="method 2: 递归"></a>method 2: 递归</h2><p>如果这个点需要删除，就返回<code>next</code>，这样这个点就没了</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode* removeElements(ListNode* head, int val) &#123;
-    if (!head) return head;
-    head-&gt;next &#x3D; removeElements(head-&gt;next, val);
-    if (head-&gt;val &#x3D;&#x3D; val) &#123;
-        return head-&gt;next;
-    &#125;
-    return head;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode<span class="token operator">*</span> <span class="token function">removeElements</span><span class="token punctuation">(</span>ListNode<span class="token operator">*</span> head<span class="token punctuation">,</span> <span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>head<span class="token punctuation">)</span> <span class="token keyword">return</span> head<span class="token punctuation">;</span>
+    head<span class="token operator">-></span>next <span class="token operator">=</span> <span class="token function">removeElements</span><span class="token punctuation">(</span>head<span class="token operator">-></span>next<span class="token punctuation">,</span> val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>head<span class="token operator">-></span>val <span class="token operator">==</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> head<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

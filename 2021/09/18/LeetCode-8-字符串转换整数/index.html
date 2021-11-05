@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -425,33 +425,33 @@
 <p>The algorithm for myAtoi(string s) is as follows:</p>
 <p>Read in and ignore <strong>any leading whitespace</strong>.<br>Check if the next character (if not already at the end of the string) is <code>&#39;-&#39;</code> or <code>&#39;+&#39;</code>. Read this character in if it is either. This determines if the final result is <strong>negative</strong> or <strong>positive</strong> respectively. Assume the result is positive if neither is present.<br>Read in next the characters until the next <strong>non-digit</strong> charcter or the end of the input is reached. The rest of the string is ignored.<br>Convert these digits into an integer (i.e. “123” -&gt; 123, “0032” -&gt; 32). If no digits were read, then the integer is 0. Change the sign as necessary (from step 2).<br>If the integer is out of the 32-bit signed integer range <code>[-2^31, 2^31 - 1]</code>, then clamp the integer so that it remains in the range. Specifically, integers less than <code>-2^31</code> should be clamped to <code>-2^31</code>, and integers greater than <code>2^31 - 1</code> should be clamped to <code>2^31 - 1</code>.<br>Return the integer as the final result.<br>Note:</p>
 <p>Only the space character <code>&#39; &#39;</code> is considered a whitespace character.<br>Do not ignore any characters other than the leading whitespace or the rest of the string after the digits.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: s &#x3D; &quot;42&quot;
-Output: 42<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>Example 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: s &#x3D; &quot;   -42a&quot;
-Output: -42<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> s <span class="token operator">=</span> <span class="token string">"42"</span>
+Output<span class="token operator">:</span> <span class="token number">42</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>Example 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> s <span class="token operator">=</span> <span class="token string">"   -42a"</span>
+Output<span class="token operator">:</span> <span class="token operator">-</span><span class="token number">42</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>先找到第一个字符的位置，判断正负号，再读取每个数字字符整合在一起</p>
 <p>判断溢出逻辑：整数范围是<code>-21,4748,3648</code>到<code>21,4748,3647</code>，如果一个数已经大于<code>21,4748,364</code>，那再来一位什么数都会溢出。<br>或者一个数等于<code>21,4748,364</code>，再来一位大于7的数就会溢出，虽然负数的话，来个8也行，但这里就算来8，输出的也是<code>-21,4748,3648</code>，所以一起当成溢出处理</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int myAtoi(string s) &#123;
-    int sign &#x3D; 1, base &#x3D; 0;
-    int i &#x3D; 0;
-    while (i &lt; s.size() &amp;&amp; s[i] &#x3D;&#x3D; &#39; &#39;) i++;
-    if (i &#x3D;&#x3D; s.size()) return 0;
-    if (s[i] &#x3D;&#x3D; &#39;-&#39; || s[i] &#x3D;&#x3D; &#39;+&#39;) &#123;
-        if (s[i] &#x3D;&#x3D; &#39;-&#39;) &#123;
-            sign &#x3D; -1;
-        &#125;
-        i++;
-    &#125;
-    while (i &lt; s.size() &amp;&amp; s[i] &gt;&#x3D; &#39;0&#39; &amp;&amp; s[i] &lt;&#x3D; &#39;9&#39;) &#123;
-        int num &#x3D; s[i] - &#39;0&#39;;
-        if (base &gt; INT_MAX &#x2F; 10 || (base &#x3D;&#x3D; INT_MAX &#x2F; 10 &amp;&amp; num &gt; 7)) &#123;
-            if (sign &#x3D;&#x3D; 1) return INT_MAX;
-            else return INT_MIN;
-        &#125;
-        base &#x3D; base * 10 + num;
-        i++;
-    &#125;
-    return sign * base;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">myAtoi</span><span class="token punctuation">(</span>string s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> sign <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> base <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">' '</span><span class="token punctuation">)</span> i<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">==</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">'-'</span> <span class="token operator">||</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">'+'</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">'-'</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            sign <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        i<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">>=</span> <span class="token string">'0'</span> <span class="token operator">&amp;&amp;</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;=</span> <span class="token string">'9'</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> num <span class="token operator">=</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>base <span class="token operator">></span> INT_MAX <span class="token operator">/</span> <span class="token number">10</span> <span class="token operator">||</span> <span class="token punctuation">(</span>base <span class="token operator">==</span> INT_MAX <span class="token operator">/</span> <span class="token number">10</span> <span class="token operator">&amp;&amp;</span> num <span class="token operator">></span> <span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>sign <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span> INT_MAX<span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">return</span> INT_MIN<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        base <span class="token operator">=</span> base <span class="token operator">*</span> <span class="token number">10</span> <span class="token operator">+</span> num<span class="token punctuation">;</span>
+        i<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> sign <span class="token operator">*</span> base<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

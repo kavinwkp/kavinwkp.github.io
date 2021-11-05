@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -417,27 +417,27 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><code>unique_ptr</code>禁止对指针进行复制和赋值<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;memory&gt;
-using namespace std;
-class Fish &#123;
-  public:
-    Fish() &#123;cout &lt;&lt; &quot;constructor&quot; &lt;&lt; endl;&#125;
-    ~Fish() &#123;cout &lt;&lt; &quot;destructor&quot; &lt;&lt; endl;&#125;
+                <p><code>unique_ptr</code>禁止对指针进行复制和赋值<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;memory></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">Fish</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">Fish</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"constructor"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span><span class="token punctuation">&#125;</span>
+    <span class="token operator">~</span><span class="token function">Fish</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"destructor"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span><span class="token punctuation">&#125;</span>
 
-    void Swim() &#123;
-        cout &lt;&lt; &quot;Fish swim in water&quot; &lt;&lt; endl;
-    &#125;
-&#125;;
-void MakeFishSwim(const unique_ptr&lt;Fish&gt;&amp; ptr) &#123;
-    ptr-&gt;Swim();
-&#125;
-int main(int argc, char const *argv[]) &#123;
-    unique_ptr&lt;Fish&gt; pFish(new Fish);
-    pFish-&gt;Swim();
-    MakeFishSwim(pFish);
-    return 0;
-&#125;
+    <span class="token keyword">void</span> <span class="token function">Swim</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Fish swim in water"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">MakeFishSwim</span><span class="token punctuation">(</span><span class="token keyword">const</span> unique_ptr<span class="token operator">&lt;</span>Fish<span class="token operator">></span><span class="token operator">&amp;</span> ptr<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    ptr<span class="token operator">-></span><span class="token function">Swim</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    unique_ptr<span class="token operator">&lt;</span>Fish<span class="token operator">></span> <span class="token function">pFish</span><span class="token punctuation">(</span><span class="token keyword">new</span> Fish<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    pFish<span class="token operator">-></span><span class="token function">Swim</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">MakeFishSwim</span><span class="token punctuation">(</span>pFish<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 constructor
 Fish swim in water
 Fish swim in water
@@ -445,147 +445,147 @@ destructor<span aria-hidden="true" class="line-numbers-rows"><span></span><span>
 <h2 id="unique-ptr"><a href="#unique-ptr" class="headerlink" title="unique_ptr"></a>unique_ptr</h2><ul>
 <li>只能有一个<code>Ownership</code>，离开作用域就自动销毁</li>
 </ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;memory&gt;
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;memory></span></span>
 
-using namespace std;
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 
-class Entity
-&#123;
-public:
-    Entity() &#123; cout &lt;&lt; &quot;Entity created!&quot; &lt;&lt; endl; &#125;
-    ~Entity() &#123;cout &lt;&lt; &quot;Entity destroyed!&quot; &lt;&lt; endl; &#125;
-&#125;;
+<span class="token keyword">class</span> <span class="token class-name">Entity</span>
+<span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">Entity</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Entity created!"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token operator">~</span><span class="token function">Entity</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Entity destroyed!"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-void ex1() &#123;
-    puts(&quot;&gt;&gt;&gt;&gt;&gt;Entering ex1&lt;&lt;&lt;&lt;&lt;&quot;);
-    &#123;
-        puts(&quot;-----Entering scope-----&quot;);
-        auto e1 &#x3D; std::make_unique&lt;Entity&gt;();
-        puts(&quot;-----Leaving scope-----&quot;);
-    &#125;
-    puts(&quot;&gt;&gt;&gt;&gt;&gt;Leaving ex1&lt;&lt;&lt;&lt;&lt;&quot;);
-&#125;
+<span class="token keyword">void</span> <span class="token function">ex1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">">>>>>Entering ex1&lt;&lt;&lt;&lt;&lt;"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"-----Entering scope-----"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">auto</span> e1 <span class="token operator">=</span> std<span class="token operator">::</span>make_unique<span class="token operator">&lt;</span>Entity<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"-----Leaving scope-----"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">">>>>>Leaving ex1&lt;&lt;&lt;&lt;&lt;"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
-int main(int argc, char const *argv[])
-&#123;
-    ex1();
-    return 0;
-&#125;
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">ex1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
-&gt;&gt;&gt;&gt;&gt;Entering ex1&lt;&lt;&lt;&lt;&lt;
------Entering scope-----
-Entity created!
------Leaving scope-----
-Entity destroyed!
-&gt;&gt;&gt;&gt;&gt;Leaving ex1&lt;&lt;&lt;&lt;&lt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token operator">>></span><span class="token operator">>></span><span class="token operator">></span>Entering ex1<span class="token operator">&lt;&lt;</span><span class="token operator">&lt;&lt;</span><span class="token operator">&lt;</span>
+<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>Entering scope<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+Entity created<span class="token operator">!</span>
+<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>Leaving scope<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+Entity destroyed<span class="token operator">!</span>
+<span class="token operator">>></span><span class="token operator">>></span><span class="token operator">></span>Leaving ex1<span class="token operator">&lt;&lt;</span><span class="token operator">&lt;&lt;</span><span class="token operator">&lt;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li><code>Ownership</code>转移到<code>foo</code>里面，所以离开<code>foo</code>之后就销毁了<br><code>move</code>是<code>ownership</code>的直接转移，调用者不再拥有对象</li>
 </ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void foo(std::unique_ptr&lt;Entity&gt;) &#123;
-    puts(&quot;-----Entering foo-----&quot;);
-    puts(&quot;-----Leaving foo-----&quot;);
-&#125;
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">foo</span><span class="token punctuation">(</span>std<span class="token operator">::</span>unique_ptr<span class="token operator">&lt;</span>Entity<span class="token operator">></span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"-----Entering foo-----"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"-----Leaving foo-----"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
-void ex2() &#123;
-    puts(&quot;&gt;&gt;&gt;&gt;&gt;Entering ex2&lt;&lt;&lt;&lt;&lt;&quot;);
-    auto e1 &#x3D; std::make_unique&lt;Entity&gt;();
-    foo(std::move(e1));
-    puts(&quot;&gt;&gt;&gt;&gt;&gt;Leaving ex2&lt;&lt;&lt;&lt;&lt;&quot;);
-&#125;
-int main(int argc, char const *argv[])
-&#123;
-    ex2();
-    return 0;
-&#125;
+<span class="token keyword">void</span> <span class="token function">ex2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">">>>>>Entering ex2&lt;&lt;&lt;&lt;&lt;"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">auto</span> e1 <span class="token operator">=</span> std<span class="token operator">::</span>make_unique<span class="token operator">&lt;</span>Entity<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">foo</span><span class="token punctuation">(</span>std<span class="token operator">::</span><span class="token function">move</span><span class="token punctuation">(</span>e1<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">">>>>>Leaving ex2&lt;&lt;&lt;&lt;&lt;"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">ex2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
-&gt;&gt;&gt;&gt;&gt;Entering ex2&lt;&lt;&lt;&lt;&lt;
-Entity created!
------Entering foo-----
------Leaving foo-----
-Entity destroyed!
-&gt;&gt;&gt;&gt;&gt;Leaving ex2&lt;&lt;&lt;&lt;&lt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token operator">>></span><span class="token operator">>></span><span class="token operator">></span>Entering ex2<span class="token operator">&lt;&lt;</span><span class="token operator">&lt;&lt;</span><span class="token operator">&lt;</span>
+Entity created<span class="token operator">!</span>
+<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>Entering foo<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>Leaving foo<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+Entity destroyed<span class="token operator">!</span>
+<span class="token operator">>></span><span class="token operator">>></span><span class="token operator">></span>Leaving ex2<span class="token operator">&lt;&lt;</span><span class="token operator">&lt;&lt;</span><span class="token operator">&lt;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="shared-ptr"><a href="#shared-ptr" class="headerlink" title="shared_ptr"></a>shared_ptr</h2><p><code>shared_ptr</code>会进行引用计数，引用计数为0时自动销毁</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void ex3() &#123;
-    puts(&quot;&gt;&gt;&gt;&gt;&gt;Entering ex3&lt;&lt;&lt;&lt;&lt;&quot;);
-    auto e1 &#x3D; std::make_shared&lt;Entity&gt;();
-    std::cout &lt;&lt; e1.use_count() &lt;&lt; std::endl;
-    &#123;
-        puts(&quot;-----Entering scope-----&quot;);
-        auto e2 &#x3D; e1;
-        std::cout &lt;&lt; e1.use_count() &lt;&lt; std::endl;
-        auto e3 &#x3D; std::move(e2);    &#x2F;&#x2F; move是ownership转移
-        std::cout &lt;&lt; e1.use_count() &lt;&lt; std::endl;
-        puts(&quot;-----Leaving scope-----&quot;);
-    &#125;
-    std::cout &lt;&lt; e1.use_count() &lt;&lt; std::endl;
-    puts(&quot;&gt;&gt;&gt;&gt;&gt;Leaving ex3&lt;&lt;&lt;&lt;&lt;&quot;);
-&#125;
-int main(int argc, char const *argv[])
-&#123;
-    ex3();
-    return 0;
-&#125;
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">ex3</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">">>>>>Entering ex3&lt;&lt;&lt;&lt;&lt;"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">auto</span> e1 <span class="token operator">=</span> std<span class="token operator">::</span>make_shared<span class="token operator">&lt;</span>Entity<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> e1<span class="token punctuation">.</span><span class="token function">use_count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"-----Entering scope-----"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">auto</span> e2 <span class="token operator">=</span> e1<span class="token punctuation">;</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> e1<span class="token punctuation">.</span><span class="token function">use_count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+        <span class="token keyword">auto</span> e3 <span class="token operator">=</span> std<span class="token operator">::</span><span class="token function">move</span><span class="token punctuation">(</span>e2<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// move是ownership转移</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> e1<span class="token punctuation">.</span><span class="token function">use_count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+        <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"-----Leaving scope-----"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> e1<span class="token punctuation">.</span><span class="token function">use_count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">">>>>>Leaving ex3&lt;&lt;&lt;&lt;&lt;"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">ex3</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
-&gt;&gt;&gt;&gt;&gt;Entering ex3&lt;&lt;&lt;&lt;&lt;
-Entity created!
-1
------Entering scope-----
-2
-2
------Leaving scope-----
-1
-&gt;&gt;&gt;&gt;&gt;Leaving ex3&lt;&lt;&lt;&lt;&lt;
-Entity destroyed!<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token operator">>></span><span class="token operator">>></span><span class="token operator">></span>Entering ex3<span class="token operator">&lt;&lt;</span><span class="token operator">&lt;&lt;</span><span class="token operator">&lt;</span>
+Entity created<span class="token operator">!</span>
+<span class="token number">1</span>
+<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>Entering scope<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+<span class="token number">2</span>
+<span class="token number">2</span>
+<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>Leaving scope<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+<span class="token number">1</span>
+<span class="token operator">>></span><span class="token operator">>></span><span class="token operator">></span>Leaving ex3<span class="token operator">&lt;&lt;</span><span class="token operator">&lt;&lt;</span><span class="token operator">&lt;</span>
+Entity destroyed<span class="token operator">!</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="weak-ptr"><a href="#weak-ptr" class="headerlink" title="weak_ptr"></a>weak_ptr</h2><p><code>weak_ptr</code>使用前检查对象是否还存在，确认存在才能使用</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void observe(std::weak_ptr&lt;Entity&gt; ew) &#123;
-    puts(&quot;*****Entering observe*****&quot;);
-    if (std::shared_ptr&lt;Entity&gt; spt &#x3D; ew.lock()) &#123;
-        std::cout &lt;&lt; spt.use_count() &lt;&lt; std::endl;
-        std::cout &lt;&lt; &quot;entity still alive&quot; &lt;&lt; std::endl;
-    &#125; else &#123;
-        std::cout &lt;&lt; &quot;entity was expired&quot; &lt;&lt; std::endl;
-    &#125;
-    puts(&quot;*****Leaving observe*****&quot;);
-&#125;
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">observe</span><span class="token punctuation">(</span>std<span class="token operator">::</span>weak_ptr<span class="token operator">&lt;</span>Entity<span class="token operator">></span> ew<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"*****Entering observe*****"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>std<span class="token operator">::</span>shared_ptr<span class="token operator">&lt;</span>Entity<span class="token operator">></span> spt <span class="token operator">=</span> ew<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> spt<span class="token punctuation">.</span><span class="token function">use_count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"entity still alive"</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"entity was expired"</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"*****Leaving observe*****"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
-void ex4() &#123;
-    puts(&quot;&gt;&gt;&gt;&gt;&gt;Entering ex4&lt;&lt;&lt;&lt;&lt;&quot;);
-    std::weak_ptr&lt;Entity&gt; ew;
-    &#123;
-        puts(&quot;-----Entering scope-----&quot;);
-        auto e1 &#x3D; std::make_shared&lt;Entity&gt;();
-        std::cout &lt;&lt; e1.use_count() &lt;&lt; std::endl;
-        ew &#x3D; e1;
-        std::cout &lt;&lt; e1.use_count() &lt;&lt; std::endl;
-        observe(ew);
-        puts(&quot;-----Leaving scope-----&quot;);
-    &#125;
-    observe(ew);
-    puts(&quot;&gt;&gt;&gt;&gt;&gt;Leaving ex4&lt;&lt;&lt;&lt;&lt;&quot;);
-&#125;
+<span class="token keyword">void</span> <span class="token function">ex4</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">">>>>>Entering ex4&lt;&lt;&lt;&lt;&lt;"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    std<span class="token operator">::</span>weak_ptr<span class="token operator">&lt;</span>Entity<span class="token operator">></span> ew<span class="token punctuation">;</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"-----Entering scope-----"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">auto</span> e1 <span class="token operator">=</span> std<span class="token operator">::</span>make_shared<span class="token operator">&lt;</span>Entity<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> e1<span class="token punctuation">.</span><span class="token function">use_count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+        ew <span class="token operator">=</span> e1<span class="token punctuation">;</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> e1<span class="token punctuation">.</span><span class="token function">use_count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+        <span class="token function">observe</span><span class="token punctuation">(</span>ew<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"-----Leaving scope-----"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">observe</span><span class="token punctuation">(</span>ew<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">">>>>>Leaving ex4&lt;&lt;&lt;&lt;&lt;"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
-int main(int argc, char const *argv[])
-&#123;
-    ex4();
-    return 0;
-&#125;
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">ex4</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
-&gt;&gt;&gt;&gt;&gt;Entering ex4&lt;&lt;&lt;&lt;&lt;
------Entering scope-----
-Entity created!
-1
-1
-*****Entering observe*****
-2
+<span class="token operator">>></span><span class="token operator">>></span><span class="token operator">></span>Entering ex4<span class="token operator">&lt;&lt;</span><span class="token operator">&lt;&lt;</span><span class="token operator">&lt;</span>
+<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>Entering scope<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+Entity created<span class="token operator">!</span>
+<span class="token number">1</span>
+<span class="token number">1</span>
+<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>Entering observe<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>
+<span class="token number">2</span>
 entity still alive
-*****Leaving observe*****
------Leaving scope-----
-Entity destroyed!
-*****Entering observe*****
+<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>Leaving observe<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>
+<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>Leaving scope<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+Entity destroyed<span class="token operator">!</span>
+<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>Entering observe<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>
 entity was expired
-*****Leaving observe*****
-&gt;&gt;&gt;&gt;&gt;Leaving ex4&lt;&lt;&lt;&lt;&lt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>Leaving observe<span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span><span class="token operator">*</span>
+<span class="token operator">>></span><span class="token operator">>></span><span class="token operator">></span>Leaving ex4<span class="token operator">&lt;&lt;</span><span class="token operator">&lt;&lt;</span><span class="token operator">&lt;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

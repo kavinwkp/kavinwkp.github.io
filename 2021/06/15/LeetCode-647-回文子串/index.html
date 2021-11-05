@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -425,32 +425,32 @@
 <p>Given a string <code>s</code>, return the number of <strong>palindromic substrings</strong> in it.</p>
 <p>A string is a palindrome when it <strong>reads the same backward as forward</strong>.</p>
 <p>A substring is a <strong>contiguous sequence</strong> of characters within the string.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: s &#x3D; &quot;abcb&quot;
-Output: 5
-Explanation: Three palindromic strings: &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;b&quot;, &quot;bcb&quot;.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> s <span class="token operator">=</span> <span class="token string">"abcb"</span>
+Output<span class="token operator">:</span> <span class="token number">5</span>
+Explanation<span class="token operator">:</span> Three palindromic strings<span class="token operator">:</span> <span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token string">"c"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token string">"bcb"</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
 <h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>中心是单个字符，会形成奇数回文，如<code>aba</code><br>中心是两个字符，会形成偶数回文，如<code>baab</code><br>在字符串中用两个指针从中心向两边扩展，如果相同就继续扩展，否则该中心结束</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">class Solution &#123;
-public:
-    int cnt &#x3D; 0;
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> cnt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
 
-    void isValue(string s, int i, int j) &#123;
-        &#x2F;&#x2F; 这里用while，如果是回文可以一直扩展下去
-        while (i &gt;&#x3D; 0 &amp;&amp; j &lt; s.size() &amp;&amp; s[i] &#x3D;&#x3D; s[j]) &#123;
-            cnt++;
-            i--;    &#x2F;&#x2F; i往左扩展
-            j++;    &#x2F;&#x2F; j往右扩展
-        &#125;
-    &#125;
+    <span class="token keyword">void</span> <span class="token function">isValue</span><span class="token punctuation">(</span>string s<span class="token punctuation">,</span> <span class="token keyword">int</span> i<span class="token punctuation">,</span> <span class="token keyword">int</span> j<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 这里用while，如果是回文可以一直扩展下去</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">>=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> j <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> s<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            cnt<span class="token operator">++</span><span class="token punctuation">;</span>
+            i<span class="token operator">--</span><span class="token punctuation">;</span>    <span class="token comment">// i往左扩展</span>
+            j<span class="token operator">++</span><span class="token punctuation">;</span>    <span class="token comment">// j往右扩展</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
 
-    int countSubstrings(string s) &#123;
-        for (int i &#x3D; 0; i &lt; s.size(); ++i) &#123;
-            isValue(s, i, i);       &#x2F;&#x2F; 奇数个回文
-            isValue(s, i, i + 1);   &#x2F;&#x2F; 偶数个回文
-        &#125;
-        return cnt;
-    &#125;
+    <span class="token keyword">int</span> <span class="token function">countSubstrings</span><span class="token punctuation">(</span>string s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">isValue</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> i<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment">// 奇数个回文</span>
+            <span class="token function">isValue</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> i<span class="token punctuation">,</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 偶数个回文</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> cnt<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
 
-&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

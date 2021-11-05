@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -420,20 +420,20 @@
                 <h2 id="LeetCode-110-Balanced-Binary-Tree"><a href="#LeetCode-110-Balanced-Binary-Tree" class="headerlink" title="LeetCode 110. Balanced Binary Tree"></a>LeetCode 110. Balanced Binary Tree</h2><p>Given a <strong>binary tree</strong>, determine if it is height-balanced.</p>
 <p>For this problem, a height-balanced binary tree is defined as:</p>
 <p>a binary tree in which the left and right subtrees of every node differ in height by no more than 1.</p>
-<p>Example 1:<br><img src="/2021/07/13/LeetCode-110-%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/110.jpg" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: root &#x3D; [3,9,20,null,null,15,7]
-Output: true<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><img src="/2021/07/13/LeetCode-110-%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/110.jpg" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> root <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">15</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">]</span>
+Output<span class="token operator">:</span> <span class="token boolean">true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>平衡二叉树：左子树和右子树的高度差的绝对值小于1</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int getDepth(TreeNode* root) &#123;
-    if (root &#x3D;&#x3D; nullptr) return 0;
-    int leftDepth &#x3D; getDepth(root-&gt;left);
-    if (leftDepth &#x3D;&#x3D; -1) return -1;
-    int rightDepth &#x3D; getDepth(root-&gt;right);
-    if (rightDepth &#x3D;&#x3D; - 1) return -1;
-    return abs(leftDepth - rightDepth) &gt; 1 ? -1 : 1 + max(leftDepth, rightDepth);
-&#125;
-bool isBalanced(TreeNode* root) &#123;
-    return getDepth(root) &#x3D;&#x3D; -1 ? false : true;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">getDepth</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> leftDepth <span class="token operator">=</span> <span class="token function">getDepth</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>leftDepth <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> rightDepth <span class="token operator">=</span> <span class="token function">getDepth</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>rightDepth <span class="token operator">==</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">abs</span><span class="token punctuation">(</span>leftDepth <span class="token operator">-</span> rightDepth<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">1</span> <span class="token operator">?</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">:</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token function">max</span><span class="token punctuation">(</span>leftDepth<span class="token punctuation">,</span> rightDepth<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">bool</span> <span class="token function">isBalanced</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token function">getDepth</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">?</span> <span class="token boolean">false</span> <span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -421,33 +421,33 @@
 <p>Given a (singly) linked list with head node root, write a function to split the linked list into <code>k consecutive linked list &quot;parts&quot;</code>.</p>
 <p>The length of each part should be <code>as equal as possible</code>: no two parts should have a size <code>differing by more than 1</code>. This may lead to some parts being null.</p>
 <p>The parts should be in order of occurrence in the input list, and parts occurring earlier should always have a size <code>greater than or equal parts occurring later</code>.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: 
-root &#x3D; [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], k &#x3D; 3
-Output: [[1, 2, 3, 4], [5, 6, 7], [8, 9, 10]]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> 
+root <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">3</span>
+Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
 <h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p><code>mod</code>余数要分配到前面的<code>num</code>每一个，也就是前面的每个<code>num</code>都要加1，直到余数减到0</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector&lt;ListNode*&gt; splitListToParts(ListNode* root, int k) &#123;
-    int len &#x3D; 0;
-    ListNode *cur &#x3D; head;
-    while (cur) &#123;
-        len++;
-        cur &#x3D; cur-&gt;next;
-    &#125;
-    int num &#x3D; len &#x2F; k;  &#x2F;&#x2F; 每块有多少个
-    int mod &#x3D; len % k;  &#x2F;&#x2F; 还剩多少个，要均匀分配
-    vector&lt;ListNode*&gt; res(k);
-    for (unsigned i &#x3D; 0; head &amp;&amp; i &lt; k; ++i) &#123;  &#x2F;&#x2F; head确保链接完最后一个元素之后可以退出
-        res[i] &#x3D; head;
-        int count &#x3D; num + (mod &gt; 0 ? 1 : 0);    &#x2F;&#x2F; 有余数就加1
-        mod--;
-        while (--count) &#123;   &#x2F;&#x2F; 从第一个节点开始走，走count-1步
-            head &#x3D; head-&gt;next;
-        &#125;
-        ListNode *tmp &#x3D; head-&gt;next;
-        head-&gt;next &#x3D; nullptr;   &#x2F;&#x2F; 断开之后块就分出来了
-        head &#x3D; tmp;
-    &#125;
-    return res;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span>ListNode<span class="token operator">*</span><span class="token operator">></span> <span class="token function">splitListToParts</span><span class="token punctuation">(</span>ListNode<span class="token operator">*</span> root<span class="token punctuation">,</span> <span class="token keyword">int</span> k<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    ListNode <span class="token operator">*</span>cur <span class="token operator">=</span> head<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>cur<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        len<span class="token operator">++</span><span class="token punctuation">;</span>
+        cur <span class="token operator">=</span> cur<span class="token operator">-></span>next<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">int</span> num <span class="token operator">=</span> len <span class="token operator">/</span> k<span class="token punctuation">;</span>  <span class="token comment">// 每块有多少个</span>
+    <span class="token keyword">int</span> mod <span class="token operator">=</span> len <span class="token operator">%</span> k<span class="token punctuation">;</span>  <span class="token comment">// 还剩多少个，要均匀分配</span>
+    vector<span class="token operator">&lt;</span>ListNode<span class="token operator">*</span><span class="token operator">></span> <span class="token function">res</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> head <span class="token operator">&amp;&amp;</span> i <span class="token operator">&lt;</span> k<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>  <span class="token comment">// head确保链接完最后一个元素之后可以退出</span>
+        res<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> head<span class="token punctuation">;</span>
+        <span class="token keyword">int</span> count <span class="token operator">=</span> num <span class="token operator">+</span> <span class="token punctuation">(</span>mod <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">?</span> <span class="token number">1</span> <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 有余数就加1</span>
+        mod<span class="token operator">--</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">--</span>count<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>   <span class="token comment">// 从第一个节点开始走，走count-1步</span>
+            head <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        ListNode <span class="token operator">*</span>tmp <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>
+        head<span class="token operator">-></span>next <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>   <span class="token comment">// 断开之后块就分出来了</span>
+        head <span class="token operator">=</span> tmp<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

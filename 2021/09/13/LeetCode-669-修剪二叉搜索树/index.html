@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -421,19 +421,19 @@
 <p>Return the root of the trimmed binary search tree. Note that the root may change depending on the given bounds.</p>
 <p>Example 1:</p>
 <p><img src="/2021/09/13/LeetCode-669-%E4%BF%AE%E5%89%AA%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/669_1.jpg" alt></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: root &#x3D; [1,0,2], low &#x3D; 1, high &#x3D; 2
-Output: [1,null,2]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>Example 2:<br><img src="/2021/09/13/LeetCode-669-%E4%BF%AE%E5%89%AA%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/669_2.jpg" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: root &#x3D; [3,0,4,null,2,null,null,1], low &#x3D; 1, high &#x3D; 3
-Output: [3,2,null,1]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> root <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> low <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> high <span class="token operator">=</span> <span class="token number">2</span>
+Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>Example 2:<br><img src="/2021/09/13/LeetCode-669-%E4%BF%AE%E5%89%AA%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/669_2.jpg" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> root <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> low <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> high <span class="token operator">=</span> <span class="token number">3</span>
+Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>如果节点值小于左区间，返回递归处理的右子树，因为左子树肯定也都小于，直接扔掉<br>如果节点值大于右区间，返回递归处理的左子树，扔掉右子树<br>否则，分别递归处理左子树和右子树</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode* trimBST(TreeNode* root, int low, int high) &#123;
-    if (!root) return root;
-    if (root-&gt;val &lt; low) return trimBST(root-&gt;right, low, high);
-    if (root-&gt;val &gt; high) return trimBST(root-&gt;left, low, high);
-    root-&gt;left &#x3D; trimBST(root-&gt;left, low, high);
-    root-&gt;right &#x3D; trimBST(root-&gt;right, low, high);
-    return root;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode<span class="token operator">*</span> <span class="token function">trimBST</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">,</span> <span class="token keyword">int</span> low<span class="token punctuation">,</span> <span class="token keyword">int</span> high<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token punctuation">)</span> <span class="token keyword">return</span> root<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span>val <span class="token operator">&lt;</span> low<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">trimBST</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">,</span> low<span class="token punctuation">,</span> high<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span>val <span class="token operator">></span> high<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">trimBST</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">,</span> low<span class="token punctuation">,</span> high<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    root<span class="token operator">-></span>left <span class="token operator">=</span> <span class="token function">trimBST</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">,</span> low<span class="token punctuation">,</span> high<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    root<span class="token operator">-></span>right <span class="token operator">=</span> <span class="token function">trimBST</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">,</span> low<span class="token punctuation">,</span> high<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> root<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

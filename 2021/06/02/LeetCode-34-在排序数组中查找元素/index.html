@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -421,63 +421,63 @@
 <p>Given an array of integers nums sorted in <code>ascending order</code>, find the starting and ending position of a given target value.</p>
 <p>If target is not found in the array, return <code>[-1, -1]</code>.</p>
 <p>You must write an algorithm with <code>O(logn)</code> runtime complexity.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: nums &#x3D; [5,7,7,8,8,10], target &#x3D; 8
-Output: [3,4]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>Example 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: nums &#x3D; [5,7,7,8,8,10], target &#x3D; 6
-Output: [-1,-1]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">,</span> target <span class="token operator">=</span> <span class="token number">8</span>
+Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>Example 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">,</span> target <span class="token operator">=</span> <span class="token number">6</span>
+Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h2 id="二分模板"><a href="#二分模板" class="headerlink" title="二分模板"></a>二分模板</h2><center>
 <img src="/2021/06/02/LeetCode-34-%E5%9C%A8%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E6%9F%A5%E6%89%BE%E5%85%83%E7%B4%A0/34.png#pic_center" width="100%" height="100%">
 </center>
 
-<p><strong>模板一</strong>：找最左边的元素<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">while (l &lt; r) &#123;
-    int mid &#x3D; l + r &gt;&gt; 1;
-    if (check(mid)) r &#x3D; mid;
-    else l &#x3D; mid + 1；
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
-<p><strong>模板二</strong>：找最右边的元素<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">while (l &lt; r) &#123;
-    int mid &#x3D; l + r + 1 &gt;&gt; 1;
-    if (check(mid)) l &#x3D; mid;
-    else r &#x3D; mid - 1；
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<p><strong>模板一</strong>：找最左边的元素<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">while</span> <span class="token punctuation">(</span>l <span class="token operator">&lt;</span> r<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> mid <span class="token operator">=</span> l <span class="token operator">+</span> r <span class="token operator">>></span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">check</span><span class="token punctuation">(</span>mid<span class="token punctuation">)</span><span class="token punctuation">)</span> r <span class="token operator">=</span> mid<span class="token punctuation">;</span>
+    <span class="token keyword">else</span> l <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span>；
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<p><strong>模板二</strong>：找最右边的元素<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">while</span> <span class="token punctuation">(</span>l <span class="token operator">&lt;</span> r<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> mid <span class="token operator">=</span> l <span class="token operator">+</span> r <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">>></span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">check</span><span class="token punctuation">(</span>mid<span class="token punctuation">)</span><span class="token punctuation">)</span> l <span class="token operator">=</span> mid<span class="token punctuation">;</span>
+    <span class="token keyword">else</span> r <span class="token operator">=</span> mid <span class="token operator">-</span> <span class="token number">1</span>；
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
 <h2 id="method-用两次二分"><a href="#method-用两次二分" class="headerlink" title="method: 用两次二分"></a>method: 用两次二分</h2><p>一次找大于等于<code>target</code>的最小值<br>一次找小于等于<code>target</code>的最大值</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector&lt;int&gt; searchRange(vector&lt;int&gt;&amp; nums, int target) &#123;
-    vector&lt;int&gt; res&#123;-1, -1&#125;;
-    if (nums.size() &#x3D;&#x3D; 0) return res;
-    &#x2F;&#x2F; 第一次：找大于等于target的最小数
-    int l &#x3D; 0, r &#x3D; nums.size() - 1;
-    while (l &lt; r) &#123;
-        int mid &#x3D; l + r &gt;&gt; 1;
-        if (nums[mid] &gt;&#x3D; target) r &#x3D; mid;
-        else l &#x3D; mid + 1;
-    &#125;
-    if (nums[r] &#x3D;&#x3D; target) res[0] &#x3D; r;
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">searchRange</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">,</span> <span class="token keyword">int</span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> res<span class="token punctuation">&#123;</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+    <span class="token comment">// 第一次：找大于等于target的最小数</span>
+    <span class="token keyword">int</span> l <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> r <span class="token operator">=</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>l <span class="token operator">&lt;</span> r<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> mid <span class="token operator">=</span> l <span class="token operator">+</span> r <span class="token operator">>></span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">>=</span> target<span class="token punctuation">)</span> r <span class="token operator">=</span> mid<span class="token punctuation">;</span>
+        <span class="token keyword">else</span> l <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>r<span class="token punctuation">]</span> <span class="token operator">==</span> target<span class="token punctuation">)</span> res<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> r<span class="token punctuation">;</span>
 
-    &#x2F;&#x2F; 第二次：找小于等于target的最大数
-    r &#x3D; nums.size() - 1;
-    while (l &lt; r) &#123;
-        int mid &#x3D; l + r + 1 &gt;&gt; 1;
-        if (nums[mid] &lt;&#x3D; target) l &#x3D; mid;
-        else r &#x3D; mid - 1;
-    &#125;
-    if (nums[r] &#x3D;&#x3D; target) res[1] &#x3D; r;
-    return res;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token comment">// 第二次：找小于等于target的最大数</span>
+    r <span class="token operator">=</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>l <span class="token operator">&lt;</span> r<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> mid <span class="token operator">=</span> l <span class="token operator">+</span> r <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">>></span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">&lt;=</span> target<span class="token punctuation">)</span> l <span class="token operator">=</span> mid<span class="token punctuation">;</span>
+        <span class="token keyword">else</span> r <span class="token operator">=</span> mid <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>r<span class="token punctuation">]</span> <span class="token operator">==</span> target<span class="token punctuation">)</span> res<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> r<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="LeetCode-35-Search-Insert-Position"><a href="#LeetCode-35-Search-Insert-Position" class="headerlink" title="LeetCode 35. Search Insert Position"></a>LeetCode 35. Search Insert Position</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/search-insert-position/">LeetCode</a></p>
 <p>Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.</p>
 <p>You must write an algorithm with <code>O(log n)</code> runtime complexity.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: nums &#x3D; [1,3,5,6], target &#x3D; 5
-Output: 2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
-<p>Example 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: nums &#x3D; [1,3,5,6], target &#x3D; 7
-Output: 4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">,</span> target <span class="token operator">=</span> <span class="token number">5</span>
+Output<span class="token operator">:</span> <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p>Example 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">,</span> target <span class="token operator">=</span> <span class="token number">7</span>
+Output<span class="token operator">:</span> <span class="token number">4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h2 id="method-二分模板一"><a href="#method-二分模板一" class="headerlink" title="method: 二分模板一"></a>method: 二分模板一</h2><p>找大于等于<code>target</code>的最小数，用模板一不会越界<br>用模板二，当<code>l</code>指向<code>nums.size() - 1</code>，<code>r</code>指向<code>nums.size()</code>的时候，<code>mid = nums.size()</code>，此时上取整越界</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int searchInsert(vector&lt;int&gt;&amp; nums, int target) &#123;
-    int l &#x3D; 0, r &#x3D; nums.size(); &#x2F;&#x2F; 可能找到最后一个元素的下一个位置
-    while (l &lt; r) &#123;
-        int mid &#x3D; l + r &gt;&gt; 1;
-        if (nums[mid] &gt;&#x3D; target) r &#x3D; mid;
-        else l &#x3D; mid + 1;
-    &#125;
-    return r;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">searchInsert</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">,</span> <span class="token keyword">int</span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> l <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> r <span class="token operator">=</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 可能找到最后一个元素的下一个位置</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>l <span class="token operator">&lt;</span> r<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> mid <span class="token operator">=</span> l <span class="token operator">+</span> r <span class="token operator">>></span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">>=</span> target<span class="token punctuation">)</span> r <span class="token operator">=</span> mid<span class="token punctuation">;</span>
+        <span class="token keyword">else</span> l <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> r<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

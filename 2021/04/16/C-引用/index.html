@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -418,73 +418,73 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!-- toc -->
-<h2 id="什么叫引用"><a href="#什么叫引用" class="headerlink" title="什么叫引用"></a>什么叫引用</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
-using namespace std;
-int main(int argc, char const *argv[]) &#123;
-    int original &#x3D; 30;
-    cout &lt;&lt; &quot;address of original: &quot; &lt;&lt; hex &lt;&lt; &amp;original &lt;&lt; endl;
+<h2 id="什么叫引用"><a href="#什么叫引用" class="headerlink" title="什么叫引用"></a>什么叫引用</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> original <span class="token operator">=</span> <span class="token number">30</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"address of original: "</span> <span class="token operator">&lt;&lt;</span> hex <span class="token operator">&lt;&lt;</span> <span class="token operator">&amp;</span>original <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
     
-    &#x2F;&#x2F; 定义一个ref引用original
-    int&amp; ref &#x3D; original;
-    cout &lt;&lt; &quot;address of ref: &quot; &lt;&lt; hex &lt;&lt; &amp;ref &lt;&lt; endl;
-    cout &lt;&lt; dec &lt;&lt; ref &lt;&lt; endl;
-    return 0;
-&#125;
-address of original: 0x7ffc14a1acfc
-address of ref: 0x7ffc14a1acfc
-30<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token comment">// 定义一个ref引用original</span>
+    <span class="token keyword">int</span><span class="token operator">&amp;</span> ref <span class="token operator">=</span> original<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"address of ref: "</span> <span class="token operator">&lt;&lt;</span> hex <span class="token operator">&lt;&lt;</span> <span class="token operator">&amp;</span>ref <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> dec <span class="token operator">&lt;&lt;</span> ref <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+address of original<span class="token operator">:</span> <span class="token number">0x7ffc14a1acfc</span>
+address of ref<span class="token operator">:</span> <span class="token number">0x7ffc14a1acfc</span>
+<span class="token number">30</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以看到<code>original</code>和<code>ref</code>的地址和数值都是一样的，所以引用就相当于起了个别名，注意与指针区别</p>
-<h2 id="引用有什么用"><a href="#引用有什么用" class="headerlink" title="引用有什么用"></a>引用有什么用</h2><p>函数在传参数的时候，如果是按值传递，将会对变量进行复制，如果变量很大，就会消耗很多的时间和内存，所以使用引用可以对变量本身直接继续修改<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
-using namespace std;
+<h2 id="引用有什么用"><a href="#引用有什么用" class="headerlink" title="引用有什么用"></a>引用有什么用</h2><p>函数在传参数的时候，如果是按值传递，将会对变量进行复制，如果变量很大，就会消耗很多的时间和内存，所以使用引用可以对变量本身直接继续修改<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 
-void DoSomeThing(int&amp; val) &#123;
-    cout &lt;&lt; &quot;address of val: &quot; &lt;&lt; hex &lt;&lt; &amp;val &lt;&lt; endl;
-    val +&#x3D; 100; &#x2F;&#x2F; 对变量值进行增加操作
-&#125;
+<span class="token keyword">void</span> <span class="token function">DoSomeThing</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">&amp;</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"address of val: "</span> <span class="token operator">&lt;&lt;</span> hex <span class="token operator">&lt;&lt;</span> <span class="token operator">&amp;</span>val <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    val <span class="token operator">+=</span> <span class="token number">100</span><span class="token punctuation">;</span> <span class="token comment">// 对变量值进行增加操作</span>
+<span class="token punctuation">&#125;</span>
 
-int main(int argc, char const *argv[])
-&#123;
-    int original &#x3D; 30;
-    cout &lt;&lt; &quot;address of original: &quot; &lt;&lt; hex &lt;&lt; &amp;original &lt;&lt; endl;
-    int&amp; ref &#x3D; original;
-    cout &lt;&lt; &quot;address of ref: &quot; &lt;&lt; hex &lt;&lt; &amp;ref &lt;&lt; endl;
-    cout &lt;&lt; dec &lt;&lt; ref &lt;&lt; endl;
-    DoSomeThing(ref);
-    cout &lt;&lt; dec &lt;&lt; original &lt;&lt; endl;
-    return 0;
-&#125;
-address of original: 0x7ffc14a1acfc
-address of ref: 0x7ffc14a1acfc
-30
-address of val: 0x7ffc14a1acfc
-130 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>可以看到最初的变量<code>original</code>的值发生了变化，按引用传递的形参的地址还是和原来一样的</p>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> original <span class="token operator">=</span> <span class="token number">30</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"address of original: "</span> <span class="token operator">&lt;&lt;</span> hex <span class="token operator">&lt;&lt;</span> <span class="token operator">&amp;</span>original <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token keyword">int</span><span class="token operator">&amp;</span> ref <span class="token operator">=</span> original<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"address of ref: "</span> <span class="token operator">&lt;&lt;</span> hex <span class="token operator">&lt;&lt;</span> <span class="token operator">&amp;</span>ref <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> dec <span class="token operator">&lt;&lt;</span> ref <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token function">DoSomeThing</span><span class="token punctuation">(</span>ref<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> dec <span class="token operator">&lt;&lt;</span> original <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+address of original<span class="token operator">:</span> <span class="token number">0x7ffc14a1acfc</span>
+address of ref<span class="token operator">:</span> <span class="token number">0x7ffc14a1acfc</span>
+<span class="token number">30</span>
+address of val<span class="token operator">:</span> <span class="token number">0x7ffc14a1acfc</span>
+<span class="token number">130</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>可以看到最初的变量<code>original</code>的值发生了变化，按引用传递的形参的地址还是和原来一样的</p>
 <h2 id="加个const"><a href="#加个const" class="headerlink" title="加个const"></a>加个const</h2><p>有时候我们希望函数只能使用传递的参数，不能修改他，就需要加个<code>const</code></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">const int&amp; ref2 &#x3D; ref;
-int num &#x3D; 10;
-ref2 &#x3D; num; &#x2F;&#x2F; 报错，ref2是只读参数，不能作为左值
-ref2 &#x3D; 100; &#x2F;&#x2F; 报错，ref2是只读参数，不能作为左值
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">&amp;</span> ref2 <span class="token operator">=</span> ref<span class="token punctuation">;</span>
+<span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+ref2 <span class="token operator">=</span> num<span class="token punctuation">;</span> <span class="token comment">// 报错，ref2是只读参数，不能作为左值</span>
+ref2 <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span> <span class="token comment">// 报错，ref2是只读参数，不能作为左值</span>
 
-void DoSomeThing(const int&amp; val) &#123;
-    cout &lt;&lt; &quot;address of val: &quot; &lt;&lt; hex &lt;&lt; &amp;val &lt;&lt; endl;
-    val +&#x3D; 100; &#x2F;&#x2F; 报错，ref2是只读参数，不能作为左值
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">void</span> <span class="token function">DoSomeThing</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">&amp;</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"address of val: "</span> <span class="token operator">&lt;&lt;</span> hex <span class="token operator">&lt;&lt;</span> <span class="token operator">&amp;</span>val <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    val <span class="token operator">+=</span> <span class="token number">100</span><span class="token punctuation">;</span> <span class="token comment">// 报错，ref2是只读参数，不能作为左值</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>不能修改的加个<code>const</code>，需要修改的就不用加<code>const</code>，可以像下面这样写</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">
-void DoSomeThing(const int&amp; val, int&amp; res) &#123;
-    res &#x3D; val * val;
-&#125;
+<span class="token keyword">void</span> <span class="token function">DoSomeThing</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">&amp;</span> val<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">&amp;</span> res<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    res <span class="token operator">=</span> val <span class="token operator">*</span> val<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
-int main(int argc, char const *argv[])
-&#123;
-    int original &#x3D; 30;
-    int res &#x3D; 0;
-    DoSomeThing(original, res);
-    cout &lt;&lt; original &lt;&lt; endl;
-    cout &lt;&lt; res &lt;&lt; endl;
-    return 0;
-&#125;
-30  &#x2F;&#x2F;const引用的值没有被改变
-900 &#x2F;&#x2F;没有const的值被修改了
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> original <span class="token operator">=</span> <span class="token number">30</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> res <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token function">DoSomeThing</span><span class="token punctuation">(</span>original<span class="token punctuation">,</span> res<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> original <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> res <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token number">30</span>  <span class="token comment">//const引用的值没有被改变</span>
+<span class="token number">900</span> <span class="token comment">//没有const的值被修改了</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>

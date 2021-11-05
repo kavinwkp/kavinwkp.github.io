@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -435,33 +435,33 @@
 
 <p>双指针，前指针找等于<code>val</code>的数，后指针找不等于<code>val</code>的数，然后交换。</p>
 <p><strong>注意</strong>：这种方法会改变元素的相对位置</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int removeElement(vector&lt;int&gt;&amp; nums, int val) &#123;
-    if (nums.empty()) return 0;
-    int l &#x3D; 0, r &#x3D; nums.size() - 1;
-    while (l &lt; r) &#123;
-        while (l &lt; r &amp;&amp; nums[l] !&#x3D; val) l++;
-        while (l &lt; r &amp;&amp; nums[r] &#x3D;&#x3D; val) r--;
-        swap(nums, l, r);
-    &#125;
-    return (nums[l] &#x3D;&#x3D; val ? l : l + 1);
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">removeElement</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">,</span> <span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> l <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> r <span class="token operator">=</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>l <span class="token operator">&lt;</span> r<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>l <span class="token operator">&lt;</span> r <span class="token operator">&amp;&amp;</span> nums<span class="token punctuation">[</span>l<span class="token punctuation">]</span> <span class="token operator">!=</span> val<span class="token punctuation">)</span> l<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>l <span class="token operator">&lt;</span> r <span class="token operator">&amp;&amp;</span> nums<span class="token punctuation">[</span>r<span class="token punctuation">]</span> <span class="token operator">==</span> val<span class="token punctuation">)</span> r<span class="token operator">--</span><span class="token punctuation">;</span>
+        <span class="token function">swap</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> l<span class="token punctuation">,</span> r<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>l<span class="token punctuation">]</span> <span class="token operator">==</span> val <span class="token operator">?</span> l <span class="token operator">:</span> l <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="method-2-同向双指针"><a href="#method-2-同向双指针" class="headerlink" title="method 2: 同向双指针"></a>method 2: 同向双指针</h2><p>不改变相对位置</p>
 <ul>
 <li>如果右指针不等于<code>val</code>，就把右指针的值赋给左指针，同时移动一格</li>
 <li>如果右指针等于<code>val</code>，右指针移动，左指针不动</li>
 </ul>
 <p>时间复杂度：$O(n)$<br>空间复杂度：$O(1)$</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int removeElement(vector&lt;int&gt;&amp; nums, int val) &#123;
-    int l &#x3D; 0, r &#x3D; 0;
-    while (r &lt; nums.size()) &#123;
-        if (nums[r] !&#x3D; val) &#123;
-            nums[l] &#x3D; nums[r];
-            l++;
-        &#125;
-        r++;
-    &#125;
-    return l;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">removeElement</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">,</span> <span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> l <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> r <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>r <span class="token operator">&lt;</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>r<span class="token punctuation">]</span> <span class="token operator">!=</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            nums<span class="token punctuation">[</span>l<span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            l<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        r<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> l<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>

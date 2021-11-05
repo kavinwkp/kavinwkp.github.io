@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -422,75 +422,75 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!-- toc -->
-<h2 id="list双向链表"><a href="#list双向链表" class="headerlink" title="list双向链表"></a>list双向链表</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
-#include &lt;cstring&gt;
-#include &lt;list&gt;
-using namespace std;
+<h2 id="list双向链表"><a href="#list双向链表" class="headerlink" title="list双向链表"></a>list双向链表</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cstring></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;list></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 
-struct Contact
-&#123;
-    string name;
-    int num;
-    Contact(const string&amp; _name, const int&amp; _num) &#123;
-        name &#x3D; _name;
-        num &#x3D; _num;
-    &#125;
-    &#x2F;&#x2F; 需要重载&quot;&lt;&quot;运算符，让list知道怎么排序
-    bool operator &lt; (const Contact&amp; itemToCompare) const &#123;
-        return this-&gt;num &lt; itemToCompare.num;
-    &#125;
-&#125;;
+<span class="token keyword">struct</span> <span class="token class-name">Contact</span>
+<span class="token punctuation">&#123;</span>
+    string name<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> num<span class="token punctuation">;</span>
+    <span class="token function">Contact</span><span class="token punctuation">(</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span> _name<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">&amp;</span> _num<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        name <span class="token operator">=</span> _name<span class="token punctuation">;</span>
+        num <span class="token operator">=</span> _num<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">// 需要重载"&lt;"运算符，让list知道怎么排序</span>
+    <span class="token keyword">bool</span> <span class="token keyword">operator</span> <span class="token operator">&lt;</span> <span class="token punctuation">(</span><span class="token keyword">const</span> Contact<span class="token operator">&amp;</span> itemToCompare<span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token operator">-></span>num <span class="token operator">&lt;</span> itemToCompare<span class="token punctuation">.</span>num<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-&#x2F;&#x2F; 自定义二元谓词函数实现自定义排序顺序
-bool descending(const int&amp; lsh, const int&amp; rsh) &#123;
-    return lsh &gt; rsh;
-&#125;
+<span class="token comment">// 自定义二元谓词函数实现自定义排序顺序</span>
+<span class="token keyword">bool</span> <span class="token function">descending</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">&amp;</span> lsh<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">&amp;</span> rsh<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> lsh <span class="token operator">></span> rsh<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
-int main(int argc, char const *argv[])
-&#123;
-    list&lt;int&gt; li &#x3D; &#123;12, 23&#125;;
-    info(li);   
-    &#x2F;&#x2F; 12 23 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    list<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> li <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">23</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token function">info</span><span class="token punctuation">(</span>li<span class="token punctuation">)</span><span class="token punctuation">;</span>   
+    <span class="token comment">// 12 23 </span>
 
-    li.push_back(100);  &#x2F;&#x2F; 从尾部插入
-    li.push_front(-1);  &#x2F;&#x2F; 从头部插入
-    info(li);   
-    &#x2F;&#x2F; -1 12 23 100
+    li<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 从尾部插入</span>
+    li<span class="token punctuation">.</span><span class="token function">push_front</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 从头部插入</span>
+    <span class="token function">info</span><span class="token punctuation">(</span>li<span class="token punctuation">)</span><span class="token punctuation">;</span>   
+    <span class="token comment">// -1 12 23 100</span>
 
-    li.insert(li.begin(), 2, 20);
-    info(li);   
-    &#x2F;&#x2F; 20 20 -1 12 23 100 
+    li<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>li<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">info</span><span class="token punctuation">(</span>li<span class="token punctuation">)</span><span class="token punctuation">;</span>   
+    <span class="token comment">// 20 20 -1 12 23 100 </span>
 
-    li.pop_back();  &#x2F;&#x2F; 从尾部弹出
-    li.pop_front(); &#x2F;&#x2F; 从头部弹出
-    info(li);
-    &#x2F;&#x2F; 20 -1 12 23 
+    li<span class="token punctuation">.</span><span class="token function">pop_back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 从尾部弹出</span>
+    li<span class="token punctuation">.</span><span class="token function">pop_front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 从头部弹出</span>
+    <span class="token function">info</span><span class="token punctuation">(</span>li<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 20 -1 12 23 </span>
 
-    li.reverse();   &#x2F;&#x2F; 翻转
-    info(li);
-    &#x2F;&#x2F; 23 12 -1 20 
+    li<span class="token punctuation">.</span><span class="token function">reverse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 翻转</span>
+    <span class="token function">info</span><span class="token punctuation">(</span>li<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 23 12 -1 20 </span>
 
-    li.sort();      &#x2F;&#x2F; 默认是从小到大排序
-    info(li);
-    &#x2F;&#x2F; -1 12 20 23 
+    li<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">// 默认是从小到大排序</span>
+    <span class="token function">info</span><span class="token punctuation">(</span>li<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// -1 12 20 23 </span>
 
-    li.sort(descending);    &#x2F;&#x2F; 自定义从大到小排序
-    info(li);
-    &#x2F;&#x2F; 23 20 12 -1 
+    li<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span>descending<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 自定义从大到小排序</span>
+    <span class="token function">info</span><span class="token punctuation">(</span>li<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 23 20 12 -1 </span>
 
-    Contact c1(&quot;kavin&quot;, 12);
-    Contact c2(&quot;jack&quot;, 23);
-    Contact c3(&quot;lisa&quot;, 34);
-    list&lt;Contact&gt; contacts &#x3D; &#123;c1, c2, c3&#125;;
-    contacts.sort();
-    for (auto it : contacts) &#123;
-        it.info();
-    &#125;
-    return 0;
-&#125;
-name&#x3D;kavin, num&#x3D;12
-name&#x3D;jack, num&#x3D;23
-name&#x3D;lisa, num&#x3D;34<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    Contact <span class="token function">c1</span><span class="token punctuation">(</span><span class="token string">"kavin"</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Contact <span class="token function">c2</span><span class="token punctuation">(</span><span class="token string">"jack"</span><span class="token punctuation">,</span> <span class="token number">23</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Contact <span class="token function">c3</span><span class="token punctuation">(</span><span class="token string">"lisa"</span><span class="token punctuation">,</span> <span class="token number">34</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    list<span class="token operator">&lt;</span>Contact<span class="token operator">></span> contacts <span class="token operator">=</span> <span class="token punctuation">&#123;</span>c1<span class="token punctuation">,</span> c2<span class="token punctuation">,</span> c3<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    contacts<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> it <span class="token operator">:</span> contacts<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        it<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+name<span class="token operator">=</span>kavin<span class="token punctuation">,</span> num<span class="token operator">=</span><span class="token number">12</span>
+name<span class="token operator">=</span>jack<span class="token punctuation">,</span> num<span class="token operator">=</span><span class="token number">23</span>
+name<span class="token operator">=</span>lisa<span class="token punctuation">,</span> num<span class="token operator">=</span><span class="token number">34</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

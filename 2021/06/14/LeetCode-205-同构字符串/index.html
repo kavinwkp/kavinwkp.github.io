@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -421,19 +421,19 @@
 <p>Given two strings s and t, determine if they are isomorphic.</p>
 <p>Two strings s and t are isomorphic if <code>the characters in s can be replaced to get t</code>.</p>
 <p>All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character, but a character may map to itself.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: s &#x3D; &quot;egg&quot;, t &#x3D; &quot;add&quot;
-Output: true<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> s <span class="token operator">=</span> <span class="token string">"egg"</span><span class="token punctuation">,</span> t <span class="token operator">=</span> <span class="token string">"add"</span>
+Output<span class="token operator">:</span> <span class="token boolean">true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>用一个长度为<code>256</code>的数组记录每个字符上一次出现的位置<br>如果两个字符上一次出现的位置相同，就更新为这一次的位置，继续<br>否则直接返回<code>false</code></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">bool isIsomorphic(string s, string t) &#123;
-    int preS[256] &#x3D; &#123;0&#125;;
-    int preT[256] &#x3D; &#123;0&#125;;
-    for (int i &#x3D; 0; i &lt; s.size(); ++i) &#123;
-        if (preS[int(s[i])] !&#x3D; preT[int(t[i])]) return false;
-        preS[int(s[i])] &#x3D; i + 1;    &#x2F;&#x2F; 更新出现位置
-        preT[int(t[i])] &#x3D; i + 1;
-    &#125;
-    return true;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">bool</span> <span class="token function">isIsomorphic</span><span class="token punctuation">(</span>string s<span class="token punctuation">,</span> string t<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> preS<span class="token punctuation">[</span><span class="token number">256</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> preT<span class="token punctuation">[</span><span class="token number">256</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>preS<span class="token punctuation">[</span><span class="token keyword">int</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">!=</span> preT<span class="token punctuation">[</span><span class="token keyword">int</span><span class="token punctuation">(</span>t<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+        preS<span class="token punctuation">[</span><span class="token keyword">int</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>    <span class="token comment">// 更新出现位置</span>
+        preT<span class="token punctuation">[</span><span class="token keyword">int</span><span class="token punctuation">(</span>t<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

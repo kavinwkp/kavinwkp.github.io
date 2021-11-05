@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -419,53 +419,53 @@
             <div id="articleContent">
                 <h2 id="LeetCode-61-Rotate-List"><a href="#LeetCode-61-Rotate-List" class="headerlink" title="LeetCode 61. Rotate List"></a>LeetCode 61. Rotate List</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/rotate-list/">LeetCode</a></p>
 <p>Given the head of a linked list, rotate the list to the right by k places.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: head &#x3D; [1,2,3,4,5], k &#x3D; 2
-Output: [4,5,1,2,3]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> head <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">2</span>
+Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p><code>p1</code>找到移动之后的头结点<code>p1-&gt;next</code><br><code>p2</code>指向末尾节点，可以链接成环</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode* rotateRight(ListNode* head, int k) &#123;
-    if (!k || !head || !head-&gt;next) return head;
-    int len &#x3D; 0;
-    ListNode *dummy &#x3D; new ListNode(0, head);
-    while (head) &#123;
-        len++;
-        head &#x3D; head-&gt;next;
-    &#125;
-    k %&#x3D; len;
-    if (!k) return dummy-&gt;next;
-    ListNode *p1 &#x3D; dummy;
-    ListNode *p2 &#x3D; dummy;
-    while (k--) p2 &#x3D; p2-&gt;next;
-    while (p2-&gt;next) &#123;
-        p1 &#x3D; p1-&gt;next;
-        p2 &#x3D; p2-&gt;next;
-    &#125;   &#x2F;&#x2F; 找到末尾第k个节点
-    head &#x3D; p1-&gt;next;    &#x2F;&#x2F; p1-&gt;next是新的头结点
-    p1-&gt;next &#x3D; nullptr;
-    p2-&gt;next &#x3D; dummy-&gt;next;
-    return head;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode<span class="token operator">*</span> <span class="token function">rotateRight</span><span class="token punctuation">(</span>ListNode<span class="token operator">*</span> head<span class="token punctuation">,</span> <span class="token keyword">int</span> k<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>k <span class="token operator">||</span> <span class="token operator">!</span>head <span class="token operator">||</span> <span class="token operator">!</span>head<span class="token operator">-></span>next<span class="token punctuation">)</span> <span class="token keyword">return</span> head<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    ListNode <span class="token operator">*</span>dummy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">ListNode</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> head<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>head<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        len<span class="token operator">++</span><span class="token punctuation">;</span>
+        head <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    k <span class="token operator">%=</span> len<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>k<span class="token punctuation">)</span> <span class="token keyword">return</span> dummy<span class="token operator">-></span>next<span class="token punctuation">;</span>
+    ListNode <span class="token operator">*</span>p1 <span class="token operator">=</span> dummy<span class="token punctuation">;</span>
+    ListNode <span class="token operator">*</span>p2 <span class="token operator">=</span> dummy<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>k<span class="token operator">--</span><span class="token punctuation">)</span> p2 <span class="token operator">=</span> p2<span class="token operator">-></span>next<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>p2<span class="token operator">-></span>next<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        p1 <span class="token operator">=</span> p1<span class="token operator">-></span>next<span class="token punctuation">;</span>
+        p2 <span class="token operator">=</span> p2<span class="token operator">-></span>next<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>   <span class="token comment">// 找到末尾第k个节点</span>
+    head <span class="token operator">=</span> p1<span class="token operator">-></span>next<span class="token punctuation">;</span>    <span class="token comment">// p1->next是新的头结点</span>
+    p1<span class="token operator">-></span>next <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+    p2<span class="token operator">-></span>next <span class="token operator">=</span> dummy<span class="token operator">-></span>next<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> head<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h3><p><code>p1</code>不需要根据<code>p2</code>给定的间隔<code>(k%len)</code>来移动，因为有周期，所以<code>p1</code>可以自己移动<code>len-(k%len)</code>，所以<code>p2</code>指针是没必要的，可以用已经移动到末尾的<code>head</code>来完成链接成环</p>
 <center>
 <img src="/2021/06/10/LeetCode-61-%E6%97%8B%E8%BD%AC%E9%93%BE%E8%A1%A8/111.png#pic_center" width="100%" height="100%">
 </center>
 
 
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode* rotateRight(ListNode* head, int k) &#123;
-    if (!k || !head || !head-&gt;next) return head;
-    int len &#x3D; 1;
-    ListNode *dummy &#x3D; new ListNode(0, head);
-    while (head-&gt;next) &#123;
-        len++;
-        head &#x3D; head-&gt;next;
-    &#125;
-    int add &#x3D; len - (k % len);
-    if (add &#x3D;&#x3D; len) return dummy-&gt;next;
-    head-&gt;next &#x3D; dummy-&gt;next;           &#x2F;&#x2F; 链接成环
-    while (add--) head &#x3D; head-&gt;next;    &#x2F;&#x2F; 找新的头结点
-    ListNode *newHead &#x3D; head-&gt;next;
-    head-&gt;next &#x3D; nullptr;
-    return newHead;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode<span class="token operator">*</span> <span class="token function">rotateRight</span><span class="token punctuation">(</span>ListNode<span class="token operator">*</span> head<span class="token punctuation">,</span> <span class="token keyword">int</span> k<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>k <span class="token operator">||</span> <span class="token operator">!</span>head <span class="token operator">||</span> <span class="token operator">!</span>head<span class="token operator">-></span>next<span class="token punctuation">)</span> <span class="token keyword">return</span> head<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    ListNode <span class="token operator">*</span>dummy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">ListNode</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> head<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>head<span class="token operator">-></span>next<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        len<span class="token operator">++</span><span class="token punctuation">;</span>
+        head <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">int</span> add <span class="token operator">=</span> len <span class="token operator">-</span> <span class="token punctuation">(</span>k <span class="token operator">%</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>add <span class="token operator">==</span> len<span class="token punctuation">)</span> <span class="token keyword">return</span> dummy<span class="token operator">-></span>next<span class="token punctuation">;</span>
+    head<span class="token operator">-></span>next <span class="token operator">=</span> dummy<span class="token operator">-></span>next<span class="token punctuation">;</span>           <span class="token comment">// 链接成环</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>add<span class="token operator">--</span><span class="token punctuation">)</span> head <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>    <span class="token comment">// 找新的头结点</span>
+    ListNode <span class="token operator">*</span>newHead <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>
+    head<span class="token operator">-></span>next <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> newHead<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

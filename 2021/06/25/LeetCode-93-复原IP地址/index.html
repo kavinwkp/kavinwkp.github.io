@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -424,9 +424,9 @@
                 <h2 id="LeetCode-93-Restore-IP-Addresses"><a href="#LeetCode-93-Restore-IP-Addresses" class="headerlink" title="LeetCode 93. Restore IP Addresses"></a>LeetCode 93. Restore IP Addresses</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/restore-ip-addresses/">LeetCode-93</a></p>
 <p>Given a string <code>s</code> containing only digits, return all possible valid IP addresses that can be obtained from s. You can return them in <strong>any order</strong>.</p>
 <p>A <code>valid IP address</code> consists of exactly four integers, each integer is between <code>0 and 255</code>, separated by single dots and cannot have leading zeros. For example, “0.1.2.201” and “192.168.1.1” are <code>valid</code> IP addresses and “0.011.255.245”, “192.168.1.312” and “192.168@1.1” are <code>invalid</code> IP addresses. </p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: s &#x3D; &quot;25525511135&quot;
-Output: [&quot;255.255.11.135&quot;,&quot;255.255.111.35&quot;]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>Example 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: s &#x3D; &quot;1111&quot;
-Output: [&quot;1.1.1.1&quot;]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> s <span class="token operator">=</span> <span class="token string">"25525511135"</span>
+Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"255.255.11.135"</span><span class="token punctuation">,</span><span class="token string">"255.255.111.35"</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>Example 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> s <span class="token operator">=</span> <span class="token string">"1111"</span>
+Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"1.1.1.1"</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h3 id="method-回溯"><a href="#method-回溯" class="headerlink" title="method: 回溯"></a>method: 回溯</h3><ul>
 <li>substr(pos, len)</li>
 </ul>
@@ -439,40 +439,40 @@ Output: [&quot;1.1.1.1&quot;]<span aria-hidden="true" class="line-numbers-rows">
 <li>不能有特殊符号</li>
 <li>不能超过255</li>
 </ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector&lt;string&gt; ret;
-bool isValid(const string&amp; s, int start, int end) &#123;
-    if (s[start] &#x3D;&#x3D; &#39;0&#39; &amp;&amp; start !&#x3D; end) return false;  &#x2F;&#x2F; 不是单独的0
-    int num &#x3D; 0;
-    for (int i &#x3D; start; i &lt;&#x3D; end; ++i) &#123;
-        if (s[i] &lt; &#39;0&#39; || s[i] &gt; &#39;9&#39;) return false; &#x2F;&#x2F; 不能是其他字符
-        num &#x3D; num * 10 + (s[i] - &#39;0&#39;);
-        if (num &gt; 255) return false;    &#x2F;&#x2F; 不能超过255
-    &#125;
-    return true;
-&#125;
-void dfs(string&amp; s, int index, int num) &#123;
-    if (num &#x3D;&#x3D; 3) &#123; &#x2F;&#x2F; 插入3个点就可以结束了
-        if (isValid(s, index, s.size() - 1)) &#123;
-            ret.push_back(s);
-        &#125;
-        return;
-    &#125;
-    for (int i &#x3D; index; i &lt; index + 3 &amp;&amp; i &lt; s.size() - 1; ++i) &#123;
-        if (isValid(s, index, i)) &#123;
-            s.insert(s.begin() + i + 1, &#39;.&#39;);   &#x2F;&#x2F; 在i+1的位置插入点
-            dfs(s, i + 2, num + 1);     &#x2F;&#x2F; 从i+2的位置继续遍历
-            s.erase(s.begin() + i + 1); &#x2F;&#x2F; 回溯删掉点
-        &#125;
-        else break; &#x2F;&#x2F; 如果这个点不行，后面也肯定不行
-    &#125;
-&#125;
-vector&lt;string&gt; restoreIpAddresses(string s) &#123;
-    if (s.size() &gt; 12) return ret;
-    dfs(s, 0, 0);
-    return ret;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>因为只考虑3个分割点，所以不能在最末尾，不然会出现<code>1.1.11.</code>，<br>所以判断条件是<code>i &lt; s.size() - 1</code><br>或者在有效性判断里边加上<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">if (start &gt; end) return false;
-此时 start &#x3D; s.size()，end &#x3D; s.size() - 1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span>string<span class="token operator">></span> ret<span class="token punctuation">;</span>
+<span class="token keyword">bool</span> <span class="token function">isValid</span><span class="token punctuation">(</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span> s<span class="token punctuation">,</span> <span class="token keyword">int</span> start<span class="token punctuation">,</span> <span class="token keyword">int</span> end<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>s<span class="token punctuation">[</span>start<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">'0'</span> <span class="token operator">&amp;&amp;</span> start <span class="token operator">!=</span> end<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>  <span class="token comment">// 不是单独的0</span>
+    <span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> start<span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> end<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;</span> <span class="token string">'0'</span> <span class="token operator">||</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">></span> <span class="token string">'9'</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span> <span class="token comment">// 不能是其他字符</span>
+        num <span class="token operator">=</span> num <span class="token operator">*</span> <span class="token number">10</span> <span class="token operator">+</span> <span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token string">'0'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>num <span class="token operator">></span> <span class="token number">255</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>    <span class="token comment">// 不能超过255</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">void</span> <span class="token function">dfs</span><span class="token punctuation">(</span>string<span class="token operator">&amp;</span> s<span class="token punctuation">,</span> <span class="token keyword">int</span> index<span class="token punctuation">,</span> <span class="token keyword">int</span> num<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>num <span class="token operator">==</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 插入3个点就可以结束了</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isValid</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> index<span class="token punctuation">,</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            ret<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> index<span class="token punctuation">;</span> i <span class="token operator">&lt;</span> index <span class="token operator">+</span> <span class="token number">3</span> <span class="token operator">&amp;&amp;</span> i <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isValid</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> index<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            s<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">'.'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 在i+1的位置插入点</span>
+            <span class="token function">dfs</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> i <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">,</span> num <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 从i+2的位置继续遍历</span>
+            s<span class="token punctuation">.</span><span class="token function">erase</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 回溯删掉点</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">else</span> <span class="token keyword">break</span><span class="token punctuation">;</span> <span class="token comment">// 如果这个点不行，后面也肯定不行</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+vector<span class="token operator">&lt;</span>string<span class="token operator">></span> <span class="token function">restoreIpAddresses</span><span class="token punctuation">(</span>string s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">12</span><span class="token punctuation">)</span> <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+    <span class="token function">dfs</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>因为只考虑3个分割点，所以不能在最末尾，不然会出现<code>1.1.11.</code>，<br>所以判断条件是<code>i &lt; s.size() - 1</code><br>或者在有效性判断里边加上<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span>start <span class="token operator">></span> end<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+此时 start <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span>，end <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <p><a target="_blank" rel="noopener" href="https://kavinwkp.github.io/2021/06/24/LeetCode-131-%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2/">分割回文串</a>里面是这个分割点不行，换到下一个分割点，所以用<code>continue</code><br>这里是如果这个分割点不行，再往后面肯定也不行，如<code>256</code>不行，再往后<code>2561</code>，<code>25610</code>肯定也不行，所以直接<code>break</code></p>
 <p>因为在第<code>i</code>个位置分割，所以在<code>i+1</code>的位置插入分割点，后面的遍历就要从<code>i+2</code>的位置开始</p>
 <p>如果已经插入三个分割点了，后面的子串自动成为第4个地址，如果有效，直接可以保存了</p>

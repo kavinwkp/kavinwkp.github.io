@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -425,17 +425,17 @@ cos\theta = \frac{X^{T} Y}{||X|| \cdot ||Y||}</script><p>所以半正定矩阵�
 <li>半正定：所有特征值都大于等于0</li>
 <li>正定：所以特征值都大于0</li>
 </ul>
-<h3 id="matlab求特征值"><a href="#matlab求特征值" class="headerlink" title="matlab求特征值"></a>matlab求特征值</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">A &#x3D; [1 2 3; 4 5 6; 7 8 9];
-[V, D] &#x3D; eig(A);    &#x2F;&#x2F; V是特征向量，D是对应的特征值
-V &#x3D;
-   -0.2320   -0.7858    0.4082
-   -0.5253   -0.0868   -0.8165
-   -0.8187    0.6123    0.4082
+<h3 id="matlab求特征值"><a href="#matlab求特征值" class="headerlink" title="matlab求特征值"></a>matlab求特征值</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">A <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span> <span class="token number">2</span> <span class="token number">3</span><span class="token punctuation">;</span> <span class="token number">4</span> <span class="token number">5</span> <span class="token number">6</span><span class="token punctuation">;</span> <span class="token number">7</span> <span class="token number">8</span> <span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">[</span>V<span class="token punctuation">,</span> D<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">eig</span><span class="token punctuation">(</span>A<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// V是特征向量，D是对应的特征值</span>
+V <span class="token operator">=</span>
+   <span class="token operator">-</span><span class="token number">0.2320</span>   <span class="token operator">-</span><span class="token number">0.7858</span>    <span class="token number">0.4082</span>
+   <span class="token operator">-</span><span class="token number">0.5253</span>   <span class="token operator">-</span><span class="token number">0.0868</span>   <span class="token operator">-</span><span class="token number">0.8165</span>
+   <span class="token operator">-</span><span class="token number">0.8187</span>    <span class="token number">0.6123</span>    <span class="token number">0.4082</span>
 
-D &#x3D;
-   16.1168         0         0
-         0   -1.1168         0
-         0         0   -0.0000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+D <span class="token operator">=</span>
+   <span class="token number">16.1168</span>         <span class="token number">0</span>         <span class="token number">0</span>
+         <span class="token number">0</span>   <span class="token operator">-</span><span class="token number">1.1168</span>         <span class="token number">0</span>
+         <span class="token number">0</span>         <span class="token number">0</span>   <span class="token operator">-</span><span class="token number">0.0000</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>有负的特征值，所以A不是半正定矩阵</p>
 <h3 id="行列式判断"><a href="#行列式判断" class="headerlink" title="行列式判断"></a>行列式判断</h3><p>如果矩阵$M$的行列式$|M|$的各阶顺序主子式都大于0，则矩阵$M$为正定矩阵<br>如果奇数阶为负，偶数阶为正，则矩阵$M$为负定矩阵</p>
 <h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><p>多元函数$f(\boldsymbol{x})$在点$\boldsymbol{x}_k$取极值的必要条件是</p>
@@ -465,18 +465,18 @@ f(\boldsymbol{x}) - f(\boldsymbol{x}_k) \approx \frac{1}{2} \Delta \boldsymbol{x
     0 & 2
 \end{bmatrix}</script><p>令$\nabla f(\boldsymbol{x}) = 0$可得驻点为$\boldsymbol{x}_k = \begin{bmatrix}3 &amp; 2 \end{bmatrix}^\mathrm{T}$，又因为$\boldsymbol{H}(\boldsymbol{x}_k)$为正定矩阵，所以$\boldsymbol{x}_k$是极小值点，对应极小值为$f(\boldsymbol{x}) = -4$</p>
 <p><code>matlab</code>验证</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">n &#x3D; [-10:0.1:10;-10:0.1:10];
-[x1, x2] &#x3D; meshgrid(n(1,:), n(2,:));
-f &#x3D; x1.^2 + x2.^2 - 6*x1 - 4*x2 + 9;
-minval &#x3D; min(min(f));
-[row, column] &#x3D; find(f &#x3D;&#x3D; minval);
-mesh(x1, x2, f);
-x1(row, column);
-x2(row, column);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">n <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">10</span><span class="token operator">:</span><span class="token number">0.1</span><span class="token operator">:</span><span class="token number">10</span><span class="token punctuation">;</span><span class="token operator">-</span><span class="token number">10</span><span class="token operator">:</span><span class="token number">0.1</span><span class="token operator">:</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">[</span>x1<span class="token punctuation">,</span> x2<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">meshgrid</span><span class="token punctuation">(</span><span class="token function">n</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">:</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">n</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token operator">:</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+f <span class="token operator">=</span> x1<span class="token punctuation">.</span><span class="token operator">^</span><span class="token number">2</span> <span class="token operator">+</span> x2<span class="token punctuation">.</span><span class="token operator">^</span><span class="token number">2</span> <span class="token operator">-</span> <span class="token number">6</span><span class="token operator">*</span>x1 <span class="token operator">-</span> <span class="token number">4</span><span class="token operator">*</span>x2 <span class="token operator">+</span> <span class="token number">9</span><span class="token punctuation">;</span>
+minval <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span><span class="token function">min</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">[</span>row<span class="token punctuation">,</span> column<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>f <span class="token operator">==</span> minval<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">mesh</span><span class="token punctuation">(</span>x1<span class="token punctuation">,</span> x2<span class="token punctuation">,</span> f<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">x1</span><span class="token punctuation">(</span>row<span class="token punctuation">,</span> column<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">x2</span><span class="token punctuation">(</span>row<span class="token punctuation">,</span> column<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><img src="/2021/10/09/%E6%95%B0%E5%AD%A6-%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0-%E5%8D%8A%E6%AD%A3%E5%AE%9A%E7%9F%A9%E9%98%B5/ff.png" alt></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">minval &#x3D; -4
-x1 &#x3D; 3
-x2 &#x3D; 2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">minval <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">4</span>
+x1 <span class="token operator">=</span> <span class="token number">3</span>
+x2 <span class="token operator">=</span> <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -414,39 +414,39 @@
 <li>不允许两个函数除了返回类型外其他所有的要素都相同。</li>
 <li>一个拥有顶层<code>const</code>的形参无法和另一个没有顶层<code>const</code>的形参区分开来。</li>
 </ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Record lookup(Phone);
-Record lookup(const Phone);  &#x2F;&#x2F; 一样的<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Record <span class="token function">lookup</span><span class="token punctuation">(</span>Phone<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Record <span class="token function">lookup</span><span class="token punctuation">(</span><span class="token keyword">const</span> Phone<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 一样的</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <ul>
 <li>如果形参是某种类型的指针或引用，则通过区分其指向的是常量对象还是非常量对象可以实现函数重载，此时的const是底层的</li>
 </ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Record lookup(Account&amp;);
-Record lookup(const Account&amp;);  &#x2F;&#x2F; 新函数，作用于常量引用<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Record <span class="token function">lookup</span><span class="token punctuation">(</span>Account<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Record <span class="token function">lookup</span><span class="token punctuation">(</span><span class="token keyword">const</span> Account<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 新函数，作用于常量引用</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p><strong>注意</strong>：当传递一个<strong>非常量对象</strong>或者<strong>非常量对象的指针</strong>时，编译器会优先选用<strong>非常量</strong>版本的函数</p>
-<h3 id="const-cast和重载"><a href="#const-cast和重载" class="headerlink" title="const_cast和重载"></a>const_cast和重载</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">const string&amp; shorterString(const string&amp; s1, const string&amp; s2) &#123;
-    return s1.size() &lt; s2.size() ? s1 : s2;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3 id="const-cast和重载"><a href="#const-cast和重载" class="headerlink" title="const_cast和重载"></a>const_cast和重载</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> string<span class="token operator">&amp;</span> <span class="token function">shorterString</span><span class="token punctuation">(</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span> s1<span class="token punctuation">,</span> <span class="token keyword">const</span> string<span class="token operator">&amp;</span> s2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> s1<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> s2<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span> s1 <span class="token operator">:</span> s2<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>这里返回常量引用，当传入非常量对象时，需要一个非常量的版本，返回非常量引用</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string&amp; shorterString(string&amp; s1, string&amp; s2) &#123;
-    auto&amp; r &#x3D; shorterString(const_cast&lt;const string&amp;&gt; s1, const_cast&lt;const string&amp;&gt; s2);
-    return const_cast&lt;string&amp;&gt; (r);
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string<span class="token operator">&amp;</span> <span class="token function">shorterString</span><span class="token punctuation">(</span>string<span class="token operator">&amp;</span> s1<span class="token punctuation">,</span> string<span class="token operator">&amp;</span> s2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">auto</span><span class="token operator">&amp;</span> r <span class="token operator">=</span> <span class="token function">shorterString</span><span class="token punctuation">(</span><span class="token keyword">const_cast</span><span class="token operator">&lt;</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span><span class="token operator">></span> s1<span class="token punctuation">,</span> <span class="token keyword">const_cast</span><span class="token operator">&lt;</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span><span class="token operator">></span> s2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token keyword">const_cast</span><span class="token operator">&lt;</span>string<span class="token operator">&amp;</span><span class="token operator">></span> <span class="token punctuation">(</span>r<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>先把非常量引用转为常量引用，调用常量引用版本的函数，再把返回的常量结果转为非常量</p>
 <h2 id="6-5-特殊用途语言特性"><a href="#6-5-特殊用途语言特性" class="headerlink" title="6.5 特殊用途语言特性"></a>6.5 特殊用途语言特性</h2><h3 id="6-5-1-默认实参"><a href="#6-5-1-默认实参" class="headerlink" title="6.5.1 默认实参"></a>6.5.1 默认实参</h3><p><strong>注意</strong>：一旦某个形参被赋予了默认值，它后面的所有形参都必须有默认值</p>
 <p>在给定的作用域中一个形参只能被赋予一次默认实参，不能重复声明</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string screen(int, int, char &#x3D; &#39; &#39;);
-string screen(int, int, char &#x3D; &#39;*&#39;);    &#x2F;&#x2F; 错误：重复声明<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>局部变量不能作为默认实参，只要表达式的类型能转换为形参所需要的类型，该表达式就能作为默认实参<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int ht();
-int wd &#x3D; 80;
-char def &#x3D; &#39; &#39;;     &#x2F;&#x2F; 全局变量
-string screen(int &#x3D; ht(), int &#x3D; wd, char &#x3D; def);
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string <span class="token function">screen</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">=</span> <span class="token string">' '</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+string <span class="token function">screen</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">=</span> <span class="token string">'*'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 错误：重复声明</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>局部变量不能作为默认实参，只要表达式的类型能转换为形参所需要的类型，该表达式就能作为默认实参<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">ht</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> wd <span class="token operator">=</span> <span class="token number">80</span><span class="token punctuation">;</span>
+<span class="token keyword">char</span> def <span class="token operator">=</span> <span class="token string">' '</span><span class="token punctuation">;</span>     <span class="token comment">// 全局变量</span>
+string <span class="token function">screen</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">=</span> <span class="token function">ht</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">int</span> <span class="token operator">=</span> wd<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">=</span> def<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-string window &#x3D; screen();   &#x2F;&#x2F; 调用screen(ht(), 80, &#39; &#39;);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+string window <span class="token operator">=</span> <span class="token function">screen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 调用screen(ht(), 80, ' ');</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
 <p>如果是在函数作用域里面</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void fun2() &#123;
-    def &#x3D; &#39;*&#39;;  &#x2F;&#x2F; 修改了全局变量def
-    int wd &#x3D; 100;   &#x2F;&#x2F; 局部变量不影响全局变量
-    window &#x3D; screen();  &#x2F;&#x2F; 调用screen(ht(), 80, &#39;*&#39;);
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">fun2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    def <span class="token operator">=</span> <span class="token string">'*'</span><span class="token punctuation">;</span>  <span class="token comment">// 修改了全局变量def</span>
+    <span class="token keyword">int</span> wd <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>   <span class="token comment">// 局部变量不影响全局变量</span>
+    window <span class="token operator">=</span> <span class="token function">screen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 调用screen(ht(), 80, '*');</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="6-5-2-内联函数和constexpr函数"><a href="#6-5-2-内联函数和constexpr函数" class="headerlink" title="6.5.2 内联函数和constexpr函数"></a>6.5.2 内联函数和constexpr函数</h3><p>内联函数可避免函数调用的开销，将函数指定为<strong>内联函数(inline)</strong>，通常就是将它在每个调用点上“内联地”展开。</p>
 
                 

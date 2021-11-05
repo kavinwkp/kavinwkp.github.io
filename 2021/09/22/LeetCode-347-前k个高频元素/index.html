@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -422,30 +422,30 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="LeetCode-347-Top-K-Frequent-Elements"><a href="#LeetCode-347-Top-K-Frequent-Elements" class="headerlink" title="LeetCode 347. Top K Frequent Elements"></a>LeetCode 347. Top K Frequent Elements</h2><p>Given an integer array <code>nums</code> and an integer <code>k</code>, return the <code>k most frequent elements</code>. You may return the answer in any order.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: nums &#x3D; [1,1,1,2,2,3], k &#x3D; 2
-Output: [1,2]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">2</span>
+Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h2 id="method-小根堆"><a href="#method-小根堆" class="headerlink" title="method: 小根堆"></a>method: 小根堆</h2><p>哈希表存储每个数字出现次数<br>用<code>pair&lt;int,int&gt;</code>存储数值和出现的频率，所以要自定义优先队列的排序方式</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">class cmp &#123;
-public:
-    bool operator()(const pair&lt;int,int&gt;&amp; lhs, const pair&lt;int,int&gt;&amp; rhs) &#123;
-        return lhs.second &gt; rhs.second; &#x2F;&#x2F; 跟sort不一样，反过来了
-    &#125;
-&#125;;
-vector&lt;int&gt; topKFrequent(vector&lt;int&gt;&amp; nums, int k) &#123;
-    unordered_map&lt;int, int&gt; hash;
-    for (auto n : nums) hash[n]++;
-    priority_queue&lt;pair&lt;int,int&gt;, vector&lt;pair&lt;int,int&gt;&gt;, cmp&gt; q;
-    for (auto it &#x3D; hash.begin(); it !&#x3D; hash.end(); it++) &#123;
-        q.push(*it);
-        if (q.size() &gt; k) q.pop();  &#x2F;&#x2F; 大于k个要把最小的出队
-    &#125; 
-    vector&lt;int&gt; res(k);
-    for (int i &#x3D; k - 1; i &gt;&#x3D; 0; i--) &#123;
-        res[i] &#x3D; q.top().first;
-        q.pop();
-    &#125;
-    return res;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">cmp</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">bool</span> <span class="token keyword">operator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">const</span> pair<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> lhs<span class="token punctuation">,</span> <span class="token keyword">const</span> pair<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> rhs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> lhs<span class="token punctuation">.</span>second <span class="token operator">></span> rhs<span class="token punctuation">.</span>second<span class="token punctuation">;</span> <span class="token comment">// 跟sort不一样，反过来了</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">topKFrequent</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">,</span> <span class="token keyword">int</span> k<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    unordered_map<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">></span> hash<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> n <span class="token operator">:</span> nums<span class="token punctuation">)</span> hash<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>
+    priority_queue<span class="token operator">&lt;</span>pair<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span><span class="token keyword">int</span><span class="token operator">></span><span class="token punctuation">,</span> vector<span class="token operator">&lt;</span>pair<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span><span class="token keyword">int</span><span class="token operator">>></span><span class="token punctuation">,</span> cmp<span class="token operator">></span> q<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> it <span class="token operator">=</span> hash<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> it <span class="token operator">!=</span> hash<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> it<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token operator">*</span>it<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>q<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> k<span class="token punctuation">)</span> q<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 大于k个要把最小的出队</span>
+    <span class="token punctuation">&#125;</span> 
+    vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">res</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> k <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        res<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> q<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>first<span class="token punctuation">;</span>
+        q<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -418,54 +418,54 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <!-- toc -->
-<h2 id="指针大小"><a href="#指针大小" class="headerlink" title="指针大小"></a>指针大小</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int main(int argc, char const *argv[])
-&#123;
-    cout &lt;&lt; sizeof(int) &lt;&lt; endl;
-    cout &lt;&lt; sizeof(char) &lt;&lt; endl;
+<h2 id="指针大小"><a href="#指针大小" class="headerlink" title="指针大小"></a>指针大小</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
     
-    cout &lt;&lt; sizeof(int*) &lt;&lt; endl;
-    cout &lt;&lt; sizeof(char*) &lt;&lt; endl;
-    return 0;
-&#125;
-4
-1
-8
-8<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token number">4</span>
+<span class="token number">1</span>
+<span class="token number">8</span>
+<span class="token number">8</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可见不管是什么类型的指针，大小都是<strong>8个字节</strong></p>
 <h2 id="const指针"><a href="#const指针" class="headerlink" title="const指针"></a>const指针</h2><h3 id="指向常量的指针"><a href="#指向常量的指针" class="headerlink" title="指向常量的指针"></a>指向常量的指针</h3><ol>
 <li><code>const</code>修饰的是<code>int</code>，说明<code>int</code>是常量不可修改，不能通过指针修改他的值，但可以指向别处</li>
 <li>指针指向的对象可以不是<code>const</code>，但是还是不能用指针去修改他，可以用其他方法修改</li>
 <li>必须用<code>const void*</code>才能指向<code>const</code>对象</li>
 </ol>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">const int* pInteger;    &#x2F;&#x2F; int const* pInteger;
-int num &#x3D; 10;           &#x2F;&#x2F; 不是const
-pInteger &#x3D; &amp;num;
-&#x2F;&#x2F; *pInteger &#x3D; 100;	&#x2F;&#x2F; error, 不能用指针修改常量
-num &#x3D; 20;               &#x2F;&#x2F; yes，可以用其他方法修改
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">*</span> pInteger<span class="token punctuation">;</span>    <span class="token comment">// int const* pInteger;</span>
+<span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>           <span class="token comment">// 不是const</span>
+pInteger <span class="token operator">=</span> <span class="token operator">&amp;</span>num<span class="token punctuation">;</span>
+<span class="token comment">// *pInteger = 100;	// error, 不能用指针修改常量</span>
+num <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>               <span class="token comment">// yes，可以用其他方法修改</span>
 
-int another &#x3D; 100;
-pInteger &#x3D; &amp;another;    &#x2F;&#x2F; yes，可以改变指针指向<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">const char ch &#x3D; &#39;a&#39;;
-&#x2F;&#x2F; void* p &#x3D; &amp;ch;   &#x2F;&#x2F;error
-const void* p &#x3D; &amp;ch;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">int</span> another <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
+pInteger <span class="token operator">=</span> <span class="token operator">&amp;</span>another<span class="token punctuation">;</span>    <span class="token comment">// yes，可以改变指针指向</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">char</span> ch <span class="token operator">=</span> <span class="token string">'a'</span><span class="token punctuation">;</span>
+<span class="token comment">// void* p = &amp;ch;   //error</span>
+<span class="token keyword">const</span> <span class="token keyword">void</span><span class="token operator">*</span> p <span class="token operator">=</span> <span class="token operator">&amp;</span>ch<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <h3 id="常指针、const指针"><a href="#常指针、const指针" class="headerlink" title="常指针、const指针"></a>常指针、const指针</h3><ol>
 <li><code>const</code>修饰的是指针，说明指针是常数，所以他存储的地址不能变，也就是不能改变指向，可以通过指针改变指向对象的值</li>
 <li>常指针必须进行初始化</li>
 <li>常指针不能指向<code>const</code>变量</li>
 </ol>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">int num &#x3D; 10;
-&#x2F;&#x2F; const int num &#x3D; 10;  &#x2F;&#x2F; error，const int* -&gt; int*
-int* const pInt &#x3D; &amp;num; 
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token comment">// const int num = 10;  // error，const int* -> int*</span>
+<span class="token keyword">int</span><span class="token operator">*</span> <span class="token keyword">const</span> pInt <span class="token operator">=</span> <span class="token operator">&amp;</span>num<span class="token punctuation">;</span> 
 
-int another &#x3D; 100;
-&#x2F;&#x2F; pInt &#x3D; &amp;another;     &#x2F;&#x2F; error, 常指针不能修改指向
+<span class="token keyword">int</span> another <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
+<span class="token comment">// pInt = &amp;another;     // error, 常指针不能修改指向</span>
 
-*pInt &#x3D; 100;            &#x2F;&#x2F; yes，变量不是const，可以改变他的值<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token operator">*</span>pInt <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>            <span class="token comment">// yes，变量不是const，可以改变他的值</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="指向常量的常指针"><a href="#指向常量的常指针" class="headerlink" title="指向常量的常指针"></a>指向常量的常指针</h2><ul>
 <li>只能指向<code>const</code>变量</li>
 </ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">const int num &#x3D; 10;
-const int* const ptr &#x3D; &amp;num;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">*</span> <span class="token keyword">const</span> ptr <span class="token operator">=</span> <span class="token operator">&amp;</span>num<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

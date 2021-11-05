@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -427,68 +427,68 @@
 <p><code>void addAtIndex(int index, int val)</code> Add a node of value val before the indexth node in the linked list. If index equals the length of the linked list, the node will be appended to the end of the linked list. If index is greater than the length, the node will not be inserted.</p>
 <p><code>void deleteAtIndex(int index)</code> Delete the indexth node in the linked list, if the index is valid.</p>
 <p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input
-[&quot;MyLinkedList&quot;, &quot;addAtHead&quot;, &quot;addAtTail&quot;, &quot;addAtIndex&quot;, &quot;get&quot;, &quot;deleteAtIndex&quot;, &quot;get&quot;]
-[[], [1], [3], [1, 2], [1], [1], [1]]
+<span class="token punctuation">[</span><span class="token string">"MyLinkedList"</span><span class="token punctuation">,</span> <span class="token string">"addAtHead"</span><span class="token punctuation">,</span> <span class="token string">"addAtTail"</span><span class="token punctuation">,</span> <span class="token string">"addAtIndex"</span><span class="token punctuation">,</span> <span class="token string">"get"</span><span class="token punctuation">,</span> <span class="token string">"deleteAtIndex"</span><span class="token punctuation">,</span> <span class="token string">"get"</span><span class="token punctuation">]</span>
+<span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
 Output
-[null, null, null, null, 2, null, 3]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<span class="token punctuation">[</span>null<span class="token punctuation">,</span> null<span class="token punctuation">,</span> null<span class="token punctuation">,</span> null<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> null<span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
 <h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>取节点和删节点的<code>index</code>不能到最后一个元素的下一个<code>_size</code><br>增加节点可以到最后一个元素的下一个<code>_size</code></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">class MyLinkedList &#123;
-public:
-    struct ListNode &#123;
-        int val;
-        ListNode *next;
-        ListNode(int x) : val(x), next(nullptr) &#123;&#125;
-    &#125;;
-    MyLinkedList() &#123;
-        _dummy &#x3D; new ListNode(0);
-        _size &#x3D; 0;
-    &#125;
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">MyLinkedList</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">struct</span> <span class="token class-name">ListNode</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> val<span class="token punctuation">;</span>
+        ListNode <span class="token operator">*</span>next<span class="token punctuation">;</span>
+        <span class="token function">ListNode</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">val</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token function">MyLinkedList</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        _dummy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">ListNode</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        _size <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
     
-    int get(int index) &#123;    &#x2F;&#x2F; 等于也不行，因为是空
-        if (index &gt;&#x3D; _size || index &lt; 0) return -1;
-        ListNode *cur &#x3D; _dummy-&gt;next;
-        while (index--) &#123;
-            cur &#x3D; cur-&gt;next;
-        &#125;
-        return cur-&gt;val;
-    &#125;
+    <span class="token keyword">int</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>    <span class="token comment">// 等于也不行，因为是空</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">>=</span> _size <span class="token operator">||</span> index <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        ListNode <span class="token operator">*</span>cur <span class="token operator">=</span> _dummy<span class="token operator">-></span>next<span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>index<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            cur <span class="token operator">=</span> cur<span class="token operator">-></span>next<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> cur<span class="token operator">-></span>val<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
     
-    void addAtHead(int val) &#123;
-        ListNode *newNode &#x3D; new ListNode(val);
-        newNode-&gt;next &#x3D; _dummy-&gt;next;
-        _dummy-&gt;next &#x3D; newNode;
-        _size++;
-    &#125;
+    <span class="token keyword">void</span> <span class="token function">addAtHead</span><span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        ListNode <span class="token operator">*</span>newNode <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">ListNode</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        newNode<span class="token operator">-></span>next <span class="token operator">=</span> _dummy<span class="token operator">-></span>next<span class="token punctuation">;</span>
+        _dummy<span class="token operator">-></span>next <span class="token operator">=</span> newNode<span class="token punctuation">;</span>
+        _size<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
     
-    void addAtTail(int val) &#123;
-        ListNode *newNode &#x3D; new ListNode(val);
-        ListNode *cur &#x3D; _dummy;
-        while (cur-&gt;next) cur &#x3D; cur-&gt;next;  &#x2F;&#x2F; 找到最后一个元素
-        cur-&gt;next &#x3D; newNode;
-        _size++;
-    &#125;
+    <span class="token keyword">void</span> <span class="token function">addAtTail</span><span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        ListNode <span class="token operator">*</span>newNode <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">ListNode</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ListNode <span class="token operator">*</span>cur <span class="token operator">=</span> _dummy<span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>cur<span class="token operator">-></span>next<span class="token punctuation">)</span> cur <span class="token operator">=</span> cur<span class="token operator">-></span>next<span class="token punctuation">;</span>  <span class="token comment">// 找到最后一个元素</span>
+        cur<span class="token operator">-></span>next <span class="token operator">=</span> newNode<span class="token punctuation">;</span>
+        _size<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
     
-    void addAtIndex(int index, int val) &#123;
-        if (index &gt; _size) return;  &#x2F;&#x2F; 等于可以，因为要新建元素
-        ListNode *cur &#x3D; _dummy;
-        while (index--) cur &#x3D; cur-&gt;next;    &#x2F;&#x2F; 增加的前一个元素
-        ListNode *newNode &#x3D; new ListNode(val);
-        newNode-&gt;next &#x3D; cur-&gt;next;
-        cur-&gt;next &#x3D; newNode;
-        _size++;
-    &#125;
+    <span class="token keyword">void</span> <span class="token function">addAtIndex</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">,</span> <span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">></span> _size<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>  <span class="token comment">// 等于可以，因为要新建元素</span>
+        ListNode <span class="token operator">*</span>cur <span class="token operator">=</span> _dummy<span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>index<span class="token operator">--</span><span class="token punctuation">)</span> cur <span class="token operator">=</span> cur<span class="token operator">-></span>next<span class="token punctuation">;</span>    <span class="token comment">// 增加的前一个元素</span>
+        ListNode <span class="token operator">*</span>newNode <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">ListNode</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        newNode<span class="token operator">-></span>next <span class="token operator">=</span> cur<span class="token operator">-></span>next<span class="token punctuation">;</span>
+        cur<span class="token operator">-></span>next <span class="token operator">=</span> newNode<span class="token punctuation">;</span>
+        _size<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
     
-    void deleteAtIndex(int index) &#123; &#x2F;&#x2F; 等于也不行，因为是空
-        if (index &gt;&#x3D; _size || index &lt; 0) return; 
-        ListNode *cur &#x3D; _dummy;
-        while (index--) cur &#x3D; cur-&gt;next;    &#x2F;&#x2F; 删除的前一个元素
-        cur-&gt;next &#x3D; cur-&gt;next-&gt;next;
-        _size--;
-    &#125;
-private:
-    int _size;
-    ListNode *_dummy;
-&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">void</span> <span class="token function">deleteAtIndex</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 等于也不行，因为是空</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">>=</span> _size <span class="token operator">||</span> index <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span> 
+        ListNode <span class="token operator">*</span>cur <span class="token operator">=</span> _dummy<span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>index<span class="token operator">--</span><span class="token punctuation">)</span> cur <span class="token operator">=</span> cur<span class="token operator">-></span>next<span class="token punctuation">;</span>    <span class="token comment">// 删除的前一个元素</span>
+        cur<span class="token operator">-></span>next <span class="token operator">=</span> cur<span class="token operator">-></span>next<span class="token operator">-></span>next<span class="token punctuation">;</span>
+        _size<span class="token operator">--</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> _size<span class="token punctuation">;</span>
+    ListNode <span class="token operator">*</span>_dummy<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

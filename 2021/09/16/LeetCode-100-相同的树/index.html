@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -419,17 +419,17 @@
             <div id="articleContent">
                 <h2 id="LeetCode-100-Same-Tree"><a href="#LeetCode-100-Same-Tree" class="headerlink" title="LeetCode 100. Same Tree"></a>LeetCode 100. Same Tree</h2><p>Share<br>Given the roots of two binary trees p and q, write a function to check if they are the same or not.</p>
 <p>Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.</p>
-<p>Example 1:<br><img src="/2021/09/16/LeetCode-100-%E7%9B%B8%E5%90%8C%E7%9A%84%E6%A0%91/100.jpg" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: p &#x3D; [1,2,3], q &#x3D; [1,2,3]
-Output: true<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><img src="/2021/09/16/LeetCode-100-%E7%9B%B8%E5%90%8C%E7%9A%84%E6%A0%91/100.jpg" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> p <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> q <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span>
+Output<span class="token operator">:</span> <span class="token boolean">true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h2 id="method-递归"><a href="#method-递归" class="headerlink" title="method: 递归"></a>method: 递归</h2><p>都空返回<code>true</code><br>否则，一个空一个非空，返回<code>false</code><br>最后处理都非空的情况</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">bool isSameTree(TreeNode* p, TreeNode* q) &#123;
-    if (!p &amp;&amp; !q) return true;  &#x2F;&#x2F; 都空
-    else if (!q || !p) return false;    &#x2F;&#x2F; 一个空，一个非空
-    bool cur &#x3D; p-&gt;val &#x3D;&#x3D; q-&gt;val;    &#x2F;&#x2F; 都非空
-    bool left &#x3D; isSameTree(p-&gt;left, q-&gt;left);
-    bool right &#x3D;  isSameTree(p-&gt;right, q-&gt;right);
-    return cur &amp;&amp; left &amp;&amp; right;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">bool</span> <span class="token function">isSameTree</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> p<span class="token punctuation">,</span> TreeNode<span class="token operator">*</span> q<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>p <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>q<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>  <span class="token comment">// 都空</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>q <span class="token operator">||</span> <span class="token operator">!</span>p<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>    <span class="token comment">// 一个空，一个非空</span>
+    <span class="token keyword">bool</span> cur <span class="token operator">=</span> p<span class="token operator">-></span>val <span class="token operator">==</span> q<span class="token operator">-></span>val<span class="token punctuation">;</span>    <span class="token comment">// 都非空</span>
+    <span class="token keyword">bool</span> left <span class="token operator">=</span> <span class="token function">isSameTree</span><span class="token punctuation">(</span>p<span class="token operator">-></span>left<span class="token punctuation">,</span> q<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">bool</span> right <span class="token operator">=</span>  <span class="token function">isSameTree</span><span class="token punctuation">(</span>p<span class="token operator">-></span>right<span class="token punctuation">,</span> q<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> cur <span class="token operator">&amp;&amp;</span> left <span class="token operator">&amp;&amp;</span> right<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

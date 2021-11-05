@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -420,105 +420,105 @@
 <ol>
 <li><code>FileSystem</code>的声明和定义</li>
 </ol>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &lt;iostream&gt;
-class FileSystem
-&#123;
-public:
-    FileSystem(int a) : num(a) &#123;&#125;
-    std::size_t getNum() const;
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token keyword">class</span> <span class="token class-name">FileSystem</span>
+<span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">FileSystem</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">num</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    std<span class="token operator">::</span>size_t <span class="token function">getNum</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span><span class="token punctuation">;</span>
 
-private:
-    int num;
-&#125;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &quot;FileSystem.h&quot;
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> num<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"FileSystem.h"</span></span>
 
-std::size_t FileSystem::getNum() const &#123;
-    return num;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+std<span class="token operator">::</span>size_t <span class="token class-name">FileSystem</span><span class="token operator">::</span><span class="token function">getNum</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> num<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ol>
 <li><code>Directory</code>的声明和定义</li>
 </ol>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &quot;FileSystem.h&quot;
-class Directory &#123;
-public:
-    Directory();
-    int display();
-private:
-    int val;
-&#125;;
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"FileSystem.h"</span></span>
+<span class="token keyword">class</span> <span class="token class-name">Directory</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">Directory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> <span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> val<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &quot;Directory.h&quot;
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Directory.h"</span></span>
 
-extern FileSystem tfs;  &#x2F;&#x2F; 这里声明了一个FileSystem对象，因为Directory的初始化要用到
+<span class="token keyword">extern</span> FileSystem tfs<span class="token punctuation">;</span>  <span class="token comment">// 这里声明了一个FileSystem对象，因为Directory的初始化要用到</span>
 
-Directory::Directory() &#123;
-    std::size_t disks &#x3D; tfs.getNum();
-    val &#x3D; disks;
-&#125;
+<span class="token class-name">Directory</span><span class="token operator">::</span><span class="token function">Directory</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    std<span class="token operator">::</span>size_t disks <span class="token operator">=</span> tfs<span class="token punctuation">.</span><span class="token function">getNum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    val <span class="token operator">=</span> disks<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
-int Directory::display() &#123;
-    return val;
-&#125;
+<span class="token keyword">int</span> <span class="token class-name">Directory</span><span class="token operator">::</span><span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> val<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
-Directory tempDir;  &#x2F;&#x2F; 定义一个Directory对象<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+Directory tempDir<span class="token punctuation">;</span>  <span class="token comment">// 定义一个Directory对象</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ol>
 <li><code>tfs</code>的定义</li>
 </ol>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &quot;FileSystem.h&quot;
-FileSystem tfs(10);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"FileSystem.h"</span></span>
+FileSystem <span class="token function">tfs</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <ol>
 <li><code>main</code>函数</li>
 </ol>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &quot;Directory.h&quot;
-#include &lt;iostream&gt;
-using namespace std;
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Directory.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 
-extern Directory tempDir;
+<span class="token keyword">extern</span> Directory tempDir<span class="token punctuation">;</span>
 
-int main(int argc, char const *argv[])
-&#123;
-    cout &lt;&lt; tempDir.display() &lt;&lt; endl;
-    return 0;
-&#125;
-0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    cout <span class="token operator">&lt;&lt;</span> tempDir<span class="token punctuation">.</span><span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>发现输出不是我们预期的<code>10</code>，原因在于定义<code>dir</code>时调用了<code>Directory</code>的构造函数，用到了<code>FileSystem</code>的对象<code>tfs</code>，但这个<code>tfs</code>此时未必已经初始化了，因为编译器对文件的编译顺序没有严格的要求，所以会出现问题</p>
-<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>不要把<code>tfs</code>声明为全局变量，即<code>non-local static</code>变量，而要声明为<code>local static</code>，就是函数里面的<code>static</code>变量<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &quot;Directory.h&quot;
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>不要把<code>tfs</code>声明为全局变量，即<code>non-local static</code>变量，而要声明为<code>local static</code>，就是函数里面的<code>static</code>变量<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Directory.h"</span></span>
 
-extern FileSystem&amp; tfs();
+<span class="token keyword">extern</span> FileSystem<span class="token operator">&amp;</span> <span class="token function">tfs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-Directory::Directory() &#123;
-    std::size_t disks &#x3D; tfs().getNum();
-    val &#x3D; disks;
-&#125;
+<span class="token class-name">Directory</span><span class="token operator">::</span><span class="token function">Directory</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    std<span class="token operator">::</span>size_t disks <span class="token operator">=</span> <span class="token function">tfs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getNum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    val <span class="token operator">=</span> disks<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
-int Directory::display() &#123;
-    return val;
-&#125;
+<span class="token keyword">int</span> <span class="token class-name">Directory</span><span class="token operator">::</span><span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> val<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
-&#x2F;&#x2F; Directory dir;   &#x2F;&#x2F; dir也声明为non-local static
-Directory&amp; dir() &#123;
-    static Directory tempDir;
-    return tempDir;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &quot;FileSystem.h&quot;
+<span class="token comment">// Directory dir;   // dir也声明为non-local static</span>
+Directory<span class="token operator">&amp;</span> <span class="token function">dir</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">static</span> Directory tempDir<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> tempDir<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"FileSystem.h"</span></span>
 
-&#x2F;&#x2F; FileSystem tfs(10);
-FileSystem&amp; tfs() &#123;
-    static FileSystem fs(10);   &#x2F;&#x2F; 在函数里面定义，就是local static
-    return fs;                  &#x2F;&#x2F; 返回引用
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">#include &quot;Directory.h&quot;
-#include &lt;iostream&gt;
-using namespace std;
+<span class="token comment">// FileSystem tfs(10);</span>
+FileSystem<span class="token operator">&amp;</span> <span class="token function">tfs</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">static</span> FileSystem <span class="token function">fs</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 在函数里面定义，就是local static</span>
+    <span class="token keyword">return</span> fs<span class="token punctuation">;</span>                  <span class="token comment">// 返回引用</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Directory.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 
-extern Directory&amp; dir();
+<span class="token keyword">extern</span> Directory<span class="token operator">&amp;</span> <span class="token function">dir</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-int main(int argc, char const *argv[])
-&#123;
-    cout &lt;&lt; dir().display() &lt;&lt; endl;
-    return 0;
-&#125;
-10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token function">dir</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token number">10</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这样就符合我们的预期了<br><code>tfs()</code>函数内部实现了<code>FileSystem</code>对象的初始化，调用该函数之后，就可以确保对象一定会被初始化了<br>所以用调用函数替换直接使用<code>non-local static</code>对象，就可以得到对象初始化保证</p>
 
                 

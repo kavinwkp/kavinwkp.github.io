@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -424,42 +424,42 @@
                 <h2 id="LeetCode-445-Add-Two-Numbers-II"><a href="#LeetCode-445-Add-Two-Numbers-II" class="headerlink" title="LeetCode 445. Add Two Numbers II"></a>LeetCode 445. Add Two Numbers II</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/add-two-numbers-ii/">LeetCode</a></p>
 <p>You are given two non-empty linked lists representing two non-negative integers. The most significant digit comes first and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.</p>
 <p>You may assume the two numbers do not contain any leading zero, except the number 0 itself.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: l1 &#x3D; [7,2,4,3], l2 &#x3D; [5,6,4]
-Output: [7,8,0,7]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> l1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> l2 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">]</span>
+Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h2 id="method-栈"><a href="#method-栈" class="headerlink" title="method: 栈"></a>method: 栈</h2><p>把两个链表的元素取出来放到栈里，然后再一位一位相加。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) &#123;
-    stack&lt;int&gt; st1;
-    stack&lt;int&gt; st2;
-    while (l1) &#123;
-        st1.push(l1-&gt;val);
-        l1 &#x3D; l1-&gt;next;
-    &#125;
-    while (l2) &#123;
-        st2.push(l2-&gt;val);
-        l2 &#x3D; l2-&gt;next;
-    &#125;
-    ListNode *head &#x3D; nullptr;
-    int carry &#x3D; 0;
-    int add1, add2;
-    while (!st1.empty() || !st2.empty() || carry) &#123;
-        if (!st1.empty()) &#123;
-            add1 &#x3D; st1.top();
-            st1.pop();
-        &#125;
-        else add1 &#x3D; 0;
-        if (!st2.empty()) &#123;
-            add2 &#x3D; st2.top();
-            st2.pop();
-        &#125;
-        else add2 &#x3D; 0;
-        int res &#x3D; add1 + add2 + carry;
-        carry &#x3D; res &#x2F; 10;
-        ListNode *resNode &#x3D; new ListNode(res % 10);
-        resNode-&gt;next &#x3D; head;
-        head &#x3D; resNode;
-    &#125;
-    return head;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode<span class="token operator">*</span> <span class="token function">addTwoNumbers</span><span class="token punctuation">(</span>ListNode<span class="token operator">*</span> l1<span class="token punctuation">,</span> ListNode<span class="token operator">*</span> l2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    stack<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> st1<span class="token punctuation">;</span>
+    stack<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> st2<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>l1<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        st1<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>l1<span class="token operator">-></span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        l1 <span class="token operator">=</span> l1<span class="token operator">-></span>next<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>l2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        st2<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>l2<span class="token operator">-></span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        l2 <span class="token operator">=</span> l2<span class="token operator">-></span>next<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    ListNode <span class="token operator">*</span>head <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> carry <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> add1<span class="token punctuation">,</span> add2<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>st1<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token operator">!</span>st2<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">||</span> carry<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>st1<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            add1 <span class="token operator">=</span> st1<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            st1<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">else</span> add1 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>st2<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            add2 <span class="token operator">=</span> st2<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            st2<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">else</span> add2 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> res <span class="token operator">=</span> add1 <span class="token operator">+</span> add2 <span class="token operator">+</span> carry<span class="token punctuation">;</span>
+        carry <span class="token operator">=</span> res <span class="token operator">/</span> <span class="token number">10</span><span class="token punctuation">;</span>
+        ListNode <span class="token operator">*</span>resNode <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">ListNode</span><span class="token punctuation">(</span>res <span class="token operator">%</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        resNode<span class="token operator">-></span>next <span class="token operator">=</span> head<span class="token punctuation">;</span>
+        head <span class="token operator">=</span> resNode<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> head<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

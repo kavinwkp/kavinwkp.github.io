@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -428,31 +428,31 @@
 <p><code>val</code>: an integer representing <code>Node.val</code><br><code>random_index</code>: the index of the node (range from <code>0</code> to <code>n-1</code>) that the <code>random</code> pointer points to, or <code>null</code> if it does not point to any node.</p>
 <p>Your code will <strong>only</strong> be given the head of the original linked list.</p>
 <p>Example 1:</p>
-<p><img src="/2021/11/02/LeetCode-138-%E5%A4%8D%E5%88%B6%E5%B8%A6%E9%9A%8F%E6%9C%BA%E6%8C%87%E9%92%88%E7%9A%84%E9%93%BE%E8%A1%A8/138_1.png" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: head &#x3D; [[7,null],[13,0],[11,4],[10,2],[1,0]]
-Output: [[7,null],[13,0],[11,4],[10,2],[1,0]]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p><img src="/2021/11/02/LeetCode-138-%E5%A4%8D%E5%88%B6%E5%B8%A6%E9%9A%8F%E6%9C%BA%E6%8C%87%E9%92%88%E7%9A%84%E9%93%BE%E8%A1%A8/138_1.png" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> head <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">,</span>null<span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">11</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">,</span>null<span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">13</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">11</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h3 id="method-哈希表"><a href="#method-哈希表" class="headerlink" title="method: 哈希表"></a>method: 哈希表</h3><p>第一次遍历只生成节点，用哈希表记录原节点和新节点的对应关系</p>
 <p>然后就可以用<code>hash[cur-&gt;next]</code>获取原节点的next在新节点中的位置，以及用<code>hash[cur]-&gt;next</code>对当前的新节点的指针赋值</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Node* copyRandomList(Node* head) &#123;
-    if (!head) return head;
-    unordered_map&lt;Node*, Node*&gt; hash;
-    Node *cur &#x3D; head;
-    while (cur) &#123;   &#x2F;&#x2F; 第一次遍历只生成节点
-        Node *tmp &#x3D; new Node(cur-&gt;val);
-        hash[cur] &#x3D; tmp;
-        cur &#x3D; cur-&gt;next;
-    &#125;
-    cur &#x3D; head;
-    while (cur) &#123;   &#x2F;&#x2F; 第二次遍历对指针赋值
-        if (cur-&gt;next) &#123;
-            hash[cur]-&gt;next &#x3D; hash[cur-&gt;next];
-        &#125;
-        if (cur-&gt;random) &#123;
-            hash[cur]-&gt;random &#x3D; hash[cur-&gt;random];
-        &#125;
-        cur &#x3D; cur-&gt;next;
-    &#125;
-    return hash[head];
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Node<span class="token operator">*</span> <span class="token function">copyRandomList</span><span class="token punctuation">(</span>Node<span class="token operator">*</span> head<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>head<span class="token punctuation">)</span> <span class="token keyword">return</span> head<span class="token punctuation">;</span>
+    unordered_map<span class="token operator">&lt;</span>Node<span class="token operator">*</span><span class="token punctuation">,</span> Node<span class="token operator">*</span><span class="token operator">></span> hash<span class="token punctuation">;</span>
+    Node <span class="token operator">*</span>cur <span class="token operator">=</span> head<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>cur<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>   <span class="token comment">// 第一次遍历只生成节点</span>
+        Node <span class="token operator">*</span>tmp <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">Node</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        hash<span class="token punctuation">[</span>cur<span class="token punctuation">]</span> <span class="token operator">=</span> tmp<span class="token punctuation">;</span>
+        cur <span class="token operator">=</span> cur<span class="token operator">-></span>next<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    cur <span class="token operator">=</span> head<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>cur<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>   <span class="token comment">// 第二次遍历对指针赋值</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>cur<span class="token operator">-></span>next<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            hash<span class="token punctuation">[</span>cur<span class="token punctuation">]</span><span class="token operator">-></span>next <span class="token operator">=</span> hash<span class="token punctuation">[</span>cur<span class="token operator">-></span>next<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>cur<span class="token operator">-></span>random<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            hash<span class="token punctuation">[</span>cur<span class="token punctuation">]</span><span class="token operator">-></span>random <span class="token operator">=</span> hash<span class="token punctuation">[</span>cur<span class="token operator">-></span>random<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        cur <span class="token operator">=</span> cur<span class="token operator">-></span>next<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> hash<span class="token punctuation">[</span>head<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

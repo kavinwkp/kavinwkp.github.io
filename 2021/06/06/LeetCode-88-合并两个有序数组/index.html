@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -419,26 +419,26 @@
             <div id="articleContent">
                 <h2 id="LeetCode-88-Merge-Sorted-Array"><a href="#LeetCode-88-Merge-Sorted-Array" class="headerlink" title="LeetCode 88. Merge Sorted Array"></a>LeetCode 88. Merge Sorted Array</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/merge-sorted-array/">LeetCode</a><br>You are given two integer arrays <code>nums1</code> and <code>nums2</code>, sorted in <code>non-decreasing order</code>, and two integers <code>m</code> and <code>n</code>, representing the number of elements in <code>nums1</code> and <code>nums2</code> respectively.</p>
 <p>Merge <code>nums1</code> and <code>nums2</code> into a single array sorted in <code>non-decreasing order</code>.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input: nums1 &#x3D; [1,2,3,0,0,0], m &#x3D; 3, nums2 &#x3D; [2,5,6], n &#x3D; 3
-Output: [1,2,2,3,5,6]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> nums1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> m <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">,</span> nums2 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">,</span> n <span class="token operator">=</span> <span class="token number">3</span>
+Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h2 id="method-归并排序"><a href="#method-归并排序" class="headerlink" title="method: 归并排序"></a>method: 归并排序</h2><p><code>p1</code>指向数组1的末尾，<code>p2</code>指向数组2的末尾，<code>cnt</code>指向合并后数组的末尾</p>
 <ul>
 <li><code>nums1</code>用完了，用<code>nums2</code></li>
 <li><code>nums2</code>用完了，用<code>nums1</code></li>
 <li>都还有，看那个大就用哪个</li>
 </ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">void merge(vector&lt;int&gt;&amp; nums1, int m, vector&lt;int&gt;&amp; nums2, int n) &#123;
-    int p1 &#x3D; m - 1;
-    int p2 &#x3D; n - 1;
-    int cnt &#x3D; m + n - 1;
-    while (cnt &gt;&#x3D; 0) &#123;
-        if (p1 &lt; 0) nums1[cnt] &#x3D; nums2[p2--];
-        else if (p2 &lt; 0) nums1[cnt] &#x3D; nums1[p1--]
-        else if (nums1[p1] &gt; nums2[p2]) nums1[cnt] &#x3D; nums1[p1--];
-        else nums1[cnt] &#x3D; nums2[p2--];
-        cnt--;
-    &#125;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">merge</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums1<span class="token punctuation">,</span> <span class="token keyword">int</span> m<span class="token punctuation">,</span> vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums2<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> p1 <span class="token operator">=</span> m <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> p2 <span class="token operator">=</span> n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> cnt <span class="token operator">=</span> m <span class="token operator">+</span> n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>cnt <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>p1 <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> nums1<span class="token punctuation">[</span>cnt<span class="token punctuation">]</span> <span class="token operator">=</span> nums2<span class="token punctuation">[</span>p2<span class="token operator">--</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>p2 <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> nums1<span class="token punctuation">[</span>cnt<span class="token punctuation">]</span> <span class="token operator">=</span> nums1<span class="token punctuation">[</span>p1<span class="token operator">--</span><span class="token punctuation">]</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>nums1<span class="token punctuation">[</span>p1<span class="token punctuation">]</span> <span class="token operator">></span> nums2<span class="token punctuation">[</span>p2<span class="token punctuation">]</span><span class="token punctuation">)</span> nums1<span class="token punctuation">[</span>cnt<span class="token punctuation">]</span> <span class="token operator">=</span> nums1<span class="token punctuation">[</span>p1<span class="token operator">--</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> nums1<span class="token punctuation">[</span>cnt<span class="token punctuation">]</span> <span class="token operator">=</span> nums2<span class="token punctuation">[</span>p2<span class="token operator">--</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        cnt<span class="token operator">--</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

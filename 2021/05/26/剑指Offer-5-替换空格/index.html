@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
@@ -418,37 +418,37 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="剑指-Offer-05-替换空格"><a href="#剑指-Offer-05-替换空格" class="headerlink" title="剑指 Offer 05. 替换空格"></a>剑指 Offer 05. 替换空格</h2><p>请实现一个函数，把字符串 <code>s</code> 中的每个空格替换成<code>&quot;%20&quot;</code>。</p>
-<h2 id="method-1-直接用string的特性"><a href="#method-1-直接用string的特性" class="headerlink" title="method 1: 直接用string的特性"></a>method 1: 直接用string的特性</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string replaceSpace(string s) &#123;
-    string t;
-    for (auto elem : s) &#123;
-        if (elem &#x3D;&#x3D; &#39; &#39;) t +&#x3D; &quot;%20&quot;;
-        else t +&#x3D; elem;
-    &#125;
-    return t;
-&#125;
-执行用时: 4 ms
-内存消耗: 6.1 MB<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="method-2-模拟"><a href="#method-2-模拟" class="headerlink" title="method 2: 模拟"></a>method 2: 模拟</h2><p>两个指针从后往前赋值，<code>p1</code>指向原<code>string</code>的末尾，<code>p2</code>指向新<code>string</code>末尾，如果<code>p1</code>不是空格，给<code>p2</code>赋值<code>p1</code>，否则<code>p2</code>从后往前赋值<code>%20</code><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string replaceSpace(string s) &#123;
-    int len &#x3D; s.size();
-    for (int i &#x3D; 0; i &lt; len; ++i) &#123;
-        if (isspace(s[i])) s +&#x3D; &quot;  &quot;;
-    &#125;
-    int p1 &#x3D; len - 1, p2 &#x3D; s.size() - 1;
-    while (p1) &#123;
-        if (!isspace(s[p1])) &#123;
-            s[p2--] &#x3D; s[p1];
-        &#125;
-        else &#123;
-            s[p2--] &#x3D; &#39;0&#39;;
-            s[p2--] &#x3D; &#39;2&#39;;
-            s[p2--] &#x3D; &#39;%&#39;;
-        &#125;
-        p1--;
-    &#125;
-    return s;
-&#125;
-执行用时: 0 ms
-内存消耗: 6.1 MB<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<h2 id="method-1-直接用string的特性"><a href="#method-1-直接用string的特性" class="headerlink" title="method 1: 直接用string的特性"></a>method 1: 直接用string的特性</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string <span class="token function">replaceSpace</span><span class="token punctuation">(</span>string s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    string t<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> elem <span class="token operator">:</span> s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>elem <span class="token operator">==</span> <span class="token string">' '</span><span class="token punctuation">)</span> t <span class="token operator">+=</span> <span class="token string">"%20"</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> t <span class="token operator">+=</span> elem<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> t<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+执行用时<span class="token operator">:</span> <span class="token number">4</span> ms
+内存消耗<span class="token operator">:</span> <span class="token number">6.1</span> MB<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="method-2-模拟"><a href="#method-2-模拟" class="headerlink" title="method 2: 模拟"></a>method 2: 模拟</h2><p>两个指针从后往前赋值，<code>p1</code>指向原<code>string</code>的末尾，<code>p2</code>指向新<code>string</code>末尾，如果<code>p1</code>不是空格，给<code>p2</code>赋值<code>p1</code>，否则<code>p2</code>从后往前赋值<code>%20</code><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string <span class="token function">replaceSpace</span><span class="token punctuation">(</span>string s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> len <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> len<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isspace</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> s <span class="token operator">+=</span> <span class="token string">"  "</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">int</span> p1 <span class="token operator">=</span> len <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> p2 <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>p1<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isspace</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>p1<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            s<span class="token punctuation">[</span>p2<span class="token operator">--</span><span class="token punctuation">]</span> <span class="token operator">=</span> s<span class="token punctuation">[</span>p1<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            s<span class="token punctuation">[</span>p2<span class="token operator">--</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
+            s<span class="token punctuation">[</span>p2<span class="token operator">--</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'2'</span><span class="token punctuation">;</span>
+            s<span class="token punctuation">[</span>p2<span class="token operator">--</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'%'</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        p1<span class="token operator">--</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> s<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+执行用时<span class="token operator">:</span> <span class="token number">0</span> ms
+内存消耗<span class="token operator">:</span> <span class="token number">6.1</span> MB<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
 
                 
             </div>
