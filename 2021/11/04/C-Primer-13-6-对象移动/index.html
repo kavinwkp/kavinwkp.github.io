@@ -426,10 +426,11 @@
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
 <span class="token keyword">int</span> <span class="token operator">&amp;</span>r1 <span class="token operator">=</span> i<span class="token punctuation">;</span>            <span class="token comment">// OK, 左值引用</span>
 <span class="token keyword">int</span> <span class="token operator">&amp;&amp;</span>r2 <span class="token operator">=</span> i<span class="token punctuation">;</span>           <span class="token comment">// Err, 不能将右值引用绑定到左值</span>
-<span class="token keyword">int</span> <span class="token operator">&amp;</span>r3 <span class="token operator">=</span> i <span class="token operator">*</span> <span class="token number">10</span><span class="token punctuation">;</span>       <span class="token comment">// Err, i*42是一个右值</span>
+<span class="token keyword">int</span> <span class="token operator">&amp;</span>r3 <span class="token operator">=</span> i <span class="token operator">*</span> <span class="token number">10</span><span class="token punctuation">;</span>       <span class="token comment">// Err, i*10是一个右值</span>
 <span class="token keyword">const</span> <span class="token keyword">int</span> <span class="token operator">&amp;</span>r3 <span class="token operator">=</span> i <span class="token operator">*</span> <span class="token number">10</span><span class="token punctuation">;</span> <span class="token comment">// OK, 可以将const引用绑定到右值</span>
 <span class="token keyword">int</span> <span class="token operator">&amp;&amp;</span>r4 <span class="token operator">=</span> i <span class="token operator">*</span> <span class="token number">10</span><span class="token punctuation">;</span>      <span class="token comment">// OK, 右值引用</span>
-cout <span class="token operator">&lt;&lt;</span> r4 <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>     <span class="token comment">// 100</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+cout <span class="token operator">&lt;&lt;</span> r4 <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>     <span class="token comment">// 100</span>
+r4 <span class="token operator">+=</span> <span class="token number">10</span><span class="token punctuation">;</span>               <span class="token comment">// OK，也可以修改</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>返回左值引用的函数，连同赋值、下标、解引用和前置递增/递减运算符，都是左值</li>
 <li>返回非引用类型的函数，连同算术、关系、位以及后置递增/递减运算符，都生成右值</li>
@@ -458,8 +459,10 @@ cout <span class="token operator">&lt;&lt;</span> r4 <span class="token operator
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>右值引用指向将要被销毁的对象，所以，我们可以从绑定到右值引用的对象“窃取”状态</p>
-<p><strong>变量是左值</strong></p>
+<p>右值引用指向<font color="Red">将要被销毁的对象</font>，所以，我们可以从绑定到右值引用的对象“窃取”状态</p>
+<table><tr><td bgcolor="MistyRose"><font color="Salmon" size="5">变量是左值</font></td></tr></table>
+
+
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token operator">&amp;&amp;</span>r1 <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
 <span class="token keyword">int</span> <span class="token operator">&amp;&amp;</span>r2 <span class="token operator">=</span> r1<span class="token punctuation">;</span>  <span class="token comment">// Err, r1是左值，尽管r1是右值引用，但还是一个变量</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <h4 id="move函数"><a href="#move函数" class="headerlink" title="move函数"></a>move函数</h4><p>可以显式地将一个左值转换为对应的右值引用类型<br>可以用<code>move</code>函数来获得绑定到左值上的右值引用</p>
