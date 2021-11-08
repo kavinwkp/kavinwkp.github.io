@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="OpenCV_Pix, kunpeng">
+    <meta name="keywords" content="13.3-交换操作, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>OpenCV_Pix | kunpeng</title>
+    <title>13.3-交换操作 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -247,12 +247,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">OpenCV_Pix</h1>
+                    <h1 class="description center-align post-title">13.3-交换操作</h1>
                 </div>
             </div>
         </div>
@@ -368,8 +368,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/OpenCV/">
-                                <span class="chip bg-color">OpenCV</span>
+                            <a href="/tags/C-Primer/">
+                                <span class="chip bg-color">C++Primer</span>
                             </a>
                         
                     </div>
@@ -380,8 +380,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/OpenCV/" class="post-category">
-                                OpenCV
+                            <a href="/categories/C/" class="post-category">
+                                C++
                             </a>
                         
                     </div>
@@ -393,7 +393,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-04-01
+                    2021-10-26
                 </div>
                 
 
@@ -417,90 +417,71 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <!-- toc -->
-<h2 id="获取并修改像素值"><a href="#获取并修改像素值" class="headerlink" title="获取并修改像素值"></a>获取并修改像素值</h2><h3 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;opencv2/opencv.hpp></span></span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> cv<span class="token punctuation">;</span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+                <h2 id="13-3-交换操作"><a href="#13-3-交换操作" class="headerlink" title="13.3 交换操作"></a>13.3 交换操作</h2><p>在排序算法中经常用到两个元素的交换，如果设计的类也要实现排序，就需要用到<code>swap</code>，如果类没有自定义<code>swap</code>函数，就会调用标准库定义的<code>swap</code></p>
+<p>标准库的<code>swap</code><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Person tmp <span class="token operator">=</span> p1<span class="token punctuation">;</span>
+p1 <span class="token operator">=</span> p2<span class="token punctuation">;</span>
+p2 <span class="token operator">=</span> tmp<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><br>其中的两次赋值都要进行动态内存分配，这是没有必要的，只需要交换两个对象的指针就可以了</p>
+<h3 id="编写自己的swap函数"><a href="#编写自己的swap函数" class="headerlink" title="编写自己的swap函数"></a>编写自己的swap函数</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string <span class="token operator">*</span>tmp <span class="token operator">=</span> p1<span class="token punctuation">.</span>ptr<span class="token punctuation">;</span>
+p1<span class="token punctuation">.</span>ptr <span class="token operator">=</span> p2<span class="token punctuation">.</span>ptr<span class="token punctuation">;</span>
+p2<span class="token punctuation">.</span>ptr <span class="token operator">=</span> tmp<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>而指针的交换可以用匹配类型的模板<code>swap</code>来完成</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Person</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    string <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> age<span class="token punctuation">;</span>
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> artc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    Mat src <span class="token operator">=</span> <span class="token function">imread</span><span class="token punctuation">(</span><span class="token string">"/home/kavin/Pictures/test.png"</span><span class="token punctuation">,</span> IMREAD_COLOR<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">friend</span> <span class="token keyword">void</span> <span class="token function">swap</span><span class="token punctuation">(</span>Person <span class="token operator">&amp;</span><span class="token punctuation">,</span> Person <span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>src<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"could not load image...\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">inline</span>
+<span class="token keyword">void</span> <span class="token function">swap</span><span class="token punctuation">(</span>Person <span class="token operator">&amp;</span>lhs<span class="token punctuation">,</span> Person <span class="token operator">&amp;</span>rhs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">using</span> std<span class="token operator">::</span>swap<span class="token punctuation">;</span>
+    <span class="token function">swap</span><span class="token punctuation">(</span>lhs<span class="token punctuation">.</span>ptr<span class="token punctuation">,</span> rhs<span class="token punctuation">.</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 交换指针变量</span>
+    <span class="token function">swap</span><span class="token punctuation">(</span>lhs<span class="token punctuation">.</span>age<span class="token punctuation">,</span> rhs<span class="token punctuation">.</span>age<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 交换成员变量</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>自定义的<code>swap</code>不是成员函数，但需要对私有变量进行修改，所以定义为<font color="LightSalmon">友元函数</font>，并声明为内联函数</p>
+<h3 id="在赋值运算符中使用swap"><a href="#在赋值运算符中使用swap" class="headerlink" title="在赋值运算符中使用swap"></a>在赋值运算符中使用swap</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Person</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    string <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> age<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">const</span> string <span class="token operator">&amp;</span>s <span class="token operator">=</span> <span class="token function">string</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">int</span> n <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">ptr</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token function">string</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">age</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">const</span> Person <span class="token operator">&amp;</span>p<span class="token punctuation">)</span>
+        <span class="token operator">:</span> <span class="token function">ptr</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token function">string</span><span class="token punctuation">(</span><span class="token operator">*</span>p<span class="token punctuation">.</span>ptr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">age</span><span class="token punctuation">(</span>p<span class="token punctuation">.</span>age<span class="token punctuation">)</span> 
+    <span class="token punctuation">&#123;</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"copy constructor"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token comment">// 拷贝构造函数</span>
+
+    Person <span class="token operator">&amp;</span><span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span>Person rhs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"swap copy assignment"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+        <span class="token function">swap</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">,</span> rhs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">50</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>          <span class="token comment">// 行</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">30</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> <span class="token number">100</span><span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>    <span class="token comment">// 列</span>
-            src<span class="token punctuation">.</span>at<span class="token operator">&lt;</span>Vec3b<span class="token operator">></span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">255</span><span class="token punctuation">;</span>
-            src<span class="token punctuation">.</span>at<span class="token operator">&lt;</span>Vec3b<span class="token operator">></span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-            src<span class="token punctuation">.</span>at<span class="token operator">&lt;</span>Vec3b<span class="token operator">></span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token function">namedWindow</span><span class="token punctuation">(</span><span class="token string">"input"</span><span class="token punctuation">,</span> WINDOW_AUTOSIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"input"</span><span class="token punctuation">,</span> src<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">imwrite</span><span class="token punctuation">(</span><span class="token string">"pix.png"</span><span class="token punctuation">,</span> src<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">waitKey</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    <span class="token comment">// 对应的roi区域 （左上角坐标（w,h）,width,height）</span>
-    Rect <span class="token function">rect_roi</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">70</span><span class="token punctuation">,</span> <span class="token number">45</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    Mat img_roi <span class="token operator">=</span> <span class="token function">src</span><span class="token punctuation">(</span>rect_roi<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"roi"</span><span class="token punctuation">,</span> img_roi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">~</span><span class="token function">Person</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">delete</span> ptr<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token keyword">friend</span> <span class="token keyword">void</span> <span class="token function">swap</span><span class="token punctuation">(</span>Person <span class="token operator">&amp;</span><span class="token punctuation">,</span> Person <span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">inline</span> <span class="token keyword">void</span> <span class="token function">swap</span><span class="token punctuation">(</span>Person <span class="token operator">&amp;</span>lhs<span class="token punctuation">,</span> Person <span class="token operator">&amp;</span>rhs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Person swap"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token keyword">using</span> std<span class="token operator">::</span>swap<span class="token punctuation">;</span>
+    <span class="token function">swap</span><span class="token punctuation">(</span>lhs<span class="token punctuation">.</span>ptr<span class="token punctuation">,</span> rhs<span class="token punctuation">.</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">swap</span><span class="token punctuation">(</span>lhs<span class="token punctuation">.</span>age<span class="token punctuation">,</span> rhs<span class="token punctuation">.</span>age<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    Person <span class="token function">p1</span><span class="token punctuation">(</span><span class="token string">"kavin"</span><span class="token punctuation">,</span> <span class="token number">23</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Person <span class="token function">p2</span><span class="token punctuation">(</span><span class="token string">"jack"</span><span class="token punctuation">,</span> <span class="token number">34</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    p2 <span class="token operator">=</span> p1<span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<center>
-<img src="/2021/04/01/OpenCV-OpenCV-Pix/pixels.png#pic_center" width="50%" height="50%" alt="test">
-<br>
-<div style="color:orange; border-bottom: 1px solid #d9d9d9;
-display: inline-block;
-color: #999;
-padding: 2px;">修改像素值</div>
-</center>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">// copy constructor 按值传递会调用拷贝构造函数</span>
+<span class="token comment">// swap copy assignment</span>
+<span class="token comment">// Person swap 调用类自定义的swap</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里右侧运算对象以<font color="LightSalmon">传值方式</font>传递给了赋值运算符，因此，<code>rhs</code>是右侧运算对象的一个副本<br>赋值函数执行时，交换<code>this</code>和<code>rhs</code>的资源，函数执行完之后，<code>rhs</code>就被销毁了，释放掉左侧运算对象中原来的内存</p>
 
-<h3 id="python"><a href="#python" class="headerlink" title="python"></a>python</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">src <span class="token operator">=</span> cv<span class="token punctuation">.</span><span class="token function">imread</span><span class="token punctuation">(</span><span class="token string">"./test.png"</span><span class="token punctuation">)</span>
-<span class="token comment">// 获取某个点的像素值</span>
-px <span class="token operator">=</span> src<span class="token punctuation">[</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token number">250</span><span class="token punctuation">]</span>      # <span class="token punctuation">[</span> <span class="token number">27</span>  <span class="token number">15</span> <span class="token number">244</span><span class="token punctuation">]</span>
-
-<span class="token comment">// 获取某个点某个通道的像素值</span>
-blue <span class="token operator">=</span> src<span class="token punctuation">[</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token number">250</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span> # <span class="token number">27</span>
-
-<span class="token comment">// 修改高度为200的所有像素值为0</span>
-src<span class="token punctuation">[</span><span class="token number">200</span><span class="token punctuation">,</span> <span class="token operator">:</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span>
-cv<span class="token punctuation">.</span><span class="token function">namedWindow</span><span class="token punctuation">(</span><span class="token string">"input"</span><span class="token punctuation">,</span> cv<span class="token punctuation">.</span>WINDOW_AUTOSIZE<span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"input"</span><span class="token punctuation">,</span> src<span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">waitKey</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">destroyAllWindows</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<center>
-<img src="/2021/04/01/OpenCV-OpenCV-Pix/pix.png#pic_center" width="50%" height="50%" alt="test">
-<br>
-<div style="color:orange; border-bottom: 1px solid #d9d9d9;
-display: inline-block;
-color: #999;
-padding: 2px;">修改像素值</div>
-</center>
-
-<h2 id="通道拆分与合并"><a href="#通道拆分与合并" class="headerlink" title="通道拆分与合并"></a>通道拆分与合并</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">b<span class="token punctuation">,</span> g<span class="token punctuation">,</span> r <span class="token operator">=</span> cv<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span>src<span class="token punctuation">)</span>
-img <span class="token operator">=</span> cv<span class="token punctuation">.</span><span class="token function">merge</span><span class="token punctuation">(</span><span class="token punctuation">(</span>b<span class="token punctuation">,</span> g<span class="token punctuation">,</span> r<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<center>
-<img src="/2021/04/01/OpenCV-OpenCV-Pix/b.png#pic_center" width="50%" height="50%" alt="test">
-<br>
-<div style="color:orange; border-bottom: 1px solid #d9d9d9;
-display: inline-block;
-color: #999;
-padding: 2px;">B通道图像</div>
-</center>
-
-<h2 id="转换颜色空间"><a href="#转换颜色空间" class="headerlink" title="转换颜色空间"></a>转换颜色空间</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">hsv <span class="token operator">=</span> cv<span class="token punctuation">.</span><span class="token function">cvtColor</span><span class="token punctuation">(</span>src<span class="token punctuation">,</span> cv<span class="token punctuation">.</span>COLOR_BGR2HSV<span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">namedWindow</span><span class="token punctuation">(</span><span class="token string">"hsv"</span><span class="token punctuation">,</span> cv<span class="token punctuation">.</span>WINDOW_AUTOSIZE<span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"hsv"</span><span class="token punctuation">,</span> hsv<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<center>
-<img src="/2021/04/01/OpenCV-OpenCV-Pix/hsv.png#pic_center" width="50%" height="50%" alt="test">
-<br>
-<div style="color:orange; border-bottom: 1px solid #d9d9d9;
-display: inline-block;
-color: #999;
-padding: 2px;">HSV颜色空间</div>
-</center>
                 
             </div>
             <hr/>
@@ -526,7 +507,7 @@ padding: 2px;">HSV颜色空间</div>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/04/01/OpenCV-OpenCV-Pix/">http://example.com/2021/04/01/OpenCV-OpenCV-Pix/</a>
+                    <a href="http://example.com/2021/10/26/C-Primer-13-3-%E4%BA%A4%E6%8D%A2%E6%93%8D%E4%BD%9C/">http://example.com/2021/10/26/C-Primer-13-3-%E4%BA%A4%E6%8D%A2%E6%93%8D%E4%BD%9C/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -564,8 +545,8 @@ padding: 2px;">HSV颜色空间</div>
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/OpenCV/">
-                                    <span class="chip bg-color">OpenCV</span>
+                                <a href="/tags/C-Primer/">
+                                    <span class="chip bg-color">C++Primer</span>
                                 </a>
                             
                         </div>
@@ -741,13 +722,13 @@ padding: 2px;">HSV颜色空间</div>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/04/12/OpenCV-OpenCV-Panel/">
+                <a href="/2021/10/26/C-Primer-13-6-%E5%AF%B9%E8%B1%A1%E7%A7%BB%E5%8A%A8/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="OpenCV_Panel">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="13.6-对象移动">
                         
-                        <span class="card-title">OpenCV_Panel</span>
+                        <span class="card-title">13.6-对象移动</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -758,14 +739,14 @@ padding: 2px;">HSV颜色空间</div>
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-12
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-26
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/OpenCV/" class="post-category">
-                                    OpenCV
+                            <a href="/categories/C/" class="post-category">
+                                    C++
                                 </a>
                             
                             
@@ -775,8 +756,8 @@ padding: 2px;">HSV颜色空间</div>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/OpenCV/">
-                        <span class="chip bg-color">OpenCV</span>
+                    <a href="/tags/C-Primer/">
+                        <span class="chip bg-color">C++Primer</span>
                     </a>
                     
                 </div>
@@ -790,13 +771,13 @@ padding: 2px;">HSV颜色空间</div>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/04/01/OpenCV-OpenCV-draw/">
+                <a href="/2021/10/26/C-Primer-13-2-%E6%8B%B7%E8%B4%9D%E6%8E%A7%E5%88%B6%E4%B8%8E%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="OpenCV_draw">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="13.2-拷贝控制与资源管理">
                         
-                        <span class="card-title">OpenCV_draw</span>
+                        <span class="card-title">13.2-拷贝控制与资源管理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -807,14 +788,14 @@ padding: 2px;">HSV颜色空间</div>
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-01
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-26
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/OpenCV/" class="post-category">
-                                    OpenCV
+                            <a href="/categories/C/" class="post-category">
+                                    C++
                                 </a>
                             
                             
@@ -824,8 +805,8 @@ padding: 2px;">HSV颜色空间</div>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/OpenCV/">
-                        <span class="chip bg-color">OpenCV</span>
+                    <a href="/tags/C-Primer/">
+                        <span class="chip bg-color">C++Primer</span>
                     </a>
                     
                 </div>
