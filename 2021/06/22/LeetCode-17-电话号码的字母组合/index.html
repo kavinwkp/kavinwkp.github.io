@@ -428,11 +428,16 @@
 <p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> digits <span class="token operator">=</span> <span class="token string">"23"</span>
 Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"ad"</span><span class="token punctuation">,</span><span class="token string">"ae"</span><span class="token punctuation">,</span><span class="token string">"af"</span><span class="token punctuation">,</span><span class="token string">"bd"</span><span class="token punctuation">,</span><span class="token string">"be"</span><span class="token punctuation">,</span><span class="token string">"bf"</span><span class="token punctuation">,</span><span class="token string">"cd"</span><span class="token punctuation">,</span><span class="token string">"ce"</span><span class="token punctuation">,</span><span class="token string">"cf"</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <h2 id="method-回溯"><a href="#method-回溯" class="headerlink" title="method: 回溯"></a>method: 回溯</h2><p>回溯三部曲：</p>
-<ul>
-<li>确定回溯函数参数<br>对于给定的数字进行遍历，抓出每个数字对应的字符串，所以参数是给定的数字<code>digits</code>和遍历的下标<code>index</code></li>
-<li>确定终止条件<br>当下标遍历完整个<code>digits</code>时返回，即<code>index == digits.size()</code></li>
-<li>确定单层循环逻辑<br>对于每个数字对应的字符串，如<code>&quot;abc&quot;</code>，要再进行遍历表示<strong>取或者不取</strong>，如可以取<code>&#39;a&#39;</code>，或者取<code>&#39;b&#39;</code>，或者取<code>&#39;c&#39;</code></li>
-</ul>
+<ol>
+<li>确定回溯函数参数<br>对于给定的数字进行遍历，抓出每个数字对应的字符串，所以参数是给定的数字字符串<code>digits</code>和遍历的下标<code>index</code></li>
+</ol>
+<p><strong>注意</strong>：是<code>index</code>在纵向遍历字符串<code>digits</code>，所以下一次递归的参数是<code>index + 1</code><br>而<code>i</code>是在横向遍历每个数字对应的字母，每次都从0开始，与上一次递归无关</p>
+<ol>
+<li><p>确定终止条件<br>当下标遍历完整个<code>digits</code>时返回，即<code>index == digits.size()</code>，或者<code>path.size() == digits.size()</code></p>
+</li>
+<li><p>确定单层循环逻辑<br>对于每个数字对应的字符串，如<code>index=0 -&gt; digits[0] -&gt; 2 -&gt; letterMap[2] -&gt; &quot;abc&quot;</code>，要再进行遍历表示<strong>取或者不取</strong>，如可以取<code>&#39;a&#39;</code>，或者取<code>&#39;b&#39;</code>，或者取<code>&#39;c&#39;</code></p>
+</li>
+</ol>
 <center>
 <img src="/2021/06/22/LeetCode-17-%E7%94%B5%E8%AF%9D%E5%8F%B7%E7%A0%81%E7%9A%84%E5%AD%97%E6%AF%8D%E7%BB%84%E5%90%88/111.png#pic_center" width="100%" height="100%">
 </center>
@@ -459,11 +464,11 @@ Output<span class="token operator">:</span> <span class="token punctuation">[</s
             ret<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
             <span class="token keyword">return</span><span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span>
-        <span class="token keyword">int</span> number <span class="token operator">=</span> digits<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
-        string letters <span class="token operator">=</span> letterMap<span class="token punctuation">[</span>number<span class="token punctuation">]</span><span class="token punctuation">;</span>     <span class="token comment">// 拿到字母</span>
+        <span class="token keyword">int</span> number <span class="token operator">=</span> digits<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token string">'0'</span><span class="token punctuation">;</span>   <span class="token comment">// 取出index对应的数字</span>
+        string letters <span class="token operator">=</span> letterMap<span class="token punctuation">[</span>number<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 用数字拿到字母</span>
         <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> letters<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
             s<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>letters<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token function">dfs</span><span class="token punctuation">(</span>digits<span class="token punctuation">,</span> index <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">dfs</span><span class="token punctuation">(</span>digits<span class="token punctuation">,</span> index <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 递归的是index+1</span>
             s<span class="token punctuation">.</span><span class="token function">pop_back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span>
