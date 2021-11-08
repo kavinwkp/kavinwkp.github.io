@@ -417,7 +417,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="LeetCode-77-Combinations"><a href="#LeetCode-77-Combinations" class="headerlink" title="LeetCode 77. Combinations"></a>LeetCode 77. Combinations</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/combinations/">LeetCode</a></p>
+                <h2 id="LeetCode-77-Combinations"><a href="#LeetCode-77-Combinations" class="headerlink" title="LeetCode 77. Combinations"></a>LeetCode 77. Combinations</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/combinations/">LeetCode-77</a></p>
 <p>Given two integers <code>n</code> and <code>k</code>, return <strong>all possible</strong> combinations of <code>k</code> numbers out of the range <code>[1, n]</code>.</p>
 <p>You may return the answer in <strong>any order</strong>.</p>
 <p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> n <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">2</span>
@@ -430,7 +430,7 @@ Output<span class="token operator">:</span>
   <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
   <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
 <span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
-<h2 id="method-回溯"><a href="#method-回溯" class="headerlink" title="method: 回溯"></a>method: 回溯</h2><center>
+<h3 id="method-回溯"><a href="#method-回溯" class="headerlink" title="method: 回溯"></a>method: 回溯</h3><center>
 <img src="/2021/06/23/LeetCode-77-%E7%BB%84%E5%90%88/77.png#pic_center" width="100%" height="100%">
 </center>
 
@@ -454,7 +454,7 @@ vector<span class="token operator">&lt;</span>vector<span class="token operator"
     <span class="token function">dfs</span><span class="token punctuation">(</span>n<span class="token punctuation">,</span> k<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>剪枝</strong>：现在已经取了<code>path.size()</code>个，还需要<code>k-path.size()</code>个，但是总共只有<code>n</code>个，所以必须从小于等于<code>n-(k-path.size())+1</code>开始取，超过这个范围就取不了<code>k</code>个了<br>比如<code>n=4,k=3</code>，现在取了<code>0</code>个，接下来的取数不能大于<code>4-(3-0)+1=2</code>，也就是只可以从<code>1,2</code>开始取，超过<code>2</code>就取不到<code>3</code>个数了</p>
+<p><strong>剪枝</strong>：现在已经取了<code>path.size()</code>个，还需要<code>k-path.size()</code>个，但是总共只有<code>n</code>个，所以必须从小于等于<code>n-(k-path.size())+1</code>开始取，超过这个范围就取不了<code>k</code>个了，<code>+1</code>是因为下标从<code>1</code>开始，如果从<code>0</code>开始就不用了<br>比如<code>n=4,k=3</code>，现在取了<code>0</code>个，接下来的取数不能大于<code>4-(3-0)+1=2</code>，也就是只可以从<code>1,2</code>开始取，超过<code>2</code>就取不到<code>3</code>个数了</p>
 
                 
             </div>
