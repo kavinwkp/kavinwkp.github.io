@@ -29,12 +29,152 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<style type="text/css" lang="css">
+    #loading-container{
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-height: 100vh;
+        width: 100vw;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #FFF;
+        text-align: center;
+        /* loader页面消失采用渐隐的方式*/
+        -webkit-transition: opacity 1s ease;
+        -moz-transition: opacity 1s ease;
+        -o-transition: opacity 1s ease;
+        transition: opacity 1s ease;
+    }
+    .loading-image{
+        width: 120px;
+        height: 50px;
+        transform: translate(-50%);
+    }
+    
+    .loading-image div:nth-child(2) {
+        -webkit-animation: pacman-balls 1s linear 0s infinite;
+        animation: pacman-balls 1s linear 0s infinite
+    }
+
+    .loading-image div:nth-child(3) {
+        -webkit-animation: pacman-balls 1s linear .33s infinite;
+        animation: pacman-balls 1s linear .33s infinite
+    }
+
+    .loading-image div:nth-child(4) {
+        -webkit-animation: pacman-balls 1s linear .66s infinite;
+        animation: pacman-balls 1s linear .66s infinite
+    }
+
+    .loading-image div:nth-child(5) {
+        -webkit-animation: pacman-balls 1s linear .99s infinite;
+        animation: pacman-balls 1s linear .99s infinite
+    }
+    
+   .loading-image div:first-of-type {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_up .5s 0s infinite;
+        animation: rotate_pacman_half_up .5s 0s infinite;
+    }
+    .loading-image div:nth-child(2) {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_down .5s 0s infinite;
+        animation: rotate_pacman_half_down .5s 0s infinite;
+        margin-top: -50px;
+    }
+    @-webkit-keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @-webkit-keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+
+    @keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+    
+    @-webkit-keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+
+    @keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+    
+   
+    .loading-image div:nth-child(3),
+    .loading-image div:nth-child(4),
+    .loading-image div:nth-child(5),
+    .loading-image div:nth-child(6){
+        background-color: #49b1f5;
+        width: 15px;
+        height: 15px;
+        border-radius: 100%;
+        margin: 2px;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        transform: translateY(-6.25px);
+        top: 25px;
+        left: 100px;
+    }
+    .loading-text{
+        margin-bottom: 20vh;
+        text-align: center;
+        color: #2c3e50;
+        font-size: 2rem;
+        box-sizing: border-box;
+        padding: 0 10px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    @media only screen and (max-width: 500px) {
+         .loading-text{
+            font-size: 1.5rem;
+         }
+    }
+    .fadeout {
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+    /* logo出现动画 */
+    @-webkit-keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}100%{opacity:1;-webkit-transform:none;transform:none}}
+    @keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);}}
+ </style>
+ <script>
+(function () {
+    const loaded = function(){
+       setTimeout(function(){
+            const loader = document.getElementById("loading-container");
+            loader.className="fadeout" ;//使用渐隐的方法淡出loading page
+            // document.getElementById("body-wrap").style.display="flex";
+            setTimeout(function(){
+                loader.style.display="none";
+            },1000); 
+        },1000);//强制显示loading page 1s  
+    };
+    loaded();
+})()
+ </script><meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
 
 
-<body>
+
+ <div id="loading-container">
+     <p class="loading-text">玩命加载中 . . . </p> 
+     <div class="loading-image">
+         <div></div>
+         <div></div>
+         <div></div>
+         <div></div> 
+         <div></div>
+     </div>
+ </div><body>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
     <nav id="headNav" class="bg-color nav-transparent">
         <div id="navContainer" class="nav-wrapper container">
@@ -417,53 +557,53 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Python标签"><a href="#Python标签" class="headerlink" title="Python标签"></a>Python标签</h2><pre class="line-numbers language-py" data-language="py"><code class="language-py">res <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-<span class="token keyword">def</span> <span class="token function">func</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    res<span class="token punctuation">.</span>append<span class="token punctuation">(</span>obj<span class="token punctuation">)</span>
+                <h2 id="Python标签"><a href="#Python标签" class="headerlink" title="Python标签"></a>Python标签</h2><pre class="line-numbers language-py" data-language="py"><code class="language-py">res &#x3D; []
+def func(obj):
+    res.append(obj)
 
-a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">id</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span>        <span class="token comment"># 2897774181960</span>
-func<span class="token punctuation">(</span>a<span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">id</span><span class="token punctuation">(</span>res<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>   <span class="token comment"># 2409845052424</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"res: "</span><span class="token punctuation">,</span> res<span class="token punctuation">)</span>
+a &#x3D; [1, 2, 3]
+print(id(a))        # 2897774181960
+func(a)
+print(id(res[0]))   # 2409845052424
+print(&quot;res: &quot;, res)
 
-a<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"res: "</span><span class="token punctuation">,</span> res<span class="token punctuation">)</span>
+a.append(4)
+print(&quot;res: &quot;, res)
 
-res<span class="token punctuation">:</span>  <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
-res<span class="token punctuation">:</span>  <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+res:  [[1, 2, 3]]
+res:  [[1, 2, 3, 4]]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>从输出可以看到，<code>a</code>和<code>res[0]</code>的<code>id</code>一样，说明指向了同一块内存空间，所以<code>a</code>改变了之后<code>res[0]</code>也跟着改变了，你以为拷贝了，其实并没有</p>
 <p>原因：</p>
 <p><code>Python</code>没有变量，我们平时所说的变量其实只是<strong>标签</strong>，是<strong>引用</strong>。<br>执行：<code>values=[0,1,2]</code>的时候，<code>python</code>做的事情是首先创建一个列表对象<code>[0,1,2]</code>，然后给它贴上名为<code>values</code>的标签。如果随后执行<code>values=[3,4,5]</code>的话，<code>python</code>做的事情是创建另一个列表对象<code>[3,4,5]</code>，然后把刚才那张名为<code>values</code>的标签从前面的<code>[0,1,2]</code>对象上撕下来，重新贴到<code>[3,4,5]</code>这个对象上。</p>
 <p>所以，这里的<code>a</code>和<code>res[0]</code>就相当于两张标签贴到了同一个对象<code>[1,2,3]</code>上</p>
 <h2 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h2><p>解决办法是用拷贝，这里先说浅拷贝<code>shallow copy</code></p>
 <p>注意：<code>[:]</code>生成对象的拷贝或者是复制序列，不再是引用和共享变量，但此法只能顶层复制</p>
-<pre class="line-numbers language-py" data-language="py"><code class="language-py">res <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-<span class="token keyword">def</span> <span class="token function">func</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    res<span class="token punctuation">.</span>append<span class="token punctuation">(</span>obj<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>  <span class="token comment"># 这里不一样</span>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">res &#x3D; []
+def func(obj):
+    res.append(obj[:])  # 这里不一样
 
-a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">id</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span>        <span class="token comment"># 1558831191048</span>
-func<span class="token punctuation">(</span>a<span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">id</span><span class="token punctuation">(</span>res<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>   <span class="token comment"># 1558832493512</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"res: "</span><span class="token punctuation">,</span> res<span class="token punctuation">)</span>
+a &#x3D; [1, 2, 3]
+print(id(a))        # 1558831191048
+func(a)
+print(id(res[0]))   # 1558832493512
+print(&quot;res: &quot;, res)
 
-a<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"a: "</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"res: "</span><span class="token punctuation">,</span> res<span class="token punctuation">)</span>
+a.append(4)
+print(&quot;a: &quot;, a)
+print(&quot;res: &quot;, res)
 
-res<span class="token punctuation">:</span>  <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
-a<span class="token punctuation">:</span>  <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span>
-res<span class="token punctuation">:</span>  <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+res:  [[1, 2, 3]]
+a:  [1, 2, 3, 4]
+res:  [[1, 2, 3]]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以看到<code>a</code>和<code>res[0]</code>的<code>id</code>不一样了，<code>a</code>改变了之后，<code>res[0]</code>没有改变，对于这种场景，浅拷贝就适用了，但如果包含子对象，浅拷贝就有问题了</p>
-<pre class="line-numbers language-py" data-language="py"><code class="language-py">a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span>
-b <span class="token operator">=</span> a<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">a &#x3D; [0, [1, 2], 3]
+b &#x3D; a[:]
 
-a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">8</span>
-a<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">9</span>
+a[0] &#x3D; 8
+a[1][1] &#x3D; 9
 
-<span class="token keyword">print</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>  <span class="token comment"># [8, [1, 9], 3]</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span>  <span class="token comment"># [0, [1, 9], 3]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+print(a)  # [8, [1, 9], 3]
+print(b)  # [0, [1, 9], 3]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以看到，<code>b[1][1]</code>也跟着改变了，这就是浅拷贝只做顶层拷贝的效果</p>
 <center>
 <img src="/2021/10/16/Python-%E6%B7%B1%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B5%85%E6%8B%B7%E8%B4%9D/copy.png#pic_center" width="50%" height="50%">
@@ -471,36 +611,36 @@ a<span class="token punctuation">[</span><span class="token number">1</span><spa
 
 <p>原因从图里就可以看出来了，<code>a[1]</code>和<code>b[1]</code>还是指向了同一个对象</p>
 <h2 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h2><p>解决办法使用深拷贝</p>
-<pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token keyword">import</span> copy
-a <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span>
-b <span class="token operator">=</span> copy<span class="token punctuation">.</span>deepcopy<span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">import copy
+a &#x3D; [0, [1, 2], 3]
+b &#x3D; copy.deepcopy(a)
 
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">id</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment"># 2071720571784</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">id</span><span class="token punctuation">(</span>b<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment"># 2071721298184</span>
+print(id(a[1]))  # 2071720571784
+print(id(b[1]))  # 2071721298184
 
-a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">8</span>
-a<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">9</span>
+a[0] &#x3D; 8
+a[1][1] &#x3D; 9
 
-<span class="token keyword">print</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>  <span class="token comment"># [8, [1, 9], 3]</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span>  <span class="token comment"># [0, [1, 2], 3]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+print(a)  # [8, [1, 9], 3]
+print(b)  # [0, [1, 2], 3]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>深拷贝之后就指向两个完全不同的对象了</p>
 <p>对象也是一样</p>
-<pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token keyword">import</span> copy
-<span class="token keyword">class</span> <span class="token class-name">Person</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        self<span class="token punctuation">.</span>num <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">import copy
+class Person:
+    def __init__(self):
+        self.num &#x3D; [1, 2]
 
-p1 <span class="token operator">=</span> Person<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>p1<span class="token punctuation">.</span>num<span class="token punctuation">)</span>   <span class="token comment"># [1, 2]</span>
-p2 <span class="token operator">=</span> p1         <span class="token comment"># 指向同一个内存</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>p2<span class="token punctuation">.</span>num<span class="token punctuation">)</span>   <span class="token comment"># [1, 2]</span>
-p3 <span class="token operator">=</span> copy<span class="token punctuation">.</span>deepcopy<span class="token punctuation">(</span>p1<span class="token punctuation">)</span>  <span class="token comment"># 深拷贝</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>p3<span class="token punctuation">.</span>num<span class="token punctuation">)</span>   <span class="token comment"># [1, 2]</span>
+p1 &#x3D; Person()
+print(p1.num)   # [1, 2]
+p2 &#x3D; p1         # 指向同一个内存
+print(p2.num)   # [1, 2]
+p3 &#x3D; copy.deepcopy(p1)  # 深拷贝
+print(p3.num)   # [1, 2]
 
-p1<span class="token punctuation">.</span>num<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>p1<span class="token punctuation">.</span>num<span class="token punctuation">)</span>   <span class="token comment"># [1, 2, 3]</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>p2<span class="token punctuation">.</span>num<span class="token punctuation">)</span>   <span class="token comment"># [1, 2, 3] 也改变了</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>p3<span class="token punctuation">.</span>num<span class="token punctuation">)</span>   <span class="token comment"># [1, 2] 没有改变</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+p1.num.append(3)
+print(p1.num)   # [1, 2, 3]
+print(p2.num)   # [1, 2, 3] 也改变了
+print(p3.num)   # [1, 2] 没有改变<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
