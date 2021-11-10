@@ -570,13 +570,20 @@
 <p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> s <span class="token operator">=</span> <span class="token string">"25525511135"</span>
 Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"255.255.11.135"</span><span class="token punctuation">,</span><span class="token string">"255.255.111.35"</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>Example 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> s <span class="token operator">=</span> <span class="token string">"1111"</span>
 Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"1.1.1.1"</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
-<h3 id="method-回溯"><a href="#method-回溯" class="headerlink" title="method: 回溯"></a>method: 回溯</h3><ul>
-<li>substr(pos, len)</li>
-</ul>
-<p>返回从<code>pos</code>开始的<code>len</code>个字符组成的字符串</p>
+<h3 id="method-回溯"><a href="#method-回溯" class="headerlink" title="method: 回溯"></a>method: 回溯</h3><blockquote>
+<p><code>substr(pos, len)</code> 返回从<code>pos</code>开始的<code>len</code>个字符组成的字符串</p>
+</blockquote>
 <hr>
-<p>类似于分割回文串，有些不同点：IP有效性，固定分割4块，直接在字符串上操作</p>
-<p>IP地址有效性的判断：</p>
+<blockquote>
+<p><code>str.erase(pos)</code> 删除从<code>pos</code>开始的所有元素<br><code>str.erase(pos, num)</code> 删除从<code>pos</code>开始的<code>num</code>个元素<br><code>st.erase(iterator)</code> 删除迭代器指向的元素</p>
+</blockquote>
+<hr>
+<blockquote>
+<p><code>str.insert(pos, string)</code> 在<code>pos</code>的位置插入一个字符串<br><code>str.insert(iterator, char)</code> 在迭代器指向的位置插入一个字符</p>
+</blockquote>
+<hr>
+<p>类似于分割回文串，有些不同点：<code>IP</code>有效性，固定分割4块，直接在字符串上操作</p>
+<p><code>IP</code>地址有效性的判断：</p>
 <ul>
 <li>不能有前导0</li>
 <li>不能有特殊符号</li>
@@ -614,11 +621,16 @@ vector<span class="token operator">&lt;</span>string<span class="token operator"
     <span class="token function">dfs</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>因为只考虑3个分割点，所以不能在最末尾，不然会出现<code>1.1.11.</code>，<br>所以判断条件是<code>i &lt; s.size() - 1</code><br>或者在有效性判断里边加上<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span>start <span class="token operator">></span> end<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+<blockquote>
+<p>进入<code>for</code>循环是要对<code>index</code>操作，还是对<code>i</code>操作要分清楚</p>
+</blockquote>
+<ul>
+<li>递归结束条件：如果已经插入<code>3</code>个分割点了，后面的子串自动成为第<code>4</code>个地址，如果有效，直接可以保存了</li>
+</ul>
+<p>因为只考虑<code>3</code>个分割点，所以不会在最末尾插入<code>.</code>，不然会出现<code>1.1.11.</code>，<br>所以判断条件是<code>i &lt; s.size() - 1</code><br>或者在有效性判断里边加上<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span>start <span class="token operator">></span> end<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
 此时 start <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span>，end <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
 <p><a target="_blank" rel="noopener" href="https://kavinwkp.github.io/2021/06/24/LeetCode-131-%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2/">分割回文串</a>里面是这个分割点不行，换到下一个分割点，所以用<code>continue</code><br>这里是如果这个分割点不行，再往后面肯定也不行，如<code>256</code>不行，再往后<code>2561</code>，<code>25610</code>肯定也不行，所以直接<code>break</code></p>
 <p>因为在第<code>i</code>个位置分割，所以在<code>i+1</code>的位置插入分割点，后面的遍历就要从<code>i+2</code>的位置开始</p>
-<p>如果已经插入三个分割点了，后面的子串自动成为第4个地址，如果有效，直接可以保存了</p>
 
                 
             </div>
