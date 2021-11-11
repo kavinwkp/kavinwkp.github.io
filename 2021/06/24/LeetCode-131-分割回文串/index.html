@@ -565,7 +565,9 @@
 <p>A <code>palindrome</code> string is a string that reads the same backward as forward.</p>
 <p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> s <span class="token operator">=</span> <span class="token string">"aab"</span>
 Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token string">"a"</span><span class="token punctuation">,</span><span class="token string">"a"</span><span class="token punctuation">,</span><span class="token string">"b"</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token string">"aa"</span><span class="token punctuation">,</span><span class="token string">"b"</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
-<h3 id="method-回溯"><a href="#method-回溯" class="headerlink" title="method: 回溯"></a>method: 回溯</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string<span class="token punctuation">.</span><span class="token function">substr</span><span class="token punctuation">(</span>begin<span class="token punctuation">,</span> number<span class="token punctuation">)</span> <span class="token comment">// 截取从begin开始的number个字符</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="method-回溯"><a href="#method-回溯" class="headerlink" title="method: 回溯"></a>method: 回溯</h3><blockquote>
+<p><code>string.substr(pos, number)</code> 截取从<code>pos</code>开始的<code>number</code>个字符</p>
+</blockquote>
 <p>枚举每一个分割点，如果分割出来的子串<code>string[index, i]</code>是回文，就继续递归，否则这个分割点不行，跳到下一个分割点</p>
 <h4 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span>vector<span class="token operator">&lt;</span>string<span class="token operator">>></span> ret<span class="token punctuation">;</span>
 vector<span class="token operator">&lt;</span>string<span class="token operator">></span> path<span class="token punctuation">;</span>
@@ -585,10 +587,10 @@ vector<span class="token operator">&lt;</span>string<span class="token operator"
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> index<span class="token punctuation">;</span> i <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isPalindrome</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> index<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
             path<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">substr</span><span class="token punctuation">(</span>index<span class="token punctuation">,</span> i <span class="token operator">-</span> index <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 左闭右闭</span>
+            <span class="token function">dfs</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            path<span class="token punctuation">.</span><span class="token function">pop_back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span>
         <span class="token keyword">else</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>  <span class="token comment">// 如果不是回文，就跳到下一个分割点</span>
-        <span class="token function">dfs</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        path<span class="token punctuation">.</span><span class="token function">pop_back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span>
 vector<span class="token operator">&lt;</span>vector<span class="token operator">&lt;</span>string<span class="token operator">>></span> <span class="token function">partition</span><span class="token punctuation">(</span>string s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -597,19 +599,19 @@ vector<span class="token operator">&lt;</span>vector<span class="token operator"
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h4><p>字符串可以直接截取，判断回文可以直接反转</p>
 <p><code>s[:i]</code>意思是截取<code>s[0]</code>到<code>s[i-1]</code><br><code>s[i-1::-1]</code>意思是截取<code>s[0]</code>到<code>s[i-1]</code>并反转</p>
-<pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token keyword">def</span> <span class="token function">partition</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> s<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> List<span class="token punctuation">[</span>List<span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">dfs</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> path<span class="token punctuation">,</span> res<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token keyword">if</span> <span class="token keyword">not</span> s<span class="token punctuation">:</span>
-            res<span class="token punctuation">.</span>append<span class="token punctuation">(</span>path<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment"># 浅拷贝就够了</span>
-            <span class="token keyword">return</span>
-        <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token builtin">len</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-            <span class="token keyword">if</span> s<span class="token punctuation">[</span><span class="token punctuation">:</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> s<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">:</span> <span class="token comment"># 是否回文</span>
-                path<span class="token punctuation">.</span>append<span class="token punctuation">(</span>s<span class="token punctuation">[</span><span class="token punctuation">:</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
-                dfs<span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">,</span> path<span class="token punctuation">,</span> res<span class="token punctuation">)</span>
-                path<span class="token punctuation">.</span>pop<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    res <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-    dfs<span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> res<span class="token punctuation">)</span>
-    <span class="token keyword">return</span> res<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-py" data-language="py"><code class="language-py">def partition(self, s: str) -&gt; List[List[str]]:
+    def dfs(s, path, res):
+        if not s:
+            res.append(path[:]) # 浅拷贝就够了
+            return
+        for i in range(1, len(s) + 1):
+            if s[:i] &#x3D;&#x3D; s[i-1::-1]: # 是否回文
+                path.append(s[:i])
+                dfs(s[i:], path, res)
+                path.pop()
+    res &#x3D; []
+    dfs(s, [], res)
+    return res<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
