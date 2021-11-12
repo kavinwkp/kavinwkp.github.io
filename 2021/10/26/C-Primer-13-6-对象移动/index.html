@@ -726,6 +726,61 @@ move copy assignment<span aria-hidden="true" class="line-numbers-rows"><span></s
 <span class="token comment">// move constructor 右值调用移动构造函数</span>
 <span class="token comment">// swap copy assignment</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>在拷贝赋值运算符中调用自定义的<code>swap</code>函数，注意参数是<font color="LightSeaGreen">非引用的</font>，所以，当实参是左值时，调用拷贝构造函数，当实参是右值时，调用移动构造函数</p>
+<h3 id="13-6-3-右值引用和成员函数"><a href="#13-6-3-右值引用和成员函数" class="headerlink" title="13.6.3 右值引用和成员函数"></a>13.6.3 右值引用和成员函数</h3><blockquote>
+<p>可以同时定义拷贝和移动版本的成员函数</p>
+</blockquote>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">push_back</span><span class="token punctuation">(</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">push_back</span><span class="token punctuation">(</span>string<span class="token operator">&amp;&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>当调用<code>push_back</code>时，实参类型决定了新元素是拷贝还是移动</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">StrVec vec<span class="token punctuation">;</span>
+string s <span class="token operator">=</span> <span class="token string">"hello"</span><span class="token punctuation">;</span>
+vec<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment">// 调用push_back(const string&amp;)</span>
+vec<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token string">"done"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 调用push_back(string&amp;&amp;)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="右值和左值引用成员函数"><a href="#右值和左值引用成员函数" class="headerlink" title="右值和左值引用成员函数"></a>右值和左值引用成员函数</h4><blockquote>
+<p>可以给成员函数增加引用限定符，强制左侧运算对象是一个左值/右值</p>
+</blockquote>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Person</span>
+<span class="token punctuation">&#123;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    string <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> age<span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    Person<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> Person<span class="token operator">&amp;</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+Person<span class="token operator">&amp;</span> Person<span class="token operator">::</span><span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> Person<span class="token operator">&amp;</span> rhs<span class="token punctuation">)</span> <span class="token operator">&amp;</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token comment">// 执行将rhs赋予本对象的工作</span>
+    <span class="token keyword">return</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<div class="uk-alert uk-alert-success"><i class="fa fa-check-circle"></i> 如果同时使用<code>const</code>和引用限定，<code>const</code>必须排在前面</div>
+<h4 id="重载和引用函数"><a href="#重载和引用函数" class="headerlink" title="重载和引用函数"></a>重载和引用函数</h4><blockquote>
+<p>可以综合引用限定符和<code>const</code>来区分一个成员函数的重载版本</p>
+</blockquote>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Foo</span>
+<span class="token punctuation">&#123;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> data<span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    Foo <span class="token function">sorted</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span><span class="token punctuation">;</span>        <span class="token comment">// 可用于可改变的右值</span>
+    Foo <span class="token function">sorted</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token operator">&amp;</span><span class="token punctuation">;</span>   <span class="token comment">// 可用于任何类型的Foo</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 本对象为右值,因此可以原址排序</span>
+Foo <span class="token class-name">Foo</span><span class="token operator">::</span><span class="token function">sorted</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> 
+<span class="token punctuation">&#123;</span>
+    <span class="token function">sort</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> data<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 本对象是const或左值,不能对其进行原址排序</span>
+Foo <span class="token class-name">Foo</span><span class="token operator">::</span><span class="token function">sorted</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token operator">&amp;</span> 
+<span class="token punctuation">&#123;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"left value"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    Foo <span class="token function">ret</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 先拷贝对象</span>
+    <span class="token function">sort</span><span class="token punctuation">(</span>ret<span class="token punctuation">.</span>data<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> ret<span class="token punctuation">.</span>data<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>对象是一个右值，意味着没有其他用户，因此可以改变对象<br>当对一个<code>const</code>右值或一个左值执行<code>sorted</code>时，不能改变对象，因此需要在排序前拷贝对象</p>
 
                 
             </div>
