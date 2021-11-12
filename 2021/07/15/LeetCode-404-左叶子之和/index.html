@@ -560,16 +560,23 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="LeetCode-404-Sum-of-Left-Leaves"><a href="#LeetCode-404-Sum-of-Left-Leaves" class="headerlink" title="LeetCode 404. Sum of Left Leaves"></a>LeetCode 404. Sum of Left Leaves</h2><p>Given the root of a binary tree, return the sum of all <strong>left leaves</strong>.</p>
+                <h2 id="LeetCode-404-Sum-of-Left-Leaves"><a href="#LeetCode-404-Sum-of-Left-Leaves" class="headerlink" title="LeetCode 404. Sum of Left Leaves"></a>LeetCode 404. Sum of Left Leaves</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/sum-of-left-leaves/">LeetCode-404</a></p>
+<p>Given the root of a binary tree, return the sum of all <strong>left leaves</strong>.</p>
 <p>Example 1:<br><img src="/2021/07/15/LeetCode-404-%E5%B7%A6%E5%8F%B6%E5%AD%90%E4%B9%8B%E5%92%8C/404.jpg" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> root <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">20</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">15</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">]</span>
 Output<span class="token operator">:</span> <span class="token number">24</span>
 Explanation<span class="token operator">:</span> There are two left leaves in the binary tree<span class="token punctuation">,</span> with values <span class="token number">9</span> <span class="token operator">and</span> <span class="token number">15</span> respectively<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
-<h2 id="method-递归"><a href="#method-递归" class="headerlink" title="method: 递归"></a>method: 递归</h2><p>左叶子的判断：当前节点的左节点不为空，左节点的左节点和右节点为空</p>
+<h3 id="method-递归"><a href="#method-递归" class="headerlink" title="method: 递归"></a>method: 递归</h3><p>左叶子的判断：当前节点的左节点不为空，左节点的左节点和右节点为空</p>
+<blockquote>
+<ul>
+<li>递归计算左右子树的结果</li>
+<li>如果当前节点满足右节点是叶子节点的条件，就加上，没有就算了</li>
+</ul>
+</blockquote>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">sumOfLeftLeaves</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>root <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
     <span class="token keyword">int</span> leftSum <span class="token operator">=</span> <span class="token function">sumOfLeftLeaves</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">int</span> rightSum <span class="token operator">=</span> <span class="token function">sumOfLeftLeaves</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> midSum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> midSum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>     <span class="token comment">// 算当前点的结果</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span>left <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>root<span class="token operator">-></span>left<span class="token operator">-></span>left <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>root<span class="token operator">-></span>left<span class="token operator">-></span>right<span class="token punctuation">)</span> 
         midSum <span class="token operator">=</span> root<span class="token operator">-></span>left<span class="token operator">-></span>val<span class="token punctuation">;</span>
     <span class="token keyword">return</span> midSum <span class="token operator">+</span> leftSum <span class="token operator">+</span> rightSum<span class="token punctuation">;</span>
