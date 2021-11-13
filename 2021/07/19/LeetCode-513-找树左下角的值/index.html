@@ -565,7 +565,10 @@
 <p><img src="/2021/07/19/LeetCode-513-%E6%89%BE%E6%A0%91%E5%B7%A6%E4%B8%8B%E8%A7%92%E7%9A%84%E5%80%BC/513.jpg" alt></p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> root <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span>
 Output<span class="token operator">:</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h2 id="method-1-回溯"><a href="#method-1-回溯" class="headerlink" title="method 1: 回溯"></a>method 1: 回溯</h2><p>需要找到最底层的左边节点，用先序遍历，如果当前深度比记录的深度大，就更新深度和结果值<br>因为是遍历整棵树，所以不需要返回值</p>
+<h3 id="method-1-递归"><a href="#method-1-递归" class="headerlink" title="method 1: 递归"></a>method 1: 递归</h3><p>需要找到最底层的左边节点，用先序遍历，如果当前深度比记录的深度大，就更新深度和结果值<br>因为是遍历整棵树，所以不需要返回值</p>
+<blockquote>
+<p>如果深度增加，那该节点肯定是当前深度的第一个节点</p>
+</blockquote>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> maxDepth <span class="token operator">=</span> INT_MIN<span class="token punctuation">;</span> <span class="token comment">// 记录最大深度</span>
 <span class="token keyword">int</span> ret<span class="token punctuation">;</span>
 <span class="token keyword">void</span> <span class="token function">traversal</span><span class="token punctuation">(</span>TreeNode <span class="token operator">*</span>root<span class="token punctuation">,</span> <span class="token keyword">int</span> depth<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -583,7 +586,9 @@ Output<span class="token operator">:</span> <span class="token number">1</span><
     <span class="token function">traversal</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="method-2-层序遍历"><a href="#method-2-层序遍历" class="headerlink" title="method 2: 层序遍历"></a>method 2: 层序遍历</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">findBottomLeftValue</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<hr>
+<h3 id="method-2-层序遍历"><a href="#method-2-层序遍历" class="headerlink" title="method 2: 层序遍历"></a>method 2: 层序遍历</h3><p>记录每层的第一个节点</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">findBottomLeftValue</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     queue<span class="token operator">&lt;</span>TreeNode<span class="token operator">*</span><span class="token operator">></span> q<span class="token punctuation">;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
     <span class="token keyword">int</span> res <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
