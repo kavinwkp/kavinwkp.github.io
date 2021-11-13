@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="OpenCV_RGB&amp;GRAY, kunpeng">
+    <meta name="keywords" content="7.1-定义抽象数据结构, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>OpenCV_RGB&amp;GRAY | kunpeng</title>
+    <title>7.1-定义抽象数据结构 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">OpenCV_RGB&amp;GRAY</h1>
+                    <h1 class="description center-align post-title">7.1-定义抽象数据结构</h1>
                 </div>
             </div>
         </div>
@@ -511,8 +511,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/OpenCV/">
-                                <span class="chip bg-color">OpenCV</span>
+                            <a href="/tags/C-Primer/">
+                                <span class="chip bg-color">C++Primer</span>
                             </a>
                         
                     </div>
@@ -523,8 +523,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/OpenCV/" class="post-category">
-                                OpenCV
+                            <a href="/categories/C/" class="post-category">
+                                C++
                             </a>
                         
                     </div>
@@ -536,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-04-01
+                    2021-10-26
                 </div>
                 
 
@@ -560,85 +560,78 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <!-- toc -->
-<h2 id="读取图像"><a href="#读取图像" class="headerlink" title="读取图像"></a>读取图像</h2><h3 id="C-版本"><a href="#C-版本" class="headerlink" title="C++版本"></a>C++版本</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">imread</span><span class="token punctuation">(</span> <span class="token keyword">const</span> String<span class="token operator">&amp;</span> filename<span class="token punctuation">,</span> <span class="token keyword">int</span> flags <span class="token operator">=</span> IMREAD_COLOR <span class="token punctuation">)</span>
-filename	<span class="token comment">// 图片路径</span>
-flags		<span class="token comment">// 以彩色图或灰度图的方式进行读取</span>
-    IMREAD_GRAYSCALE <span class="token operator">=</span> <span class="token number">0</span>    <span class="token comment">// 灰度图</span>
-    IMREAD_COLOR     <span class="token operator">=</span> <span class="token number">1</span>    <span class="token comment">// 彩色图(默认)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">namedWindow</span><span class="token punctuation">(</span><span class="token keyword">const</span> String<span class="token operator">&amp;</span> winname<span class="token punctuation">,</span> <span class="token keyword">int</span> flags <span class="token operator">=</span> WINDOW_AUTOSIZE<span class="token punctuation">)</span>
-winname	<span class="token comment">// 窗口名称</span>
-flags	<span class="token comment">// 窗口属性</span>
-	WINDOW_NORMAL		<span class="token comment">// 可拖动改变大小</span>
-	WINDOW_AUTOSIZE		<span class="token comment">// 自动调整适应图片大小</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">imwrite</span><span class="token punctuation">(</span><span class="token keyword">const</span> String<span class="token operator">&amp;</span> filename<span class="token punctuation">,</span> InputArray img<span class="token punctuation">,</span> <span class="token keyword">const</span> std<span class="token operator">::</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> params <span class="token operator">=</span> std<span class="token operator">::</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-filename	<span class="token comment">// 文件名</span>
-img		<span class="token comment">// 对象名</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Mat src <span class="token operator">=</span> <span class="token function">imread</span><span class="token punctuation">(</span><span class="token string">"./test.png"</span><span class="token punctuation">,</span> IMREAD_GRAYSCALE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token function">namedWindow</span><span class="token punctuation">(</span><span class="token string">"input"</span><span class="token punctuation">,</span> WINDOW_AUTOSIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"input"</span><span class="token punctuation">,</span> src<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token function">waitKey</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="Python版本"><a href="#Python版本" class="headerlink" title="Python版本"></a>Python版本</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">cv<span class="token punctuation">.</span><span class="token function">imread</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">imshow</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">import cv2 as cv
+                <h2 id="7-1-定义抽象数据类型"><a href="#7-1-定义抽象数据类型" class="headerlink" title="7.1 定义抽象数据类型"></a>7.1 定义抽象数据类型</h2><h3 id="7-1-1-设计Sales-data类"><a href="#7-1-1-设计Sales-data类" class="headerlink" title="7.1.1 设计Sales_data类"></a>7.1.1 设计Sales_data类</h3><h3 id="7-1-2-定义改进的Sales-data类"><a href="#7-1-2-定义改进的Sales-data类" class="headerlink" title="7.1.2 定义改进的Sales_data类"></a>7.1.2 定义改进的Sales_data类</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">Sales_data</span>
+<span class="token punctuation">&#123;</span>
+    string <span class="token function">isbn</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> bookNo<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    Sales_data<span class="token operator">&amp;</span> <span class="token function">combine</span><span class="token punctuation">(</span><span class="token keyword">const</span> Sales_data<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">double</span> <span class="token function">avg_price</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span><span class="token punctuation">;</span>
+    string bookNo<span class="token punctuation">;</span>
+    <span class="token keyword">unsigned</span> units_sold <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">double</span> revenus <span class="token operator">=</span> <span class="token number">0.0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-src <span class="token operator">=</span> cv<span class="token punctuation">.</span><span class="token function">imread</span><span class="token punctuation">(</span><span class="token string">"./test.png"</span><span class="token punctuation">)</span>
-<span class="token function">print</span><span class="token punctuation">(</span><span class="token function">type</span><span class="token punctuation">(</span>src<span class="token punctuation">)</span><span class="token punctuation">)</span>	<span class="token comment">// &lt;class 'numpy.ndarray'></span>
-<span class="token function">print</span><span class="token punctuation">(</span>src<span class="token punctuation">.</span>dtype<span class="token punctuation">)</span>	<span class="token comment">// uint8</span>
-<span class="token function">print</span><span class="token punctuation">(</span>src<span class="token punctuation">.</span>shape<span class="token punctuation">)</span>	<span class="token comment">// (610, 570, 3)</span>
-cv<span class="token punctuation">.</span><span class="token function">namedWindow</span><span class="token punctuation">(</span><span class="token string">"input"</span><span class="token punctuation">,</span> cv<span class="token punctuation">.</span>WINDOW_AUTOSIZE<span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"input"</span><span class="token punctuation">,</span> src<span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">waitKey</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">destroyAllWindows</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<center>
-<img src="/2021/04/01/OpenCV-OpenCV-RGB-GRAY/test.png#pic_center" width="50%" height="50%" alt="test">
-</center>
+Sales_data <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">const</span> Sales_data<span class="token operator">&amp;</span><span class="token punctuation">,</span> <span class="token keyword">const</span> Sales_data<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ostream<span class="token operator">&amp;</span> <span class="token function">print</span><span class="token punctuation">(</span>ostream<span class="token operator">&amp;</span><span class="token punctuation">,</span> <span class="token keyword">const</span> Sales_data<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+istream<span class="token operator">&amp;</span> <span class="token function">read</span><span class="token punctuation">(</span>istream<span class="token operator">&amp;</span><span class="token punctuation">,</span> Sales_data<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>成员函数的声明必须在类的内部，定义既可以在类的内部也可以在类的外部<br>定义在类内部的函数是隐式的<code>inline</code>函数</p>
+</blockquote>
+<h4 id="引入const成员函数"><a href="#引入const成员函数" class="headerlink" title="引入const成员函数"></a>引入const成员函数</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string <span class="token function">isbn</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> bookNo<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这里<code>const</code>是修饰<code>this</code>指针，说明此处的<code>this</code>是一个指向常量的指针，所以常量成员函数不能修改调用它的对象的内容</p>
+<div class="uk-alert uk-alert-danger"><i class="fas fa-exclamation-triangle"></i> 常量对象，以及常量对象的引用或指针都只能调用常量成员函数</div>
+<h4 id="类作用域和成员函数"><a href="#类作用域和成员函数" class="headerlink" title="类作用域和成员函数"></a>类作用域和成员函数</h4><p>在类外部定义的成员函数需要带上<font color="LightSeaGreen">类名</font>和<font color="LightSeaGreen">作用域解析运算符</font></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">double</span> <span class="token class-name">Sales_data</span><span class="token operator">::</span><span class="token function">avg_price</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>units_sold<span class="token punctuation">)</span> 
+        <span class="token keyword">return</span> revenus <span class="token operator">/</span> units_sold<span class="token punctuation">;</span>
+    <span class="token keyword">else</span> 
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="定义一个返回this对象的函数"><a href="#定义一个返回this对象的函数" class="headerlink" title="定义一个返回this对象的函数"></a>定义一个返回this对象的函数</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Sales_data<span class="token operator">&amp;</span> <span class="token class-name">Sales_data</span><span class="token operator">::</span><span class="token function">combine</span><span class="token punctuation">(</span><span class="token keyword">const</span> Sales_data<span class="token operator">&amp;</span> rhs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    units_sold <span class="token operator">+=</span> rhs<span class="token punctuation">.</span>units_sold<span class="token punctuation">;</span>
+    revenus <span class="token operator">+=</span> rhs<span class="token punctuation">.</span>revenus<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="7-1-3-定义类相关的非成员函数"><a href="#7-1-3-定义类相关的非成员函数" class="headerlink" title="7.1.3 定义类相关的非成员函数"></a>7.1.3 定义类相关的非成员函数</h3><p>一般来说，如果非成员函数是类接口的组成部分，则这些函数的声明应该与类在同一个头文件内</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 输入的交易信息包括ISBN、售出总数和售出价格</span>
+istream<span class="token operator">&amp;</span> <span class="token function">read</span><span class="token punctuation">(</span>istream<span class="token operator">&amp;</span> is<span class="token punctuation">,</span> Sales_data<span class="token operator">&amp;</span> item<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">double</span> price<span class="token punctuation">;</span>
+    is <span class="token operator">>></span> item<span class="token punctuation">.</span>bookNo <span class="token operator">>></span> item<span class="token punctuation">.</span>units_sold <span class="token operator">>></span> price<span class="token punctuation">;</span>
+    item<span class="token punctuation">.</span>revenus <span class="token operator">=</span> price <span class="token operator">*</span> item<span class="token punctuation">.</span>units_sold<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> is<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
+ostream<span class="token operator">&amp;</span> <span class="token function">print</span><span class="token punctuation">(</span>ostream<span class="token operator">&amp;</span> os<span class="token punctuation">,</span> <span class="token keyword">const</span> Sales_data<span class="token operator">&amp;</span> item<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    os <span class="token operator">&lt;&lt;</span> item<span class="token punctuation">.</span><span class="token function">isbn</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">" "</span> <span class="token operator">&lt;&lt;</span> item<span class="token punctuation">.</span>units_sold <span class="token operator">&lt;&lt;</span> <span class="token string">" "</span>
+        <span class="token operator">&lt;&lt;</span> item<span class="token punctuation">.</span>revenus <span class="token operator">&lt;&lt;</span> <span class="token string">" "</span> <span class="token operator">&lt;&lt;</span> item<span class="token punctuation">.</span><span class="token function">avg_price</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> os<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>IO类属于不能被拷贝的类型，因此只能通过引用来传递</p>
+</blockquote>
+<h4 id="定义add函数"><a href="#定义add函数" class="headerlink" title="定义add函数"></a>定义add函数</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Sales_data <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">const</span> Sales_data<span class="token operator">&amp;</span> rhs<span class="token punctuation">,</span> <span class="token keyword">const</span> Sales_data<span class="token operator">&amp;</span> lhs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    Sales_data sum <span class="token operator">=</span> lhs<span class="token punctuation">;</span>
+    sum<span class="token punctuation">.</span><span class="token function">combine</span><span class="token punctuation">(</span>lhs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> sum<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="7-1-4-构造函数"><a href="#7-1-4-构造函数" class="headerlink" title="7.1.4 构造函数"></a>7.1.4 构造函数</h3><h4 id="合成的默认构造函数"><a href="#合成的默认构造函数" class="headerlink" title="合成的默认构造函数"></a>合成的默认构造函数</h4><p>类通过一个特殊的构造函数来控制默认初始化过程，这个函数叫做<font color="LightSeaGreen">默认构造函数</font>，无须任何实参</p>
+<blockquote>
+<ul>
+<li>如果存在类内的初始值，用它来初始化成员，如<code>units_sold</code>和<code>revenus</code></li>
+<li>否则，默认初始化，将<code>bookNo</code>初始化为空字符串</li>
+</ul>
+</blockquote>
+<div class="uk-alert uk-alert-danger"><i class="fas fa-exclamation-triangle"></i> 只有当类没有声明任何构造函数时，编译器才会自动地生成默认构造函数</div>
+<h4 id="定义Sales-data的构造函数"><a href="#定义Sales-data的构造函数" class="headerlink" title="定义Sales_data的构造函数"></a>定义Sales_data的构造函数</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">Sales_data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">default</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>该构造函数不接受任何实参，所以它是一个默认构造函数，我们定义这个构造函数的目的仅仅是因为我们既需要其他形式的构造函数，也需要默认的构造函数</p>
+<h4 id="构造函数初始值列表"><a href="#构造函数初始值列表" class="headerlink" title="构造函数初始值列表"></a>构造函数初始值列表</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">Sales_data</span><span class="token punctuation">(</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span> s<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">bookNo</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token function">Sales_data</span><span class="token punctuation">(</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span> s<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> n<span class="token punctuation">,</span> <span class="token keyword">double</span> p<span class="token punctuation">)</span><span class="token operator">:</span> 
+    <span class="token function">bookNo</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">units_sold</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">revenus</span><span class="token punctuation">(</span>p <span class="token operator">*</span> n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h4 id="在类的外部定义构造函数"><a href="#在类的外部定义构造函数" class="headerlink" title="在类的外部定义构造函数"></a>在类的外部定义构造函数</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token class-name">Sales_data</span><span class="token operator">::</span><span class="token function">Sales_data</span><span class="token punctuation">(</span>istream<span class="token operator">&amp;</span> is<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">read</span><span class="token punctuation">(</span>is<span class="token punctuation">,</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3 id="7-1-5-拷贝、赋值和析构"><a href="#7-1-5-拷贝、赋值和析构" class="headerlink" title="7.1.5 拷贝、赋值和析构"></a>7.1.5 拷贝、赋值和析构</h3><p>尽管编译器能替我们合成拷贝、赋值和销毁的操作，但是，对于某些类来说合成的版本无法正常工作。特别是，当类需要分配类对象之外的资源时，合成的版本常常会失效，所以只能自己写</p>
+<p>不过，如果类包含<code>vector</code>或<code>string</code>成员，则其拷贝、赋值和销毁的合成版本能够正常工作</p>
 
-<h2 id="转化为灰度图"><a href="#转化为灰度图" class="headerlink" title="转化为灰度图"></a>转化为灰度图</h2><h3 id="C-版本-1"><a href="#C-版本-1" class="headerlink" title="C++版本"></a>C++版本</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">cvtColor</span><span class="token punctuation">(</span>src<span class="token punctuation">,</span> gray<span class="token punctuation">,</span> COLOR_BGR2GRAY<span class="token punctuation">)</span>
-src	<span class="token comment">// input</span>
-gray	<span class="token comment">// output</span>
-COLOR_BGR2GRAY	<span class="token comment">//RGB图转为GRAY灰度图</span>
-默认三个通道顺序是<span class="token operator">:</span> B<span class="token punctuation">,</span> G<span class="token punctuation">,</span> R<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;opencv2/opencv.hpp></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> cv<span class="token punctuation">;</span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> artc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    Mat src <span class="token operator">=</span> <span class="token function">imread</span><span class="token punctuation">(</span><span class="token string">"./test.png"</span><span class="token punctuation">,</span> IMREAD_COLOR<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>src<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"could not load image...\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token function">namedWindow</span><span class="token punctuation">(</span><span class="token string">"input"</span><span class="token punctuation">,</span> WINDOW_AUTOSIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"input"</span><span class="token punctuation">,</span> src<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    Mat gray<span class="token punctuation">;</span>
-    <span class="token function">cvtColor</span><span class="token punctuation">(</span>src<span class="token punctuation">,</span> gray<span class="token punctuation">,</span> COLOR_BGR2GRAY<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">imwrite</span><span class="token punctuation">(</span><span class="token string">"./gray.png"</span><span class="token punctuation">,</span> gray<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">namedWindow</span><span class="token punctuation">(</span><span class="token string">"gray"</span><span class="token punctuation">,</span> WINDOW_AUTOSIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"gray"</span><span class="token punctuation">,</span> gray<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">waitKey</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="Python版本-1"><a href="#Python版本-1" class="headerlink" title="Python版本"></a>Python版本</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">src <span class="token operator">=</span> cv<span class="token punctuation">.</span><span class="token function">imread</span><span class="token punctuation">(</span><span class="token string">"./test.png"</span><span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">namedWindow</span><span class="token punctuation">(</span><span class="token string">"input"</span><span class="token punctuation">,</span> cv<span class="token punctuation">.</span>WINDOW_AUTOSIZE<span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"input"</span><span class="token punctuation">,</span> src<span class="token punctuation">)</span>
-gray <span class="token operator">=</span> cv<span class="token punctuation">.</span><span class="token function">cvtColor</span><span class="token punctuation">(</span>src<span class="token punctuation">,</span> cv<span class="token punctuation">.</span>COLOR_BGR2GRAY<span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">imwrite</span><span class="token punctuation">(</span><span class="token string">'gray.png'</span><span class="token punctuation">,</span> gray<span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"gray"</span><span class="token punctuation">,</span> gray<span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">waitKey</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">destroyAllWindows</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<center>
-<img src="/2021/04/01/OpenCV-OpenCV-RGB-GRAY/gray.png#pic_center" width="50%" height="50%" alt="test">
-<br>
-<div style="color:orange; border-bottom: 1px solid #d9d9d9;
-display: inline-block;
-color: #999;
-padding: 2px;">灰度图</div>
-</center>
                 
             </div>
             <hr/>
@@ -664,7 +657,7 @@ padding: 2px;">灰度图</div>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/04/01/OpenCV-OpenCV-RGB-GRAY/">http://example.com/2021/04/01/OpenCV-OpenCV-RGB-GRAY/</a>
+                    <a href="http://example.com/2021/10/26/C-Primer-7-1-%E5%AE%9A%E4%B9%89%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">http://example.com/2021/10/26/C-Primer-7-1-%E5%AE%9A%E4%B9%89%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -702,8 +695,8 @@ padding: 2px;">灰度图</div>
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/OpenCV/">
-                                    <span class="chip bg-color">OpenCV</span>
+                                <a href="/tags/C-Primer/">
+                                    <span class="chip bg-color">C++Primer</span>
                                 </a>
                             
                         </div>
@@ -879,13 +872,13 @@ padding: 2px;">灰度图</div>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/04/01/OpenCV-OpenCV-Pix/">
+                <a href="/2021/10/26/C-Primer-13-1-%E6%8B%B7%E8%B4%9D%E3%80%81%E8%B5%8B%E5%80%BC%E4%B8%8E%E9%94%80%E6%AF%81/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="OpenCV_Pix">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="13.1-拷贝、赋值与销毁">
                         
-                        <span class="card-title">OpenCV_Pix</span>
+                        <span class="card-title">13.1-拷贝、赋值与销毁</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -896,14 +889,14 @@ padding: 2px;">灰度图</div>
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-01
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-26
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/OpenCV/" class="post-category">
-                                    OpenCV
+                            <a href="/categories/C/" class="post-category">
+                                    C++
                                 </a>
                             
                             
@@ -913,8 +906,8 @@ padding: 2px;">灰度图</div>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/OpenCV/">
-                        <span class="chip bg-color">OpenCV</span>
+                    <a href="/tags/C-Primer/">
+                        <span class="chip bg-color">C++Primer</span>
                     </a>
                     
                 </div>
@@ -928,13 +921,13 @@ padding: 2px;">灰度图</div>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/04/01/OpenCV-OpenCV-draw/">
+                <a href="/2021/10/25/LeetCode-115-%E6%9C%80%E5%B0%8F%E6%A0%88/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="OpenCV_draw">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="115-最小栈">
                         
-                        <span class="card-title">OpenCV_draw</span>
+                        <span class="card-title">115-最小栈</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -945,14 +938,14 @@ padding: 2px;">灰度图</div>
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-01
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-25
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/OpenCV/" class="post-category">
-                                    OpenCV
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
                                 </a>
                             
                             
@@ -962,8 +955,8 @@ padding: 2px;">灰度图</div>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/OpenCV/">
-                        <span class="chip bg-color">OpenCV</span>
+                    <a href="/tags/%E6%A0%88/">
+                        <span class="chip bg-color">栈</span>
                     </a>
                     
                 </div>
