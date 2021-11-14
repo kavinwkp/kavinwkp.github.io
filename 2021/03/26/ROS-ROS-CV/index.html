@@ -511,12 +511,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/OpenCV/">
-                                <span class="chip bg-color">OpenCV</span>
-                            </a>
-                        
                             <a href="/tags/ROS/">
                                 <span class="chip bg-color">ROS</span>
+                            </a>
+                        
+                            <a href="/tags/OpenCV/">
+                                <span class="chip bg-color">OpenCV</span>
                             </a>
                         
                     </div>
@@ -666,32 +666,32 @@ Mat colorImg<span class="token punctuation">;</span>
     <span class="token function">destroyWindow</span><span class="token punctuation">(</span><span class="token string">"gray"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token comment">#! /usr/bin/env python</span>
-<span class="token comment"># coding=utf-8</span>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><pre class="line-numbers language-py" data-language="py"><code class="language-py">#! &#x2F;usr&#x2F;bin&#x2F;env python
+# coding&#x3D;utf-8
 
-<span class="token keyword">import</span> rospy
-<span class="token keyword">from</span> sensor_msgs<span class="token punctuation">.</span>msg <span class="token keyword">import</span> Image
-<span class="token keyword">import</span> cv2
-<span class="token keyword">from</span> cv_bridge <span class="token keyword">import</span> CvBridge
-
-
-rospy<span class="token punctuation">.</span>init_node<span class="token punctuation">(</span><span class="token string">'py_image_sub'</span><span class="token punctuation">,</span> anonymous<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
-
-<span class="token keyword">def</span> <span class="token function">colorCallBack</span><span class="token punctuation">(</span>msg<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    bridge <span class="token operator">=</span> CvBridge<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    img <span class="token operator">=</span> bridge<span class="token punctuation">.</span>imgmsg_to_cv2<span class="token punctuation">(</span>msg<span class="token punctuation">,</span> <span class="token string">"bgr8"</span><span class="token punctuation">)</span>
-    cv2<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span><span class="token string">"color"</span><span class="token punctuation">,</span> img<span class="token punctuation">)</span>
-    cv2<span class="token punctuation">.</span>waitKey<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
-
-<span class="token keyword">def</span> <span class="token function">listener</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    rospy<span class="token punctuation">.</span>Subscriber<span class="token punctuation">(</span><span class="token string">"image_topic"</span><span class="token punctuation">,</span> Image<span class="token punctuation">,</span> colorCallBack<span class="token punctuation">)</span>
-    rospy<span class="token punctuation">.</span>spin<span class="token punctuation">(</span><span class="token punctuation">)</span>
+import rospy
+from sensor_msgs.msg import Image
+import cv2
+from cv_bridge import CvBridge
 
 
-<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span>cv2<span class="token punctuation">.</span>__version__<span class="token punctuation">)</span>
-    listener<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'done'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+rospy.init_node(&#39;py_image_sub&#39;, anonymous&#x3D;True)
+
+def colorCallBack(msg):
+    bridge &#x3D; CvBridge()
+    img &#x3D; bridge.imgmsg_to_cv2(msg, &quot;bgr8&quot;)
+    cv2.imshow(&quot;color&quot;, img)
+    cv2.waitKey(10)
+
+def listener():
+    rospy.Subscriber(&quot;image_topic&quot;, Image, colorCallBack)
+    rospy.spin()
+
+
+if __name__ &#x3D;&#x3D; &#39;__main__&#39;:
+    print(cv2.__version__)
+    listener()
+    print(&#39;done&#39;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -755,12 +755,12 @@ rospy<span class="token punctuation">.</span>init_node<span class="token punctua
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/OpenCV/">
-                                    <span class="chip bg-color">OpenCV</span>
-                                </a>
-                            
                                 <a href="/tags/ROS/">
                                     <span class="chip bg-color">ROS</span>
+                                </a>
+                            
+                                <a href="/tags/OpenCV/">
+                                    <span class="chip bg-color">OpenCV</span>
                                 </a>
                             
                         </div>
@@ -936,13 +936,13 @@ rospy<span class="token punctuation">.</span>init_node<span class="token punctua
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/26/ROS-ROS-action/">
+                <a href="/2021/04/01/OpenCV-OpenCV-draw/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="ROS action">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="OpenCV_draw">
                         
-                        <span class="card-title">ROS action</span>
+                        <span class="card-title">OpenCV_draw</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -953,12 +953,16 @@ rospy<span class="token punctuation">.</span>init_node<span class="token punctua
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-03-26
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-01
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kunpeng
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/OpenCV/" class="post-category">
+                                    OpenCV
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -966,8 +970,8 @@ rospy<span class="token punctuation">.</span>init_node<span class="token punctua
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/ROS/">
-                        <span class="chip bg-color">ROS</span>
+                    <a href="/tags/OpenCV/">
+                        <span class="chip bg-color">OpenCV</span>
                     </a>
                     
                 </div>
@@ -981,13 +985,13 @@ rospy<span class="token punctuation">.</span>init_node<span class="token punctua
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/26/ROS-ROS-find-red-pixels/">
+                <a href="/2021/03/26/ROS-ROS-action/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="ROS find_red_pixels">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="ROS action">
                         
-                        <span class="card-title">ROS find_red_pixels</span>
+                        <span class="card-title">ROS action</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1010,10 +1014,6 @@ rospy<span class="token punctuation">.</span>init_node<span class="token punctua
                 </div>
                 
                 <div class="card-action article-tags">
-                    
-                    <a href="/tags/OpenCV/">
-                        <span class="chip bg-color">OpenCV</span>
-                    </a>
                     
                     <a href="/tags/ROS/">
                         <span class="chip bg-color">ROS</span>
