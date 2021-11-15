@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="Eigen_Quaternion, kunpeng">
+    <meta name="keywords" content="7.4-类的作用域, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Eigen_Quaternion | kunpeng</title>
+    <title>7.4-类的作用域 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Eigen_Quaternion</h1>
+                    <h1 class="description center-align post-title">7.4-类的作用域</h1>
                 </div>
             </div>
         </div>
@@ -511,14 +511,23 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Eigen/">
-                                <span class="chip bg-color">Eigen</span>
+                            <a href="/tags/C-Primer/">
+                                <span class="chip bg-color">C++Primer</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/C/" class="post-category">
+                                C++
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -527,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-21
+                    2021-10-26
                 </div>
                 
 
@@ -551,55 +560,70 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <!-- toc -->
-<h2 id="旋转向量到旋转矩阵"><a href="#旋转向量到旋转矩阵" class="headerlink" title="旋转向量到旋转矩阵"></a>旋转向量到旋转矩阵</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">double</span> alpha <span class="token operator">=</span> M_PI <span class="token operator">/</span> <span class="token number">3</span><span class="token punctuation">;</span>
-AngleAxisd <span class="token function">rotation_vector</span><span class="token punctuation">(</span>alpha<span class="token punctuation">,</span> <span class="token function">Vector3d</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// x轴: 1 0 0</span>
-<span class="token comment">// y轴: 0 1 0</span>
-<span class="token comment">// z轴: 0 0 1</span>
+                <h2 id="类的作用域"><a href="#类的作用域" class="headerlink" title="类的作用域"></a>类的作用域</h2><p>在类的作用域之外，普通的数据和函数成员只能由对象、引用或者指针使用<font color="LightSeaGreen">成员访问运算符</font>来访问</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Screen<span class="token operator">::</span>pos ht <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">,</span> wd <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span> <span class="token comment">// 使用Screen定义的pos类型</span>
+Screen <span class="token function">scr</span><span class="token punctuation">(</span>ht<span class="token punctuation">,</span> wd<span class="token punctuation">,</span> <span class="token string">'X'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Screen <span class="token operator">*</span>p <span class="token operator">=</span> <span class="token operator">&amp;</span>scr<span class="token punctuation">;</span>
+<span class="token keyword">char</span> c <span class="token operator">=</span> scr<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 类对象调用成员函数</span>
+p<span class="token operator">-></span><span class="token function">display</span><span class="token punctuation">(</span>cout<span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment">// 类指针调用成员函数</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>如果返回类型是类里面定义的类型，也需要加上类名和作用域解析运算符</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Window_mgr</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    ScreenIndex <span class="token function">addScreen</span><span class="token punctuation">(</span><span class="token keyword">const</span> Screen<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-MatrixXd rotation_matrix<span class="token punctuation">;</span>
+Window_mgr<span class="token operator">::</span>ScreenIndex 
+<span class="token class-name">Window_mgr</span><span class="token operator">::</span><span class="token function">addScreen</span><span class="token punctuation">(</span><span class="token keyword">const</span> Screen<span class="token operator">&amp;</span> s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    screens<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> screens<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="7-4-1-名字查找与类的作用域"><a href="#7-4-1-名字查找与类的作用域" class="headerlink" title="7.4.1 名字查找与类的作用域"></a>7.4.1 名字查找与类的作用域</h3><blockquote>
+<p>编译器处理完类中的全部声明后才会处理成员函数的定义</p>
+</blockquote>
+<p>成员函数中使用的名字按照如下方式解析：</p>
+<blockquote>
+<ul>
+<li>首先，在成员函数内查找该名字的声明</li>
+<li>如果在成员函数内没有找到，则在类内继续查找，这时类的所有成员都可以被考虑</li>
+<li>如果类内也没有该名字的声明，就在成员函数定义之前的作用域内继续查找</li>
+</ul>
+</blockquote>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> height<span class="token punctuation">;</span>     <span class="token comment">// 定义一个全局名字，待会在Screen中使用</span>
+<span class="token keyword">class</span> <span class="token class-name">Screen</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">typedef</span> string<span class="token operator">::</span>size_type pos<span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">dummy_fcn</span><span class="token punctuation">(</span>pos height<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        cursor <span class="token operator">=</span> width <span class="token operator">*</span> height<span class="token punctuation">;</span>    <span class="token comment">// 使用的是参数声明</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    pos cursor <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    pos height <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> width <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>如果硬要使用类的成员，可以显式地用<code>this</code>或类名</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">dummy_fcn</span><span class="token punctuation">(</span>pos height<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    cursor <span class="token operator">=</span> width <span class="token operator">*</span> <span class="token keyword">this</span><span class="token operator">-></span>height<span class="token punctuation">;</span>    <span class="token comment">// 使用的是类的成员</span>
+    <span class="token comment">// cursor = width * Screen::hegiht;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>如果要用到外层作用域中的名字，可以显式地通过作用域运算符来请求</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">dummy_fcn</span><span class="token punctuation">(</span>pos height<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    cursor <span class="token operator">=</span> width <span class="token operator">*</span> <span class="token operator">::</span>height<span class="token punctuation">;</span>    <span class="token comment">// 使用的是全局变量</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>成员函数定义在类的外部时，名字查找不仅要考虑类定义之前的全局作用域中的声明，还要考虑成员函数定义之前的全局作用域中的声明</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> height<span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">Screen</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">typedef</span> string<span class="token operator">::</span>size_type pos<span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">setHeight</span><span class="token punctuation">(</span>pos<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    pos height <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-rotation_matrix <span class="token operator">=</span> rotation_vector<span class="token punctuation">.</span><span class="token function">matrix</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// rotation_matrix = rotation_vector.toRotationMatrix();</span>
+Screen<span class="token operator">::</span>pos <span class="token function">verity</span><span class="token punctuation">(</span>Screen<span class="token operator">::</span>pos<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 全局函数的声明</span>
 
-cout <span class="token operator">&lt;&lt;</span> rotation_matrix <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">// 1         0         0</span>
-<span class="token comment">// 0       0.5 -0.866025</span>
-<span class="token comment">// 0  0.866025       0.5</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="旋转向量到欧拉角"><a href="#旋转向量到欧拉角" class="headerlink" title="旋转向量到欧拉角"></a>旋转向量到欧拉角</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Vector3d eulerAngle <span class="token operator">=</span> rotation_vector<span class="token punctuation">.</span><span class="token function">matrix</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">eulerAngles</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// ZYX: 2, 1, 0</span>
+<span class="token keyword">void</span> <span class="token class-name">Screen</span><span class="token operator">::</span><span class="token function">setHeight</span><span class="token punctuation">(</span>pos var<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    height <span class="token operator">=</span> <span class="token function">verify</span><span class="token punctuation">(</span>var<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里成员函数<code>setHeight</code>用到的<code>verify</code>全局函数，已经在成员函数定义之前声明了，所以可以正常使用，<code>height</code>已经在类里面声明了，所以成员函数里面的<code>height</code>就是类的成员了</p>
 
-cout <span class="token operator">&lt;&lt;</span> eulerAngle <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">//      0</span>
-<span class="token comment">//     -0</span>
-<span class="token comment">// 1.0472</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="旋转向量到四元数"><a href="#旋转向量到四元数" class="headerlink" title="旋转向量到四元数"></a>旋转向量到四元数</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Quaterniond <span class="token function">quaternion</span><span class="token punctuation">(</span>rotation_vector<span class="token punctuation">)</span><span class="token punctuation">;</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">coeffs</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">//      0.5</span>
-<span class="token comment">//        0</span>
-<span class="token comment">//        0</span>
-<span class="token comment">// 0.866025</span>
-
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">x</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">y</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">z</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">w</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">// 0.5</span>
-<span class="token comment">// 0</span>
-<span class="token comment">// 0</span>
-<span class="token comment">// 0.866025</span>
-
-Quaterniond quaternion2<span class="token punctuation">;</span>
-quaternion2 <span class="token operator">=</span> rotation_vector<span class="token punctuation">;</span>  <span class="token comment">// 重载了'='</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion2<span class="token punctuation">.</span><span class="token function">coeffs</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">//      0.5</span>
-<span class="token comment">//        0</span>
-<span class="token comment">//        0</span>
-<span class="token comment">// 0.866025</span>
-
-<span class="token comment">// 四元数的初始化</span>
-Quaterniond <span class="token function">quaternion</span><span class="token punctuation">(</span>w<span class="token punctuation">,</span> x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> z<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -625,7 +649,7 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/03/21/Eigen-Eigen-Quaternion/">http://example.com/2021/03/21/Eigen-Eigen-Quaternion/</a>
+                    <a href="http://example.com/2021/10/26/C-Primer-7-4-%E7%B1%BB%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F/">http://example.com/2021/10/26/C-Primer-7-4-%E7%B1%BB%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -663,8 +687,8 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Eigen/">
-                                    <span class="chip bg-color">Eigen</span>
+                                <a href="/tags/C-Primer/">
+                                    <span class="chip bg-color">C++Primer</span>
                                 </a>
                             
                         </div>
@@ -840,13 +864,13 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/21/Eigen-Eigen-2/">
+                <a href="/2021/10/26/C-Primer-13-1-%E6%8B%B7%E8%B4%9D%E3%80%81%E8%B5%8B%E5%80%BC%E4%B8%8E%E9%94%80%E6%AF%81/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Eigen_2">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="13.1-拷贝、赋值与销毁">
                         
-                        <span class="card-title">Eigen_2</span>
+                        <span class="card-title">13.1-拷贝、赋值与销毁</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -857,12 +881,16 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-03-21
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-26
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kunpeng
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/C/" class="post-category">
+                                    C++
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -870,8 +898,8 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Eigen/">
-                        <span class="chip bg-color">Eigen</span>
+                    <a href="/tags/C-Primer/">
+                        <span class="chip bg-color">C++Primer</span>
                     </a>
                     
                 </div>
@@ -885,13 +913,13 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/21/Eigen-Eigen-1/">
+                <a href="/2021/10/26/C-Primer-7-3-%E7%B1%BB%E7%9A%84%E5%85%B6%E4%BB%96%E7%89%B9%E6%80%A7/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Eigen_1">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="7.3-类的其他特性">
                         
-                        <span class="card-title">Eigen_1</span>
+                        <span class="card-title">7.3-类的其他特性</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -902,12 +930,16 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-26
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kunpeng
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/C/" class="post-category">
+                                    C++
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -915,8 +947,8 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Eigen/">
-                        <span class="chip bg-color">Eigen</span>
+                    <a href="/tags/C-Primer/">
+                        <span class="chip bg-color">C++Primer</span>
                     </a>
                     
                 </div>

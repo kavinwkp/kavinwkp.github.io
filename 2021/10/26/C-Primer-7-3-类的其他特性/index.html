@@ -698,29 +698,32 @@ blank<span class="token punctuation">.</span><span class="token function">displa
 <h4 id="令成员函数作为友元"><a href="#令成员函数作为友元" class="headerlink" title="令成员函数作为友元"></a>令成员函数作为友元</h4><p>可以只让<code>clear</code>函数作为<code>Screen</code>的友元函数，注意<code>clear</code>必须在<code>Screen</code>类之前被声明，顺序是</p>
 <blockquote>
 <ol>
-<li>首先定义<code>Window_mgr</code>类，声明<code>clear</code>函数</li>
-<li>定义<code>Screen</code>，包括对于<code>clear</code>友元声明</li>
+<li>首先声明<code>Screen</code>类，不用定义</li>
+<li>然后定义<code>Window_mgr</code>类，声明<code>clear</code>函数</li>
+<li>再定义<code>Screen</code>，包括对于<code>clear</code>友元声明</li>
 <li>最后定义<code>clear</code></li>
 </ol>
 </blockquote>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 1. 定义Window_mgr类，声明clear函数</span>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 1. 先声明Screen，因为Window_mgr中用到了</span>
+<span class="token keyword">class</span> <span class="token class-name">Screen</span><span class="token punctuation">;</span>
+<span class="token comment">// 2. 定义Window_mgr类，声明clear函数</span>
 <span class="token keyword">class</span> <span class="token class-name">Window_mgr</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token keyword">using</span> ScreenIndex <span class="token operator">=</span> vector<span class="token operator">&lt;</span>Screen<span class="token operator">></span><span class="token operator">::</span>size_type<span class="token punctuation">;</span>
     <span class="token keyword">void</span> <span class="token function">clear</span><span class="token punctuation">(</span>ScreenIndex<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">private</span><span class="token operator">:</span>
-    vector<span class="token operator">&lt;</span>Screen<span class="token operator">></span> screens<span class="token punctuation">&#123;</span><span class="token function">Screen</span><span class="token punctuation">(</span><span class="token number">24</span><span class="token punctuation">,</span> <span class="token number">80</span><span class="token punctuation">,</span> <span class="token string">'*'</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    vector<span class="token operator">&lt;</span>Screen<span class="token operator">></span> screens<span class="token punctuation">;</span>     <span class="token comment">// 这里就不能调用Screen的构造函数了</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-<span class="token comment">// 2. 定义Screen，包括对于clear友元声明</span>
+<span class="token comment">// 3. 定义Screen，包括对于clear友元声明</span>
 <span class="token keyword">class</span> <span class="token class-name">Screen</span>
 <span class="token punctuation">&#123;</span>
     <span class="token keyword">friend</span> <span class="token keyword">void</span> <span class="token class-name">Window_mgr</span><span class="token operator">::</span><span class="token function">clear</span><span class="token punctuation">(</span>ScreenIndex<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-<span class="token comment">// 3. 最后定义clear</span>
+<span class="token comment">// 4. 最后定义clear</span>
 <span class="token keyword">void</span> <span class="token class-name">Window_mgr</span><span class="token operator">::</span><span class="token function">clear</span><span class="token punctuation">(</span>ScreenIndex i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     Screen<span class="token operator">&amp;</span> s <span class="token operator">=</span> screens<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>     <span class="token comment">// 指向要清空的那个Screen</span>
     s<span class="token punctuation">.</span>contents <span class="token operator">=</span> <span class="token function">string</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span>height <span class="token operator">*</span> s<span class="token punctuation">.</span>width<span class="token punctuation">,</span> <span class="token string">' '</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="函数重载和友元"><a href="#函数重载和友元" class="headerlink" title="函数重载和友元"></a>函数重载和友元</h4><p>要把重载的函数声明为友元，需要逐个声明</p>
 <h4 id="友元声明和作用域"><a href="#友元声明和作用域" class="headerlink" title="友元声明和作用域"></a>友元声明和作用域</h4><p>可以在类的内部定义友元函数，但也需要在外部声明使得友元函数可见</p>
 
@@ -964,13 +967,13 @@ blank<span class="token punctuation">.</span><span class="token function">displa
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/10/26/C-Primer-13-1-%E6%8B%B7%E8%B4%9D%E3%80%81%E8%B5%8B%E5%80%BC%E4%B8%8E%E9%94%80%E6%AF%81/">
+                <a href="/2021/10/26/C-Primer-7-4-%E7%B1%BB%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="13.1-拷贝、赋值与销毁">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="7.4-类的作用域">
                         
-                        <span class="card-title">13.1-拷贝、赋值与销毁</span>
+                        <span class="card-title">7.4-类的作用域</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
