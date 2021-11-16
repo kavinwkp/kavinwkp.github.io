@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="ROS话题通信, kunpeng">
+    <meta name="keywords" content="寄存器, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>ROS话题通信 | kunpeng</title>
+    <title>寄存器 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">ROS话题通信</h1>
+                    <h1 class="description center-align post-title">寄存器</h1>
                 </div>
             </div>
         </div>
@@ -511,14 +511,23 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/ROS/">
-                                <span class="chip bg-color">ROS</span>
+                            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                                <span class="chip bg-color">计算机组成原理</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/CS/" class="post-category">
+                                CS
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -527,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-26
+                    2021-11-16
                 </div>
                 
 
@@ -551,135 +560,131 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <!-- toc -->
-<h2 id="容易出错的地方"><a href="#容易出错的地方" class="headerlink" title="容易出错的地方"></a>容易出错的地方</h2><h3 id="链接catkin的库"><a href="#链接catkin的库" class="headerlink" title="链接catkin的库"></a>链接catkin的库</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">target_link_libraries</span><span class="token punctuation">(</span>main $<span class="token punctuation">&#123;</span>catkin_LIBRARIES<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="使用自定义头文件，前面加包名"><a href="#使用自定义头文件，前面加包名" class="headerlink" title="使用自定义头文件，前面加包名"></a>使用自定义头文件，前面加包名</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"package_name/xxx.h"</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="CMakeLists-txt"><a href="#CMakeLists-txt" class="headerlink" title="CMakeLists.txt"></a>CMakeLists.txt</h3><p>如果有自定义类，需要包含头文件和链接库</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 头文件位置</span>
-<span class="token function">include_libraries</span><span class="token punctuation">(</span>include<span class="token punctuation">)</span>
+                <h2 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h2><p>寄存器是<code>CPU</code>内部的构造，主要用于信息的存储。除此之外，<code>CPU</code>内部还有运算器，负责处理数据；控制器控制其他组件；外部总线连接<code>CPU</code>和各种组件，进行数据传输；内部总线负责<code>CPU</code>内部各种组件的数据处理</p>
+<p><strong>为什么会出现寄存器？</strong></p>
+<p>程序在内存中装载，由<code>CPU</code>来运行，<code>CPU</code>的主要职责就是用来处理数据。这个过程涉及到从存储器读取和写入数据，如果还要从内存中读取就太麻烦了，所以直接在<code>CPU</code>中开辟一些空间来存储数据，读取速度也比较快</p>
+<h3 id="认识寄存器"><a href="#认识寄存器" class="headerlink" title="认识寄存器"></a>认识寄存器</h3><p><code>CPU</code>从逻辑上可以分为3个模块，分别是控制单元、运算单元和存储单元，这三部分由<code>CPU</code>内部总线连接起来。</p>
+<p>几乎所有的冯·诺伊曼型计算机的<code>CPU</code>，其工作都可以分为5个阶段：<font color="LightSeaGreen">取指令、指令译码、执行指令、访存取数、结果写回</font></p>
+<blockquote>
+<ol>
+<li>取指令阶段是将内存中的指令读取到<code>CPU</code>中寄存器的过程，程序寄存器用于存储下一条指令所在的地址</li>
+<li>指令译码阶段，在取指令完成后，立马进入指令译码阶段，指令译码器按照预定的指令格式，对取回的指令进行拆分和解释，识别区分出不同的指令类别以及各种获取操作数的方法</li>
+<li>执行指令阶段，译码完成后，就需要执行这一条指令了，此阶段的任务是完成指令所规定的各种操作，具体实现指令的功能</li>
+<li>访问取数阶段，根据指令的需要，有可能需要从内存中提取数据，此阶段的任务是：根据指令地址码，得到操作数在内存中的地址，并从内存中读取该操作数用于运算</li>
+<li>结果写回阶段（Write Back，WB），把运行结果写回到<code>CPU</code>内部寄存器中，以便被后续的指令快速地存取</li>
+</ol>
+</blockquote>
+<h3 id="计算机架构中的寄存器"><a href="#计算机架构中的寄存器" class="headerlink" title="　计算机架构中的寄存器"></a>　计算机架构中的寄存器</h3><div class="uk-alert uk-alert-success"><i class="fa fa-check-circle"></i> 寄存器是一块速度非常快的计算机内存</div>
+<p>在<code>8086</code>架构中，所有的内部寄存器、内部以及外部总线都是<code>16</code>位宽，可以存储两个字节，<code>8086</code>处理器有<code>14</code>个寄存器，每个寄存器都有一个特有的名称，即</p>
+<blockquote>
+<p>AX，BX，CX，DX，SP，BP，SI，DI，IP，FLAG，CS，DS，SS，ES</p>
+</blockquote>
+<p>这<code>14</code>个寄存器有可能进行具体的划分，按照功能可以分为三种</p>
+<blockquote>
+<ul>
+<li>通用寄存器</li>
+<li>控制寄存器</li>
+<li>段寄存器</li>
+</ul>
+</blockquote>
+<h3 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h3><p>通用寄存器主要有四种 ，即<font color="LightSeaGreen">AX、BX、CX、DX</font>，同样的，这四个寄存器也是<code>16</code>位的，能存放两个字节，各自的功能为</p>
+<blockquote>
+<ul>
+<li>AX（Accumulator Register） ：累加寄存器，用于输入/输出和大规模的指令运算</li>
+<li>BX（Base Register）：基址寄存器，用来存储基础访问地址</li>
+<li>CX（Count Register）：计数寄存器，在迭代的操作中循环计数</li>
+<li>DX（data Register）：数据寄存器，也用于输入/输出操作。它还与 AX 寄存器一起使用，用于大数值的乘法和除法运算</li>
+</ul>
+</blockquote>
+<p>这四种寄存器可以分为上半部分和下半部分，分成高位和低位两个<code>8</code>位数据寄存器</p>
+<blockquote>
+<p><code>AX</code>寄存器可以分为两个独立的<code>8</code>位的<code>AH</code>和<code>AL</code>寄存器，另外3个类似</p>
+</blockquote>
+<p>寄存器的存储方式是先存储低位，如果低位满足不了就存储高位，如果低位能够满足，高位用0补全</p>
+<p><code>8086 CPU</code>可以一次存储两种类型的数据</p>
+<blockquote>
+<ul>
+<li>字节（byte）：一个字节由<code>8 bit</code>组成，这是一种恒定不变的存储方式</li>
+<li>字（word）：字是由指令集或处理器硬件作为单元处理的固定大小的数据，对于<code>intel</code>来说，一个字长就是两个字节，字是计算机一个非常重要的特征，针对不同的指令集架构来说，计算机一次处理的数据也是不同的。有字（16位）、双字（32位）、四字（64位）等</li>
+</ul>
+</blockquote>
+<h4 id="AX寄存器"><a href="#AX寄存器" class="headerlink" title="AX寄存器"></a>AX寄存器</h4><p><font color="LightSeaGreen">累加寄存器</font>或者简称为累加器</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">mov AX<span class="token punctuation">,</span><span class="token number">20</span>   <span class="token comment">// 将 20 送入寄存器 AX</span>
+mov AH<span class="token punctuation">,</span><span class="token number">80</span>   <span class="token comment">// 将 80 送入寄存器 AH</span>
+add AX<span class="token punctuation">,</span><span class="token number">10</span>   <span class="token comment">// 将寄存器 AX 中的数值加上 10</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>支持<code>MUL</code>和<code>DIV</code>指令</p>
+<h4 id="BX寄存器"><a href="#BX寄存器" class="headerlink" title="BX寄存器"></a>BX寄存器</h4><p><font color="LightSeaGreen"><b>数据寄存器</b></font>，能够暂存一般数据，还用于<font color="LightSeaGreen">寻址</font>，即寻找物理内存地址。<code>BX</code>寄存器中存放的数据一般是作为<font color="LightSeaGreen">偏移地址</font>使用的。偏移地址是在段寄存器中存储的</p>
+<h4 id="CX寄存器"><a href="#CX寄存器" class="headerlink" title="CX寄存器"></a>CX寄存器</h4><p><code>CX</code>也是数据寄存器，能够暂存一般性数据。当在汇编指令中使用循环<code>LOOP</code>指令时，可以通过<code>CX</code>来指定需要循环的次数，每次执行循环<code>LOOP</code>时候，<code>CPU</code>会做两件事</p>
+<ul>
+<li>一是计数器自动减 1</li>
+<li>二是判断<code>CX</code>中的值，如果值为<code>0</code>则会跳出循环，如果值为<code>0</code>，则会继续执行循环</li>
+</ul>
+<h4 id="DX寄存器"><a href="#DX寄存器" class="headerlink" title="DX寄存器"></a>DX寄存器</h4><p><code>DX</code>也是数据寄存器，能够暂存一般性数据，支持<code>MUL</code>和<code>DIV</code>指令，同时也支持数值溢出等</p>
+<h3 id="段寄存器"><a href="#段寄存器" class="headerlink" title="段寄存器"></a>段寄存器</h3><blockquote>
+<ul>
+<li><font color="LightCoral">CS(Code Segment)：代码寄存器</font>，程序代码的基础位置</li>
+<li>DS(Data Segment)：数据寄存器，变量的基本位置</li>
+<li>SS(Stack Segment)：栈寄存器，栈的基础位置</li>
+<li>ES(Extra Segment)：其他寄存器，内存中变量的其他基本位置</li>
+</ul>
+</blockquote>
+<h3 id="索引寄存器"><a href="#索引寄存器" class="headerlink" title="索引寄存器"></a>索引寄存器</h3><p>索引寄存器主要包含段地址的偏移量，分为</p>
+<blockquote>
+<p>BP(Base Pointer)：基础指针，它是栈寄存器上的偏移量，用来定位栈上变量<br>SP(Stack Pointer): 栈指针，它是栈寄存器上的偏移量，用来定位栈顶<br>SI(Source Index): 变址寄存器，用来拷贝源字符串<br>DI(Destination Index): 目标变址寄存器，用来复制到目标字符串</p>
+</blockquote>
+<h3 id="状态和控制寄存器"><a href="#状态和控制寄存器" class="headerlink" title="状态和控制寄存器"></a>状态和控制寄存器</h3><ul>
+<li><font color="LightCoral">IP(Instruction Pointer)：指令指针寄存器</font>，它是从<code>Code Segment</code>代码寄存器处的偏移来存储执行的下一条指令</li>
+<li>FLAG：<code>Flag</code>寄存器用于存储当前进程的状态，这些状态有<ul>
+<li>位置 (Direction)：用于数据块的传输方向，是向上传输还是向下传输</li>
+<li>中断标志位 (Interrupt) ：1 - 允许；0 - 禁止</li>
+<li>陷入位 (Trap) ：确定每条指令执行完成后，CPU 是否应该停止。1 - 开启，0 - 关闭</li>
+<li>进位 (Carry) : 设置最后一个无符号算术运算是否带有进位</li>
+<li>溢出 (Overflow) : 设置最后一个有符号运算是否溢出</li>
+<li>符号 (Sign) : 如果最后一次算术运算为负，则设置 1 =负，0 =正</li>
+<li>零位 (Zero) : 如果最后一次算术运算结果为零，1 = 零</li>
+<li>辅助进位 (Aux Carry) ：用于第三位到第四位的进位</li>
+<li>奇偶校验 (Parity) : 用于奇偶校验</li>
+</ul>
+</li>
+</ul>
+<h3 id="物理地址"><a href="#物理地址" class="headerlink" title="物理地址"></a>物理地址</h3><p>16 位的 CPU 指的是</p>
+<ul>
+<li>CPU 内部的运算器一次最多能处理 16 位的数据</li>
+</ul>
+<blockquote>
+<p>运算器其实就是ALU，运算控制单元，它是CPU内部的三大核心器件之一，主要负责数据的运算</p>
+</blockquote>
+<ul>
+<li>寄存器的最大宽度为 16 位</li>
+</ul>
+<blockquote>
+<p>这个寄存器的最大宽度值就是通用寄存器能处理的二进制数的最大位数</p>
+</blockquote>
+<ul>
+<li>寄存器和运算器之间的通路为 16 位</li>
+</ul>
+<blockquote>
+<p>这个指的是寄存器和运算器之间的总线，一次能传输 16 位的数据</p>
+</blockquote>
+<p>CPU 相关组件提供两个地址：<font color="LightSeaGreen">段地址和偏移地址</font>，这两个地址都是<code>16</code>位的，他们经由地址加法器变为<code>20</code>位的<font color="LightSeaGreen">物理地址</font>，这个地址即是输入输出控制电路传递给内存的物理地址，由此完成物理地址的转换</p>
+<p>地址加法器采用<code>物理地址 = 段地址 * 16 + 偏移地址</code>的方法用段地址和偏移地址合成物理地址</p>
+<p>段地址*16就是二进制左移4位，十六进制左移1位，作为基础地址，所以</p>
+<div class="uk-alert uk-alert-success"><i class="fa fa-check-circle"></i> 物理地址 = 基础地址 + 偏移地址</div>
+<h3 id="段寄存器-1"><a href="#段寄存器-1" class="headerlink" title="段寄存器"></a>段寄存器</h3><h4 id="CS-寄存器"><a href="#CS-寄存器" class="headerlink" title="CS 寄存器"></a>CS 寄存器</h4><blockquote>
+<p>CS（代码寄存器，存储段地址）和 IP（指令指针，存储偏移地址） 都是 8086 CPU 非常重要的寄存器，它们指出了 CPU 当前需要读取指令的地址</p>
+</blockquote>
+<p>在 CPU 内部，由 CS 和 IP 提供段地址和偏移地址，由加法器负责转换为物理地址，输入输出控制电路负责输入/输出数据，指令缓冲器负责缓冲指令，指令执行器负责执行指令。在内存中有一段连续存储的区域，区域内部存储的是机器码、外面是地址和汇编指令</p>
+<p>假设段地址和偏移地址分别是<code>2000</code>和<code>0000</code>，当这两个地址进入地址加法器后，会由地址加法器负责将这两个地址转换为物理地址<code>20000</code>，然后输入输出控制电路将<code>20</code>位的地址总线送到内存中，然后取出对应的数据，<code>B8 23 01</code>，<code>B8</code>是操作数，再送入指令缓存器中，此时这个指令就已经具备执行条件，然后 IP（指令指针）会自动增加。它会知道下一个需要读取指令的地址<code>0003</code>，在这之后，指令执行执行取出的<code>B8 23 01</code>这条指令，然后再把<code>2000</code>和<code>0003</code>送到地址加法器中再进行后续指令的读取，如此循环</p>
+<p>总结一下 8086 CPU 的工作过程</p>
+<blockquote>
+<ul>
+<li>段寄存器提供段地址和偏移地址给地址加法器</li>
+<li>由地址加法器计算出物理地址通过输入输出控制电路将物理地址送到内存中</li>
+<li>提取物理地址对应的指令，经由控制电路取回并送到指令缓存器中</li>
+<li><code>IP</code>继续指向下一条指令的地址，同时指令执行器执行指令缓冲器中的指令</li>
+</ul>
+</blockquote>
 
-<span class="token comment">// 添加库文件</span>
-<span class="token function">add_libraries</span><span class="token punctuation">(</span>Student STATIC src<span class="token operator">/</span>Student<span class="token punctuation">.</span>cpp<span class="token punctuation">)</span>
-
-<span class="token comment">// 链接</span>
-<span class="token function">target_link_libraries</span><span class="token punctuation">(</span>main Student<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="std-msgs的数据类型"><a href="#std-msgs的数据类型" class="headerlink" title="std_msgs的数据类型"></a>std_msgs的数据类型</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;std_msgs/Float64.h></span></span>
-float64 data
-
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;std_msgs/Float64MultiArray.h></span></span>
-float64<span class="token punctuation">[</span><span class="token punctuation">]</span> data  <span class="token comment">// 这种可变数组就相当于vector</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><h3 id="发布者-talker"><a href="#发布者-talker" class="headerlink" title="发布者 talker"></a>发布者 talker</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    ros<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"talker"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 节点名</span>
-    ros<span class="token operator">::</span>NodeHandle n<span class="token punctuation">;</span>                  <span class="token comment">// 句柄</span>
-    ros<span class="token operator">::</span>Publisher pub <span class="token operator">=</span> n<span class="token punctuation">.</span>advertise<span class="token operator">&lt;</span>std_msgs<span class="token operator">::</span>Float64<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"chatting"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">// 往chatting话题上发消息，数据类型是std_msgs::Float64</span>
-    std_msgs<span class="token operator">::</span>Float64 input<span class="token punctuation">;</span>
-    input<span class="token punctuation">.</span>data <span class="token operator">=</span> <span class="token number">0.0</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>Rate <span class="token function">loop_rate</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 1s发一次</span>
-    <span class="token keyword">while</span><span class="token punctuation">(</span>ros<span class="token operator">::</span><span class="token function">ok</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
-        input<span class="token punctuation">.</span>data <span class="token operator">+=</span> <span class="token number">0.1</span><span class="token punctuation">;</span>
-        pub<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span>input<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        loop_rate<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>不同数据类型<code>std_msgs::Float64MultiArray</code></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    ros<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"talker"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>NodeHandle n<span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>Publisher pub <span class="token operator">=</span> n<span class="token punctuation">.</span>advertise<span class="token operator">&lt;</span>std_msgs<span class="token operator">::</span>Float64MultiArray<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"chatting"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>Rate <span class="token function">loop_rate</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">double</span> arr<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">14</span><span class="token punctuation">,</span> <span class="token number">15</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-    std<span class="token operator">::</span>vector<span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token operator">></span> <span class="token function">vi</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> arr<span class="token operator">+</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// float64就是double</span>
-    std_msgs<span class="token operator">::</span>Float64MultiArray input_float<span class="token punctuation">;</span>
-    input_float<span class="token punctuation">.</span>data <span class="token operator">=</span> vi<span class="token punctuation">;</span>
-    <span class="token keyword">while</span><span class="token punctuation">(</span>ros<span class="token operator">::</span><span class="token function">ok</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span><span class="token operator">&amp;</span> i <span class="token operator">:</span> input_float<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
-            std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> i <span class="token operator">&lt;&lt;</span> <span class="token string">" "</span><span class="token punctuation">;</span>
-        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
-        pub<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span>input_float<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        loop_rate<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="订阅者-listener"><a href="#订阅者-listener" class="headerlink" title="订阅者 listener"></a>订阅者 listener</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">chatting_cb</span><span class="token punctuation">(</span><span class="token keyword">const</span> std_msgs<span class="token operator">::</span>Float64<span class="token operator">::</span>ConstPtr<span class="token operator">&amp;</span> message<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"I receive the number: %f"</span><span class="token punctuation">,</span> message<span class="token operator">-></span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    ros<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"listener"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>NodeHandle n<span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>Subscribe sub <span class="token operator">=</span> n<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token string">"chatting"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> chatting_cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span><span class="token function">spin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 阻塞</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="CMakeLists-txt-1"><a href="#CMakeLists-txt-1" class="headerlink" title="CMakeLists.txt"></a>CMakeLists.txt</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">cmake_minimum_required</span><span class="token punctuation">(</span>VERSION <span class="token number">3.0</span><span class="token punctuation">.</span><span class="token number">2</span><span class="token punctuation">)</span>
-<span class="token function">project</span><span class="token punctuation">(</span>learning_communication<span class="token punctuation">)</span>
-
-<span class="token function">find_package</span><span class="token punctuation">(</span>catkin REQUIRED COMPONENTS
-  roscpp
-  rospy
-  std_msgs
-<span class="token punctuation">)</span>
-
-<span class="token function">catkin_package</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-<span class="token function">include_directories</span><span class="token punctuation">(</span>
-  include
-  $<span class="token punctuation">&#123;</span>catkin_INCLUDE_DIRS<span class="token punctuation">&#125;</span>
-<span class="token punctuation">)</span>
-
-<span class="token function">add_executable</span><span class="token punctuation">(</span>talker src<span class="token operator">/</span>talker<span class="token punctuation">.</span>cpp<span class="token punctuation">)</span>
-
-<span class="token function">target_link_libraries</span><span class="token punctuation">(</span>talker $<span class="token punctuation">&#123;</span>catkin_LIBRARIES<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><h3 id="发布者"><a href="#发布者" class="headerlink" title="发布者"></a>发布者</h3><pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token comment">#! /usr/bin/env python</span>
-<span class="token comment"># -*- coding: utf-8 -*-</span>
-
-<span class="token keyword">import</span> rospy
-<span class="token keyword">from</span> std_msgs<span class="token punctuation">.</span>msg <span class="token keyword">import</span> String
-<span class="token keyword">from</span> test_msgs<span class="token punctuation">.</span>msg <span class="token keyword">import</span> Position
-
-
-<span class="token keyword">def</span> <span class="token function">talker</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    rospy<span class="token punctuation">.</span>init_node<span class="token punctuation">(</span><span class="token string">'py_talker'</span><span class="token punctuation">,</span> anonymous<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
-    Pos_pub <span class="token operator">=</span> rospy<span class="token punctuation">.</span>Publisher<span class="token punctuation">(</span><span class="token string">'/test/Position'</span><span class="token punctuation">,</span> Position<span class="token punctuation">,</span> queue_size<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">)</span>
-    rate <span class="token operator">=</span> rospy<span class="token punctuation">.</span>Rate<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
-    pos <span class="token operator">=</span> Position<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    pos<span class="token punctuation">.</span>x <span class="token operator">=</span> <span class="token number">10</span>
-    pos<span class="token punctuation">.</span>y <span class="token operator">=</span> <span class="token number">20</span>
-    <span class="token keyword">while</span> <span class="token keyword">not</span> rospy<span class="token punctuation">.</span>is_shutdown<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        pos<span class="token punctuation">.</span>x <span class="token operator">+=</span> <span class="token number">1</span>
-        pos<span class="token punctuation">.</span>y <span class="token operator">+=</span> <span class="token number">2</span>
-        rospy<span class="token punctuation">.</span>loginfo<span class="token punctuation">(</span>pos<span class="token punctuation">)</span>
-        Pos_pub<span class="token punctuation">.</span>publish<span class="token punctuation">(</span>pos<span class="token punctuation">)</span>
-        rate<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-
-<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
-    <span class="token keyword">try</span><span class="token punctuation">:</span>
-        talker<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">except</span> rospy<span class="token punctuation">.</span>ROSInterruptException<span class="token punctuation">:</span><span class="token keyword">pass</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="订阅者"><a href="#订阅者" class="headerlink" title="订阅者"></a>订阅者</h3><pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token comment">#! /usr/bin/env python</span>
-<span class="token comment"># -*- coding: utf-8 -*-</span>
-
-<span class="token keyword">import</span> rospy
-<span class="token keyword">from</span> test_msgs<span class="token punctuation">.</span>msg <span class="token keyword">import</span> Position
-
-<span class="token keyword">def</span> <span class="token function">callback</span><span class="token punctuation">(</span>msg<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    rospy<span class="token punctuation">.</span>loginfo<span class="token punctuation">(</span><span class="token string">'Receive: %f, %f'</span><span class="token punctuation">,</span> msg<span class="token punctuation">.</span>x<span class="token punctuation">,</span> msg<span class="token punctuation">.</span>y<span class="token punctuation">)</span>
-
-<span class="token keyword">def</span> <span class="token function">listener</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    rospy<span class="token punctuation">.</span>init_node<span class="token punctuation">(</span><span class="token string">'py_listener'</span><span class="token punctuation">,</span> anonymous<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
-    rospy<span class="token punctuation">.</span>Subscriber<span class="token punctuation">(</span><span class="token string">'/test/Position'</span><span class="token punctuation">,</span> Position<span class="token punctuation">,</span> callback<span class="token punctuation">)</span>
-    rospy<span class="token punctuation">.</span>spin<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
-    <span class="token keyword">try</span><span class="token punctuation">:</span>
-        listener<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">except</span> rospy<span class="token punctuation">.</span>ROSInitException<span class="token punctuation">:</span><span class="token keyword">pass</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -705,7 +710,7 @@ float64<span class="token punctuation">[</span><span class="token punctuation">]
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/03/26/ROS-ROS%E8%AF%9D%E9%A2%98%E9%80%9A%E4%BF%A1/">http://example.com/2021/03/26/ROS-ROS%E8%AF%9D%E9%A2%98%E9%80%9A%E4%BF%A1/</a>
+                    <a href="http://example.com/2021/11/16/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AF%84%E5%AD%98%E5%99%A8/">http://example.com/2021/11/16/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AF%84%E5%AD%98%E5%99%A8/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -743,8 +748,8 @@ float64<span class="token punctuation">[</span><span class="token punctuation">]
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/ROS/">
-                                    <span class="chip bg-color">ROS</span>
+                                <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                                    <span class="chip bg-color">计算机组成原理</span>
                                 </a>
                             
                         </div>
@@ -916,17 +921,18 @@ float64<span class="token punctuation">[</span><span class="token punctuation">]
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/03/26/ROS-ROS%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB/">
+                <a href="/2021/11/16/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AF%84%E5%AD%98%E5%99%A8/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="ROS自定义类">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="寄存器">
                         
-                        <span class="card-title">ROS自定义类</span>
+                        <span class="card-title">寄存器</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -936,22 +942,27 @@ float64<span class="token punctuation">[</span><span class="token punctuation">]
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-03-26
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-16
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kunpeng
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CS/" class="post-category">
+                                    CS
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/ROS/">
-                        <span class="chip bg-color">ROS</span>
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
+                        <span class="chip bg-color">计算机组成原理</span>
                     </a>
                     
                 </div>
@@ -965,13 +976,13 @@ float64<span class="token punctuation">[</span><span class="token punctuation">]
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/26/%E5%A4%9A%E6%97%8B%E7%BF%BC-PX4-pos-estimator/">
+                <a href="/2021/11/06/LeetCode-118-%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="PX4_pos_estimator">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="118-杨辉三角">
                         
-                        <span class="card-title">PX4_pos_estimator</span>
+                        <span class="card-title">118-杨辉三角</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -982,14 +993,14 @@ float64<span class="token punctuation">[</span><span class="token punctuation">]
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-26
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-06
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%A4%9A%E6%97%8B%E7%BF%BC/" class="post-category">
-                                    多旋翼
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
                                 </a>
                             
                             
@@ -999,8 +1010,8 @@ float64<span class="token punctuation">[</span><span class="token punctuation">]
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%A4%9A%E6%97%8B%E7%BF%BC/">
-                        <span class="chip bg-color">多旋翼</span>
+                    <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                        <span class="chip bg-color">动态规划</span>
                     </a>
                     
                 </div>
