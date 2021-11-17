@@ -70,9 +70,9 @@
       
         <tags>
             
-            <tag> 二叉树 </tag>
-            
             <tag> 递归 </tag>
+            
+            <tag> 二叉树 </tag>
             
         </tags>
       
@@ -147,9 +147,9 @@
       
         <tags>
             
-            <tag> 哈希表 </tag>
-            
             <tag> 链表 </tag>
+            
+            <tag> 哈希表 </tag>
             
         </tags>
       
@@ -312,7 +312,7 @@
       <link href="2021/10/26/C-Primer-7-5-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%86%8D%E6%8E%A2/"/>
       <url>2021/10/26/C-Primer-7-5-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%86%8D%E6%8E%A2/</url>
       
-        <content type="html"><![CDATA[<h2 id="7-5-构造函数再探"><a href="#7-5-构造函数再探" class="headerlink" title="7.5 构造函数再探"></a>7.5 构造函数再探</h2><h3 id="7-5-1-构造函数初始值列表"><a href="#7-5-1-构造函数初始值列表" class="headerlink" title="7.5.1 构造函数初始值列表"></a>7.5.1 构造函数初始值列表</h3><p>如果没有在构造函数的初始值列表中显式地初始化成员，则该成员将在构造函数体之前执行默认初始化，然后再在构造函数体内赋值</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 使用初始化列表</span><span class="token function">Sales_data</span><span class="token punctuation">(</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span> s<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> n<span class="token punctuation">,</span> <span class="token keyword">double</span> p<span class="token punctuation">)</span><span class="token operator">:</span>     <span class="token function">bookNo</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">units_sold</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">revenus</span><span class="token punctuation">(</span>p <span class="token operator">*</span> n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token comment">// 虽然合法但比较草率，没有使用构造函数初始值</span><span class="token function">Sales_data</span><span class="token punctuation">(</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span> s<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> cnt<span class="token punctuation">,</span> <span class="token keyword">double</span> price<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>    bookNo <span class="token operator">=</span> s<span class="token punctuation">;</span>    units_sold <span class="token operator">=</span> cnt<span class="token punctuation">;</span>    revenue <span class="token operator">=</span> cnt <span class="token operator">*</span> price<span class="token punctuation">;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><blockquote><p>成员是<code>const</code>、引用，或者属于某种未提供默认构造函数的类类型，必须通过构造函数初始值列表为这些成员提供初值</p></blockquote><p>随着构造函数体一开始执行，初始化就完成了，初始化<code>const</code>或引用类型的成员的唯一机会是通过<font color="LightSeaGreen">构造函数初始化列表</font></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">ConstRef</span> <span class="token punctuation">&#123;</span><span class="token keyword">public</span><span class="token operator">:</span>     <span class="token function">ConstRef</span><span class="token punctuation">(</span><span class="token keyword">int</span> ii<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">private</span><span class="token operator">:</span>    <span class="token keyword">int</span> i<span class="token punctuation">;</span>    <span class="token keyword">const</span> <span class="token keyword">int</span> ci<span class="token punctuation">;</span>   <span class="token comment">// const必须初始化</span>    <span class="token keyword">int</span> <span class="token operator">&amp;</span>ri<span class="token punctuation">;</span>        <span class="token comment">// 引用必须初始化</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span class="token class-name">ConstRef</span><span class="token operator">::</span><span class="token function">ConstRef</span><span class="token punctuation">(</span><span class="token keyword">int</span> ii<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">i</span><span class="token punctuation">(</span>ii<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">ci</span><span class="token punctuation">(</span>ii<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">ri</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h4 id="成员初始化顺序"><a href="#成员初始化顺序" class="headerlink" title="成员初始化顺序"></a>成员初始化顺序</h4><p>成员的初始化顺序与它们在类定义中的出现顺序一致，构造函数初始值列表中的前后位置关系不会影响实际的初始化顺序</p><h4 id="默认实参和构造函数"><a href="#默认实参和构造函数" class="headerlink" title="默认实参和构造函数"></a>默认实参和构造函数</h4><p>如果一个构造函数为所有参数都提供了默认实参，则它实际上也定义了默认构造函数</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 定义默认构造函数</span><span class="token function">Sales_data</span><span class="token punctuation">(</span>string s <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">bookNo</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><h3 id="7-5-2-委托构造函数"><a href="#7-5-2-委托构造函数" class="headerlink" title="7.5.2 委托构造函数"></a>7.5.2 委托构造函数</h3><p>一个<font color="LightSeaGreen">委托构造函数</font>使用它所属类的其他构造函数执行自己的初始化过程，或者说它把自己的一些职责委托给了其他构造函数</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Sales_data</span> <span class="token punctuation">&#123;</span>    <span class="token comment">// 非委托构造函数使用对应的实参初始化成员</span>    <span class="token function">Sales_data</span><span class="token punctuation">(</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span> s<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> n<span class="token punctuation">,</span> <span class="token keyword">double</span> p<span class="token punctuation">)</span><span class="token operator">:</span>         <span class="token function">bookNo</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">units_sold</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">revenus</span><span class="token punctuation">(</span>p <span class="token operator">*</span> n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>    <span class="token comment">// 其余构造函数全都委托给另一个构造函数</span>    <span class="token function">Sales_data</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">Sales_data</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>    <span class="token function">Sales_data</span><span class="token punctuation">(</span>string s<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">Sales_data</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>    <span class="token function">Sales_data</span><span class="token punctuation">(</span>istream<span class="token operator">&amp;</span> is<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">Sales_data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>        <span class="token function">read</span><span class="token punctuation">(</span>is<span class="token punctuation">,</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="7-5-3-默认构造函数的作用"><a href="#7-5-3-默认构造函数的作用" class="headerlink" title="7.5.3 默认构造函数的作用"></a>7.5.3 默认构造函数的作用</h3><p>在实际中，如果定义了其他构造函数，最好也提供一个默认构造函数</p><p>使用默认构造函数的正确写法</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Sales_data obj<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h3 id="7-5-4-隐式的类类型转换"><a href="#7-5-4-隐式的类类型转换" class="headerlink" title="7.5.4 隐式的类类型转换"></a>7.5.4 隐式的类类型转换</h3><p>能通过一个实参调用的构造函数定义了一条从构造函数的参数类型向类类型转换的规则</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string null_book <span class="token operator">=</span> <span class="token string">"9-999"</span><span class="token punctuation">;</span>item<span class="token punctuation">.</span><span class="token function">combine</span><span class="token punctuation">(</span>null_book<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>这里构造了一个临时的<code>Sales_data</code>对象，<code>bookNo</code>等于<code>null_book</code>，其他成员默认</p><h4 id="只允许一步类类型转换"><a href="#只允许一步类类型转换" class="headerlink" title="只允许一步类类型转换"></a>只允许一步类类型转换</h4><p>编译器只会自动地执行一步类型转换</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">item<span class="token punctuation">.</span><span class="token function">combine</span><span class="token punctuation">(</span><span class="token string">"9-999"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// Err 需要两步类型转换</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>需要先把<code>9-999</code>转换为<code>string</code>，再转换为<code>Sales_data</code></p><p>可以把其中一步显式地写出来</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">item<span class="token punctuation">.</span><span class="token function">combine</span><span class="token punctuation">(</span><span class="token function">string</span><span class="token punctuation">(</span><span class="token string">"9-999"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 正确</span>item<span class="token punctuation">.</span><span class="token function">combine</span><span class="token punctuation">(</span><span class="token function">Sales_data</span><span class="token punctuation">(</span><span class="token string">"9-999"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 正确</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><h4 id="抑制构造函数定义的隐式转换"><a href="#抑制构造函数定义的隐式转换" class="headerlink" title="抑制构造函数定义的隐式转换"></a>抑制构造函数定义的隐式转换</h4><p>可以通过将构造函数声明为<code>explicit</code>阻止隐式转换</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Sales_data</span> <span class="token punctuation">&#123;</span>    <span class="token function">Sales_data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">default</span><span class="token punctuation">;</span>    <span class="token function">Sales_data</span><span class="token punctuation">(</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span> s<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> n<span class="token punctuation">,</span> <span class="token keyword">double</span> p<span class="token punctuation">)</span><span class="token operator">:</span>         <span class="token function">bookNo</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">units_sold</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">revenus</span><span class="token punctuation">(</span>p <span class="token operator">*</span> n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>    <span class="token keyword">explicit</span> <span class="token function">Sales_data</span><span class="token punctuation">(</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span> s<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">bookNo</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>    <span class="token keyword">explicit</span> <span class="token function">Sales_data</span><span class="token punctuation">(</span>istream<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>这样就不能隐式转换</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">item<span class="token punctuation">.</span><span class="token function">combine</span><span class="token punctuation">(</span>null_book<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// Err</span>item<span class="token punctuation">.</span><span class="token function">combine</span><span class="token punctuation">(</span>cin<span class="token punctuation">)</span><span class="token punctuation">;</span>          <span class="token comment">// Err</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>关键字<code>explicit</code>只对一个实参的构造函数有效，需要多个实参的构造函数不能用于执行隐式转换，所以不用声明<code>explicit</code><br>只能在类内声明构造函数时使用<code>explicit</code>，类外不能重复</p><h4 id="explicit构造函数只能用于直接初始化"><a href="#explicit构造函数只能用于直接初始化" class="headerlink" title="explicit构造函数只能用于直接初始化"></a>explicit构造函数只能用于直接初始化</h4><p>发生隐式转换的一种情况是当我们执行拷贝形式的初始化时（使用=），这种只能使用直接初始化而不能使用explicit构造函数</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Sales_data <span class="token function">item1</span><span class="token punctuation">(</span>null_book<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 正确，直接初始化</span>Sales_data item2 <span class="token operator">=</span> null_book<span class="token punctuation">;</span>   <span class="token comment">// Err，不能将explicit构造函数用于拷贝形式的初始化过程</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><blockquote><p>用<code>explicit</code>声明构造函数时，就只能以直接初始化的形式使用，同时也不能在自动转换过程中使用该构造函数</p></blockquote><p>硬要用的话可以用强制类型转换</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Sales_data item <span class="token operator">=</span> <span class="token keyword">static_cast</span><span class="token operator">&lt;</span>Sales_data<span class="token operator">></span><span class="token punctuation">(</span>null_book<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 正确</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h3 id="7-5-5-聚合类"><a href="#7-5-5-聚合类" class="headerlink" title="7.5.5 聚合类"></a>7.5.5 聚合类</h3><blockquote><ul><li>所有成员都是<code>public</code>的</li><li>没有定义任何构造函数</li><li>没有类内初始值</li><li>没有基类，也没有<code>virtual</code>函数</li></ul></blockquote><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">Data</span> <span class="token punctuation">&#123;</span>    <span class="token keyword">int</span> ival<span class="token punctuation">;</span>    string s<span class="token punctuation">;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>Data data1 <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">"kavin"</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>可以使用成员初始化列表初始化聚合类的数据成员，顺序要跟声明的顺序相同</p><h3 id="7-5-6-字面值常量类"><a href="#7-5-6-字面值常量类" class="headerlink" title="7.5.6 字面值常量类"></a>7.5.6 字面值常量类</h3><blockquote><ul><li>数据成员必须都是字面值类型</li><li>类必须至少有一个<code>constexpr</code>构造函数</li><li>数据成员的类内初始值<ul><li>内置类型：必须是一条常量表达式</li><li>类类型：使用成员自己的<code>constexpr</code>构造函数</li></ul></li><li>类必须使用析构函数的默认定义</li></ul></blockquote><div class="uk-alert uk-alert-success"><i class="fa fa-check-circle"></i> 算数类型、引用、指针是字面值类型</div><blockquote><p><code>constexpr</code>构造函数体一般应该是空的</p></blockquote><p>因为<code>constexpr</code>函数只能有返回语句，构造函数又不能有返回语句</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Debug</span> <span class="token punctuation">&#123;</span><span class="token keyword">public</span><span class="token operator">:</span>    <span class="token keyword">constexpr</span> <span class="token function">Debug</span><span class="token punctuation">(</span><span class="token keyword">bool</span> b <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">hw</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">io</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">other</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>    <span class="token keyword">constexpr</span> <span class="token function">Debug</span><span class="token punctuation">(</span><span class="token keyword">bool</span> h<span class="token punctuation">,</span> <span class="token keyword">bool</span> i<span class="token punctuation">,</span> <span class="token keyword">bool</span> o<span class="token punctuation">)</span><span class="token operator">:</span>        <span class="token function">hw</span><span class="token punctuation">(</span>h<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">io</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">other</span><span class="token punctuation">(</span>o<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token keyword">private</span><span class="token operator">:</span>    <span class="token keyword">bool</span> hw<span class="token punctuation">;</span>    <span class="token keyword">bool</span> io<span class="token punctuation">;</span>    <span class="token keyword">bool</span> other<span class="token punctuation">;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+        <content type="html"><![CDATA[<h2 id="7-5-构造函数再探"><a href="#7-5-构造函数再探" class="headerlink" title="7.5 构造函数再探"></a>7.5 构造函数再探</h2><h3 id="7-5-1-构造函数初始值列表"><a href="#7-5-1-构造函数初始值列表" class="headerlink" title="7.5.1 构造函数初始值列表"></a>7.5.1 构造函数初始值列表</h3><p>如果没有在构造函数的初始值列表中显式地初始化成员，则该成员将在构造函数体之前执行默认初始化，然后再在构造函数体内赋值</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 使用初始化列表</span><span class="token function">Sales_data</span><span class="token punctuation">(</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span> s<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> n<span class="token punctuation">,</span> <span class="token keyword">double</span> p<span class="token punctuation">)</span><span class="token operator">:</span>     <span class="token function">bookNo</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">units_sold</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">revenus</span><span class="token punctuation">(</span>p <span class="token operator">*</span> n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token comment">// 虽然合法但比较草率，没有使用构造函数初始值</span><span class="token function">Sales_data</span><span class="token punctuation">(</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span> s<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> cnt<span class="token punctuation">,</span> <span class="token keyword">double</span> price<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>    bookNo <span class="token operator">=</span> s<span class="token punctuation">;</span>    units_sold <span class="token operator">=</span> cnt<span class="token punctuation">;</span>    revenue <span class="token operator">=</span> cnt <span class="token operator">*</span> price<span class="token punctuation">;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><blockquote><p>成员是<code>const</code>、引用，或者属于某种未提供默认构造函数的类类型，必须通过构造函数初始值列表为这些成员提供初值</p></blockquote><p>随着构造函数体一开始执行，初始化就完成了，初始化<code>const</code>或引用类型的成员的唯一机会是通过<font color="LightSeaGreen">构造函数初始化列表</font></p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">ConstRef</span> <span class="token punctuation">&#123;</span><span class="token keyword">public</span><span class="token operator">:</span>     <span class="token function">ConstRef</span><span class="token punctuation">(</span><span class="token keyword">int</span> ii<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">private</span><span class="token operator">:</span>    <span class="token keyword">int</span> i<span class="token punctuation">;</span>    <span class="token keyword">const</span> <span class="token keyword">int</span> ci<span class="token punctuation">;</span>   <span class="token comment">// const必须初始化</span>    <span class="token keyword">int</span> <span class="token operator">&amp;</span>ri<span class="token punctuation">;</span>        <span class="token comment">// 引用必须初始化</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span class="token class-name">ConstRef</span><span class="token operator">::</span><span class="token function">ConstRef</span><span class="token punctuation">(</span><span class="token keyword">int</span> ii<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">i</span><span class="token punctuation">(</span>ii<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">ci</span><span class="token punctuation">(</span>ii<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">ri</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h4 id="成员初始化顺序"><a href="#成员初始化顺序" class="headerlink" title="成员初始化顺序"></a>成员初始化顺序</h4><p>成员的初始化顺序与它们在类定义中的出现顺序一致，构造函数初始值列表中的前后位置关系不会影响实际的初始化顺序</p><h4 id="默认实参和构造函数"><a href="#默认实参和构造函数" class="headerlink" title="默认实参和构造函数"></a>默认实参和构造函数</h4><p>如果一个构造函数为所有参数都提供了默认实参，则它实际上也定义了默认构造函数</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 定义默认构造函数</span><span class="token function">Sales_data</span><span class="token punctuation">(</span>string s <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">bookNo</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><h3 id="7-5-2-委托构造函数"><a href="#7-5-2-委托构造函数" class="headerlink" title="7.5.2 委托构造函数"></a>7.5.2 委托构造函数</h3><p>一个<font color="LightSeaGreen">委托构造函数</font>使用它所属类的其他构造函数执行自己的初始化过程，或者说它把自己的一些职责委托给了其他构造函数</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Sales_data</span> <span class="token punctuation">&#123;</span>    <span class="token comment">// 非委托构造函数使用对应的实参初始化成员</span>    <span class="token function">Sales_data</span><span class="token punctuation">(</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span> s<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> n<span class="token punctuation">,</span> <span class="token keyword">double</span> p<span class="token punctuation">)</span><span class="token operator">:</span>         <span class="token function">bookNo</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">units_sold</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">revenus</span><span class="token punctuation">(</span>p <span class="token operator">*</span> n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>    <span class="token comment">// 其余构造函数全都委托给另一个构造函数</span>    <span class="token function">Sales_data</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">Sales_data</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>    <span class="token function">Sales_data</span><span class="token punctuation">(</span>string s<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">Sales_data</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>    <span class="token function">Sales_data</span><span class="token punctuation">(</span>istream<span class="token operator">&amp;</span> is<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">Sales_data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>        <span class="token function">read</span><span class="token punctuation">(</span>is<span class="token punctuation">,</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="7-5-3-默认构造函数的作用"><a href="#7-5-3-默认构造函数的作用" class="headerlink" title="7.5.3 默认构造函数的作用"></a>7.5.3 默认构造函数的作用</h3><p>在实际中，如果定义了其他构造函数，最好也提供一个默认构造函数</p><p>使用默认构造函数的正确写法</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Sales_data obj<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h3 id="7-5-4-隐式的类类型转换"><a href="#7-5-4-隐式的类类型转换" class="headerlink" title="7.5.4 隐式的类类型转换"></a>7.5.4 隐式的类类型转换</h3><p>能通过一个实参调用的构造函数定义了一条从构造函数的参数类型向类类型转换的规则</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string null_book <span class="token operator">=</span> <span class="token string">"9-999"</span><span class="token punctuation">;</span>item<span class="token punctuation">.</span><span class="token function">combine</span><span class="token punctuation">(</span>null_book<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>这里构造了一个临时的<code>Sales_data</code>对象，<code>bookNo</code>等于<code>null_book</code>，其他成员默认</p><h4 id="只允许一步类类型转换"><a href="#只允许一步类类型转换" class="headerlink" title="只允许一步类类型转换"></a>只允许一步类类型转换</h4><p>编译器只会自动地执行一步类型转换</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">item<span class="token punctuation">.</span><span class="token function">combine</span><span class="token punctuation">(</span><span class="token string">"9-999"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// Err 需要两步类型转换</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>需要先把<code>9-999</code>转换为<code>string</code>，再转换为<code>Sales_data</code></p><p>可以把其中一步显式地写出来</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">item<span class="token punctuation">.</span><span class="token function">combine</span><span class="token punctuation">(</span><span class="token function">string</span><span class="token punctuation">(</span><span class="token string">"9-999"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 正确</span>item<span class="token punctuation">.</span><span class="token function">combine</span><span class="token punctuation">(</span><span class="token function">Sales_data</span><span class="token punctuation">(</span><span class="token string">"9-999"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 正确</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><h4 id="抑制构造函数定义的隐式转换"><a href="#抑制构造函数定义的隐式转换" class="headerlink" title="抑制构造函数定义的隐式转换"></a>抑制构造函数定义的隐式转换</h4><p>可以通过将构造函数声明为<code>explicit</code>阻止隐式转换</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Sales_data</span> <span class="token punctuation">&#123;</span>    <span class="token function">Sales_data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">default</span><span class="token punctuation">;</span>    <span class="token function">Sales_data</span><span class="token punctuation">(</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span> s<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> n<span class="token punctuation">,</span> <span class="token keyword">double</span> p<span class="token punctuation">)</span><span class="token operator">:</span>         <span class="token function">bookNo</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">units_sold</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">revenus</span><span class="token punctuation">(</span>p <span class="token operator">*</span> n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>    <span class="token keyword">explicit</span> <span class="token function">Sales_data</span><span class="token punctuation">(</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span> s<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">bookNo</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>    <span class="token keyword">explicit</span> <span class="token function">Sales_data</span><span class="token punctuation">(</span>istream<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>这样就不能隐式转换</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">item<span class="token punctuation">.</span><span class="token function">combine</span><span class="token punctuation">(</span>null_book<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// Err</span>item<span class="token punctuation">.</span><span class="token function">combine</span><span class="token punctuation">(</span>cin<span class="token punctuation">)</span><span class="token punctuation">;</span>          <span class="token comment">// Err</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p>关键字<code>explicit</code>只对一个实参的构造函数有效，需要多个实参的构造函数不能用于执行隐式转换，所以不用声明<code>explicit</code><br>只能在类内声明构造函数时使用<code>explicit</code>，类外不能重复</p><h4 id="explicit构造函数只能用于直接初始化"><a href="#explicit构造函数只能用于直接初始化" class="headerlink" title="explicit构造函数只能用于直接初始化"></a>explicit构造函数只能用于直接初始化</h4><p>执行拷贝形式的初始化时（使用<code>=</code>）会发生隐式转换，这种只能使用<font color="LightSeaGreen">直接初始化</font>而不能使用<code>explicit</code>构造函数</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Sales_data <span class="token function">item1</span><span class="token punctuation">(</span>null_book<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 正确，直接初始化</span>Sales_data item2 <span class="token operator">=</span> null_book<span class="token punctuation">;</span>   <span class="token comment">// Err，不能将explicit构造函数用于拷贝形式的初始化过程</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><blockquote><p>用<code>explicit</code>声明构造函数时，就只能以直接初始化的形式使用，同时也不能在自动转换过程中使用该构造函数</p></blockquote><p>硬要用的话可以用强制类型转换</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Sales_data item <span class="token operator">=</span> <span class="token keyword">static_cast</span><span class="token operator">&lt;</span>Sales_data<span class="token operator">></span><span class="token punctuation">(</span>null_book<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 正确</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h3 id="7-5-5-聚合类"><a href="#7-5-5-聚合类" class="headerlink" title="7.5.5 聚合类"></a>7.5.5 聚合类</h3><blockquote><ul><li>所有成员都是<code>public</code>的</li><li>没有定义任何构造函数</li><li>没有类内初始值</li><li>没有基类，也没有<code>virtual</code>函数</li></ul></blockquote><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">Data</span> <span class="token punctuation">&#123;</span>    <span class="token keyword">int</span> ival<span class="token punctuation">;</span>    string s<span class="token punctuation">;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>Data data1 <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">"kavin"</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p>可以使用成员初始化列表初始化聚合类的数据成员，顺序要跟声明的顺序相同</p><h3 id="7-5-6-字面值常量类"><a href="#7-5-6-字面值常量类" class="headerlink" title="7.5.6 字面值常量类"></a>7.5.6 字面值常量类</h3><blockquote><ul><li>数据成员必须都是字面值类型</li><li>类必须至少有一个<code>constexpr</code>构造函数</li><li>数据成员的类内初始值<ul><li>内置类型：必须是一条常量表达式</li><li>类类型：使用成员自己的<code>constexpr</code>构造函数</li></ul></li><li>类必须使用析构函数的默认定义</li></ul></blockquote><div class="uk-alert uk-alert-success"><i class="fa fa-check-circle"></i> 算数类型、引用、指针是字面值类型</div><blockquote><p><code>constexpr</code>构造函数体一般应该是空的</p></blockquote><p>因为<code>constexpr</code>函数只能有返回语句，构造函数又不能有返回语句</p><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Debug</span> <span class="token punctuation">&#123;</span><span class="token keyword">public</span><span class="token operator">:</span>    <span class="token keyword">constexpr</span> <span class="token function">Debug</span><span class="token punctuation">(</span><span class="token keyword">bool</span> b <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">hw</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">io</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">other</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>    <span class="token keyword">constexpr</span> <span class="token function">Debug</span><span class="token punctuation">(</span><span class="token keyword">bool</span> h<span class="token punctuation">,</span> <span class="token keyword">bool</span> i<span class="token punctuation">,</span> <span class="token keyword">bool</span> o<span class="token punctuation">)</span><span class="token operator">:</span>        <span class="token function">hw</span><span class="token punctuation">(</span>h<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">io</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">other</span><span class="token punctuation">(</span>o<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token keyword">private</span><span class="token operator">:</span>    <span class="token keyword">bool</span> hw<span class="token punctuation">;</span>    <span class="token keyword">bool</span> io<span class="token punctuation">;</span>    <span class="token keyword">bool</span> other<span class="token punctuation">;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
       
       
       <categories>
@@ -845,9 +845,9 @@
       
         <tags>
             
-            <tag> 数学 </tag>
-            
             <tag> Python </tag>
+            
+            <tag> 数学 </tag>
             
         </tags>
       
@@ -1097,9 +1097,9 @@
       
         <tags>
             
-            <tag> 哈希表 </tag>
-            
             <tag> 数学 </tag>
+            
+            <tag> 哈希表 </tag>
             
         </tags>
       
@@ -1201,9 +1201,9 @@
       
         <tags>
             
-            <tag> 哈希表 </tag>
-            
             <tag> 堆 </tag>
+            
+            <tag> 哈希表 </tag>
             
         </tags>
       
@@ -1303,9 +1303,9 @@
       
         <tags>
             
-            <tag> 递归 </tag>
-            
             <tag> 链表 </tag>
+            
+            <tag> 递归 </tag>
             
         </tags>
       
@@ -1507,9 +1507,9 @@
       
         <tags>
             
-            <tag> 递归 </tag>
-            
             <tag> 链表 </tag>
+            
+            <tag> 递归 </tag>
             
         </tags>
       
@@ -2291,9 +2291,9 @@
       
         <tags>
             
-            <tag> 二叉树 </tag>
-            
             <tag> 递归 </tag>
+            
+            <tag> 二叉树 </tag>
             
         </tags>
       
@@ -2343,9 +2343,9 @@
       
         <tags>
             
-            <tag> 二叉树 </tag>
-            
             <tag> 递归 </tag>
+            
+            <tag> 二叉树 </tag>
             
         </tags>
       
@@ -2422,9 +2422,9 @@
       
         <tags>
             
-            <tag> 哈希表 </tag>
-            
             <tag> 双指针 </tag>
+            
+            <tag> 哈希表 </tag>
             
         </tags>
       
@@ -2726,9 +2726,9 @@
       
         <tags>
             
-            <tag> 哈希表 </tag>
-            
             <tag> 双指针 </tag>
+            
+            <tag> 哈希表 </tag>
             
         </tags>
       
@@ -2884,9 +2884,9 @@
       
         <tags>
             
-            <tag> 哈希表 </tag>
-            
             <tag> 数学 </tag>
+            
+            <tag> 哈希表 </tag>
             
         </tags>
       
@@ -3086,9 +3086,9 @@
       
         <tags>
             
-            <tag> 字符串 </tag>
-            
             <tag> 双指针 </tag>
+            
+            <tag> 字符串 </tag>
             
         </tags>
       
@@ -3317,9 +3317,9 @@
       
         <tags>
             
-            <tag> 递归 </tag>
-            
             <tag> 链表 </tag>
+            
+            <tag> 递归 </tag>
             
         </tags>
       
@@ -3394,9 +3394,9 @@
       
         <tags>
             
-            <tag> 字符串 </tag>
-            
             <tag> 双指针 </tag>
+            
+            <tag> 字符串 </tag>
             
         </tags>
       
@@ -3421,9 +3421,9 @@
       
         <tags>
             
-            <tag> 双指针 </tag>
-            
             <tag> 链表 </tag>
+            
+            <tag> 双指针 </tag>
             
         </tags>
       
@@ -3473,9 +3473,9 @@
       
         <tags>
             
-            <tag> 字符串 </tag>
-            
             <tag> 双指针 </tag>
+            
+            <tag> 字符串 </tag>
             
         </tags>
       
@@ -3602,9 +3602,9 @@
       
         <tags>
             
-            <tag> 递归 </tag>
-            
             <tag> 链表 </tag>
+            
+            <tag> 递归 </tag>
             
         </tags>
       
@@ -3850,11 +3850,11 @@
       
         <tags>
             
-            <tag> 递归 </tag>
+            <tag> 链表 </tag>
             
             <tag> 双指针 </tag>
             
-            <tag> 链表 </tag>
+            <tag> 递归 </tag>
             
         </tags>
       
@@ -3879,9 +3879,9 @@
       
         <tags>
             
-            <tag> 递归 </tag>
-            
             <tag> 链表 </tag>
+            
+            <tag> 递归 </tag>
             
         </tags>
       
@@ -3981,9 +3981,9 @@
       
         <tags>
             
-            <tag> 哈希表 </tag>
-            
             <tag> 二分法 </tag>
+            
+            <tag> 哈希表 </tag>
             
         </tags>
       
@@ -4052,9 +4052,9 @@
       
         <tags>
             
-            <tag> 双指针 </tag>
-            
             <tag> 链表 </tag>
+            
+            <tag> 双指针 </tag>
             
         </tags>
       
@@ -4179,9 +4179,9 @@
       
         <tags>
             
-            <tag> 字符串 </tag>
-            
             <tag> 双指针 </tag>
+            
+            <tag> 字符串 </tag>
             
         </tags>
       
@@ -4258,9 +4258,9 @@
       
         <tags>
             
-            <tag> 双指针 </tag>
-            
             <tag> 链表 </tag>
+            
+            <tag> 双指针 </tag>
             
         </tags>
       
@@ -4579,9 +4579,9 @@
       
         <tags>
             
-            <tag> 字符串 </tag>
-            
             <tag> 双指针 </tag>
+            
+            <tag> 字符串 </tag>
             
         </tags>
       
@@ -5392,9 +5392,9 @@
       
         <tags>
             
-            <tag> 栈 </tag>
-            
             <tag> 链表 </tag>
+            
+            <tag> 栈 </tag>
             
         </tags>
       
@@ -5593,6 +5593,25 @@
     
     
     <entry>
+      <title>ROS_MAVROS</title>
+      <link href="2021/03/26/ROS-ROS-mavros/"/>
+      <url>2021/03/26/ROS-ROS-mavros/</url>
+      
+        <content type="html"><![CDATA[<!-- toc --><p><img src="/2021/03/26/ROS-ROS-mavros/mavros/mavros.png" alt></p><h2 id="常用MAVROS消息"><a href="#常用MAVROS消息" class="headerlink" title="常用MAVROS消息"></a>常用MAVROS消息</h2><h3 id="global-position-订阅-GPS-数据"><a href="#global-position-订阅-GPS-数据" class="headerlink" title="global_position 订阅 GPS 数据"></a>global_position 订阅 GPS 数据</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>global_position<span class="token operator">/</span>global类型名称<span class="token operator">:</span> sensor_msgs<span class="token operator">::</span>NavSatFix常用类成员变量<span class="token operator">:</span> float64 latitude    <span class="token comment">//经</span>float64 longitude   <span class="token comment">//纬</span>float64 altitude    <span class="token comment">//海拔</span>float64<span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span> position_covarianceuint8 position_covariance_type<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="imu-pub-订阅-IMU-原始数据"><a href="#imu-pub-订阅-IMU-原始数据" class="headerlink" title="imu_pub 订阅 IMU 原始数据"></a>imu_pub 订阅 IMU 原始数据</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>imu<span class="token operator">/</span><span class="token function">data</span><span class="token punctuation">(</span>不是mavros<span class="token operator">/</span>imu<span class="token operator">/</span>data_raw<span class="token punctuation">,</span> mavros<span class="token operator">/</span>imu<span class="token operator">/</span>data 为经过滤波后的数据<span class="token punctuation">)</span>类型名称<span class="token operator">:</span> sensor_msgs<span class="token operator">::</span>Imu常用类成员变量<span class="token operator">:</span>geometry_msgs<span class="token operator">::</span>Quaternion orientation       <span class="token comment">//旋转四元数(xyzw)</span>float64<span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span> orientation_covariance           <span class="token comment">//方差</span>geometry_msgs<span class="token operator">::</span>Vector3 angular_velocity     <span class="token comment">//3 轴角速度(xyz)</span>float64<span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span> angular_velocity_covariance      <span class="token comment">//方差</span>geometry_msgs<span class="token operator">::</span>Vector3 linear_acceleration  <span class="token comment">//线性加速度(xyz)</span>float64<span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span> linear_acceleration_covariance   <span class="token comment">//方差</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="local-position-订阅本地位置数据"><a href="#local-position-订阅本地位置数据" class="headerlink" title="local_position 订阅本地位置数据"></a>local_position 订阅本地位置数据</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>local_position<span class="token operator">/</span>pose类型名称<span class="token operator">:</span> geometry_msgs<span class="token operator">::</span>PoseStamped<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><h3 id="manual-control-订阅遥控器的值"><a href="#manual-control-订阅遥控器的值" class="headerlink" title="manual_control 订阅遥控器的值"></a>manual_control 订阅遥控器的值</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>manual_control<span class="token operator">/</span>control类型名称<span class="token operator">:</span> mavros_msgs<span class="token operator">::</span>ManualControl常用类成员变量<span class="token operator">:</span>float32 xfloat32 yfloat32 zfloat32 ruint16 buttons<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="sys-status-查询系统状态"><a href="#sys-status-查询系统状态" class="headerlink" title="sys_status 查询系统状态"></a>sys_status 查询系统状态</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>state类型名称<span class="token operator">:</span> mavros_msgs<span class="token operator">::</span>State常用类成员变量<span class="token operator">:</span><span class="token keyword">bool</span> connected  <span class="token comment">//是否连接</span><span class="token keyword">bool</span> armed      <span class="token comment">//是否解锁</span><span class="token keyword">bool</span> guided     <span class="token comment">//是否被引导（offboard 模式）</span>string mode     <span class="token comment">//模式类型</span>uint8 system_status<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="waypoint-查询航点"><a href="#waypoint-查询航点" class="headerlink" title="waypoint 查询航点"></a>waypoint 查询航点</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>mission<span class="token operator">/</span>waypoints类型名称<span class="token operator">:</span> mavros_msgs<span class="token operator">::</span>WaypointList常用类成员变量<span class="token operator">:</span>uint16 current_seq  <span class="token comment">//当前航点索引</span>mavros_msgs<span class="token operator">::</span>Waypoint<span class="token punctuation">[</span><span class="token punctuation">]</span> waypoints    uint8 frame     <span class="token comment">//坐标类型</span>    uint16 command  <span class="token comment">//命令 id，16 为航点</span>    <span class="token keyword">bool</span> is_current    <span class="token keyword">bool</span> autocontinue    float32 param1    float32 param2    float32 param3    float32 param4    float64 x_lat   <span class="token comment">//经度或者 x 坐标</span>    float64 y_long  <span class="token comment">//维度或者 y 坐标</span>    float64 z_alt   <span class="token comment">//海拔或者 z 坐标</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h2 id="坐标系"><a href="#坐标系" class="headerlink" title="坐标系"></a>坐标系</h2><p><code>px4</code>使用的坐标系为<code>NED</code>（北东地）坐标系或者<code>FRD</code>（前右下）坐标系。<br><code>mavros</code>中常使用的是<code>ENU</code>（东北天）坐标系或者<code>body</code>系，<code>mavros</code>会自动将输入的<code>ENU</code>坐标值或者<code>body</code>系坐标值转换到<code>NED</code>坐标系中，再通过<code>mavlink</code>发送给飞控。</p><p>mavros的话题中常见的坐标系有<code>global</code>系、<code>local</code>系、<code>body</code>系</p><ul><li><p><code>global</code>系是gps坐标系，经纬度。</p></li><li><p><code>local</code>系指当地坐标系，一般是<code>ENU</code>坐标系，坐标原点一般在起飞点。如果有offset的话坐标原点在飞机上，这时其实是导航坐标系。</p></li><li><p><code>body</code>系在melodic版本中，改成了FLU（前左上）坐标系。</p></li></ul><h3 id="note"><a href="#note" class="headerlink" title="note"></a>note</h3><ul><li><code>coordinate_frame=1</code>虽然代表向px4发送<code>NED</code>坐标值，但是发送到这个话题的坐标系应该用<code>ENU</code>，<code>mavros</code>会自动完成这个坐标系的转换</li><li><code>ROS</code>程序发布的给定姿态<code>topic</code>为<code>/mavros/setpoint_raw/attitude</code>，而非<code>/mavros/setpoint_attitude/attitude</code></li><li><code>ROS</code>发布的速度指令<code>topic</code>为<code>/mavros/setpoint_velocity/cmd_vel_unstamped</code></li></ul><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token argument-name">topic</span><span class="token punctuation">:</span> <span class="token string double-quoted-string">"mavros/setpoint_raw/local"</span>rosmsg show marvros_msg<span class="token operator">/</span>PositionTarget    uint8 coordinate_frame    uint8 <span class="token constant">FRAME_LOCAL_NED</span> <span class="token operator">=</span> <span class="token number">1</span>    uint8 <span class="token constant">FRAME_LOCAL_OFFSET_NED</span> <span class="token operator">=</span> <span class="token number">7</span>    uint8 <span class="token constant">FRAME_BODY_NED</span> <span class="token operator">=</span> <span class="token number">8</span>    uint8 <span class="token constant">FRAME_BODY_OFFSET_NED</span> <span class="token operator">=</span> <span class="token number">9</span>    uint16 type_mask    uint16 <span class="token constant">IGNORE_PX</span> <span class="token operator">=</span> <span class="token number">1</span>    <span class="token comment"># Position ignore flags</span>    uint16 <span class="token constant">IGNORE_PY</span> <span class="token operator">=</span> <span class="token number">2</span>    uint16 <span class="token constant">IGNORE_PZ</span> <span class="token operator">=</span> <span class="token number">4</span>    uint16 <span class="token constant">IGNORE_VX</span> <span class="token operator">=</span> <span class="token number">8</span>    <span class="token comment"># Velocity vector ignore flags</span>    uint16 <span class="token constant">IGNORE_VY</span> <span class="token operator">=</span> <span class="token number">16</span>    uint16 <span class="token constant">IGNORE_VZ</span> <span class="token operator">=</span> <span class="token number">32</span>    uint16 <span class="token constant">IGNORE_AFX</span> <span class="token operator">=</span> <span class="token number">64</span>  <span class="token comment"># Acceleration/Force vector ignore flags</span>    uint16 <span class="token constant">IGNORE_AFY</span> <span class="token operator">=</span> <span class="token number">128</span>    uint16 <span class="token constant">IGNORE_AFZ</span> <span class="token operator">=</span> <span class="token number">256</span>    uint16 <span class="token constant">FORCE</span> <span class="token operator">=</span> <span class="token number">512</span>      <span class="token comment"># Force in af vector flag</span>    uint16 <span class="token constant">IGNORE_YAW</span> <span class="token operator">=</span> <span class="token number">1024</span>    uint16 <span class="token constant">IGNORE_YAW_RATE</span> <span class="token operator">=</span> <span class="token number">2048</span>    geometry_msgs<span class="token operator">/</span>Point position    geometry_msgs<span class="token operator">/</span>Vector3 velocity    geometry_msgs<span class="token operator">/</span>Vector3 acceleration_or_force    float32 yaw    float32 yaw_rate<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> ROS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>ROS find_red_pixels</title>
       <link href="2021/03/26/ROS-ROS-find-red-pixels/"/>
       <url>2021/03/26/ROS-ROS-find-red-pixels/</url>
@@ -5604,25 +5623,6 @@
         <tags>
             
             <tag> OpenCV </tag>
-            
-            <tag> ROS </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>ROS_MAVROS</title>
-      <link href="2021/03/26/ROS-ROS-mavros/"/>
-      <url>2021/03/26/ROS-ROS-mavros/</url>
-      
-        <content type="html"><![CDATA[<!-- toc --><p><img src="/2021/03/26/ROS-ROS-mavros/mavros/mavros.png" alt></p><h2 id="常用MAVROS消息"><a href="#常用MAVROS消息" class="headerlink" title="常用MAVROS消息"></a>常用MAVROS消息</h2><h3 id="global-position-订阅-GPS-数据"><a href="#global-position-订阅-GPS-数据" class="headerlink" title="global_position 订阅 GPS 数据"></a>global_position 订阅 GPS 数据</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>global_position<span class="token operator">/</span>global类型名称<span class="token operator">:</span> sensor_msgs<span class="token operator">::</span>NavSatFix常用类成员变量<span class="token operator">:</span> float64 latitude    <span class="token comment">//经</span>float64 longitude   <span class="token comment">//纬</span>float64 altitude    <span class="token comment">//海拔</span>float64<span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span> position_covarianceuint8 position_covariance_type<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="imu-pub-订阅-IMU-原始数据"><a href="#imu-pub-订阅-IMU-原始数据" class="headerlink" title="imu_pub 订阅 IMU 原始数据"></a>imu_pub 订阅 IMU 原始数据</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>imu<span class="token operator">/</span><span class="token function">data</span><span class="token punctuation">(</span>不是mavros<span class="token operator">/</span>imu<span class="token operator">/</span>data_raw<span class="token punctuation">,</span> mavros<span class="token operator">/</span>imu<span class="token operator">/</span>data 为经过滤波后的数据<span class="token punctuation">)</span>类型名称<span class="token operator">:</span> sensor_msgs<span class="token operator">::</span>Imu常用类成员变量<span class="token operator">:</span>geometry_msgs<span class="token operator">::</span>Quaternion orientation       <span class="token comment">//旋转四元数(xyzw)</span>float64<span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span> orientation_covariance           <span class="token comment">//方差</span>geometry_msgs<span class="token operator">::</span>Vector3 angular_velocity     <span class="token comment">//3 轴角速度(xyz)</span>float64<span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span> angular_velocity_covariance      <span class="token comment">//方差</span>geometry_msgs<span class="token operator">::</span>Vector3 linear_acceleration  <span class="token comment">//线性加速度(xyz)</span>float64<span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span> linear_acceleration_covariance   <span class="token comment">//方差</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="local-position-订阅本地位置数据"><a href="#local-position-订阅本地位置数据" class="headerlink" title="local_position 订阅本地位置数据"></a>local_position 订阅本地位置数据</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>local_position<span class="token operator">/</span>pose类型名称<span class="token operator">:</span> geometry_msgs<span class="token operator">::</span>PoseStamped<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><h3 id="manual-control-订阅遥控器的值"><a href="#manual-control-订阅遥控器的值" class="headerlink" title="manual_control 订阅遥控器的值"></a>manual_control 订阅遥控器的值</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>manual_control<span class="token operator">/</span>control类型名称<span class="token operator">:</span> mavros_msgs<span class="token operator">::</span>ManualControl常用类成员变量<span class="token operator">:</span>float32 xfloat32 yfloat32 zfloat32 ruint16 buttons<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="sys-status-查询系统状态"><a href="#sys-status-查询系统状态" class="headerlink" title="sys_status 查询系统状态"></a>sys_status 查询系统状态</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>state类型名称<span class="token operator">:</span> mavros_msgs<span class="token operator">::</span>State常用类成员变量<span class="token operator">:</span><span class="token keyword">bool</span> connected  <span class="token comment">//是否连接</span><span class="token keyword">bool</span> armed      <span class="token comment">//是否解锁</span><span class="token keyword">bool</span> guided     <span class="token comment">//是否被引导（offboard 模式）</span>string mode     <span class="token comment">//模式类型</span>uint8 system_status<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="waypoint-查询航点"><a href="#waypoint-查询航点" class="headerlink" title="waypoint 查询航点"></a>waypoint 查询航点</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>mission<span class="token operator">/</span>waypoints类型名称<span class="token operator">:</span> mavros_msgs<span class="token operator">::</span>WaypointList常用类成员变量<span class="token operator">:</span>uint16 current_seq  <span class="token comment">//当前航点索引</span>mavros_msgs<span class="token operator">::</span>Waypoint<span class="token punctuation">[</span><span class="token punctuation">]</span> waypoints    uint8 frame     <span class="token comment">//坐标类型</span>    uint16 command  <span class="token comment">//命令 id，16 为航点</span>    <span class="token keyword">bool</span> is_current    <span class="token keyword">bool</span> autocontinue    float32 param1    float32 param2    float32 param3    float32 param4    float64 x_lat   <span class="token comment">//经度或者 x 坐标</span>    float64 y_long  <span class="token comment">//维度或者 y 坐标</span>    float64 z_alt   <span class="token comment">//海拔或者 z 坐标</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h2 id="坐标系"><a href="#坐标系" class="headerlink" title="坐标系"></a>坐标系</h2><p><code>px4</code>使用的坐标系为<code>NED</code>（北东地）坐标系或者<code>FRD</code>（前右下）坐标系。<br><code>mavros</code>中常使用的是<code>ENU</code>（东北天）坐标系或者<code>body</code>系，<code>mavros</code>会自动将输入的<code>ENU</code>坐标值或者<code>body</code>系坐标值转换到<code>NED</code>坐标系中，再通过<code>mavlink</code>发送给飞控。</p><p>mavros的话题中常见的坐标系有<code>global</code>系、<code>local</code>系、<code>body</code>系</p><ul><li><p><code>global</code>系是gps坐标系，经纬度。</p></li><li><p><code>local</code>系指当地坐标系，一般是<code>ENU</code>坐标系，坐标原点一般在起飞点。如果有offset的话坐标原点在飞机上，这时其实是导航坐标系。</p></li><li><p><code>body</code>系在melodic版本中，改成了FLU（前左上）坐标系。</p></li></ul><h3 id="note"><a href="#note" class="headerlink" title="note"></a>note</h3><ul><li><code>coordinate_frame=1</code>虽然代表向px4发送<code>NED</code>坐标值，但是发送到这个话题的坐标系应该用<code>ENU</code>，<code>mavros</code>会自动完成这个坐标系的转换</li><li><code>ROS</code>程序发布的给定姿态<code>topic</code>为<code>/mavros/setpoint_raw/attitude</code>，而非<code>/mavros/setpoint_attitude/attitude</code></li><li><code>ROS</code>发布的速度指令<code>topic</code>为<code>/mavros/setpoint_velocity/cmd_vel_unstamped</code></li></ul><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token argument-name">topic</span><span class="token punctuation">:</span> <span class="token string double-quoted-string">"mavros/setpoint_raw/local"</span>rosmsg show marvros_msg<span class="token operator">/</span>PositionTarget    uint8 coordinate_frame    uint8 <span class="token constant">FRAME_LOCAL_NED</span> <span class="token operator">=</span> <span class="token number">1</span>    uint8 <span class="token constant">FRAME_LOCAL_OFFSET_NED</span> <span class="token operator">=</span> <span class="token number">7</span>    uint8 <span class="token constant">FRAME_BODY_NED</span> <span class="token operator">=</span> <span class="token number">8</span>    uint8 <span class="token constant">FRAME_BODY_OFFSET_NED</span> <span class="token operator">=</span> <span class="token number">9</span>    uint16 type_mask    uint16 <span class="token constant">IGNORE_PX</span> <span class="token operator">=</span> <span class="token number">1</span>    <span class="token comment"># Position ignore flags</span>    uint16 <span class="token constant">IGNORE_PY</span> <span class="token operator">=</span> <span class="token number">2</span>    uint16 <span class="token constant">IGNORE_PZ</span> <span class="token operator">=</span> <span class="token number">4</span>    uint16 <span class="token constant">IGNORE_VX</span> <span class="token operator">=</span> <span class="token number">8</span>    <span class="token comment"># Velocity vector ignore flags</span>    uint16 <span class="token constant">IGNORE_VY</span> <span class="token operator">=</span> <span class="token number">16</span>    uint16 <span class="token constant">IGNORE_VZ</span> <span class="token operator">=</span> <span class="token number">32</span>    uint16 <span class="token constant">IGNORE_AFX</span> <span class="token operator">=</span> <span class="token number">64</span>  <span class="token comment"># Acceleration/Force vector ignore flags</span>    uint16 <span class="token constant">IGNORE_AFY</span> <span class="token operator">=</span> <span class="token number">128</span>    uint16 <span class="token constant">IGNORE_AFZ</span> <span class="token operator">=</span> <span class="token number">256</span>    uint16 <span class="token constant">FORCE</span> <span class="token operator">=</span> <span class="token number">512</span>      <span class="token comment"># Force in af vector flag</span>    uint16 <span class="token constant">IGNORE_YAW</span> <span class="token operator">=</span> <span class="token number">1024</span>    uint16 <span class="token constant">IGNORE_YAW_RATE</span> <span class="token operator">=</span> <span class="token number">2048</span>    geometry_msgs<span class="token operator">/</span>Point position    geometry_msgs<span class="token operator">/</span>Vector3 velocity    geometry_msgs<span class="token operator">/</span>Vector3 acceleration_or_force    float32 yaw    float32 yaw_rate<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
-      
-      
-      
-        <tags>
             
             <tag> ROS </tag>
             
