@@ -571,7 +571,7 @@
 <li>指令译码阶段，在取指令完成后，立马进入指令译码阶段，指令译码器按照预定的指令格式，对取回的指令进行拆分和解释，识别区分出不同的指令类别以及各种获取操作数的方法</li>
 <li>执行指令阶段，译码完成后，就需要执行这一条指令了，此阶段的任务是完成指令所规定的各种操作，具体实现指令的功能</li>
 <li>访问取数阶段，根据指令的需要，有可能需要从内存中提取数据，此阶段的任务是：根据指令地址码，得到操作数在内存中的地址，并从内存中读取该操作数用于运算</li>
-<li>结果写回阶段（Write Back，WB），把运行结果写回到<code>CPU</code>内部寄存器中，以便被后续的指令快速地存取</li>
+<li>结果写回阶段(Write Back，WB)，把运行结果写回到<code>CPU</code>内部寄存器中，以便被后续的指令快速地存取</li>
 </ol>
 </blockquote>
 <h3 id="计算机架构中的寄存器"><a href="#计算机架构中的寄存器" class="headerlink" title="　计算机架构中的寄存器"></a>　计算机架构中的寄存器</h3><div class="uk-alert uk-alert-success"><i class="fa fa-check-circle"></i> 寄存器是一块速度非常快的计算机内存</div>
@@ -590,10 +590,10 @@
 <h3 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h3><p>通用寄存器主要有四种 ，即<font color="LightSeaGreen">AX、BX、CX、DX</font>，同样的，这四个寄存器也是<code>16</code>位的，能存放两个字节，各自的功能为</p>
 <blockquote>
 <ul>
-<li>AX（Accumulator Register） ：累加寄存器，用于输入/输出和大规模的指令运算</li>
-<li>BX（Base Register）：基址寄存器，用来存储基础访问地址</li>
-<li>CX（Count Register）：计数寄存器，在迭代的操作中循环计数</li>
-<li>DX（data Register）：数据寄存器，也用于输入/输出操作。它还与 AX 寄存器一起使用，用于大数值的乘法和除法运算</li>
+<li>AX(Accumulator Register)：累加寄存器，用于输入/输出和大规模的指令运算</li>
+<li>BX(Base Register)：基址寄存器，用来存储基础访问地址</li>
+<li>CX(Count Register)：计数寄存器，在迭代的操作中循环计数</li>
+<li>DX(data Register)：数据寄存器，也用于输入/输出操作。它还与 AX 寄存器一起使用，用于大数值的乘法和除法运算</li>
 </ul>
 </blockquote>
 <p>这四种寄存器可以分为上半部分和下半部分，分成高位和低位两个<code>8</code>位数据寄存器</p>
@@ -604,8 +604,8 @@
 <p><code>8086 CPU</code>可以一次存储两种类型的数据</p>
 <blockquote>
 <ul>
-<li>字节（byte）：一个字节由<code>8 bit</code>组成，这是一种恒定不变的存储方式</li>
-<li>字（word）：字是由指令集或处理器硬件作为单元处理的固定大小的数据，对于<code>intel</code>来说，一个字长就是两个字节，字是计算机一个非常重要的特征，针对不同的指令集架构来说，计算机一次处理的数据也是不同的。有字（16位）、双字（32位）、四字（64位）等</li>
+<li>字节(byte)：一个字节由<code>8 bit</code>组成，这是一种恒定不变的存储方式</li>
+<li>字(word)：字是由指令集或处理器硬件作为单元处理的固定大小的数据，对于<code>intel</code>来说，一个字长就是两个字节，字是计算机一个非常重要的特征，针对不同的指令集架构来说，计算机一次处理的数据也是不同的。有字(16位)、双字(32位)、四字(64位)等</li>
 </ul>
 </blockquote>
 <h4 id="AX寄存器"><a href="#AX寄存器" class="headerlink" title="AX寄存器"></a>AX寄存器</h4><p><font color="LightSeaGreen">累加寄存器</font>或者简称为累加器</p>
@@ -671,10 +671,10 @@ add AX<span class="token punctuation">,</span><span class="token number">10</spa
 <p>段地址*16就是二进制左移4位，十六进制左移1位，作为基础地址，所以</p>
 <div class="uk-alert uk-alert-success"><i class="fa fa-check-circle"></i> 物理地址 = 基础地址 + 偏移地址</div>
 <h3 id="段寄存器-1"><a href="#段寄存器-1" class="headerlink" title="段寄存器"></a>段寄存器</h3><h4 id="CS-寄存器"><a href="#CS-寄存器" class="headerlink" title="CS 寄存器"></a>CS 寄存器</h4><blockquote>
-<p>CS（代码寄存器，存储段地址）和 IP（指令指针，存储偏移地址） 都是 8086 CPU 非常重要的寄存器，它们指出了 CPU 当前需要读取指令的地址</p>
+<p>CS(代码寄存器，存储段地址)和 IP(指令指针，存储偏移地址) 都是 8086 CPU 非常重要的寄存器，它们指出了 CPU 当前需要读取指令的地址</p>
 </blockquote>
 <p>在 CPU 内部，由 CS 和 IP 提供段地址和偏移地址，由加法器负责转换为物理地址，输入输出控制电路负责输入/输出数据，指令缓冲器负责缓冲指令，指令执行器负责执行指令。在内存中有一段连续存储的区域，区域内部存储的是机器码、外面是地址和汇编指令</p>
-<p>假设段地址和偏移地址分别是<code>2000</code>和<code>0000</code>，当这两个地址进入地址加法器后，会由地址加法器负责将这两个地址转换为物理地址<code>20000</code>，然后输入输出控制电路将<code>20</code>位的地址总线送到内存中，然后取出对应的数据，<code>B8 23 01</code>，<code>B8</code>是操作数，再送入指令缓存器中，此时这个指令就已经具备执行条件，然后 IP（指令指针）会自动增加。它会知道下一个需要读取指令的地址<code>0003</code>，在这之后，指令执行执行取出的<code>B8 23 01</code>这条指令，然后再把<code>2000</code>和<code>0003</code>送到地址加法器中再进行后续指令的读取，如此循环</p>
+<p>假设段地址和偏移地址分别是<code>2000</code>和<code>0000</code>，当这两个地址进入地址加法器后，会由地址加法器负责将这两个地址转换为物理地址<code>20000</code>，然后输入输出控制电路将<code>20</code>位的地址总线送到内存中，然后取出对应的数据，<code>B8 23 01</code>，<code>B8</code>是操作数，再送入指令缓存器中，此时这个指令就已经具备执行条件，然后 IP(指令指针)会自动增加。它会知道下一个需要读取指令的地址<code>0003</code>，在这之后，指令执行执行取出的<code>B8 23 01</code>这条指令，然后再把<code>2000</code>和<code>0003</code>送到地址加法器中再进行后续指令的读取，如此循环</p>
 <p>总结一下 8086 CPU 的工作过程</p>
 <blockquote>
 <ul>
