@@ -560,9 +560,9 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-2-操作系统"><a href="#1-2-操作系统" class="headerlink" title="1.2 操作系统"></a>1.2 操作系统</h2><p>无论是<code>shell</code>程序还是<code>hello</code>程序，都没有直接访问键盘、显示器、磁盘等硬件设备，真正操控硬件的是<font color="LightSeaGreen">操作系统</font>，可以把操作系统看成是应用程序和硬件之间的中间层，所有应用程序对硬件的操作必须通过操作系统来完成</p>
+                <h2 id="1-2-操作系统"><a href="#1-2-操作系统" class="headerlink" title="1.2 操作系统"></a>1.2 操作系统</h2><p>无论是<code>shell</code>程序还是<code>hello</code>程序，都没有直接访问键盘、显示器、磁盘等硬件设备，真正操控硬件的是<font color="LightSeaGreen">操作系统</font>，可以把操作系统看成是应用程序和硬件之间的<font color="LightSeaGreen">中间层</font>，所有应用程序对硬件的操作必须通过操作系统来完成</p>
 <p><img src="https://github.com/kavinwkp/blogimage/raw/main/img/cs/1/1.2/OS.png" alt></p>
-<p>为了实现上述功能，操作系统引入了一些抽象的概念，例如：文件是对<code>IO</code>设备的抽象，虚拟内存是对内存和磁盘的抽象，进程是对处理器、内存以及<code>IO</code>的抽象</p>
+<p>为了实现上述功能，操作系统引入了一些抽象的概念，例如：<font color="LightSeaGreen">文件</font>是对<code>IO</code>设备的抽象，<font color="LightSeaGreen">虚拟内存</font>是对内存和磁盘的抽象，<font color="LightSeaGreen">进程</font>是对处理器、内存以及<code>IO</code>的抽象</p>
 <p><img src="https://github.com/kavinwkp/blogimage/raw/main/img/cs/1/1.2/OS2.png" alt></p>
 <h3 id="1-2-1-进程"><a href="#1-2-1-进程" class="headerlink" title="1.2.1 进程"></a>1.2.1 进程</h3><p>假设示例场景中只有两个并发的进程，<code>shell</code>进程和<code>hello</code>进程，最开始只有<code>shell</code>进程在运行，即<code>shell</code>在等待命令行的输入，当我们通过<code>shell</code>进程加载<code>hello</code>进程时，<code>shell</code>进程通过系统调用来执行我们的请求，系统调用会将控制权由<code>shell</code>进程传递给操作系统，操作系统保存<code>shell</code>进程的上下文<code>context</code>，然后创建一个新的<code>hello</code>进程以及上下文，然后将控制权转交给<code>hello</code>进程，<code>hello</code>进程执行完之后，操作系统就会恢复<code>shell</code>进程的上下文，并将控制权交给<code>shell</code>进程，之后<code>shell</code>进程继续等待下一个命令的输入</p>
 <p><img src="https://github.com/kavinwkp/blogimage/raw/main/img/cs/1/1.2/Process.png" alt></p>
@@ -580,7 +580,7 @@
 </li>
 <li><p>继续往上是<font color="LightSeaGreen">用户栈</font>，栈的增长方向是从高地址到低地址</p>
 </li>
-<li><p>最顶部是为<font color="LightSeaGreen">内核</font>内核保留的区域，应用程序不能读写这个区域的数据，对应用程序是不可见的</p>
+<li><p>最顶部是为<font color="LightSeaGreen">内核</font>保留的区域，应用程序不能读写这个区域的数据，对应用程序是不可见的</p>
 </li>
 </ol>
 
