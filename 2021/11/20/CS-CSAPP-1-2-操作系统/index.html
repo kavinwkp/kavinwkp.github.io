@@ -564,7 +564,8 @@
 <p><img src="https://github.com/kavinwkp/blogimage/raw/main/img/cs/1/1.2/OS.png" alt></p>
 <p>为了实现上述功能，操作系统引入了一些抽象的概念，例如：<font color="LightSeaGreen">文件</font>是对<code>IO</code>设备的抽象，<font color="LightSeaGreen">虚拟内存</font>是对内存和磁盘的抽象，<font color="LightSeaGreen">进程</font>是对处理器、内存以及<code>IO</code>的抽象</p>
 <p><img src="https://github.com/kavinwkp/blogimage/raw/main/img/cs/1/1.2/OS2.png" alt></p>
-<h3 id="1-2-1-进程"><a href="#1-2-1-进程" class="headerlink" title="1.2.1 进程"></a>1.2.1 进程</h3><p>假设示例场景中只有两个并发的进程，<code>shell</code>进程和<code>hello</code>进程，最开始只有<code>shell</code>进程在运行，即<code>shell</code>在等待命令行的输入，当我们通过<code>shell</code>进程加载<code>hello</code>进程时，<code>shell</code>进程通过系统调用来执行我们的请求，系统调用会将控制权由<code>shell</code>进程传递给操作系统，操作系统保存<code>shell</code>进程的上下文<code>context</code>，然后创建一个新的<code>hello</code>进程以及上下文，然后将控制权转交给<code>hello</code>进程，<code>hello</code>进程执行完之后，操作系统就会恢复<code>shell</code>进程的上下文，并将控制权交给<code>shell</code>进程，之后<code>shell</code>进程继续等待下一个命令的输入</p>
+<h3 id="1-2-1-进程"><a href="#1-2-1-进程" class="headerlink" title="1.2.1 进程"></a>1.2.1 进程</h3><p>程序在现代系统上运行时，操作系统会提供一种假象，就好像系统上只有这个程序在运行，程序看上去是独占地使用处理器、内存和IO设备，处理器看上去就像在不间断地执行程序中的指令，即该程序的代码和数据是系统内存中唯一的对象。这种假象是通过<font color="LightSeaGreen">进程</font>的概念来实现的</p>
+<p>假设示例场景中只有两个并发的进程，<code>shell</code>进程和<code>hello</code>进程，最开始只有<code>shell</code>进程在运行，即<code>shell</code>在等待命令行的输入，当我们通过<code>shell</code>进程加载<code>hello</code>进程时，<code>shell</code>进程通过系统调用来执行我们的请求，系统调用会将控制权由<code>shell</code>进程传递给操作系统，操作系统保存<code>shell</code>进程的上下文<code>context</code>，然后创建一个新的<code>hello</code>进程以及上下文，然后将控制权转交给<code>hello</code>进程，<code>hello</code>进程执行完之后，操作系统就会恢复<code>shell</code>进程的上下文，并将控制权交给<code>shell</code>进程，之后<code>shell</code>进程继续等待下一个命令的输入</p>
 <p><img src="https://github.com/kavinwkp/blogimage/raw/main/img/cs/1/1.2/Process.png" alt></p>
 <blockquote>
 <p>上下文：操作系统会跟踪进程运行中所需要的所有状态信息，这种状态就是上下文，例如当前<code>PC</code>和寄存器的值，以及内存中的内容等</p>
