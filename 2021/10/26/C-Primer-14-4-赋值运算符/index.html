@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="43-字符串相乘, kunpeng">
+    <meta name="keywords" content="14.4/14.5/14.6-赋值/下标/递增和递减运算符, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>43-字符串相乘 | kunpeng</title>
+    <title>14.4/14.5/14.6-赋值/下标/递增和递减运算符 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">43-字符串相乘</h1>
+                    <h1 class="description center-align post-title">14.4/14.5/14.6-赋值/下标/递增和递减运算符</h1>
                 </div>
             </div>
         </div>
@@ -511,8 +511,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%A8%A1%E6%8B%9F/">
-                                <span class="chip bg-color">模拟</span>
+                            <a href="/tags/C-Primer/">
+                                <span class="chip bg-color">C++Primer</span>
                             </a>
                         
                     </div>
@@ -523,8 +523,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/LeetCode/" class="post-category">
-                                LeetCode
+                            <a href="/categories/C/" class="post-category">
+                                C++
                             </a>
                         
                     </div>
@@ -536,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-09-28
+                    2021-10-26
                 </div>
                 
 
@@ -560,34 +560,81 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="LeetCode-43-Multiply-Strings"><a href="#LeetCode-43-Multiply-Strings" class="headerlink" title="LeetCode 43. Multiply Strings"></a>LeetCode 43. Multiply Strings</h2><p>Given two <code>non-negative</code> integers <code>num1</code> and <code>num2</code> represented as strings, return the <strong>product</strong> of <code>num1</code> and <code>num2</code>, also represented as a <code>string</code>.</p>
-<p>Note: You must not use any built-in BigInteger library or convert the inputs to integer directly.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> num1 <span class="token operator">=</span> <span class="token string">"2"</span><span class="token punctuation">,</span> num2 <span class="token operator">=</span> <span class="token string">"3"</span>
-Output<span class="token operator">:</span> <span class="token string">"6"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>Example 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> num1 <span class="token operator">=</span> <span class="token string">"123"</span><span class="token punctuation">,</span> num2 <span class="token operator">=</span> <span class="token string">"456"</span>
-Output<span class="token operator">:</span> <span class="token string">"56088"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
-<h2 id="method-模拟高精乘法"><a href="#method-模拟高精乘法" class="headerlink" title="method: 模拟高精乘法"></a>method: 模拟高精乘法</h2><p>从最低位开始从后往前计算，先把结果放到数组里，因为要从前往后放结果，所以需要做一个转换，再把多余的零弹出，再反向转换到字符串</p>
-<p>从后往前遍历的<code>index</code>转换为从前往后的对应位置是<code>size - index - 1</code></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string <span class="token function">multiply</span><span class="token punctuation">(</span>string num1<span class="token punctuation">,</span> string num2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">mul</span><span class="token punctuation">(</span>num1<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> num2<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> num1<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> num2<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> j <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">;</span> j<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">int</span> idx <span class="token operator">=</span> num1<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> num2<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> i <span class="token operator">-</span> j <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">;</span>
-            mul<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token operator">+=</span> <span class="token punctuation">(</span>num1<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token string">'0'</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>num2<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token string">'0'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>mul<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token operator">></span> <span class="token number">9</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                mul<span class="token punctuation">[</span>idx <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+=</span> mul<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token operator">/</span> <span class="token number">10</span><span class="token punctuation">;</span>
-                mul<span class="token punctuation">[</span>idx<span class="token punctuation">]</span> <span class="token operator">%=</span> <span class="token number">10</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span>
-        <span class="token punctuation">&#125;</span>
+                <h2 id="14-4-赋值运算符"><a href="#14-4-赋值运算符" class="headerlink" title="14.4 赋值运算符"></a>14.4 赋值运算符</h2><p>赋值运算符必须定义为<font color="LightSeaGreen">成员函数</font>，返回左侧运算对象的引用</p>
+<h4 id="复合赋值运算符"><a href="#复合赋值运算符" class="headerlink" title="复合赋值运算符"></a>复合赋值运算符</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Sales_data<span class="token operator">&amp;</span> Sales_data<span class="token operator">::</span><span class="token keyword">operator</span><span class="token operator">+=</span><span class="token punctuation">(</span><span class="token keyword">const</span> Sales_data<span class="token operator">&amp;</span> rhs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    units_sold <span class="token operator">+=</span> rhs<span class="token punctuation">.</span>units_sold<span class="token punctuation">;</span>
+    revenue <span class="token operator">+=</span> rhs<span class="token punctuation">.</span>revenue<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<hr>
+<h2 id="14-5-下标运算符"><a href="#14-5-下标运算符" class="headerlink" title="14.5 下标运算符"></a>14.5 下标运算符</h2><p>表示容器的类一般会定义下标运算符<code>operator[]</code></p>
+<blockquote>
+<p>下标运算符必须是<font color="LightSeaGreen">成员函数</font>，通常定义两个版本：一个返回普通引用，另一个是类的常量成员并且返回常量引用</p>
+</blockquote>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">StrVec</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    string<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">(</span>size_t n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> elements<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>mul<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> mul<span class="token punctuation">.</span><span class="token function">back</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> mul<span class="token punctuation">.</span><span class="token function">pop_back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>mul<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token string">"0"</span><span class="token punctuation">;</span>
-    
-    string res<span class="token punctuation">;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> mul<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        res<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>mul<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">'0'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> string<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">(</span>size_t n<span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> elements<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    string <span class="token operator">*</span>element<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>对常量对象取下标时，不能为其赋值</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> StrVec cvec <span class="token operator">=</span> svec<span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>svec<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> svec<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    svec<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"zero"</span><span class="token punctuation">;</span>   <span class="token comment">// 正确</span>
+    cvec<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"Zip"</span><span class="token punctuation">;</span>    <span class="token comment">// Err</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<hr>
+<h2 id="14-6-递增和递减运算符"><a href="#14-6-递增和递减运算符" class="headerlink" title="14.6 递增和递减运算符"></a>14.6 递增和递减运算符</h2><h4 id="定义前置递增-递减运算符"><a href="#定义前置递增-递减运算符" class="headerlink" title="定义前置递增/递减运算符"></a>定义前置递增/递减运算符</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">StrBlobPtr</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    StrBlobPtr<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">++</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    StrBlobPtr<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">--</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>前置运算符应该返回递增或递减后对象的引用</p>
+</blockquote>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">StrBlobPtr<span class="token operator">&amp;</span> StrBlobPtr<span class="token operator">::</span><span class="token keyword">operator</span><span class="token operator">++</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">check</span><span class="token punctuation">(</span>curr<span class="token punctuation">,</span> <span class="token string">"increment past end of StrBlobPtr"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">++</span>curr<span class="token punctuation">;</span>     <span class="token comment">// 将curr在当前状态下向后移动一个元素</span>
+    <span class="token keyword">return</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+StrBlobPtr<span class="token operator">&amp;</span> StrBlobPtr<span class="token operator">::</span><span class="token keyword">operator</span><span class="token operator">--</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 如果curr是0，则继续递减将产生一个无效的下标</span>
+    <span class="token operator">--</span>curr<span class="token punctuation">;</span>     <span class="token comment">// 将curr在当前状态下向前移动一个元素</span>
+    <span class="token function">check</span><span class="token punctuation">(</span>curr<span class="token punctuation">,</span> <span class="token string">"decrement past begin of StrBlobPtr"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="区分前置和后置运算符"><a href="#区分前置和后置运算符" class="headerlink" title="区分前置和后置运算符"></a>区分前置和后置运算符</h4><p>后置版本接受一个额外的<code>int</code>类型的形参，唯一作用是区分前置版本和后置版本</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">StrBlobPtr</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    StrBlobPtr <span class="token keyword">operator</span><span class="token operator">++</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    StrBlobPtr <span class="token keyword">operator</span><span class="token operator">--</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>后置运算符应该返回对象的原值（递增或递减之前的值），返回的是一个值而非引用</p>
+</blockquote>
+<p>要先记录对象的状态</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">StrBlobPtr StrBlobPtr<span class="token operator">::</span><span class="token keyword">operator</span><span class="token operator">++</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    StrBlobPtr ret <span class="token operator">=</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span> <span class="token comment">// 记录当前的值</span>
+    <span class="token operator">++</span><span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>    <span class="token comment">// 调用前置运算符</span>
+    <span class="token keyword">return</span> ret<span class="token punctuation">;</span> <span class="token comment">// 返回保存的副本</span>
+<span class="token punctuation">&#125;</span>
+
+StrBlobPtr StrBlobPtr<span class="token operator">::</span><span class="token keyword">operator</span><span class="token operator">--</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    StrBlobPtr ret <span class="token operator">=</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token operator">--</span><span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="显式地调用后置运算符"><a href="#显式地调用后置运算符" class="headerlink" title="显式地调用后置运算符"></a>显式地调用后置运算符</h4><p>需要传个参数给<code>int</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">StrBlobPtr <span class="token function">p</span><span class="token punctuation">(</span>a1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+p<span class="token punctuation">.</span><span class="token keyword">operator</span><span class="token operator">++</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 调用后置版本</span>
+p<span class="token punctuation">.</span><span class="token keyword">operator</span><span class="token operator">++</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 调用前置版本</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
                 
             </div>
             <hr/>
@@ -613,7 +660,7 @@ Output<span class="token operator">:</span> <span class="token string">"56088"</
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/09/28/LeetCode-43-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E4%B9%98/">http://example.com/2021/09/28/LeetCode-43-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E4%B9%98/</a>
+                    <a href="http://example.com/2021/10/26/C-Primer-14-4-%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6/">http://example.com/2021/10/26/C-Primer-14-4-%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -651,8 +698,8 @@ Output<span class="token operator">:</span> <span class="token string">"56088"</
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%A8%A1%E6%8B%9F/">
-                                    <span class="chip bg-color">模拟</span>
+                                <a href="/tags/C-Primer/">
+                                    <span class="chip bg-color">C++Primer</span>
                                 </a>
                             
                         </div>
@@ -828,13 +875,13 @@ Output<span class="token operator">:</span> <span class="token string">"56088"</
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/09/29/%E5%A4%9A%E6%97%8B%E7%BF%BC-%E7%9B%B4%E5%8D%87%E6%9C%BA%E5%8A%A8%E5%8A%9B%E5%AD%A6/">
+                <a href="/2021/10/26/C-Primer-14-7-%E6%88%90%E5%91%98%E8%AE%BF%E9%97%AE%E8%BF%90%E7%AE%97%E7%AC%A6/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="直升机动力学">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="14.7-成员访问运算符">
                         
-                        <span class="card-title">直升机动力学</span>
+                        <span class="card-title">14.7-成员访问运算符</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -845,14 +892,14 @@ Output<span class="token operator">:</span> <span class="token string">"56088"</
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-29
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-26
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%A4%9A%E6%97%8B%E7%BF%BC/" class="post-category">
-                                    多旋翼
+                            <a href="/categories/C/" class="post-category">
+                                    C++
                                 </a>
                             
                             
@@ -862,8 +909,8 @@ Output<span class="token operator">:</span> <span class="token string">"56088"</
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%A4%9A%E6%97%8B%E7%BF%BC/">
-                        <span class="chip bg-color">多旋翼</span>
+                    <a href="/tags/C-Primer/">
+                        <span class="chip bg-color">C++Primer</span>
                     </a>
                     
                 </div>
@@ -877,13 +924,13 @@ Output<span class="token operator">:</span> <span class="token string">"56088"</
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/09/28/Python-Python%E7%AC%A6%E5%8F%B7%E6%96%B9%E7%A8%8B/">
+                <a href="/2021/10/26/C-Primer-14-3-%E7%AE%97%E6%9C%AF%E5%92%8C%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E7%AC%A6/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Python符号方程">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="14.3-算术和关系运算符">
                         
-                        <span class="card-title">Python符号方程</span>
+                        <span class="card-title">14.3-算术和关系运算符</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -894,14 +941,14 @@ Output<span class="token operator">:</span> <span class="token string">"56088"</
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-28
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-26
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%95%B0%E5%AD%A6/" class="post-category">
-                                    数学
+                            <a href="/categories/C/" class="post-category">
+                                    C++
                                 </a>
                             
                             
@@ -911,12 +958,8 @@ Output<span class="token operator">:</span> <span class="token string">"56088"</
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E5%AD%A6/">
-                        <span class="chip bg-color">数学</span>
-                    </a>
-                    
-                    <a href="/tags/Python/">
-                        <span class="chip bg-color">Python</span>
+                    <a href="/tags/C-Primer/">
+                        <span class="chip bg-color">C++Primer</span>
                     </a>
                     
                 </div>
