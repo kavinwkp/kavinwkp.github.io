@@ -564,11 +564,11 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="LeetCode-27-Remove-Element"><a href="#LeetCode-27-Remove-Element" class="headerlink" title="LeetCode 27. Remove Element"></a>LeetCode 27. Remove Element</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/remove-element/">LeetCode</a></p>
-<p>Given an integer array nums and an integer val, remove all occurrences of val in nums in-place. The relative order of the elements <code>may be changed</code>.</p>
+                <h2 id="LeetCode-27-Remove-Element"><a href="#LeetCode-27-Remove-Element" class="headerlink" title="LeetCode 27. Remove Element"></a>LeetCode 27. Remove Element</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/remove-element/">LeetCode-27</a></p>
+<p>Given an integer array <code>nums</code> and an integer <code>val</code>, remove all occurrences of val in nums in-place. The relative order of the elements <code>may be changed</code>.</p>
 <p>Return k after placing the final result in the first k slots of nums.</p>
 <p>Do not allocate extra space for another array. You must do this by modifying the input array in-place with $O(1)$ extra memory.</p>
-<h2 id="method-1-反向双指针"><a href="#method-1-反向双指针" class="headerlink" title="method 1: 反向双指针"></a>method 1: 反向双指针</h2><center>
+<h3 id="method-1-反向双指针"><a href="#method-1-反向双指针" class="headerlink" title="method 1: 反向双指针"></a>method 1: 反向双指针</h3><center>
 <img src="/2021/05/27/LeetCode-27-%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0/1.png#pic_center" width="100%" height="100%">
 </center>
 
@@ -588,23 +588,22 @@
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>l<span class="token punctuation">]</span> <span class="token operator">==</span> val <span class="token operator">?</span> l <span class="token operator">:</span> l <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="method-2-同向双指针"><a href="#method-2-同向双指针" class="headerlink" title="method 2: 同向双指针"></a>method 2: 同向双指针</h2><p>不改变相对位置</p>
+<h3 id="method-2-同向双指针"><a href="#method-2-同向双指针" class="headerlink" title="method 2: 同向双指针"></a>method 2: 同向双指针</h3><p>不改变相对位置</p>
 <ul>
 <li>如果右指针不等于<code>val</code>，就把右指针的值赋给左指针，同时移动一格</li>
 <li>如果右指针等于<code>val</code>，右指针移动，左指针不动</li>
 </ul>
 <p>时间复杂度：$O(n)$<br>空间复杂度：$O(1)$</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">removeElement</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">,</span> <span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> l <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> r <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>r <span class="token operator">&lt;</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>r<span class="token punctuation">]</span> <span class="token operator">!=</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            nums<span class="token punctuation">[</span>l<span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token punctuation">;</span>
-            l<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> index <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">!=</span> val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            nums<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            index<span class="token operator">++</span><span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span>
-        r<span class="token operator">++</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> l<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">return</span> index<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>

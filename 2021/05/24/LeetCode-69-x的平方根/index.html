@@ -560,8 +560,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="LeetCode-69-Sqrt-x"><a href="#LeetCode-69-Sqrt-x" class="headerlink" title="LeetCode 69. Sqrt(x)"></a>LeetCode 69. Sqrt(x)</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/sqrtx/">LeetCode</a></p>
-<p>Given a non-negative integer x, compute and return the <code>square root</code> of x.</p>
+                <h2 id="LeetCode-69-Sqrt-x"><a href="#LeetCode-69-Sqrt-x" class="headerlink" title="LeetCode 69. Sqrt(x)"></a>LeetCode 69. Sqrt(x)</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/sqrtx/">LeetCode-69</a></p>
+<p>Given a <strong>non-negative</strong> integer <code>x</code>, compute and return the <code>square root</code> of x.</p>
 <p>Since the return type is an <code>integer</code>, the decimal digits are <code>truncated</code>, and only the integer part of the result is returned.</p>
 <p>示例 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入<span class="token operator">:</span> <span class="token number">4</span>
 输出<span class="token operator">:</span> <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
@@ -569,11 +569,11 @@
 输出<span class="token operator">:</span> <span class="token number">2</span>
 说明<span class="token operator">:</span> <span class="token number">8</span> 的平方根是 <span class="token number">2.82842</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span> 
      由于返回类型是整数，小数部分将被舍去。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></p>
-<h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>模板二：满足条件的最大数<br><code>r</code>和<code>l</code>相加可能超过<code>int</code>，所以用<code>long</code><br>两个<code>mid</code>相乘也可能越界，把一个除到另一边去</p>
+<h3 id="method-二分法"><a href="#method-二分法" class="headerlink" title="method: 二分法"></a>method: 二分法</h3><p>模板二：满足条件的最大数<br><code>r</code>和<code>l</code>相加可能超过<code>int</code>，所以用<code>long</code><br>两个<code>mid</code>相乘也可能越界，把一个除到另一边去</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">mySqrt</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">long</span> l <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> r <span class="token operator">=</span> x<span class="token punctuation">;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">long</span> l <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> r <span class="token operator">=</span> x<span class="token punctuation">;</span>
     <span class="token keyword">while</span> <span class="token punctuation">(</span>l <span class="token operator">&lt;</span> r<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">long</span> mid <span class="token operator">=</span> l <span class="token operator">+</span> r <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">>></span> <span class="token number">1</span><span class="token punctuation">;</span>      <span class="token comment">// 左移一位就相当于除以2</span>
+        <span class="token keyword">unsigned</span> <span class="token keyword">long</span> mid <span class="token operator">=</span> l <span class="token operator">+</span> r <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">>></span> <span class="token number">1</span><span class="token punctuation">;</span>      <span class="token comment">// 左移一位就相当于除以2</span>
         <span class="token keyword">if</span> <span class="token punctuation">(</span>mid <span class="token operator">&lt;=</span> x <span class="token operator">/</span> mid<span class="token punctuation">)</span> l <span class="token operator">=</span> mid<span class="token punctuation">;</span>    <span class="token comment">// 把乘移到另一边</span>
         <span class="token keyword">else</span> r <span class="token operator">=</span> mid <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
