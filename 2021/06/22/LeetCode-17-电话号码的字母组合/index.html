@@ -585,42 +585,39 @@ Output<span class="token operator">:</span> <span class="token punctuation">[</s
 <img src="https://github.com/kavinwkp/blogimage/raw/main/img/LeetCode/17/111.png#pic_center" width="100%" height="100%">
 </center>
 
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
-<span class="token keyword">private</span><span class="token operator">:</span>
-    <span class="token keyword">const</span> string letterMap<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
-        <span class="token string">""</span><span class="token punctuation">,</span>
-        <span class="token string">""</span><span class="token punctuation">,</span>
-        <span class="token string">"abc"</span><span class="token punctuation">,</span>
-        <span class="token string">"def"</span><span class="token punctuation">,</span>
-        <span class="token string">"ghi"</span><span class="token punctuation">,</span>
-        <span class="token string">"jkl"</span><span class="token punctuation">,</span>
-        <span class="token string">"mno"</span><span class="token punctuation">,</span>
-        <span class="token string">"pqrs"</span><span class="token punctuation">,</span>
-        <span class="token string">"tuv"</span><span class="token punctuation">,</span>
-        <span class="token string">"wxyz"</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>  <span class="token comment">// 数字与字母对应关系</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    vector<span class="token operator">&lt;</span>string<span class="token operator">></span> ret<span class="token punctuation">;</span>
-    string s<span class="token punctuation">;</span>
-    <span class="token keyword">void</span> <span class="token function">dfs</span><span class="token punctuation">(</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span> digits<span class="token punctuation">,</span> <span class="token keyword">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">==</span> digits<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            ret<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">int</span> number <span class="token operator">=</span> digits<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token string">'0'</span><span class="token punctuation">;</span>   <span class="token comment">// 取出index对应的数字</span>
-        string letters <span class="token operator">=</span> letterMap<span class="token punctuation">[</span>number<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 用数字拿到字母</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> letters<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            s<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>letters<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token function">dfs</span><span class="token punctuation">(</span>digits<span class="token punctuation">,</span> index <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 递归的是index+1</span>
-            s<span class="token punctuation">.</span><span class="token function">pop_back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> string letterMap<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token string">""</span><span class="token punctuation">,</span>
+    <span class="token string">""</span><span class="token punctuation">,</span>
+    <span class="token string">"abc"</span><span class="token punctuation">,</span>
+    <span class="token string">"def"</span><span class="token punctuation">,</span>
+    <span class="token string">"ghi"</span><span class="token punctuation">,</span>
+    <span class="token string">"jkl"</span><span class="token punctuation">,</span>
+    <span class="token string">"mno"</span><span class="token punctuation">,</span>
+    <span class="token string">"pqrs"</span><span class="token punctuation">,</span>
+    <span class="token string">"tuv"</span><span class="token punctuation">,</span>
+    <span class="token string">"wxyz"</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>  <span class="token comment">// 数字与字母对应关系</span>
+
+vector<span class="token operator">&lt;</span>string<span class="token operator">></span> ret<span class="token punctuation">;</span>
+string s<span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">dfs</span><span class="token punctuation">(</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span> digits<span class="token punctuation">,</span> <span class="token keyword">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">==</span> digits<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        ret<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-    vector<span class="token operator">&lt;</span>string<span class="token operator">></span> <span class="token function">letterCombinations</span><span class="token punctuation">(</span>string digits<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>digits<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
-        <span class="token function">dfs</span><span class="token punctuation">(</span>digits<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> number <span class="token operator">=</span> digits<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token string">'0'</span><span class="token punctuation">;</span>   <span class="token comment">// 取出index对应的数字</span>
+    string letters <span class="token operator">=</span> letterMap<span class="token punctuation">[</span>number<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 用数字拿到字母</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> letters<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        s<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>letters<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">dfs</span><span class="token punctuation">(</span>digits<span class="token punctuation">,</span> index <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 递归的是index+1</span>
+        s<span class="token punctuation">.</span><span class="token function">pop_back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span>
+vector<span class="token operator">&lt;</span>string<span class="token operator">></span> <span class="token function">letterCombinations</span><span class="token punctuation">(</span>string digits<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>digits<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+    <span class="token function">dfs</span><span class="token punctuation">(</span>digits<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
