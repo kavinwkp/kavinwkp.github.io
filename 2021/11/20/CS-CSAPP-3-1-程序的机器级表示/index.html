@@ -614,7 +614,7 @@ dest <span class="token operator">-></span> rdx<span aria-hidden="true" class="l
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">movq    <span class="token operator">%</span>rdx<span class="token punctuation">,</span> <span class="token operator">%</span>rbx<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>第二行汇编的含义是将寄存器<code>rdx</code>的内容复制到寄存器<code>rbx</code></p>
 <p>根据寄存器用法的定义，函数<code>mulstore</code>的三个参数分别保存在<code>rdi, rsi, rdx</code>中，这条指令执行完，寄存器<code>rbx</code>的内容与寄存器<code>rdx</code>一致，都是<code>dest</code>指针所指向的内存的地址</p>
-<p><code>movq</code>指令的后缀<code>q</code>表示数据的大小，由于早起的机器是16位，后来才扩展到32位，因此，用字<code>word</code>表示16位的数据类型，32位称为双字，64位称为四字</p>
+<p><code>movq</code>指令的后缀<code>q</code>表示数据的大小，由于早期的机器是16位，后来才扩展到32位，因此，用字<code>word</code>表示16位的数据类型，32位称为<font color="LightSeaGreen">双字</font>，64位称为<font color="LightSeaGreen">四字</font></p>
 <p>图中给出了C语言的基本数据类型对应的汇编后缀表示<br><img src="https://github.com/kavinwkp/blogimage/raw/main/img/cs/3/suffix.png" alt></p>
 <p>大多数GCC生成的汇编指令都有一个字符后缀来表示操作数的大小，例如，数据传送指令就有4个变种</p>
 <blockquote>
@@ -626,7 +626,6 @@ dest <span class="token operator">-></span> rdx<span aria-hidden="true" class="l
 </ul>
 </blockquote>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">call    mul2@PLT<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><strong>函数调用</strong></p>
 <p><code>call</code>指令表示函数调用，返回值会保存在寄存器<code>rax</code>中，因此，寄存器<code>rax</code>中保存了<code>x</code>和<code>y</code>的乘积结果</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">movq    <span class="token operator">%</span>rax<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token operator">%</span>rbx<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>这条指令将寄存器<code>rax</code>的值送到内存中，内存的地址就存放在寄存器<code>rbx</code>中</p>
