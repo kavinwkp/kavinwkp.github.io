@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="23-合并k个升序链表, kunpeng">
+    <meta name="keywords" content="136-只出现1次的数字, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>23-合并k个升序链表 | kunpeng</title>
+    <title>136-只出现1次的数字 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">23-合并k个升序链表</h1>
+                    <h1 class="description center-align post-title">136-只出现1次的数字</h1>
                 </div>
             </div>
         </div>
@@ -511,12 +511,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E9%93%BE%E8%A1%A8/">
-                                <span class="chip bg-color">链表</span>
-                            </a>
-                        
-                            <a href="/tags/%E5%A0%86/">
-                                <span class="chip bg-color">堆</span>
+                            <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/">
+                                <span class="chip bg-color">位运算</span>
                             </a>
                         
                     </div>
@@ -540,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-09-23
+                    2021-11-30
                 </div>
                 
 
@@ -564,37 +560,21 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="LeetCode-23-Merge-k-Sorted-Lists"><a href="#LeetCode-23-Merge-k-Sorted-Lists" class="headerlink" title="LeetCode 23. Merge k Sorted Lists"></a>LeetCode 23. Merge k Sorted Lists</h2><p>You are given an array of <code>k</code> linked-lists lists, each linked-list is sorted in <code>ascending</code> order.</p>
-<p>Merge all the linked-lists into one sorted linked-list and return it.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> lists <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
-Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">]</span>
-Explanation<span class="token operator">:</span> The linked<span class="token operator">-</span>lists are<span class="token operator">:</span>
-<span class="token punctuation">[</span>
-  <span class="token number">1</span><span class="token operator">-></span><span class="token number">4</span><span class="token operator">-></span><span class="token number">5</span><span class="token punctuation">,</span>
-  <span class="token number">1</span><span class="token operator">-></span><span class="token number">3</span><span class="token operator">-></span><span class="token number">4</span><span class="token punctuation">,</span>
-  <span class="token number">2</span><span class="token operator">-></span><span class="token number">6</span>
-<span class="token punctuation">]</span>
-merging them into one sorted list<span class="token operator">:</span>
-<span class="token number">1</span><span class="token operator">-></span><span class="token number">1</span><span class="token operator">-></span><span class="token number">2</span><span class="token operator">-></span><span class="token number">3</span><span class="token operator">-></span><span class="token number">4</span><span class="token operator">-></span><span class="token number">4</span><span class="token operator">-></span><span class="token number">5</span><span class="token operator">-></span><span class="token number">6</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
-<h2 id="method-小根堆"><a href="#method-小根堆" class="headerlink" title="method: 小根堆"></a>method: 小根堆</h2><p>把链表的值和序号放进小根堆排序，会按照值的大小从小到大排序，然后通过序号找到是哪条链表的，如果他还有值，就继续插入堆中</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode<span class="token operator">*</span> <span class="token function">mergeKLists</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span>ListNode<span class="token operator">*</span><span class="token operator">></span><span class="token operator">&amp;</span> lists<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    ListNode <span class="token operator">*</span>dummy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">ListNode</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ListNode <span class="token operator">*</span>head <span class="token operator">=</span> dummy<span class="token punctuation">;</span>
-    priority_queue<span class="token operator">&lt;</span>pair<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span><span class="token keyword">int</span><span class="token operator">></span><span class="token punctuation">,</span> vector<span class="token operator">&lt;</span>pair<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span><span class="token keyword">int</span><span class="token operator">>></span><span class="token punctuation">,</span> greater<span class="token operator">&lt;</span>pair<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span><span class="token keyword">int</span><span class="token operator">>></span><span class="token operator">></span> q<span class="token punctuation">;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> lists<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>   <span class="token comment">// 先把每条链的头结点放进来</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>lists<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token function">pair</span><span class="token punctuation">(</span>lists<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">-></span>val<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>q<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">int</span> index <span class="token operator">=</span> q<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>second<span class="token punctuation">;</span>
-        q<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        head<span class="token operator">-></span>next <span class="token operator">=</span> lists<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        head <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>
-        lists<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">=</span> lists<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token operator">-></span>next<span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>lists<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">)</span> q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token function">pair</span><span class="token punctuation">(</span>lists<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token operator">-></span>val<span class="token punctuation">,</span> index<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">// 如果还有就继续放入</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> dummy<span class="token operator">-></span>next<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <h2 id="LeetCode-136-Single-Number"><a href="#LeetCode-136-Single-Number" class="headerlink" title="LeetCode 136. Single Number"></a>LeetCode 136. Single Number</h2><p>Given a non-empty array of integers <code>nums</code>, every element appears twice <strong>except for one</strong>. Find that single one.</p>
+<p>You must implement a solution with a linear runtime complexity and use only constant extra space.</p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span>
+Output<span class="token operator">:</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<h3 id="method"><a href="#method" class="headerlink" title="method"></a>method</h3><blockquote>
+<ul>
+<li>a ^ a = 0</li>
+<li>0 ^ a = a</li>
+</ul>
+</blockquote>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">singleNumber</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> res <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> n <span class="token operator">:</span> nums<span class="token punctuation">)</span> res <span class="token operator">^=</span> n<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -620,7 +600,7 @@ merging them into one sorted list<span class="token operator">:</span>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/09/23/LeetCode-23-%E5%90%88%E5%B9%B6k%E4%B8%AA%E5%8D%87%E5%BA%8F%E9%93%BE%E8%A1%A8/">http://example.com/2021/09/23/LeetCode-23-%E5%90%88%E5%B9%B6k%E4%B8%AA%E5%8D%87%E5%BA%8F%E9%93%BE%E8%A1%A8/</a>
+                    <a href="http://example.com/2021/11/30/LeetCode-136-%E5%8F%AA%E5%87%BA%E7%8E%B01%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97/">http://example.com/2021/11/30/LeetCode-136-%E5%8F%AA%E5%87%BA%E7%8E%B01%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -658,12 +638,8 @@ merging them into one sorted list<span class="token operator">:</span>
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E9%93%BE%E8%A1%A8/">
-                                    <span class="chip bg-color">链表</span>
-                                </a>
-                            
-                                <a href="/tags/%E5%A0%86/">
-                                    <span class="chip bg-color">堆</span>
+                                <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/">
+                                    <span class="chip bg-color">位运算</span>
                                 </a>
                             
                         </div>
@@ -839,13 +815,13 @@ merging them into one sorted list<span class="token operator">:</span>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/09/23/LeetCode-13-%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97%E8%BD%AC%E6%95%B4%E6%95%B0/">
+                <a href="/2021/11/30/LeetCode-762-%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%A1%A8%E7%A4%BA%E4%B8%AD%E8%B4%A8%E6%95%B0%E4%B8%AA%E8%AE%A1%E7%AE%97%E7%BD%AE%E4%BD%8D/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="13-罗马数字转整数">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="762-二进制表示中质数个计算置位">
                         
-                        <span class="card-title">13-罗马数字转整数</span>
+                        <span class="card-title">762-二进制表示中质数个计算置位</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -856,7 +832,7 @@ merging them into one sorted list<span class="token operator">:</span>
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-23
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-30
                         </span>
                         <span class="publish-author">
                             
@@ -873,12 +849,8 @@ merging them into one sorted list<span class="token operator">:</span>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E5%AD%A6/">
-                        <span class="chip bg-color">数学</span>
-                    </a>
-                    
-                    <a href="/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/">
-                        <span class="chip bg-color">哈希表</span>
+                    <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/">
+                        <span class="chip bg-color">位运算</span>
                     </a>
                     
                 </div>
@@ -892,13 +864,13 @@ merging them into one sorted list<span class="token operator">:</span>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/09/23/LeetCode-%E9%93%BE%E8%A1%A8%E6%80%BB%E7%BB%93/">
+                <a href="/2021/11/30/LeetCode-231-2%E7%9A%84%E5%B9%82/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="链表总结">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="231-2的幂">
                         
-                        <span class="card-title">链表总结</span>
+                        <span class="card-title">231-2的幂</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -909,7 +881,7 @@ merging them into one sorted list<span class="token operator">:</span>
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-23
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-30
                             </span>
                         <span class="publish-author">
                             
@@ -926,8 +898,8 @@ merging them into one sorted list<span class="token operator">:</span>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E9%93%BE%E8%A1%A8/">
-                        <span class="chip bg-color">链表</span>
+                    <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/">
+                        <span class="chip bg-color">位运算</span>
                     </a>
                     
                 </div>
