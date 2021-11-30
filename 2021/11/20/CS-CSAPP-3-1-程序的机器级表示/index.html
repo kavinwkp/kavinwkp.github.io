@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="Prometheus_msgs, kunpeng">
+    <meta name="keywords" content="3.1-程序的机器级表示, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Prometheus_msgs | kunpeng</title>
+    <title>3.1-程序的机器级表示 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Prometheus_msgs</h1>
+                    <h1 class="description center-align post-title">3.1-程序的机器级表示</h1>
                 </div>
             </div>
         </div>
@@ -511,8 +511,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%A4%9A%E6%97%8B%E7%BF%BC/">
-                                <span class="chip bg-color">多旋翼</span>
+                            <a href="/tags/CSAPP/">
+                                <span class="chip bg-color">CSAPP</span>
                             </a>
                         
                     </div>
@@ -523,8 +523,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E5%A4%9A%E6%97%8B%E7%BF%BC/" class="post-category">
-                                多旋翼
+                            <a href="/categories/CS/" class="post-category">
+                                CS
                             </a>
                         
                     </div>
@@ -536,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-26
+                    2021-11-20
                 </div>
                 
 
@@ -560,130 +560,94 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <!-- toc -->
-<h2 id="prometheus-msgs-DroneState"><a href="#prometheus-msgs-DroneState" class="headerlink" title="prometheus_msgs/DroneState"></a>prometheus_msgs/DroneState</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">$ rosmsg show prometheus_msgs<span class="token operator">/</span>DroneState 
-std_msgs<span class="token operator">/</span>Header header
-  uint32 seq
-  time stamp
-  string frame_id
-string mode     <span class="token comment">// 模式选择，来自"/mavros/state"话题，类型是mavros_msgs::State</span>
-<span class="token keyword">bool</span> connected  <span class="token comment">// 是否连接，来自"/mavros/state"话题，类型是mavros_msgs::State</span>
-<span class="token keyword">bool</span> armed      <span class="token comment">// 是否解锁，来自"/mavros/state"话题，类型是mavros_msgs::State</span>
-<span class="token keyword">bool</span> landed     <span class="token comment">// 是否降落，来自"/mavros/extended_state"，类型是mavros_msgs::ExtendedState</span>
+                <h2 id="3-1-程序的机器级表示"><a href="#3-1-程序的机器级表示" class="headerlink" title="3.1 程序的机器级表示"></a>3.1 程序的机器级表示</h2><p>编写<code>main.c</code>和<code>mstore.c</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
 
-float32 time_from_start
-float32<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> position <span class="token comment">// 位置，来自"/mavros/local_position/pose"，类型是geometry_msgs::PoseStamped</span>
-float32 rel_alt
-float32<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> velocity <span class="token comment">// 速度，来自"/mavros/local_position/velocity_local"，类型是geometry_msgs::TwistStamped</span>
-float32<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> attitude <span class="token comment">// 姿态欧拉角，来自"/mavros/Imu/data"，由四元数转换而来</span>
-geometry_msgs<span class="token operator">/</span>Quaternion attitude_q <span class="token comment">//姿态四元数，来自"/mavros/Imu/data"，类型是sensor_msgs::Imu里面的orientation</span>
-  float64 x
-  float64 y
-  float64 z
-  float64 w
-float32<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> attitude_rate    <span class="token comment">// 角速度，来自"/mavros/Imu/data"，类型是sensor_msgs::Imu里面的angular_velocity</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="prometheus-msgs-Message"><a href="#prometheus-msgs-Message" class="headerlink" title="prometheus_msgs/Message"></a>prometheus_msgs/Message</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">$ rosmsg show prometheus_msgs<span class="token operator">/</span>Message 
-std_msgs<span class="token operator">/</span>Header header
-  uint32 seq
-  time stamp
-  string frame_id
-uint8 message_type          <span class="token comment">// 节点回传地面站的消息</span>
-uint8 NORMAL<span class="token operator">=</span><span class="token number">0</span>              <span class="token comment">// enum message_type</span>
-uint8 WARN<span class="token operator">=</span><span class="token number">1</span>
-uint8 ERROR<span class="token operator">=</span><span class="token number">2</span>
-string source_node
-string content
-$ rosmsg show nav_msgs<span class="token operator">/</span>Odometry 
-std_msgs<span class="token operator">/</span>Header header
-  uint32 seq
-  time stamp
-  string frame_id
-string child_frame_id
-geometry_msgs<span class="token operator">/</span>PoseWithCovariance pose
-  geometry_msgs<span class="token operator">/</span>Pose pose
-    geometry_msgs<span class="token operator">/</span>Point position
-      float64 x
-      float64 y
-      float64 z
-    geometry_msgs<span class="token operator">/</span>Quaternion orientation
-      float64 x
-      float64 y
-      float64 z
-      float64 w
-  float64<span class="token punctuation">[</span><span class="token number">36</span><span class="token punctuation">]</span> covariance
-geometry_msgs<span class="token operator">/</span>TwistWithCovariance twist
-  geometry_msgs<span class="token operator">/</span>Twist twist
-    geometry_msgs<span class="token operator">/</span>Vector3 linear
-      float64 x
-      float64 y
-      float64 z
-    geometry_msgs<span class="token operator">/</span>Vector3 angular
-      float64 x
-      float64 y
-      float64 z
-  float64<span class="token punctuation">[</span><span class="token number">36</span><span class="token punctuation">]</span> covariance<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="prometheus-msgs-ControlCommand"><a href="#prometheus-msgs-ControlCommand" class="headerlink" title="prometheus_msgs/ControlCommand"></a>prometheus_msgs/ControlCommand</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">$ rosmsg show prometheus_msgs<span class="token operator">/</span>ControlCommand 
-uint8 Idle<span class="token operator">=</span><span class="token number">0</span>
-uint8 Takeoff<span class="token operator">=</span><span class="token number">1</span>
-uint8 Hold<span class="token operator">=</span><span class="token number">2</span>
-uint8 Land<span class="token operator">=</span><span class="token number">3</span>
-uint8 Move<span class="token operator">=</span><span class="token number">4</span>
-uint8 Disarm<span class="token operator">=</span><span class="token number">5</span>
-uint8 User_Mode1<span class="token operator">=</span><span class="token number">6</span>
-uint8 User_Mode2<span class="token operator">=</span><span class="token number">7</span>
-std_msgs<span class="token operator">/</span>Header header
-  uint32 seq
-  time stamp
-  string frame_id
-uint32 Command_ID
-string source
-uint8 Mode
-prometheus_msgs<span class="token operator">/</span>PositionReference Reference_State
-  uint8 XYZ_POS<span class="token operator">=</span><span class="token number">0</span>
-  uint8 XY_POS_Z_VEL<span class="token operator">=</span><span class="token number">1</span>
-  uint8 XY_VEL_Z_POS<span class="token operator">=</span><span class="token number">2</span>
-  uint8 XYZ_VEL<span class="token operator">=</span><span class="token number">3</span>
-  uint8 XYZ_ACC<span class="token operator">=</span><span class="token number">4</span>
-  uint8 TRAJECTORY<span class="token operator">=</span><span class="token number">5</span>
-  uint8 ENU_FRAME<span class="token operator">=</span><span class="token number">0</span>
-  uint8 BODY_FRAME<span class="token operator">=</span><span class="token number">1</span>
-  uint8 MIX_FRAME<span class="token operator">=</span><span class="token number">2</span>
-  std_msgs<span class="token operator">/</span>Header header
-    uint32 seq
-    time stamp
-    string frame_id
-  uint8 Move_mode
-  uint8 Move_frame
-  float32 time_from_start
-  float32<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> position_ref
-  float32<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> velocity_ref
-  float32<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> acceleration_ref
-  <span class="token keyword">bool</span> Yaw_Rate_Mode
-  float32 yaw_ref
-  float32 yaw_rate_ref<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="prometheus-msgs-PositionReference"><a href="#prometheus-msgs-PositionReference" class="headerlink" title="prometheus_msgs/PositionReference"></a>prometheus_msgs/PositionReference</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">$ rosmsg show prometheus_msgs<span class="token operator">/</span>PositionReference
-uint8 XYZ_POS<span class="token operator">=</span><span class="token number">0</span>
-uint8 XY_POS_Z_VEL<span class="token operator">=</span><span class="token number">1</span>
-uint8 XY_VEL_Z_POS<span class="token operator">=</span><span class="token number">2</span>
-uint8 XYZ_VEL<span class="token operator">=</span><span class="token number">3</span>
-uint8 XYZ_ACC<span class="token operator">=</span><span class="token number">4</span>
-uint8 TRAJECTORY<span class="token operator">=</span><span class="token number">5</span>
-uint8 ENU_FRAME<span class="token operator">=</span><span class="token number">0</span>
-uint8 BODY_FRAME<span class="token operator">=</span><span class="token number">1</span>
-uint8 MIX_FRAME<span class="token operator">=</span><span class="token number">2</span>
-std_msgs<span class="token operator">/</span>Header header
-  uint32 seq
-  time stamp
-  string frame_id
-uint8 Move_mode
-uint8 Move_frame
-float32 time_from_start
-float32<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> position_ref
-float32<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> velocity_ref
-float32<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> acceleration_ref
-<span class="token keyword">bool</span> Yaw_Rate_Mode
-float32 yaw_ref
-float32 yaw_rate_ref<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">void</span> <span class="token function">mulstore</span><span class="token punctuation">(</span><span class="token keyword">long</span><span class="token punctuation">,</span> <span class="token keyword">long</span><span class="token punctuation">,</span> <span class="token keyword">long</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">long</span> d<span class="token punctuation">;</span>
+    <span class="token function">mulstore</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"2 * 3 --> %ld\n"</span><span class="token punctuation">,</span> d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">long</span> <span class="token function">mult2</span><span class="token punctuation">(</span><span class="token keyword">long</span> a<span class="token punctuation">,</span> <span class="token keyword">long</span> b<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">long</span> s <span class="token operator">=</span> a <span class="token operator">*</span> b<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> s<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">long</span> <span class="token function">mul2</span><span class="token punctuation">(</span><span class="token keyword">long</span><span class="token punctuation">,</span> <span class="token keyword">long</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">mulstore</span><span class="token punctuation">(</span><span class="token keyword">long</span> x<span class="token punctuation">,</span> <span class="token keyword">long</span> y<span class="token punctuation">,</span> <span class="token keyword">long</span> <span class="token operator">*</span>dest<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">long</span> t <span class="token operator">=</span> <span class="token function">mul2</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">*</span>dest <span class="token operator">=</span> t<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+x <span class="token operator">-></span> rdi
+y <span class="token operator">-></span> rsi
+dest <span class="token operator">-></span> rdx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>两个文件一起编译生成可执行文件<code>prog</code><br><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">gcc -Og -o prog main.c mstore.c<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></p>
+<h3 id="汇编"><a href="#汇编" class="headerlink" title="汇编"></a>汇编</h3><p>也可以编译单个文件，生成汇编文件<code>mstore.s</code><br><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">gcc -Og -S mstore.c<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br>删除部分无关代码<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">mulstore<span class="token operator">:</span>
+    pushq   <span class="token operator">%</span>rbx
+    movq    <span class="token operator">%</span>rdx<span class="token punctuation">,</span> <span class="token operator">%</span>rbx
+    call    mul2@PLT
+    movq    <span class="token operator">%</span>rax<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token operator">%</span>rbx<span class="token punctuation">)</span>
+    popq    <span class="token operator">%</span>rbx
+    ret<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<p><code>pushq</code>意思是将寄存器<code>rbx</code>的值压如程序栈进行保存</p>
+<p>补充寄存器的知识：<br>在Intel x86-64的处理器中包含16个通用目的寄存器，这些寄存器用来存放整数数据和指针，都是以<code>%r</code>开头</p>
+<center>
+<img src="https://github.com/kavinwkp/blogimage/raw/main/img/cs/3/register.png" width="60%">
+</center>
+
+<p>为什么需要对寄存器进行压栈保存，因为在函数中修改了全局的东西，当函数调用完成之后要恢复原样</p>
+<p><strong>调用者保存寄存器和被调用者保存寄存器</strong></p>
+<p>函数A称为调用者(caller)，函数B称为被调用者(callee)，寄存器<code>rbx</code>在函数B中被修改了，逻辑上<code>rbx</code>的内容在调用函数B前后应该保持一致，解决这个问题有2个策略</p>
+<blockquote>
+<ul>
+<li>一个是函数A在调用函数B之前，提前保存寄存器<code>rbx</code>的内容，执行完函数B之后，再恢复<code>rbx</code>的内容，这个策略就称为<font color="LightSeaGreen">调用者保存</font></li>
+<li>一个是函数B在使用寄存器<code>rbx</code>之前，先保存寄存器的内容，在函数B返回之前，先恢复<code>rbx</code>原来的内容，称之为<font color="LightSeaGreen">被调用者保存</font></li>
+</ul>
+</blockquote>
+<p>不同的寄存器采取不同的策略，具体如图所示</p>
+<p><img src="https://github.com/kavinwkp/blogimage/raw/main/img/cs/3/register2.png" alt></p>
+<p>寄存器<code>rbx</code>被定义为被调用者保存寄存器，<code>pushq</code>就是用来保存<code>rbx</code>的内容，在函数返回之前，使用了<code>pop</code>指令，恢复<code>rbx</code>的内容</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">movq    <span class="token operator">%</span>rdx<span class="token punctuation">,</span> <span class="token operator">%</span>rbx<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>第二行汇编的含义是将寄存器<code>rdx</code>的内容复制到寄存器<code>rbx</code></p>
+<p>根据寄存器用法的定义，函数<code>mulstore</code>的三个参数分别保存在<code>rdi, rsi, rdx</code>中，这条指令执行完，寄存器<code>rbx</code>的内容与寄存器<code>rdx</code>一致，都是<code>dest</code>指针所指向的内存的地址</p>
+<p><code>movq</code>指令的后缀<code>q</code>表示数据的大小，由于早起的机器是16位，后来才扩展到32位，因此，用字<code>word</code>表示16位的数据类型，32位称为双字，64位称为四字</p>
+<p>图中给出了C语言的基本数据类型对应的汇编后缀表示<br><img src="https://github.com/kavinwkp/blogimage/raw/main/img/cs/3/suffix.png" alt></p>
+<p>大多数GCC生成的汇编指令都有一个字符后缀来表示操作数的大小，例如，数据传送指令就有4个变种</p>
+<blockquote>
+<ul>
+<li>movb: Move byte， 传送8位</li>
+<li>movw: Move word， 传送16位</li>
+<li>movl: Move double word， 传送32位</li>
+<li>movq: Move quad word， 传送64位</li>
+</ul>
+</blockquote>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">call    mul2@PLT<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><strong>函数调用</strong></p>
+<p><code>call</code>指令表示函数调用，返回值会保存在寄存器<code>rax</code>中，因此，寄存器<code>rax</code>中保存了<code>x</code>和<code>y</code>的乘积结果</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">movq    <span class="token operator">%</span>rax<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token operator">%</span>rbx<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这条指令将寄存器<code>rax</code>的值送到内存中，内存的地址就存放在寄存器<code>rbx</code>中</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">popq    <span class="token operator">%</span>rbx<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>恢复寄存器<code>rbx</code>的值</p>
+<h3 id="反汇编"><a href="#反汇编" class="headerlink" title="反汇编"></a>反汇编</h3><p>将编译选项<code>-S</code>替换为<code>-c</code>，就可以生成对应的机器码目标文件<code>mstore.o</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">gcc -Og -c mstore.c<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>该文件是二进制文件无法直接查看，要用到反汇编工具<code>objdump</code>，将机器代码反汇编成汇编代码</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">objdump -d mstore.o<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">mstore<span class="token punctuation">.</span>o<span class="token operator">:</span>     file format elf64<span class="token operator">-</span>x86<span class="token operator">-</span><span class="token number">64</span>
+
+Disassembly of section <span class="token punctuation">.</span>text<span class="token operator">:</span>
+
+<span class="token number">0000000000000000</span> <span class="token operator">&lt;</span>mulstore<span class="token operator">></span><span class="token operator">:</span>
+   <span class="token number">0</span><span class="token operator">:</span>   <span class="token number">53</span>                      push   <span class="token operator">%</span>rbx
+   <span class="token number">1</span><span class="token operator">:</span>   <span class="token number">48</span> <span class="token number">89</span> d3                mov    <span class="token operator">%</span>rdx<span class="token punctuation">,</span><span class="token operator">%</span>rbx
+   <span class="token number">4</span><span class="token operator">:</span>   e8 <span class="token number">00</span> <span class="token number">00</span> <span class="token number">00</span> <span class="token number">00</span>          callq  <span class="token number">9</span> <span class="token operator">&lt;</span>mulstore<span class="token operator">+</span><span class="token number">0x9</span><span class="token operator">></span>
+   <span class="token number">9</span><span class="token operator">:</span>   <span class="token number">48</span> <span class="token number">89</span> <span class="token number">03</span>                mov    <span class="token operator">%</span>rax<span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token operator">%</span>rbx<span class="token punctuation">)</span>
+   c<span class="token operator">:</span>   <span class="token number">5</span>b                      pop    <span class="token operator">%</span>rbx
+   d<span class="token operator">:</span>   c3                      retq<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>通过对比反汇编得到的汇编代码与编译器直接生成的汇编代码，可以看到有细微的差异，反汇编代码省略了后缀<code>q</code>，但在<code>call</code>和<code>ret</code>指令后添加了后缀<code>q</code>，由于<code>q</code>只是表示大小指示符，大多数情况下是可以省略的</p>
 
                 
             </div>
@@ -710,7 +674,7 @@ float32 yaw_rate_ref<span aria-hidden="true" class="line-numbers-rows"><span></s
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/03/26/%E5%A4%9A%E6%97%8B%E7%BF%BC-Prometheus-msg/">http://example.com/2021/03/26/%E5%A4%9A%E6%97%8B%E7%BF%BC-Prometheus-msg/</a>
+                    <a href="http://example.com/2021/11/20/CS-CSAPP-3-1-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/">http://example.com/2021/11/20/CS-CSAPP-3-1-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -748,8 +712,8 @@ float32 yaw_rate_ref<span aria-hidden="true" class="line-numbers-rows"><span></s
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%A4%9A%E6%97%8B%E7%BF%BC/">
-                                    <span class="chip bg-color">多旋翼</span>
+                                <a href="/tags/CSAPP/">
+                                    <span class="chip bg-color">CSAPP</span>
                                 </a>
                             
                         </div>
@@ -925,13 +889,13 @@ float32 yaw_rate_ref<span aria-hidden="true" class="line-numbers-rows"><span></s
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/26/%E5%A4%9A%E6%97%8B%E7%BF%BC-Prometheus/">
+                <a href="/2021/11/29/LeetCode-509-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Prometheus">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="509-斐波那契数">
                         
-                        <span class="card-title">Prometheus</span>
+                        <span class="card-title">509-斐波那契数</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -942,14 +906,14 @@ float32 yaw_rate_ref<span aria-hidden="true" class="line-numbers-rows"><span></s
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-03-26
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-29
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%A4%9A%E6%97%8B%E7%BF%BC/" class="post-category">
-                                    多旋翼
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
                                 </a>
                             
                             
@@ -959,8 +923,8 @@ float32 yaw_rate_ref<span aria-hidden="true" class="line-numbers-rows"><span></s
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%A4%9A%E6%97%8B%E7%BF%BC/">
-                        <span class="chip bg-color">多旋翼</span>
+                    <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                        <span class="chip bg-color">动态规划</span>
                     </a>
                     
                 </div>
@@ -974,13 +938,13 @@ float32 yaw_rate_ref<span aria-hidden="true" class="line-numbers-rows"><span></s
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/25/C-C-%E6%8C%87%E9%92%88/">
+                <a href="/2021/11/20/CS-CSAPP-2-4-%E6%B5%AE%E7%82%B9%E6%95%B0/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="C++指针">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="2.4-浮点数">
                         
-                        <span class="card-title">C++指针</span>
+                        <span class="card-title">2.4-浮点数</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -991,14 +955,14 @@ float32 yaw_rate_ref<span aria-hidden="true" class="line-numbers-rows"><span></s
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-25
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-20
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/C/" class="post-category">
-                                    C++
+                            <a href="/categories/CS/" class="post-category">
+                                    CS
                                 </a>
                             
                             
@@ -1008,8 +972,8 @@ float32 yaw_rate_ref<span aria-hidden="true" class="line-numbers-rows"><span></s
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/C/">
-                        <span class="chip bg-color">C++</span>
+                    <a href="/tags/CSAPP/">
+                        <span class="chip bg-color">CSAPP</span>
                     </a>
                     
                 </div>
