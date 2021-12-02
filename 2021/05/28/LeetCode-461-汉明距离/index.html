@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="461-汉明距离, kunpeng">
+    <meta name="keywords" content="461/477-汉明距离, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>461-汉明距离 | kunpeng</title>
+    <title>461/477-汉明距离 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">461-汉明距离</h1>
+                    <h1 class="description center-align post-title">461/477-汉明距离</h1>
                 </div>
             </div>
         </div>
@@ -580,7 +580,11 @@ The above arrows point to positions where the corresponding bits are different<s
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> cnt<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>n &amp; (n-1)</code>可以去掉<code>n</code>最低位的<code>1</code></p>
+<blockquote>
+<ul>
+<li><code>n &amp; (n-1)</code>可以去掉<code>n</code>最低位的<code>1</code></li>
+</ul>
+</blockquote>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">hammingDistance</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">int</span> z <span class="token operator">=</span> x <span class="token operator">^</span> y<span class="token punctuation">;</span>
     <span class="token keyword">int</span> cnt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
@@ -590,6 +594,27 @@ The above arrows point to positions where the corresponding bits are different<s
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> cnt<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<hr>
+<h2 id="LeetCode-477-Total-Hamming-Distance"><a href="#LeetCode-477-Total-Hamming-Distance" class="headerlink" title="LeetCode 477. Total Hamming Distance"></a>LeetCode 477. Total Hamming Distance</h2><p>The Hamming distance between two integers is the number of positions at which the corresponding bits are different.</p>
+<p>Given an integer array nums, return the sum of Hamming distances between all the pairs of the integers in nums.</p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">14</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span>
+Output<span class="token operator">:</span> <span class="token number">6</span>
+Explanation<span class="token operator">:</span> In binary representation<span class="token punctuation">,</span> the <span class="token number">4</span> is <span class="token number">0100</span><span class="token punctuation">,</span> <span class="token number">14</span> is <span class="token number">1110</span><span class="token punctuation">,</span> <span class="token operator">and</span> <span class="token number">2</span> is <span class="token number">0010</span> <span class="token punctuation">(</span>just
+showing the four bits relevant in <span class="token keyword">this</span> <span class="token keyword">case</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
+The answer will be<span class="token operator">:</span>
+<span class="token function">HammingDistance</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">14</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">HammingDistance</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">HammingDistance</span><span class="token punctuation">(</span><span class="token number">14</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">2</span> <span class="token operator">=</span> <span class="token number">6.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<h3 id="method-1"><a href="#method-1" class="headerlink" title="method"></a>method</h3><p>假设4个数的某一位分别是：1 0 1 0，分别计算异或值为：1 0 1 1 0 1，所以汉明距离总和为4，可以看出是0的个数和1的个数的乘积，所以对每一位计算0和1的个数的乘积就行</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">totalHammingDistance</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> res <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">32</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> ones <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> n <span class="token operator">:</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">>></span> i <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span> ones<span class="token operator">++</span><span class="token punctuation">;</span> <span class="token comment">// 1的个数</span>
+        <span class="token punctuation">&#125;</span>
+        res <span class="token operator">+=</span> ones <span class="token operator">*</span> <span class="token punctuation">(</span>nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> ones<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 1的个数*0的个数</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
