@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="PX4_sender, kunpeng">
+    <meta name="keywords" content="268-丢失的数字, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>PX4_sender | kunpeng</title>
+    <title>268-丢失的数字 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">PX4_sender</h1>
+                    <h1 class="description center-align post-title">268-丢失的数字</h1>
                 </div>
             </div>
         </div>
@@ -511,8 +511,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%A4%9A%E6%97%8B%E7%BF%BC/">
-                                <span class="chip bg-color">多旋翼</span>
+                            <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/">
+                                <span class="chip bg-color">位运算</span>
                             </a>
                         
                     </div>
@@ -523,8 +523,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E5%A4%9A%E6%97%8B%E7%BF%BC/" class="post-category">
-                                多旋翼
+                            <a href="/categories/LeetCode/" class="post-category">
+                                LeetCode
                             </a>
                         
                     </div>
@@ -536,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-26
+                    2021-12-02
                 </div>
                 
 
@@ -560,91 +560,36 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <!-- toc -->
-<h2 id="变量声明"><a href="#变量声明" class="headerlink" title="变量声明"></a>变量声明</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">float</span> cur_time<span class="token punctuation">;</span>         <span class="token comment">//程序运行时间</span>
-<span class="token keyword">float</span> Takeoff_height<span class="token punctuation">;</span>   <span class="token comment">//默认起飞高度</span>
-<span class="token keyword">float</span> Disarm_height<span class="token punctuation">;</span>    <span class="token comment">//自动上锁高度</span>
-<span class="token keyword">float</span> Land_speed<span class="token punctuation">;</span>       <span class="token comment">//降落速度</span>
-<span class="token keyword">int</span> Land_mode<span class="token punctuation">;</span>          <span class="token comment">//降落策略选择</span>
-Eigen<span class="token operator">::</span>Vector2f geo_fence_x<span class="token punctuation">;</span>        <span class="token comment">//地理围栏</span>
-Eigen<span class="token operator">::</span>Vector2f geo_fence_y<span class="token punctuation">;</span>
-Eigen<span class="token operator">::</span>Vector2f geo_fence_z<span class="token punctuation">;</span>
-Eigen<span class="token operator">::</span>Vector3d Takeoff_position<span class="token punctuation">;</span>   <span class="token comment">// 起飞位置</span>
-prometheus_msgs<span class="token operator">::</span>DroneState _DroneState<span class="token punctuation">;</span>    <span class="token comment">//无人机状态量</span>
-prometheus_msgs<span class="token operator">::</span>ControlCommand Command_Now<span class="token punctuation">;</span>    <span class="token comment">//无人机当前执行命令</span>
-prometheus_msgs<span class="token operator">::</span>ControlCommand Command_Last<span class="token punctuation">;</span>   <span class="token comment">//无人机上一条执行命令</span>
-
-Eigen<span class="token operator">::</span>Vector3d <span class="token function">state_sp</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-Eigen<span class="token operator">::</span>Vector3d <span class="token function">state_sp_extra</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">double</span> yaw_sp<span class="token punctuation">;</span>
-<span class="token keyword">double</span> yaw_rate_sp<span class="token punctuation">;</span>
-prometheus_msgs<span class="token operator">::</span>Message message<span class="token punctuation">;</span>
-prometheus_msgs<span class="token operator">::</span>LogMessageControl LogMessage<span class="token punctuation">;</span>
-
-<span class="token comment">//RVIZ显示：期望位置</span>
-geometry_msgs<span class="token operator">::</span>PoseStamped ref_pose_rviz<span class="token punctuation">;</span>
-<span class="token keyword">float</span> dt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-ros<span class="token operator">::</span>Publisher rivz_ref_pose_pub<span class="token punctuation">;</span>
-ros<span class="token operator">::</span>Publisher message_pub<span class="token punctuation">;</span>
-ros<span class="token operator">::</span>Publisher log_message_pub<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="订阅"><a href="#订阅" class="headerlink" title="订阅"></a>订阅</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 【订阅】为任务模块生成的控制指令(来自terminal_control.cpp)</span>
-ros<span class="token operator">::</span>Subscriber Command_sub <span class="token operator">=</span> nh<span class="token punctuation">.</span>subscribe<span class="token operator">&lt;</span>prometheus_msgs<span class="token operator">::</span>ControlCommand<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"/prometheus/control_command"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> Command_cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 本话题为Prometheus地面站发送的控制指令</span>
-ros<span class="token operator">::</span>Subscriber station_command_sub <span class="token operator">=</span> nh<span class="token punctuation">.</span>subscribe<span class="token operator">&lt;</span>prometheus_msgs<span class="token operator">::</span>ControlCommand<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"/prometheus/control_command_station"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> station_command_cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">//【订阅】无人机状态(来自px4_pos_estimator.cpp)</span>
-ros<span class="token operator">::</span>Subscriber drone_state_sub <span class="token operator">=</span> nh<span class="token punctuation">.</span>subscribe<span class="token operator">&lt;</span>prometheus_msgs<span class="token operator">::</span>DroneState<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"/prometheus/drone_state"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> drone_state_cb<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 【发布】参考位姿 RVIZ显示用</span>
-rivz_ref_pose_pub <span class="token operator">=</span> nh<span class="token punctuation">.</span>advertise<span class="token operator">&lt;</span>geometry_msgs<span class="token operator">::</span>PoseStamped<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"/prometheus/control/ref_pose_rviz"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 【发布】用于地面站显示的提示消息</span>
-message_pub <span class="token operator">=</span> nh<span class="token punctuation">.</span>advertise<span class="token operator">&lt;</span>prometheus_msgs<span class="token operator">::</span>Message<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"/prometheus/message/main"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 【发布】用于log的消息</span>
-log_message_pub <span class="token operator">=</span> nh<span class="token punctuation">.</span>advertise<span class="token operator">&lt;</span>prometheus_msgs<span class="token operator">::</span>LogMessageControl<span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"/prometheus/log/control"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 参数读取</span>
-nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"Takeoff_height"</span><span class="token punctuation">,</span> Takeoff_height<span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"Disarm_height"</span><span class="token punctuation">,</span> Disarm_height<span class="token punctuation">,</span> <span class="token number">0.15</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"Land_speed"</span><span class="token punctuation">,</span> Land_speed<span class="token punctuation">,</span> <span class="token number">0.2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"Land_mode"</span><span class="token punctuation">,</span>Land_mode<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"geo_fence/x_min"</span><span class="token punctuation">,</span> geo_fence_x<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">100.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"geo_fence/x_max"</span><span class="token punctuation">,</span> geo_fence_x<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">100.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"geo_fence/y_min"</span><span class="token punctuation">,</span> geo_fence_y<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">100.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"geo_fence/y_max"</span><span class="token punctuation">,</span> geo_fence_y<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">100.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"geo_fence/z_min"</span><span class="token punctuation">,</span> geo_fence_z<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">100.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-nh<span class="token punctuation">.</span>param<span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"geo_fence/z_max"</span><span class="token punctuation">,</span> geo_fence_z<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">100.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 设定起飞位置</span>
-Takeoff_position<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0.0</span><span class="token punctuation">;</span>
-Takeoff_position<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0.0</span><span class="token punctuation">;</span>
-Takeoff_position<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0.15</span><span class="token punctuation">;</span>
-<span class="token comment">// 建议控制频率: 10 - 50Hz, 控制频率取决于控制形式，若控制方式为速度或加速度应适当提高频率</span>
-ros<span class="token operator">::</span>Rate <span class="token function">rate</span><span class="token punctuation">(</span><span class="token number">20.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="用于与mavros通讯的类，通过mavros发送控制指令至飞控【本程序-gt-mavros-gt-飞控】"><a href="#用于与mavros通讯的类，通过mavros发送控制指令至飞控【本程序-gt-mavros-gt-飞控】" class="headerlink" title="用于与mavros通讯的类，通过mavros发送控制指令至飞控【本程序-&gt;mavros-&gt;飞控】"></a>用于与mavros通讯的类，通过mavros发送控制指令至飞控【本程序-&gt;mavros-&gt;飞控】</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">command_to_mavros _command_to_mavros<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 【订阅】无人机期望位置/速度/加速度 坐标系:ENU系 本话题来自飞控</span>
-position_target_sub <span class="token operator">=</span> command_nh<span class="token punctuation">.</span>subscribe<span class="token operator">&lt;</span>mavros_msgs<span class="token operator">::</span>PositionTarget<span class="token operator">></span><span class="token punctuation">(</span>uav_name <span class="token operator">+</span> <span class="token string">"/mavros/setpoint_raw/target_local"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>command_to_mavros<span class="token operator">::</span>pos_target_cb<span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 【订阅】无人机期望角度/角速度 坐标系:ENU系 本话题来自飞控</span>
-attitude_target_sub <span class="token operator">=</span> command_nh<span class="token punctuation">.</span>subscribe<span class="token operator">&lt;</span>mavros_msgs<span class="token operator">::</span>AttitudeTarget<span class="token operator">></span><span class="token punctuation">(</span>uav_name <span class="token operator">+</span> <span class="token string">"/mavros/setpoint_raw/target_attitude"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>command_to_mavros<span class="token operator">::</span>att_target_cb<span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token comment">// 【发布】位置/速度/加速度期望值至飞控 坐标系 ENU系</span>
-advertise<span class="token operator">&lt;</span>mavros_msgs<span class="token operator">::</span>PositionTarget<span class="token operator">></span><span class="token punctuation">(</span>uav_name <span class="token operator">+</span> <span class="token string">"/mavros/setpoint_raw/local"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 【发布】角度/角速度期望值至飞控 坐标系 ENU系</span>
-setpoint_raw_attitude_pub <span class="token operator">=</span> command_nh<span class="token punctuation">.</span>advertise<span class="token operator">&lt;</span>mavros_msgs<span class="token operator">::</span>AttitudeTarget<span class="token operator">></span><span class="token punctuation">(</span>uav_name <span class="token operator">+</span> <span class="token string">"/mavros/setpoint_raw/attitude"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 【发布】底层控制量（Mx My Mz 及 F） [0][1][2][3]分别对应 roll pitch yaw控制量及油门推力注意这里是NED系的！！</span>
-actuator_setpoint_pub <span class="token operator">=</span> command_nh<span class="token punctuation">.</span>advertise<span class="token operator">&lt;</span>mavros_msgs<span class="token operator">::</span>ActuatorControl<span class="token operator">></span><span class="token punctuation">(</span>uav_name <span class="token operator">+</span> <span class="token string">"/mavros/actuator_control"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 【发布】本话题要发送至飞控(通过Mavros_extra功能包 /plugins/mount_control.cpp发送)</span>
-mount_control_pub <span class="token operator">=</span> command_nh<span class="token punctuation">.</span>advertise<span class="token operator">&lt;</span>mavros_msgs<span class="token operator">::</span>MountControl<span class="token operator">></span><span class="token punctuation">(</span>uav_name <span class="token operator">+</span> <span class="token string">"/mavros/mount_control/command"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="主循环"><a href="#主循环" class="headerlink" title="主循环"></a>主循环</h2><ul>
-<li><p>Idle</p>
-</li>
-<li><p>Takeoff</p>
-</li>
-<li><p>Hold</p>
-</li>
-<li><p>Land</p>
-</li>
-<li><p>Move</p>
-</li>
-<li><p>Disarm</p>
-</li>
-</ul>
-
+                <h2 id="LeetCode-268-Missing-Number"><a href="#LeetCode-268-Missing-Number" class="headerlink" title="LeetCode 268. Missing Number"></a>LeetCode 268. Missing Number</h2><p>Given an array nums containing n distinct numbers in the range <code>[0, n]</code>, return the only number in the range that is missing from the array.</p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span>
+Output<span class="token operator">:</span> <span class="token number">2</span>
+Explanation<span class="token operator">:</span> n <span class="token operator">=</span> <span class="token number">3</span> since there are <span class="token number">3</span> numbers<span class="token punctuation">,</span> so all numbers are in the range <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">.</span> <span class="token number">2</span> is the missing number in the range since it does <span class="token operator">not</span> appear in nums<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
+<h3 id="method-1-排序"><a href="#method-1-排序" class="headerlink" title="method 1: 排序"></a>method 1: 排序</h3><p>排序后，如果元素和下标不对应，就是缺失的</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">missingNumber</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">sort</span><span class="token punctuation">(</span>nums<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> nums<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">!=</span> i<span class="token punctuation">)</span> <span class="token keyword">return</span> i<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>时间复杂度：$O(nlogn)$</p>
+<hr>
+<h3 id="method-2-求和"><a href="#method-2-求和" class="headerlink" title="method 2: 求和"></a>method 2: 求和</h3><p>已经知道是<code>[0,n]</code>，累加之后再减去每个元素就知道哪个缺失了</p>
+<p>等差数列求和：$S_n = \frac{(a_1 + a_n)n}{2}$</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">missingNumber</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> sum <span class="token operator">=</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> n <span class="token operator">:</span> nums<span class="token punctuation">)</span> sum <span class="token operator">-=</span> n<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> sum<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<hr>
+<h3 id="method-3-异或"><a href="#method-3-异或" class="headerlink" title="method 3: 异或"></a>method 3: 异或</h3><p>下标和元素应该是一一对应的，所以全部异或之后，剩下的就是缺失的</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">missingNumber</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> res <span class="token operator">=</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 补上下标的n</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        res <span class="token operator">=</span> res <span class="token operator">^</span> i <span class="token operator">^</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -670,7 +615,7 @@ mount_control_pub <span class="token operator">=</span> command_nh<span class="t
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/03/26/%E5%A4%9A%E6%97%8B%E7%BF%BC-PX4-sender/">http://example.com/2021/03/26/%E5%A4%9A%E6%97%8B%E7%BF%BC-PX4-sender/</a>
+                    <a href="http://example.com/2021/12/02/LeetCode-268-%E4%B8%A2%E5%A4%B1%E7%9A%84%E6%95%B0%E5%AD%97/">http://example.com/2021/12/02/LeetCode-268-%E4%B8%A2%E5%A4%B1%E7%9A%84%E6%95%B0%E5%AD%97/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -708,8 +653,8 @@ mount_control_pub <span class="token operator">=</span> command_nh<span class="t
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%A4%9A%E6%97%8B%E7%BF%BC/">
-                                    <span class="chip bg-color">多旋翼</span>
+                                <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/">
+                                    <span class="chip bg-color">位运算</span>
                                 </a>
                             
                         </div>
@@ -885,13 +830,13 @@ mount_control_pub <span class="token operator">=</span> command_nh<span class="t
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/26/%E5%A4%9A%E6%97%8B%E7%BF%BC-PX4-pos-estimator/">
+                <a href="/2021/12/02/LeetCode-201-%E6%95%B0%E5%AD%97%E8%8C%83%E5%9B%B4%E6%8C%89%E4%BD%8D%E4%B8%8E/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="PX4_pos_estimator">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="201-数字范围按位与">
                         
-                        <span class="card-title">PX4_pos_estimator</span>
+                        <span class="card-title">201-数字范围按位与</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -902,14 +847,14 @@ mount_control_pub <span class="token operator">=</span> command_nh<span class="t
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-03-26
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-12-02
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%A4%9A%E6%97%8B%E7%BF%BC/" class="post-category">
-                                    多旋翼
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
                                 </a>
                             
                             
@@ -919,8 +864,8 @@ mount_control_pub <span class="token operator">=</span> command_nh<span class="t
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%A4%9A%E6%97%8B%E7%BF%BC/">
-                        <span class="chip bg-color">多旋翼</span>
+                    <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/">
+                        <span class="chip bg-color">位运算</span>
                     </a>
                     
                 </div>
@@ -934,13 +879,13 @@ mount_control_pub <span class="token operator">=</span> command_nh<span class="t
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/26/%E5%A4%9A%E6%97%8B%E7%BF%BC-Prometheus/">
+                <a href="/2021/12/01/LeetCode-190-%E9%A2%A0%E5%80%92%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%BD%8D/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Prometheus">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="190-颠倒二进制位">
                         
-                        <span class="card-title">Prometheus</span>
+                        <span class="card-title">190-颠倒二进制位</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -951,14 +896,14 @@ mount_control_pub <span class="token operator">=</span> command_nh<span class="t
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-26
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-01
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%A4%9A%E6%97%8B%E7%BF%BC/" class="post-category">
-                                    多旋翼
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
                                 </a>
                             
                             
@@ -968,8 +913,8 @@ mount_control_pub <span class="token operator">=</span> command_nh<span class="t
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%A4%9A%E6%97%8B%E7%BF%BC/">
-                        <span class="chip bg-color">多旋翼</span>
+                    <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/">
+                        <span class="chip bg-color">位运算</span>
                     </a>
                     
                 </div>
@@ -1100,6 +1045,13 @@ mount_control_pub <span class="token operator">=</span> command_nh<span class="t
 
 </main>
 
+
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
 
 
 
