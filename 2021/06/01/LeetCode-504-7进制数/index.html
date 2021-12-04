@@ -560,16 +560,15 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="LeetCode-504-Base-7"><a href="#LeetCode-504-Base-7" class="headerlink" title="LeetCode 504. Base 7"></a>LeetCode 504. Base 7</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/base-7/">LeetCode</a></p>
+                <h2 id="LeetCode-504-Base-7"><a href="#LeetCode-504-Base-7" class="headerlink" title="LeetCode 504. Base 7"></a>LeetCode 504. Base 7</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/base-7/">LeetCode-504</a></p>
 <p>Given an integer num, return a string of its base 7 representation.</p>
 <p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> num <span class="token operator">=</span> <span class="token number">100</span>
 Output<span class="token operator">:</span> <span class="token string">"202"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>Example 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> num <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">7</span>
 Output<span class="token operator">:</span> <span class="token string">"-10"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
-<h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>注意进制转换的写法<br><code>int</code>如何转换为<code>char</code>，也可以用<code>to_string()</code>转换为<code>string</code></p>
+<h3 id="method-1-模拟"><a href="#method-1-模拟" class="headerlink" title="method 1: 模拟"></a>method 1: 模拟</h3><p>注意进制转换的写法<br><code>int</code>如何转换为<code>char</code>，也可以用<code>to_string()</code>转换为<code>string</code></p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string <span class="token function">convertToBase7</span><span class="token punctuation">(</span><span class="token keyword">int</span> num<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>num <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token string">"0"</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> x <span class="token operator">=</span> num<span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>x <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> x <span class="token operator">=</span> <span class="token operator">-</span>x<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> x <span class="token operator">=</span> num <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">?</span> num <span class="token operator">:</span> <span class="token operator">-</span>num<span class="token punctuation">;</span>
     string ret<span class="token punctuation">;</span>
     <span class="token keyword">while</span> <span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         ret <span class="token operator">=</span> <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token string">'0'</span> <span class="token operator">+</span> x <span class="token operator">%</span> <span class="token number">7</span><span class="token punctuation">)</span> <span class="token operator">+</span> ret<span class="token punctuation">;</span>
@@ -577,7 +576,17 @@ Output<span class="token operator">:</span> <span class="token string">"-10"</sp
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>num <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> ret <span class="token operator">=</span> <span class="token string">'-'</span> <span class="token operator">+</span> ret<span class="token punctuation">;</span>
     <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="method-2-递归"><a href="#method-2-递归" class="headerlink" title="method 2: 递归"></a>method 2: 递归</h3><ul>
+<li>小于0，加个符号，再递归处理相反数</li>
+<li>小于7，直接返回整数转成的字符串</li>
+<li>大于7，除以7部分继续递归，模以7部分转成字符串</li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">string <span class="token function">convertToBase7</span><span class="token punctuation">(</span><span class="token keyword">int</span> num<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>num <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token string">"-"</span> <span class="token operator">+</span> <span class="token function">convertToBase7</span><span class="token punctuation">(</span><span class="token operator">-</span>num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>num <span class="token operator">&lt;</span> <span class="token number">7</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">to_string</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">convertToBase7</span><span class="token punctuation">(</span>num <span class="token operator">/</span> <span class="token number">7</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">to_string</span><span class="token punctuation">(</span>num <span class="token operator">%</span> <span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
