@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="Eigen_Quaternion, kunpeng">
+    <meta name="keywords" content="背包问题, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Eigen_Quaternion | kunpeng</title>
+    <title>背包问题 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Eigen_Quaternion</h1>
+                    <h1 class="description center-align post-title">背包问题</h1>
                 </div>
             </div>
         </div>
@@ -511,14 +511,23 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Eigen/">
-                                <span class="chip bg-color">Eigen</span>
+                            <a href="/tags/%E8%83%8C%E5%8C%85/">
+                                <span class="chip bg-color">背包</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/LeetCode/" class="post-category">
+                                LeetCode
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -527,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-21
+                    2021-09-23
                 </div>
                 
 
@@ -551,55 +560,87 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <!-- toc -->
-<h2 id="旋转向量到旋转矩阵"><a href="#旋转向量到旋转矩阵" class="headerlink" title="旋转向量到旋转矩阵"></a>旋转向量到旋转矩阵</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">double</span> alpha <span class="token operator">=</span> M_PI <span class="token operator">/</span> <span class="token number">3</span><span class="token punctuation">;</span>
-AngleAxisd <span class="token function">rotation_vector</span><span class="token punctuation">(</span>alpha<span class="token punctuation">,</span> <span class="token function">Vector3d</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// x轴: 1 0 0</span>
-<span class="token comment">// y轴: 0 1 0</span>
-<span class="token comment">// z轴: 0 0 1</span>
+                <h2 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h2><h3 id="01背包"><a href="#01背包" class="headerlink" title="01背包"></a>01背包</h3><h4 id="动态规划五部曲"><a href="#动态规划五部曲" class="headerlink" title="动态规划五部曲"></a>动态规划五部曲</h4><p>1、确定dp数组以及下标的含义</p>
+<p>使用二维数组，<code>dp[i][j]</code>表示对于下标为<code>0~i</code>的物品，背包重量为<code>j</code>时的最大价值</p>
+<center>
+<img src="https://github.com/kavinwkp/blogimage/raw/main/img/LeetCode/01/01bag-1.png" width="60%">
+</center>
 
-MatrixXd rotation_matrix<span class="token punctuation">;</span>
 
-rotation_matrix <span class="token operator">=</span> rotation_vector<span class="token punctuation">.</span><span class="token function">matrix</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// rotation_matrix = rotation_vector.toRotationMatrix();</span>
+<p>2、确定递推公式</p>
+<ul>
+<li>不放物品<code>i</code>，则价值和<code>i-1</code>的一样，所以<code>dp[i][j] = dp[i-1][j]</code></li>
+<li>放物品<code>i</code>，则背包重量要减少<code>weight[i]</code>，价值要增加<code>value[i]</code>，所以<code>dp[i][j] = dp[i-1][j-weight[i]] + value[i]</code></li>
+</ul>
+<p>如果放不进物品<code>i</code>，那只能是第一种，如果放得进，那就两种取较大值</p>
+<p>3、dp数组初始化</p>
+<p>第一列：首先背包重量为0时，一个物品都放不进来，所以第一列初始化为0<br>第一行：对于物品0，当背包重量小于物品0的重量时，都放不进来，所以初始化为0，当背包重量大于等于物品0的重量时，都放得进来，所以初始化为<code>value[0]</code></p>
+<p>剩下的初始化为0就行</p>
+<center>
+<img src="https://github.com/kavinwkp/blogimage/raw/main/img/LeetCode/01/01bag-2.png" width="60%">
+</center>
 
-cout <span class="token operator">&lt;&lt;</span> rotation_matrix <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">// 1         0         0</span>
-<span class="token comment">// 0       0.5 -0.866025</span>
-<span class="token comment">// 0  0.866025       0.5</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="旋转向量到欧拉角"><a href="#旋转向量到欧拉角" class="headerlink" title="旋转向量到欧拉角"></a>旋转向量到欧拉角</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Vector3d eulerAngle <span class="token operator">=</span> rotation_vector<span class="token punctuation">.</span><span class="token function">matrix</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">eulerAngles</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// ZYX: 2, 1, 0</span>
+<p>4、确定遍历顺序</p>
+<p>先遍历物品，再遍历背包，比较容易理解</p>
+<p>也可以先遍历背包，再遍历物品，因为<code>dp[i][j]</code>来源于它的左上角</p>
+<p>5、举例推导dp数组</p>
+<p>对于物品1，背包重量为4时，可以选择不放物品1，价值不变，为15<br>如果选择放物品1，背包重量变为1，原先的背包重量为1的最大价值为15，再加上物品1的价值20，所以总价值为35，所以将<code>dp[1][4]</code>更新为35</p>
+<center>
+<img src="https://github.com/kavinwkp/blogimage/raw/main/img/LeetCode/01/01bag-3.png" width="60%">
+</center>
 
-cout <span class="token operator">&lt;&lt;</span> eulerAngle <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">//      0</span>
-<span class="token comment">//     -0</span>
-<span class="token comment">// 1.0472</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="旋转向量到四元数"><a href="#旋转向量到四元数" class="headerlink" title="旋转向量到四元数"></a>旋转向量到四元数</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Quaterniond <span class="token function">quaternion</span><span class="token punctuation">(</span>rotation_vector<span class="token punctuation">)</span><span class="token punctuation">;</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">coeffs</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">//      0.5</span>
-<span class="token comment">//        0</span>
-<span class="token comment">//        0</span>
-<span class="token comment">// 0.866025</span>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> weight <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> value <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">15</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">30</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">x</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">y</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">z</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">w</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">// 0.5</span>
-<span class="token comment">// 0</span>
-<span class="token comment">// 0</span>
-<span class="token comment">// 0.866025</span>
+    <span class="token keyword">int</span> bagWeight <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>  <span class="token comment">// 最大背包</span>
 
-Quaterniond quaternion2<span class="token punctuation">;</span>
-quaternion2 <span class="token operator">=</span> rotation_vector<span class="token punctuation">;</span>  <span class="token comment">// 重载了'='</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion2<span class="token punctuation">.</span><span class="token function">coeffs</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">//      0.5</span>
-<span class="token comment">//        0</span>
-<span class="token comment">//        0</span>
-<span class="token comment">// 0.866025</span>
+    vector<span class="token operator">&lt;</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">>></span> <span class="token function">dp</span><span class="token punctuation">(</span>weight<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token punctuation">(</span>bagWeight <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-<span class="token comment">// 四元数的初始化</span>
-Quaterniond <span class="token function">quaternion</span><span class="token punctuation">(</span>w<span class="token punctuation">,</span> x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> z<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> weight<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span> j <span class="token operator">&lt;=</span> bagWeight<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        dp<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> value<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>    <span class="token comment">// 第一行的初始化</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> weight<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>   <span class="token comment">// 遍历物品</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> j <span class="token operator">&lt;=</span> bagWeight<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>  <span class="token comment">// 遍历背包</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>j <span class="token operator">&lt;</span> weight<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> dp<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 放不了</span>
+            <span class="token keyword">else</span> dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> dp<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j <span class="token operator">-</span> weight<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">+</span> value<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">// 0 15 15 15 15 </span>
+<span class="token comment">// 0 15 15 20 35 </span>
+<span class="token comment">// 0 15 15 20 35 </span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="状态压缩"><a href="#状态压缩" class="headerlink" title="状态压缩"></a>状态压缩</h4><p>既然<code>dp[i][j]</code>只跟上一行有关，就可以只用一个滚动数组，但要注意，因为跟前面的元素有关，所以一定要先更新后面的元素，再更新前面的元素，<strong>从后往前</strong></p>
+<blockquote>
+<ul>
+<li>逆序遍历是为了保证每个物品只被放入一次</li>
+<li>正序遍历会使得每个物品放入多次，变成完全背包</li>
+</ul>
+</blockquote>
+<p>举例：物品0重量为1，价值为15<br>正序遍历<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">dp<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> dp<span class="token punctuation">[</span><span class="token number">1</span> <span class="token operator">-</span> weight<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">+</span> value<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">15</span>
+dp<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> dp<span class="token punctuation">[</span><span class="token number">2</span> <span class="token operator">-</span> weight<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">+</span> value<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">30</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>这样物品0在背包2里面就放了两次</p>
+<p>逆序遍历就不会出现这种状态的重叠<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">dp<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> dp<span class="token punctuation">[</span><span class="token number">2</span> <span class="token operator">-</span> weight<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">+</span> value<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">15</span>   <span class="token comment">// dp[1]还没更新</span>
+dp<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> dp<span class="token punctuation">[</span><span class="token number">1</span> <span class="token operator">-</span> weight<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">+</span> value<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">15</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> weight <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> value <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">15</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">30</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> bagWeight <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+    vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">dp</span><span class="token punctuation">(</span>bagWeight <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> weight<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>   <span class="token comment">// 遍历物品</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> bagWeight<span class="token punctuation">;</span> j <span class="token operator">>=</span> weight<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span> j<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>  <span class="token comment">// 从后往前遍历背包，直到放不进物品i</span>
+            dp<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> dp<span class="token punctuation">[</span>j <span class="token operator">-</span> weight<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">+</span> value<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">// 0 15 15 15 15 </span>
+<span class="token comment">// 0 15 15 20 35 </span>
+<span class="token comment">// 0 15 15 20 35 </span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
                 
             </div>
             <hr/>
@@ -625,7 +666,7 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/03/21/Eigen-Eigen-Quaternion/">http://example.com/2021/03/21/Eigen-Eigen-Quaternion/</a>
+                    <a href="http://example.com/2021/09/23/LeetCode-%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">http://example.com/2021/09/23/LeetCode-%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -663,8 +704,8 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Eigen/">
-                                    <span class="chip bg-color">Eigen</span>
+                                <a href="/tags/%E8%83%8C%E5%8C%85/">
+                                    <span class="chip bg-color">背包</span>
                                 </a>
                             
                         </div>
@@ -840,13 +881,13 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/21/Eigen-Eigen-%E5%90%91%E9%87%8F/">
+                <a href="/2021/09/23/LeetCode-23-%E5%90%88%E5%B9%B6k%E4%B8%AA%E5%8D%87%E5%BA%8F%E9%93%BE%E8%A1%A8/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Eigen_向量">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="23-合并k个升序链表">
                         
-                        <span class="card-title">Eigen_向量</span>
+                        <span class="card-title">23-合并k个升序链表</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -857,12 +898,16 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-03-21
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-23
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kunpeng
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -870,8 +915,12 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Eigen/">
-                        <span class="chip bg-color">Eigen</span>
+                    <a href="/tags/%E9%93%BE%E8%A1%A8/">
+                        <span class="chip bg-color">链表</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%A0%86/">
+                        <span class="chip bg-color">堆</span>
                     </a>
                     
                 </div>
@@ -885,13 +934,13 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/21/Eigen-Eigen-%E7%9F%A9%E9%98%B5%E5%B1%9E%E6%80%A7/">
+                <a href="/2021/09/23/LeetCode-%E9%93%BE%E8%A1%A8%E6%80%BB%E7%BB%93/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Eigen_矩阵属性">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="链表总结">
                         
-                        <span class="card-title">Eigen_矩阵属性</span>
+                        <span class="card-title">链表总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -902,12 +951,16 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-23
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kunpeng
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -915,8 +968,8 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Eigen/">
-                        <span class="chip bg-color">Eigen</span>
+                    <a href="/tags/%E9%93%BE%E8%A1%A8/">
+                        <span class="chip bg-color">链表</span>
                     </a>
                     
                 </div>
