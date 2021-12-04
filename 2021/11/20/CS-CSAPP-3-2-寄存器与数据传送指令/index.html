@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="寄存器, kunpeng">
+    <meta name="keywords" content="3.2-寄存器与数据传送指令, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>寄存器 | kunpeng</title>
+    <title>3.2-寄存器与数据传送指令 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">寄存器</h1>
+                    <h1 class="description center-align post-title">3.2-寄存器与数据传送指令</h1>
                 </div>
             </div>
         </div>
@@ -511,8 +511,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
-                                <span class="chip bg-color">计算机组成原理</span>
+                            <a href="/tags/CSAPP/">
+                                <span class="chip bg-color">CSAPP</span>
                             </a>
                         
                     </div>
@@ -536,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-11-16
+                    2021-11-20
                 </div>
                 
 
@@ -560,132 +560,95 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h2><p>寄存器是<code>CPU</code>内部的构造，主要用于信息的存储。除此之外，<code>CPU</code>内部还有运算器，负责处理数据；控制器控制其他组件；外部总线连接<code>CPU</code>和各种组件，进行数据传输；内部总线负责<code>CPU</code>内部各种组件的数据处理</p>
-<p><strong>为什么会出现寄存器？</strong></p>
-<p>程序在内存中装载，由<code>CPU</code>来运行，<code>CPU</code>的主要职责就是用来处理数据。这个过程涉及到从存储器读取和写入数据，如果还要从内存中读取就太麻烦了，所以直接在<code>CPU</code>中开辟一些空间来存储数据，读取速度也比较快</p>
-<h3 id="认识寄存器"><a href="#认识寄存器" class="headerlink" title="认识寄存器"></a>认识寄存器</h3><p><code>CPU</code>从逻辑上可以分为3个模块，分别是控制单元、运算单元和存储单元，这三部分由<code>CPU</code>内部总线连接起来。</p>
-<p>几乎所有的冯·诺伊曼型计算机的<code>CPU</code>，其工作都可以分为5个阶段：<font color="LightSeaGreen">取指令、指令译码、执行指令、访存取数、结果写回</font></p>
-<blockquote>
-<ol>
-<li>取指令阶段是将内存中的指令读取到<code>CPU</code>中寄存器的过程，程序寄存器用于存储下一条指令所在的地址</li>
-<li>指令译码阶段，在取指令完成后，立马进入指令译码阶段，指令译码器按照预定的指令格式，对取回的指令进行拆分和解释，识别区分出不同的指令类别以及各种获取操作数的方法</li>
-<li>执行指令阶段，译码完成后，就需要执行这一条指令了，此阶段的任务是完成指令所规定的各种操作，具体实现指令的功能</li>
-<li>访问取数阶段，根据指令的需要，有可能需要从内存中提取数据，此阶段的任务是：根据指令地址码，得到操作数在内存中的地址，并从内存中读取该操作数用于运算</li>
-<li>结果写回阶段(Write Back，WB)，把运行结果写回到<code>CPU</code>内部寄存器中，以便被后续的指令快速地存取</li>
-</ol>
-</blockquote>
-<h3 id="计算机架构中的寄存器"><a href="#计算机架构中的寄存器" class="headerlink" title="　计算机架构中的寄存器"></a>　计算机架构中的寄存器</h3><div class="uk-alert uk-alert-success"><i class="fa fa-check-circle"></i> 寄存器是一块速度非常快的计算机内存</div>
-<p>在<code>8086</code>架构中，所有的内部寄存器、内部以及外部总线都是<code>16</code>位宽，可以存储两个字节，<code>8086</code>处理器有<code>14</code>个寄存器，每个寄存器都有一个特有的名称，即</p>
-<blockquote>
-<p>AX，BX，CX，DX，SP，BP，SI，DI，IP，FLAG，CS，DS，SS，ES</p>
-</blockquote>
-<p><img src="https://github.com/kavinwkp/blogimage/raw/main/img/cs/register.png" alt></p>
-<p>8位写成<code>al</code>，16位写成<code>ax</code>，后面扩展到32位会写成<code>eax</code>，扩展到64位会写成<code>rax</code>，其实都是一样的</p>
-<p>这<code>14</code>个寄存器有可能进行具体的划分，按照功能可以分为三种</p>
+                <h2 id="寄存器与数据传送指令"><a href="#寄存器与数据传送指令" class="headerlink" title="寄存器与数据传送指令"></a>寄存器与数据传送指令</h2><p>64位的处理器中，原来8个16位寄存器扩展成了64位，还增加了8个</p>
+<p>不同寄存器扮演不同的角色，相应的编程规范规定了如何使用这些寄存器</p>
 <blockquote>
 <ul>
-<li>通用寄存器</li>
-<li>控制寄存器</li>
-<li>段寄存器</li>
+<li><code>rax</code>用来保存函数的返回值</li>
+<li><code>rsp</code>用来保存程序栈的结束位置</li>
+<li><code>rdi, rsi, rdx, rcx, r8, r9</code>可以用来传递函数参数</li>
 </ul>
 </blockquote>
-<h3 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h3><p>通用寄存器主要有四种 ，即<font color="LightSeaGreen">AX、BX、CX、DX</font>，同样的，这四个寄存器也是<code>16</code>位的，能存放两个字节，各自的功能为</p>
+<h3 id="指令-Instruction"><a href="#指令-Instruction" class="headerlink" title="指令(Instruction)"></a>指令(Instruction)</h3><p>包括<font color="LightCoral">操作码(Operation Code)和操作数(Operands)</font></p>
+<ul>
+<li>操作码决定了CPU执行操作的类型</li>
+<li>大多数指令具有一个或多个操作数</li>
+</ul>
+<p>操作数可以分为3类：</p>
 <blockquote>
 <ul>
-<li>AX(Accumulator Register)：累加寄存器，用于输入/输出和大规模的指令运算</li>
-<li>BX(Base Register)：基址寄存器，用来存储基础访问地址</li>
-<li>CX(Count Register)：计数寄存器，在迭代的操作中循环计数</li>
-<li>DX(data Register)：数据寄存器，也用于输入/输出操作。它还与 AX 寄存器一起使用，用于大数值的乘法和除法运算</li>
+<li>立即数(Immediate)：以<code>$</code>开头，后面跟一个整数</li>
+<li>寄存器(Register)：<code>%rax</code>，64位，32位，16位，8位寄存器都可以作为操作数</li>
+<li>内存引用(Memory Reference)：寄存器加上小括号，如<code>(%rdi)</code></li>
 </ul>
 </blockquote>
-<p>这四种寄存器可以分为上半部分和下半部分，分成高位和低位两个<code>8</code>位数据寄存器</p>
-<blockquote>
-<p><code>AX</code>寄存器可以分为两个独立的<code>8</code>位的<code>AH</code>和<code>AL</code>寄存器，另外3个类似</p>
-</blockquote>
-<p>寄存器的存储方式是先存储低位，如果低位满足不了就存储高位，如果低位能够满足，高位用0补全</p>
-<p><code>8086 CPU</code>可以一次存储两种类型的数据</p>
+<p><strong>MOV指令</strong></p>
+<p>有两个操作数，<font color="LightSeaGreen">源操作数(Source operand)和目的操作数(Destination operand)</font></p>
 <blockquote>
 <ul>
-<li>字节(byte)：一个字节由<code>8 bit</code>组成，这是一种恒定不变的存储方式</li>
-<li>字(word)：字是由指令集或处理器硬件作为单元处理的固定大小的数据，对于<code>intel</code>来说，一个字长就是两个字节，字是计算机一个非常重要的特征，针对不同的指令集架构来说，计算机一次处理的数据也是不同的。有字(16位)、双字(32位)、四字(64位)等</li>
+<li>源操作数可以是：立即数，寄存器，内存引用</li>
+<li>目的操作数是用来存放源操作数的内容，所以只能是寄存器或内存引用</li>
 </ul>
 </blockquote>
-<h4 id="AX寄存器"><a href="#AX寄存器" class="headerlink" title="AX寄存器"></a>AX寄存器</h4><p><font color="LightSeaGreen">累加寄存器</font>或者简称为累加器</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">mov AX<span class="token punctuation">,</span><span class="token number">20</span>   <span class="token comment">// 将 20 送入寄存器 AX</span>
-mov AH<span class="token punctuation">,</span><span class="token number">80</span>   <span class="token comment">// 将 80 送入寄存器 AH</span>
-add AX<span class="token punctuation">,</span><span class="token number">10</span>   <span class="token comment">// 将寄存器 AX 中的数值加上 10</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>支持<code>MUL</code>和<code>DIV</code>指令</p>
-<h4 id="BX寄存器"><a href="#BX寄存器" class="headerlink" title="BX寄存器"></a>BX寄存器</h4><p><font color="LightSeaGreen"><b>数据寄存器</b></font>，能够暂存一般数据，还用于<font color="LightSeaGreen">寻址</font>，即寻找物理内存地址。<code>BX</code>寄存器中存放的数据一般是作为<font color="LightSeaGreen">偏移地址</font>使用的。偏移地址是在段寄存器中存储的</p>
-<h4 id="CX寄存器"><a href="#CX寄存器" class="headerlink" title="CX寄存器"></a>CX寄存器</h4><p><code>CX</code>也是数据寄存器，能够暂存一般性数据。当在汇编指令中使用循环<code>LOOP</code>指令时，可以通过<code>CX</code>来指定需要循环的次数，每次执行循环<code>LOOP</code>时候，<code>CPU</code>会做两件事</p>
-<ul>
-<li>一是计数器自动减 1</li>
-<li>二是判断<code>CX</code>中的值，如果值为<code>0</code>则会跳出循环，如果值为<code>0</code>，则会继续执行循环</li>
-</ul>
-<h4 id="DX寄存器"><a href="#DX寄存器" class="headerlink" title="DX寄存器"></a>DX寄存器</h4><p><code>DX</code>也是数据寄存器，能够暂存一般性数据，支持<code>MUL</code>和<code>DIV</code>指令，同时也支持数值溢出等</p>
-<h3 id="段寄存器"><a href="#段寄存器" class="headerlink" title="段寄存器"></a>段寄存器</h3><blockquote>
-<ul>
-<li><font color="LightCoral">CS(Code Segment)：代码寄存器</font>，程序代码的基础位置</li>
-<li>DS(Data Segment)：数据寄存器，变量的基本位置</li>
-<li>SS(Stack Segment)：栈寄存器，栈的基础位置</li>
-<li>ES(Extra Segment)：其他寄存器，内存中变量的其他基本位置</li>
-</ul>
-</blockquote>
-<h3 id="索引寄存器"><a href="#索引寄存器" class="headerlink" title="索引寄存器"></a>索引寄存器</h3><p>索引寄存器主要包含段地址的偏移量，分为</p>
+<div class="uk-alert uk-alert-danger"><i class="fas fa-exclamation-triangle"></i> 规定：源操作数和目的操作数不能都是内存的地址</div>
+<p>所以，放需要将一个数从内存的一个位置复制到另一个位置，需要两条<code>mov</code>指令来完成<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">mov memory<span class="token punctuation">,</span> <span class="token keyword">register</span>    <span class="token comment">// 将内存源位置的数值加载到寄存器</span>
+mov <span class="token keyword">register</span><span class="token punctuation">,</span> memory    <span class="token comment">// 再将该寄存器的值写入目标位置</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
+<p><code>mov</code>指令的后缀与寄存器的大小一定得是匹配的</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">movl $<span class="token number">0x4050</span><span class="token punctuation">,</span> <span class="token operator">%</span>eax      <span class="token comment">// 立即数->寄存器 32位</span>
+movw <span class="token operator">%</span>bp<span class="token punctuation">,</span> <span class="token operator">%</span>sp           <span class="token comment">// 寄存器->寄存器 16位</span>
+<span class="token function">movb</span> <span class="token punctuation">(</span><span class="token operator">%</span>rdi<span class="token punctuation">,</span> <span class="token operator">%</span>rcx<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">%</span>al  <span class="token comment">// 内存->寄存器 8位</span>
+movb $<span class="token operator">-</span><span class="token number">17</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token operator">%</span>rsp<span class="token punctuation">)</span>       <span class="token comment">// 立即数->内存 8位</span>
+movq <span class="token operator">%</span>rax<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">12</span><span class="token punctuation">(</span><span class="token operator">%</span>rbp<span class="token punctuation">)</span>    <span class="token comment">// 寄存器->内存 64位</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>特殊情况</strong></p>
+<p>当<code>movq</code>的源操作数是立即数时，该立即数只能是32位的补码表示，然后对该数值进行符号位扩展，将得到的64位数传送到目标位置</p>
 <blockquote>
-<p>BP(Base Pointer)：基础指针，它是栈寄存器上的偏移量，用来定位栈上变量<br>SP(Stack Pointer): 栈指针，它是栈寄存器上的偏移量，用来定位栈顶<br>SI(Source Index): 变址寄存器，用来拷贝源字符串<br>DI(Destination Index): 目标变址寄存器，用来复制到目标字符串</p>
+<p><code>movabsq</code>指令的源操作数可以是任意的64位立即数，目的操作数只能是寄存器</p>
 </blockquote>
-<h3 id="状态和控制寄存器"><a href="#状态和控制寄存器" class="headerlink" title="状态和控制寄存器"></a>状态和控制寄存器</h3><ul>
-<li><font color="LightCoral">IP(Instruction Pointer)：指令指针寄存器</font>，它是从<code>Code Segment</code>代码寄存器处的偏移来存储执行的下一条指令</li>
-<li>FLAG：<code>Flag</code>寄存器用于存储当前进程的状态，这些状态有<ul>
-<li>位置 (Direction)：用于数据块的传输方向，是向上传输还是向下传输</li>
-<li>中断标志位 (Interrupt) ：1 - 允许；0 - 禁止</li>
-<li>陷入位 (Trap) ：确定每条指令执行完成后，CPU 是否应该停止。1 - 开启，0 - 关闭</li>
-<li>进位 (Carry) : 设置最后一个无符号算术运算是否带有进位</li>
-<li>溢出 (Overflow) : 设置最后一个有符号运算是否溢出</li>
-<li>符号 (Sign) : 如果最后一次算术运算为负，则设置 1 =负，0 =正</li>
-<li>零位 (Zero) : 如果最后一次算术运算结果为零，1 = 零</li>
-<li>辅助进位 (Aux Carry) ：用于第三位到第四位的进位</li>
-<li>奇偶校验 (Parity) : 用于奇偶校验</li>
-</ul>
-</li>
-</ul>
-<h3 id="物理地址"><a href="#物理地址" class="headerlink" title="物理地址"></a>物理地址</h3><p>16 位的 CPU 指的是</p>
-<ul>
-<li>CPU 内部的运算器一次最多能处理 16 位的数据</li>
-</ul>
-<blockquote>
-<p>运算器其实就是ALU，运算控制单元，它是CPU内部的三大核心器件之一，主要负责数据的运算</p>
-</blockquote>
-<ul>
-<li>寄存器的最大宽度为 16 位</li>
-</ul>
-<blockquote>
-<p>这个寄存器的最大宽度值就是通用寄存器能处理的二进制数的最大位数</p>
-</blockquote>
-<ul>
-<li>寄存器和运算器之间的通路为 16 位</li>
-</ul>
-<blockquote>
-<p>这个指的是寄存器和运算器之间的总线，一次能传输 16 位的数据</p>
-</blockquote>
-<p>CPU 相关组件提供两个地址：<font color="LightSeaGreen">段地址和偏移地址</font>，这两个地址都是<code>16</code>位的，他们经由地址加法器变为<code>20</code>位的<font color="LightSeaGreen">物理地址</font>，这个地址即是输入输出控制电路传递给内存的物理地址，由此完成物理地址的转换</p>
-<p>地址加法器采用<code>物理地址 = 段地址 * 16 + 偏移地址</code>的方法用段地址和偏移地址合成物理地址</p>
-<p>段地址*16就是二进制左移4位，十六进制左移1位，作为基础地址，所以</p>
-<div class="uk-alert uk-alert-success"><i class="fa fa-check-circle"></i> 物理地址 = 基础地址 + 偏移地址</div>
-<h3 id="段寄存器-1"><a href="#段寄存器-1" class="headerlink" title="段寄存器"></a>段寄存器</h3><h4 id="CS-寄存器"><a href="#CS-寄存器" class="headerlink" title="CS 寄存器"></a>CS 寄存器</h4><blockquote>
-<p>CS(代码寄存器，存储段地址)和 IP(指令指针，存储偏移地址) 都是 8086 CPU 非常重要的寄存器，它们指出了 CPU 当前需要读取指令的地址</p>
-</blockquote>
-<p>在 CPU 内部，由 CS 和 IP 提供段地址和偏移地址，由加法器负责转换为物理地址，输入输出控制电路负责输入/输出数据，指令缓冲器负责缓冲指令，指令执行器负责执行指令。在内存中有一段连续存储的区域，区域内部存储的是机器码、外面是地址和汇编指令</p>
-<p>假设段地址和偏移地址分别是<code>2000</code>和<code>0000</code>，当这两个地址进入地址加法器后，会由地址加法器负责将这两个地址转换为物理地址<code>20000</code>，然后输入输出控制电路将<code>20</code>位的地址总线送到内存中，然后取出对应的数据，<code>B8 23 01</code>，<code>B8</code>是操作数，再送入指令缓存器中，此时这个指令就已经具备执行条件，然后 IP(指令指针)会自动增加。它会知道下一个需要读取指令的地址<code>0003</code>，在这之后，指令执行执行取出的<code>B8 23 01</code>这条指令，然后再把<code>2000</code>和<code>0003</code>送到地址加法器中再进行后续指令的读取，如此循环</p>
-<p>总结一下 8086 CPU 的工作过程</p>
+<p>例子：<br>使用<code>movabsq</code>将一个64位立即数复制到寄存器<code>rax</code><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">movabsq $<span class="token number">0x0011223344556677</span><span class="token punctuation">,</span> <span class="token operator">%</span>rax<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></p>
+<p><code>rax</code>内的数值如图所示</p>
+<center>
+<img src="https://github.com/kavinwkp/blogimage/raw/main/img/cs/3/rax-1.png" width="60%">
+</center>
+
+<p>接下来，使用<code>movb</code>指令将立即数-1复制到低8位的寄存器<code>al</code></p>
+<p>此时，<code>rax</code>的低8位发生了变化</p>
+<center>
+<img src="https://github.com/kavinwkp/blogimage/raw/main/img/cs/3/rax-2.png" width="60%">
+</center>
+
+<p>然后，再用指令<code>movw</code>将-1复制给16位寄存器<code>ax</code></p>
+<p>此时，<code>rax</code>的低16位发生了变化</p>
+<center>
+<img src="https://github.com/kavinwkp/blogimage/raw/main/img/cs/3/rax-3.png" width="60%">
+</center>
+
+<p>再用<code>movl</code>将立即数-1复制到32位寄存器<code>eax</code></p>
+<p>此时，<code>rax</code>的低32位发生了变化，而且高32位也被置0</p>
+<center>
+<img src="https://github.com/kavinwkp/blogimage/raw/main/img/cs/3/rax-4.png" width="60%">
+</center>
+
 <blockquote>
 <ul>
-<li>段寄存器提供段地址和偏移地址给地址加法器</li>
-<li>由地址加法器计算出物理地址通过输入输出控制电路将物理地址送到内存中</li>
-<li>提取物理地址对应的指令，经由控制电路取回并送到指令缓存器中</li>
-<li><code>IP</code>继续指向下一条指令的地址，同时指令执行器执行指令缓冲器中的指令</li>
+<li>64位处理器的规定：<code>movl</code>的目的操作数是寄存器时，它会把寄存器的高4字节设置为0</li>
 </ul>
 </blockquote>
+<p>当源操作数的数位小于目的操作数时，需要对目的操作数剩余的字节进行零扩展或符号位扩展</p>
+<p>零扩展数据传送指令有5条，z表示zero，最后两个字符都是大小指示符</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">movzbw   <span class="token number">8</span><span class="token operator">-></span><span class="token number">16</span>
+movzbl   <span class="token number">8</span><span class="token operator">-></span><span class="token number">32</span>
+movzwl   <span class="token number">16</span><span class="token operator">-></span><span class="token number">32</span>
+movzbq   <span class="token number">8</span><span class="token operator">-></span><span class="token number">64</span>
+movzwq   <span class="token number">16</span><span class="token operator">-></span><span class="token number">64</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>符号位扩展传送指令有6条，s表示sign</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">movsbw  <span class="token number">8</span><span class="token operator">-></span><span class="token number">16</span>
+movsbl  <span class="token number">8</span><span class="token operator">-></span><span class="token number">32</span>
+movswl  <span class="token number">16</span><span class="token operator">-></span><span class="token number">32</span>
+movsbq  <span class="token number">8</span><span class="token operator">-></span><span class="token number">64</span>
+movswq  <span class="token number">16</span><span class="token operator">-></span><span class="token number">64</span>
+movslq  <span class="token number">32</span><span class="token operator">-></span><span class="token number">64</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>对比发现，零扩展没有32位到64位的扩展指令，这种情况可以用<code>movl</code>来实现，本身就是可以将高位置0</p>
+<p>另外，符号位扩展还有一条没有操作数的特殊指令<code>cltq</code>，源操作数总是<code>eax</code>，目的操作数总是<code>rax</code>，就是对寄存器<code>rax</code>的高32位进行符号位扩展，等价于<code>movslq %eax, %rax</code></p>
 
                 
             </div>
@@ -712,7 +675,7 @@ add AX<span class="token punctuation">,</span><span class="token number">10</spa
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/11/16/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AF%84%E5%AD%98%E5%99%A8/">http://example.com/2021/11/16/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AF%84%E5%AD%98%E5%99%A8/</a>
+                    <a href="http://example.com/2021/11/20/CS-CSAPP-3-2-%E5%AF%84%E5%AD%98%E5%99%A8%E4%B8%8E%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%81%E6%8C%87%E4%BB%A4/">http://example.com/2021/11/20/CS-CSAPP-3-2-%E5%AF%84%E5%AD%98%E5%99%A8%E4%B8%8E%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%81%E6%8C%87%E4%BB%A4/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -750,8 +713,8 @@ add AX<span class="token punctuation">,</span><span class="token number">10</spa
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">
-                                    <span class="chip bg-color">计算机组成原理</span>
+                                <a href="/tags/CSAPP/">
+                                    <span class="chip bg-color">CSAPP</span>
                                 </a>
                             
                         </div>
@@ -927,13 +890,13 @@ add AX<span class="token punctuation">,</span><span class="token number">10</spa
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/11/18/LeetCode-16-%E6%9C%80%E6%8E%A5%E8%BF%91%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C/">
+                <a href="/2021/11/29/LeetCode-509-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="16-最接近三数之和">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="509-斐波那契数">
                         
-                        <span class="card-title">16-最接近三数之和</span>
+                        <span class="card-title">509-斐波那契数</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -944,57 +907,8 @@ add AX<span class="token punctuation">,</span><span class="token number">10</spa
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-18
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-29
                         </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/LeetCode/" class="post-category">
-                                    LeetCode
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">
-                        <span class="chip bg-color">双指针</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/11/06/LeetCode-118-%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="118-杨辉三角">
-                        
-                        <span class="card-title">118-杨辉三角</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-06
-                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1012,6 +926,55 @@ add AX<span class="token punctuation">,</span><span class="token number">10</spa
                     
                     <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
                         <span class="chip bg-color">动态规划</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/11/20/CS-CSAPP-3-1-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="3.1-程序的机器级表示">
+                        
+                        <span class="card-title">3.1-程序的机器级表示</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-20
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CS/" class="post-category">
+                                    CS
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/CSAPP/">
+                        <span class="chip bg-color">CSAPP</span>
                     </a>
                     
                 </div>
