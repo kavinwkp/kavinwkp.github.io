@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="二阶常系数齐次线性微分方程, kunpeng">
+    <meta name="keywords" content="Matlab字符变量, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>二阶常系数齐次线性微分方程 | kunpeng</title>
+    <title>Matlab字符变量 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">二阶常系数齐次线性微分方程</h1>
+                    <h1 class="description center-align post-title">Matlab字符变量</h1>
                 </div>
             </div>
         </div>
@@ -511,8 +511,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%95%B0%E5%AD%A6/">
-                                <span class="chip bg-color">数学</span>
+                            <a href="/tags/Matlab/">
+                                <span class="chip bg-color">Matlab</span>
                             </a>
                         
                     </div>
@@ -523,8 +523,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%95%B0%E5%AD%A6/" class="post-category">
-                                数学
+                            <a href="/categories/Math/" class="post-category">
+                                Math
                             </a>
                         
                     </div>
@@ -536,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-20
+                    2021-09-14
                 </div>
                 
 
@@ -560,22 +560,29 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><strong>二阶常系数齐次线性微分方程</strong>的形式为：</p>
-<script type="math/tex; mode=display">a{y}^{\prime \prime}+b{y}^{\prime}+cy=0</script><p>由于是二阶线性微分方程，所以它有两个解，记为$y_1, y_2$<br>它的特征方程为：</p>
-<script type="math/tex; mode=display">ar^2+br+c=0</script><p>写出微分方程的特征方程后即可以用<strong>求根公式</strong>求出特征方程的解：</p>
-<script type="math/tex; mode=display">r_{1,2} = {-b \pm \sqrt{b^2-4ac}\over 2a}</script><p>以下分情况讨论：</p>
-<ol>
-<li><p>当$\Delta &gt; 0$时，$r_1,r_2$是两个不相等的实根</p>
-<script type="math/tex; mode=display">r_{1} = {-b + \sqrt{\Delta}\over 2a}, r_{2} = {-b - \sqrt{\Delta}\over 2a}</script><p>微分方程的通解为：</p>
-<script type="math/tex; mode=display">y = C_1e^{r_1x} + C_2e^{r_2x}</script></li>
-<li><p>当$\Delta = 0$时，$r_1,r_2$是两个相等的实根</p>
-<script type="math/tex; mode=display">r_{1} = r_{2} = {-b \over 2a}</script><p>微分方程的通解为：</p>
-<script type="math/tex; mode=display">y = C_1e^{r_1x} + C_2xe^{r_2x}</script></li>
-<li><p>当$\Delta &lt; 0$时，$r_1,r_2$是一对共轭复根</p>
-<script type="math/tex; mode=display">r_{1} = \alpha + \beta i, r_{2} = \alpha - \beta i</script><p>其中</p>
-<script type="math/tex; mode=display">\alpha = {-b \over 2a}, \beta = {\sqrt{-\Delta}\over 2a}</script><p>微分方程的通解为：</p>
-<script type="math/tex; mode=display">y = e^{\alpha x}(C_1 cos\beta x + C_2 sin\beta x)</script></li>
-</ol>
+                <h2 id="字符变量"><a href="#字符变量" class="headerlink" title="字符变量"></a>字符变量</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">syms a b real<span class="token punctuation">;</span>
+x <span class="token operator">=</span> <span class="token punctuation">(</span>a <span class="token operator">+</span> b<span class="token punctuation">)</span> <span class="token operator">^</span> <span class="token number">2</span><span class="token punctuation">;</span>
+<span class="token function">expand</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 展开 a^2 + 2*a*b + b^2</span>
+
+y <span class="token operator">=</span> <span class="token punctuation">(</span>a <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">^</span> <span class="token number">2</span> <span class="token operator">/</span> a<span class="token punctuation">;</span>    <span class="token comment">// 自动化简 a/4</span>
+
+z <span class="token operator">=</span> <span class="token function">sin</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token operator">^</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token function">cos</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token operator">^</span> <span class="token number">2</span><span class="token punctuation">;</span>
+<span class="token function">simplify</span><span class="token punctuation">(</span>z<span class="token punctuation">)</span>     <span class="token comment">// 简化</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="字符矩阵"><a href="#字符矩阵" class="headerlink" title="字符矩阵"></a>字符矩阵</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">A <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0</span> <span class="token operator">-</span>z y<span class="token punctuation">;</span> z <span class="token number">0</span> <span class="token operator">-</span>x<span class="token punctuation">;</span> <span class="token operator">-</span>y x <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">[</span>V<span class="token punctuation">,</span> D<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">eig</span><span class="token punctuation">(</span>A<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 特征值和特征向量</span>
+<span class="token function">det</span><span class="token punctuation">(</span>A<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 行列式</span>
+A<span class="token number">'</span><span class="token punctuation">;</span>     <span class="token comment">// 转置</span>
+<span class="token function">inv</span><span class="token punctuation">(</span>A<span class="token punctuation">)</span>  <span class="token comment">// 求逆</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>求旋转矩阵<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">syms phi theta psi real
+Rz <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token function">cos</span><span class="token punctuation">(</span>psi<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token function">sin</span><span class="token punctuation">(</span>psi<span class="token punctuation">)</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token function">sin</span><span class="token punctuation">(</span>psi<span class="token punctuation">)</span> <span class="token function">cos</span><span class="token punctuation">(</span>psi<span class="token punctuation">)</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+Ry <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token function">cos</span><span class="token punctuation">(</span>theta<span class="token punctuation">)</span> <span class="token number">0</span> <span class="token function">sin</span><span class="token punctuation">(</span>theta<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token number">0</span> <span class="token number">1</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token operator">-</span><span class="token function">sin</span><span class="token punctuation">(</span>theta<span class="token punctuation">)</span> <span class="token number">0</span> <span class="token function">cos</span><span class="token punctuation">(</span>theta<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+Rx <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span> <span class="token number">0</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token number">0</span> <span class="token function">cos</span><span class="token punctuation">(</span>phi<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token function">sin</span><span class="token punctuation">(</span>phi<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token number">0</span> <span class="token function">sin</span><span class="token punctuation">(</span>phi<span class="token punctuation">)</span> <span class="token function">cos</span><span class="token punctuation">(</span>phi<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+R <span class="token operator">=</span> Rz <span class="token operator">*</span> Ry <span class="token operator">*</span> Rx
+
+<span class="token punctuation">[</span> <span class="token function">cos</span><span class="token punctuation">(</span>psi<span class="token punctuation">)</span><span class="token operator">*</span><span class="token function">cos</span><span class="token punctuation">(</span>theta<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">cos</span><span class="token punctuation">(</span>psi<span class="token punctuation">)</span><span class="token operator">*</span><span class="token function">sin</span><span class="token punctuation">(</span>phi<span class="token punctuation">)</span><span class="token operator">*</span><span class="token function">sin</span><span class="token punctuation">(</span>theta<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token function">cos</span><span class="token punctuation">(</span>phi<span class="token punctuation">)</span><span class="token operator">*</span><span class="token function">sin</span><span class="token punctuation">(</span>psi<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">sin</span><span class="token punctuation">(</span>phi<span class="token punctuation">)</span><span class="token operator">*</span><span class="token function">sin</span><span class="token punctuation">(</span>psi<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">cos</span><span class="token punctuation">(</span>phi<span class="token punctuation">)</span><span class="token operator">*</span><span class="token function">cos</span><span class="token punctuation">(</span>psi<span class="token punctuation">)</span><span class="token operator">*</span><span class="token function">sin</span><span class="token punctuation">(</span>theta<span class="token punctuation">)</span><span class="token punctuation">]</span>
+<span class="token punctuation">[</span> <span class="token function">cos</span><span class="token punctuation">(</span>theta<span class="token punctuation">)</span><span class="token operator">*</span><span class="token function">sin</span><span class="token punctuation">(</span>psi<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">cos</span><span class="token punctuation">(</span>phi<span class="token punctuation">)</span><span class="token operator">*</span><span class="token function">cos</span><span class="token punctuation">(</span>psi<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">sin</span><span class="token punctuation">(</span>phi<span class="token punctuation">)</span><span class="token operator">*</span><span class="token function">sin</span><span class="token punctuation">(</span>psi<span class="token punctuation">)</span><span class="token operator">*</span><span class="token function">sin</span><span class="token punctuation">(</span>theta<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">cos</span><span class="token punctuation">(</span>phi<span class="token punctuation">)</span><span class="token operator">*</span><span class="token function">sin</span><span class="token punctuation">(</span>psi<span class="token punctuation">)</span><span class="token operator">*</span><span class="token function">sin</span><span class="token punctuation">(</span>theta<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token function">cos</span><span class="token punctuation">(</span>psi<span class="token punctuation">)</span><span class="token operator">*</span><span class="token function">sin</span><span class="token punctuation">(</span>phi<span class="token punctuation">)</span><span class="token punctuation">]</span>
+<span class="token punctuation">[</span>         <span class="token operator">-</span><span class="token function">sin</span><span class="token punctuation">(</span>theta<span class="token punctuation">)</span><span class="token punctuation">,</span>                              <span class="token function">cos</span><span class="token punctuation">(</span>theta<span class="token punctuation">)</span><span class="token operator">*</span><span class="token function">sin</span><span class="token punctuation">(</span>phi<span class="token punctuation">)</span><span class="token punctuation">,</span>                              <span class="token function">cos</span><span class="token punctuation">(</span>phi<span class="token punctuation">)</span><span class="token operator">*</span><span class="token function">cos</span><span class="token punctuation">(</span>theta<span class="token punctuation">)</span><span class="token punctuation">]</span>
+ <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
 
                 
             </div>
@@ -602,7 +609,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/06/20/%E6%95%B0%E5%AD%A6-%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B-%E4%BA%8C%E9%98%B6%E5%B8%B8%E7%B3%BB%E6%95%B0%E9%BD%90%E6%AC%A1%E7%BA%BF%E6%80%A7%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B/">http://example.com/2021/06/20/%E6%95%B0%E5%AD%A6-%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B-%E4%BA%8C%E9%98%B6%E5%B8%B8%E7%B3%BB%E6%95%B0%E9%BD%90%E6%AC%A1%E7%BA%BF%E6%80%A7%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B/</a>
+                    <a href="http://example.com/2021/09/14/Math-MATLAB-%E5%AD%97%E7%AC%A6%E5%8F%98%E9%87%8F/">http://example.com/2021/09/14/Math-MATLAB-%E5%AD%97%E7%AC%A6%E5%8F%98%E9%87%8F/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -640,8 +647,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%95%B0%E5%AD%A6/">
-                                    <span class="chip bg-color">数学</span>
+                                <a href="/tags/Matlab/">
+                                    <span class="chip bg-color">Matlab</span>
                                 </a>
                             
                         </div>
@@ -817,13 +824,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/06/21/LeetCode-15-%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C/">
+                <a href="/2021/09/14/Math-MATLAB-CVX/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="15-三数之和">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="CVX教程">
                         
-                        <span class="card-title">15-三数之和</span>
+                        <span class="card-title">CVX教程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -834,14 +841,14 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-21
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-14
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/LeetCode/" class="post-category">
-                                    LeetCode
+                            <a href="/categories/Math/" class="post-category">
+                                    Math
                                 </a>
                             
                             
@@ -851,12 +858,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">
-                        <span class="chip bg-color">双指针</span>
-                    </a>
-                    
-                    <a href="/tags/%E6%95%B0%E7%BB%84/">
-                        <span class="chip bg-color">数组</span>
+                    <a href="/tags/Matlab/">
+                        <span class="chip bg-color">Matlab</span>
                     </a>
                     
                 </div>
@@ -870,13 +873,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/06/20/LeetCode-202-%E5%BF%AB%E4%B9%90%E6%95%B0/">
+                <a href="/2021/09/14/LeetCode-48-%E7%BF%BB%E8%BD%AC%E5%9B%BE%E5%83%8F/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="202-快乐数">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="48-翻转图像">
                         
-                        <span class="card-title">202-快乐数</span>
+                        <span class="card-title">48-翻转图像</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -887,7 +890,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-20
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-14
                             </span>
                         <span class="publish-author">
                             
@@ -904,12 +907,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E5%AD%A6/">
-                        <span class="chip bg-color">数学</span>
-                    </a>
-                    
-                    <a href="/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/">
-                        <span class="chip bg-color">哈希表</span>
+                    <a href="/tags/%E6%A8%A1%E6%8B%9F/">
+                        <span class="chip bg-color">模拟</span>
                     </a>
                     
                 </div>
@@ -1040,13 +1039,6 @@
 
 </main>
 
-
-<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-    MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
-    });
-</script>
 
 
 
