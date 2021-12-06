@@ -593,6 +593,63 @@ variables <span class="token function">x</span><span class="token punctuation">(
 <p><code>cvx_precision default/low/medium/high/best</code></p>
 <p><strong>选择求解器</strong></p>
 <p><code>cvx_solver Mosek</code></p>
+<h3 id="最小二乘问题"><a href="#最小二乘问题" class="headerlink" title="最小二乘问题"></a>最小二乘问题</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">m <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+n <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+A <span class="token operator">=</span> <span class="token function">randn</span><span class="token punctuation">(</span>m<span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+b <span class="token operator">=</span> <span class="token function">randn</span><span class="token punctuation">(</span>m<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+cvx_begin quiet
+    variable <span class="token function">x</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span>   <span class="token comment">// n维变量</span>
+    <span class="token function">minimize</span><span class="token punctuation">(</span> <span class="token function">norm</span><span class="token punctuation">(</span>A<span class="token operator">*</span>x<span class="token operator">-</span>b<span class="token punctuation">)</span> <span class="token punctuation">)</span> <span class="token comment">// 目标函数为二阶范数</span>
+cvx_end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="有约束的最小二乘问题"><a href="#有约束的最小二乘问题" class="headerlink" title="有约束的最小二乘问题"></a>有约束的最小二乘问题</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">m <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+n <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+A <span class="token operator">=</span> <span class="token function">randn</span><span class="token punctuation">(</span>m<span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+b <span class="token operator">=</span> <span class="token function">randn</span><span class="token punctuation">(</span>m<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+bnds <span class="token operator">=</span> <span class="token function">rand</span><span class="token punctuation">(</span>n<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+l <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>bnds<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 每行的最小值组成的列</span>
+u <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>bnds<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 每行的最大值组成的列</span>
+
+cvx_begin quiet
+    variable <span class="token function">x</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span>
+    <span class="token function">minimize</span><span class="token punctuation">(</span> <span class="token function">norm</span><span class="token punctuation">(</span>A<span class="token operator">*</span>x<span class="token operator">-</span>b<span class="token punctuation">)</span> <span class="token punctuation">)</span>
+    subject to
+        l <span class="token operator">&lt;=</span> x <span class="token operator">&lt;=</span> u<span class="token punctuation">;</span>
+cvx_end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>其他范数</strong></p>
+<p>无穷范数</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">cvx_begin quiet
+    variable <span class="token function">x</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span>
+    <span class="token function">minimize</span><span class="token punctuation">(</span> <span class="token function">norm</span><span class="token punctuation">(</span>A<span class="token operator">*</span>x<span class="token operator">-</span>b<span class="token punctuation">,</span> Inf<span class="token punctuation">)</span> <span class="token punctuation">)</span>
+cvx_end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>1阶范数</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">cvx_begin quiet
+    variable <span class="token function">x</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span>
+    <span class="token function">minimize</span><span class="token punctuation">(</span> <span class="token function">norm</span><span class="token punctuation">(</span>A<span class="token operator">*</span>x<span class="token operator">-</span>b<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">)</span>
+cvx_end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>凸函数乘以一个整数或者和凸函数相加，结果还是凸函数</p>
+<script type="math/tex; mode=display">
+\left \| Ax-b \right \|_2 + \gamma \left \| x \right \|_1</script><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">m <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+n <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+A <span class="token operator">=</span> <span class="token function">randn</span><span class="token punctuation">(</span>m<span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+b <span class="token operator">=</span> <span class="token function">randn</span><span class="token punctuation">(</span>m<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+gamma <span class="token operator">=</span> <span class="token function">logspace</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+l2norm <span class="token operator">=</span> <span class="token function">zeros</span><span class="token punctuation">(</span><span class="token function">size</span><span class="token punctuation">(</span>gamma<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+l1norm <span class="token operator">=</span> <span class="token function">zeros</span><span class="token punctuation">(</span><span class="token function">size</span><span class="token punctuation">(</span>gamma<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> k <span class="token operator">=</span> <span class="token number">1</span><span class="token operator">:</span><span class="token function">length</span><span class="token punctuation">(</span>gamma<span class="token punctuation">)</span>     <span class="token comment">// 不同gamma值对目标的影响</span>
+    cvx_begin
+        variable <span class="token function">x</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span>
+        <span class="token function">minimize</span><span class="token punctuation">(</span> <span class="token function">norm</span><span class="token punctuation">(</span>A<span class="token operator">*</span>x<span class="token operator">-</span>b<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">gamma</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span><span class="token operator">*</span><span class="token function">norm</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">)</span>
+    cvx_end
+    <span class="token function">l1norm</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">norm</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">l2norm</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">norm</span><span class="token punctuation">(</span>A<span class="token operator">*</span>x<span class="token operator">-</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="DCP-Disciplined-Convex-Programming"><a href="#DCP-Disciplined-Convex-Programming" class="headerlink" title="DCP(Disciplined Convex Programming)"></a>DCP(Disciplined Convex Programming)</h3><p>不能将$\sqrt{x^2+1}$写成<code>sqrt(x^2+1)</code>，因为开根号是一种非凸运算，但可以将其转化为</p>
+<script type="math/tex; mode=display">
+\left \| [x, 1]\right \|_2</script><p>所以编写为<code>norm([x 1])</code>，这样就可以了</p>
+<blockquote>
+<p>不能直接写<code>1/x</code>，而是需要调用<code>inv_pos(x)</code>，其默认定义域为$\mathbb{R}_{++}$，所以是凸函数，单调递减</p>
+</blockquote>
 
                 
             </div>
