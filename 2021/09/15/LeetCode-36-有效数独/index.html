@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="36-有效数独, kunpeng">
+    <meta name="keywords" content="36/37-有效数独, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>36-有效数独 | kunpeng</title>
+    <title>36/37-有效数独 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">36-有效数独</h1>
+                    <h1 class="description center-align post-title">36/37-有效数独</h1>
                 </div>
             </div>
         </div>
@@ -510,6 +510,10 @@
                 <div class="col s7">
                     
                     <div class="article-tag">
+                        
+                            <a href="/tags/%E5%9B%9E%E6%BA%AF/">
+                                <span class="chip bg-color">回溯</span>
+                            </a>
                         
                             <a href="/tags/%E6%A8%A1%E6%8B%9F/">
                                 <span class="chip bg-color">模拟</span>
@@ -632,6 +636,54 @@ Output<span class="token operator">:</span> <span class="token boolean">true</sp
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<hr>
+<h2 id="LeetCode-37-Sudoku-Solver"><a href="#LeetCode-37-Sudoku-Solver" class="headerlink" title="LeetCode 37. Sudoku Solver"></a>LeetCode 37. Sudoku Solver</h2><p>Write a program to solve a <code>Sudoku</code> puzzle by filling the empty cells.</p>
+<p>A sudoku solution must satisfy all of the following rules:</p>
+<ol>
+<li>Each of the digits 1-9 must occur exactly once in each row.</li>
+<li>Each of the digits 1-9 must occur exactly once in each column.</li>
+<li>Each of the digits 1-9 must occur exactly once in each of the 9 <code>3x3</code> sub-boxes of the grid.<br>The <code>.</code> character indicates empty cells.</li>
+</ol>
+<h3 id="method-回溯"><a href="#method-回溯" class="headerlink" title="method: 回溯"></a>method: 回溯</h3><p>先处理<code>used</code>数组，再回溯填数</p>
+<p>递归需要返回，但又不需要对返回值进行处理，就设置为<code>bool</code>，如果最后返回<code>true</code>，那就一路返回<code>true</code>，不再回溯处理了</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">bool</span> used<span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">27</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">bool</span> <span class="token function">traversal</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span>vector<span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token operator">>></span><span class="token operator">&amp;</span> board<span class="token punctuation">,</span> <span class="token keyword">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">></span> <span class="token number">80</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>    <span class="token comment">// 到末尾说明前面都没问题了</span>
+    <span class="token keyword">int</span> m <span class="token operator">=</span> index <span class="token operator">/</span> <span class="token number">9</span><span class="token punctuation">;</span>          <span class="token comment">// 对应行</span>
+    <span class="token keyword">int</span> n <span class="token operator">=</span> index <span class="token operator">%</span> <span class="token number">9</span><span class="token punctuation">;</span>          <span class="token comment">// 对应列</span>
+    <span class="token keyword">int</span> k <span class="token operator">=</span> m <span class="token operator">/</span> <span class="token number">3</span> <span class="token operator">*</span> <span class="token number">3</span> <span class="token operator">+</span> n <span class="token operator">/</span> <span class="token number">3</span><span class="token punctuation">;</span>  <span class="token comment">// 对应块</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>board<span class="token punctuation">[</span>m<span class="token punctuation">]</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">'.'</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">9</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>used<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>m<span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>used<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>n <span class="token operator">+</span> <span class="token number">9</span><span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>used<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>k <span class="token operator">+</span> <span class="token number">18</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                board<span class="token punctuation">[</span>m<span class="token punctuation">]</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span> <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token string">'1'</span><span class="token punctuation">;</span>
+                used<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>m<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+                used<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>n <span class="token operator">+</span> <span class="token number">9</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+                used<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>k <span class="token operator">+</span> <span class="token number">18</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">traversal</span><span class="token punctuation">(</span>board<span class="token punctuation">,</span> index <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>   <span class="token comment">// 如果下一层是true，就直接返回</span>
+                board<span class="token punctuation">[</span>m<span class="token punctuation">]</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'.'</span><span class="token punctuation">;</span>
+                used<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>m<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+                used<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>n <span class="token operator">+</span> <span class="token number">9</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+                used<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>k <span class="token operator">+</span> <span class="token number">18</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">traversal</span><span class="token punctuation">(</span>board<span class="token punctuation">,</span> index <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>  <span class="token comment">// 不需要处理直接递归到下一层</span>
+    <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token function">solveSudoku</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span>vector<span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token operator">>></span><span class="token operator">&amp;</span> board<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">9</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> <span class="token number">9</span><span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>board<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">'.'</span><span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>
+            <span class="token keyword">int</span> k <span class="token operator">=</span> i <span class="token operator">/</span> <span class="token number">3</span> <span class="token operator">*</span> <span class="token number">3</span> <span class="token operator">+</span> j <span class="token operator">/</span> <span class="token number">3</span><span class="token punctuation">;</span>
+            <span class="token keyword">int</span> num <span class="token operator">=</span> board<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token string">'1'</span><span class="token punctuation">;</span>
+            used<span class="token punctuation">[</span>num<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>       <span class="token comment">// 行</span>
+            used<span class="token punctuation">[</span>num<span class="token punctuation">]</span><span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">9</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>   <span class="token comment">// 列</span>
+            used<span class="token punctuation">[</span>num<span class="token punctuation">]</span><span class="token punctuation">[</span>k <span class="token operator">+</span> <span class="token number">18</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>  <span class="token comment">// 块</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">traversal</span><span class="token punctuation">(</span>board<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -694,6 +746,10 @@ Output<span class="token operator">:</span> <span class="token boolean">true</sp
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
+                            
+                                <a href="/tags/%E5%9B%9E%E6%BA%AF/">
+                                    <span class="chip bg-color">回溯</span>
+                                </a>
                             
                                 <a href="/tags/%E6%A8%A1%E6%8B%9F/">
                                     <span class="chip bg-color">模拟</span>
