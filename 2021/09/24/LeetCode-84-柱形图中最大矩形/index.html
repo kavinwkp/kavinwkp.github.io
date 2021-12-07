@@ -566,12 +566,14 @@
 Output<span class="token operator">:</span> <span class="token number">10</span>
 Explanation<span class="token operator">:</span> The above is a histogram where width of each bar is <span class="token number">1.</span>
 The largest rectangle is shown in the red area<span class="token punctuation">,</span> which has an area <span class="token operator">=</span> <span class="token number">10</span> units<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></p>
-<h2 id="method-单调栈"><a href="#method-单调栈" class="headerlink" title="method: 单调栈"></a>method: 单调栈</h2><p>计算区间中元素个数</p>
+<h3 id="method-单调栈"><a href="#method-单调栈" class="headerlink" title="method: 单调栈"></a>method: 单调栈</h3><p>计算区间中元素个数</p>
+<blockquote>
 <ul>
 <li>左闭右闭<code>[i, j]: i-j+1</code></li>
 <li>左闭右开<code>[i, j): j-i</code></li>
 <li>左开右开<code>(i, j): j-i-1</code></li>
 </ul>
+</blockquote>
 <p>维护一个从栈底到栈顶单调递增的栈，如果<code>heights[i]</code>比栈顶元素大就入栈，小就栈顶元素出栈。<br>计算面积的逻辑，高度就是栈顶元素的高度，宽度的确定：</p>
 <ul>
 <li>如果栈是空的，说明从下标0开始的所有元素都比<code>topIdx</code>大，而<code>heights[i]</code>比他小，所以他能到达的宽度区间就是<code>[0, i)</code>，即为<code>i</code></li>
