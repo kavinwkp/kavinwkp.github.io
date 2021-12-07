@@ -560,7 +560,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="LeetCode-84-Largest-Rectangle-in-Histogram"><a href="#LeetCode-84-Largest-Rectangle-in-Histogram" class="headerlink" title="LeetCode 84. Largest Rectangle in Histogram"></a>LeetCode 84. Largest Rectangle in Histogram</h2><p>Given an array of integers <code>heights</code> representing the histogram’s bar height where the width of each bar is 1, return the area of the largest rectangle in the histogram.</p>
+                <h2 id="LeetCode-84-Largest-Rectangle-in-Histogram"><a href="#LeetCode-84-Largest-Rectangle-in-Histogram" class="headerlink" title="LeetCode 84. Largest Rectangle in Histogram"></a>LeetCode 84. Largest Rectangle in Histogram</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/largest-rectangle-in-histogram/">LeetCode-84</a></p>
+<p>Given an array of integers <code>heights</code> representing the histogram’s bar height where the width of each bar is 1, return the area of the largest rectangle in the histogram.</p>
 <p>Example 1:<br><img src="https://github.com/kavinwkp/blogimage/raw/main/img/LeetCode/84/84.jpg" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> heights <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span>
 Output<span class="token operator">:</span> <span class="token number">10</span>
 Explanation<span class="token operator">:</span> The above is a histogram where width of each bar is <span class="token number">1.</span>
@@ -571,11 +572,16 @@ The largest rectangle is shown in the red area<span class="token punctuation">,<
 <li>左闭右开<code>[i, j): j-i</code></li>
 <li>左开右开<code>(i, j): j-i-1</code></li>
 </ul>
-<p>维护一个从栈底到栈顶单调递增的栈，如果新来的元素比栈顶元素大就入栈，小就栈顶元素出栈。<br>计算面积的逻辑，高度就是栈顶元素的高度，宽度的确定：</p>
+<p>维护一个从栈底到栈顶单调递增的栈，如果<code>heights[i]</code>比栈顶元素大就入栈，小就栈顶元素出栈。<br>计算面积的逻辑，高度就是栈顶元素的高度，宽度的确定：</p>
 <ul>
-<li>如果栈是空的，说明从下标0开始的所有元素都比栈顶元素大，而新来的元素的高度比他小，所以他能到达的宽度区间就是<code>[0, i)</code>，即为<code>i</code></li>
-<li>如果栈非空，那么栈顶元素肯定比他小，并且新来的元素也比他小，所以他能到达的宽度区间是<code>(st.top, i)</code>，即为<code>i-st.top-1</code></li>
+<li>如果栈是空的，说明从下标0开始的所有元素都比<code>topIdx</code>大，而<code>heights[i]</code>比他小，所以他能到达的宽度区间就是<code>[0, i)</code>，即为<code>i</code></li>
+<li>如果栈非空，<code>top</code>肯定比刚弹出的<code>topIdx</code>小，并且<code>heights[i]</code>也比<code>topIdx</code>小，所以他能到达的宽度区间是<code>(st.top, i)</code>，即为<code>i-st.top-1</code></li>
 </ul>
+<p>栈非空有两种情况，为什么不是<code>i-topIdx</code>，因为现在的<code>top</code>和<code>topIdx</code>之间可能还有值，只不过已经弹出了</p>
+<center class="half">
+<img src="https://github.com/kavinwkp/blogimage/raw/main/img/LeetCode/84/84-1.png" width="50%"><img src="https://github.com/kavinwkp/blogimage/raw/main/img/LeetCode/84/84-2.png" width="50%">
+</center>
+
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">largestRectangleArea</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> heights<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     stack<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> st<span class="token punctuation">;</span>
     <span class="token keyword">int</span> res <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
