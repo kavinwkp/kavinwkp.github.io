@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="131-分割回文串, kunpeng">
+    <meta name="keywords" content="279-完全平方数, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>131-分割回文串 | kunpeng</title>
+    <title>279-完全平方数 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">131-分割回文串</h1>
+                    <h1 class="description center-align post-title">279-完全平方数</h1>
                 </div>
             </div>
         </div>
@@ -511,8 +511,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%9B%9E%E6%BA%AF/">
-                                <span class="chip bg-color">回溯</span>
+                            <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                                <span class="chip bg-color">动态规划</span>
                             </a>
                         
                     </div>
@@ -536,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-24
+                    2021-11-29
                 </div>
                 
 
@@ -560,58 +560,26 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="LeetCode-131-Palindrome-Partitioning"><a href="#LeetCode-131-Palindrome-Partitioning" class="headerlink" title="LeetCode 131. Palindrome Partitioning"></a>LeetCode 131. Palindrome Partitioning</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/palindrome-partitioning/">LeetCode-131</a></p>
-<p>Given a string s, partition s such that every substring of the partition is a <code>palindrome</code>. Return all possible palindrome partitioning of s.</p>
-<p>A <code>palindrome</code> string is a string that reads the same backward as forward.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> s <span class="token operator">=</span> <span class="token string">"aab"</span>
-Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token string">"a"</span><span class="token punctuation">,</span><span class="token string">"a"</span><span class="token punctuation">,</span><span class="token string">"b"</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token string">"aa"</span><span class="token punctuation">,</span><span class="token string">"b"</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
-<h3 id="method-回溯"><a href="#method-回溯" class="headerlink" title="method: 回溯"></a>method: 回溯</h3><blockquote>
-<p><code>string.substr(pos, number)</code> 截取从<code>pos</code>开始的<code>number</code>个字符</p>
-</blockquote>
-<p>枚举每一个分割点，如果分割出来的子串<code>string[index, i]</code>是回文，就继续递归，否则这个分割点不行，跳到下一个分割点</p>
-<h4 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span>vector<span class="token operator">&lt;</span>string<span class="token operator">>></span> ret<span class="token punctuation">;</span>
-vector<span class="token operator">&lt;</span>string<span class="token operator">></span> path<span class="token punctuation">;</span>
-<span class="token keyword">bool</span> <span class="token function">isPalindrome</span><span class="token punctuation">(</span>string<span class="token operator">&amp;</span> s<span class="token punctuation">,</span> <span class="token keyword">int</span> i<span class="token punctuation">,</span> <span class="token keyword">int</span> j<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> j<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">!=</span> s<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-        i<span class="token operator">++</span><span class="token punctuation">;</span>
-        j<span class="token operator">--</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span class="token keyword">void</span> <span class="token function">dfs</span><span class="token punctuation">(</span>string<span class="token operator">&amp;</span> s<span class="token punctuation">,</span> <span class="token keyword">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">==</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        ret<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> index<span class="token punctuation">;</span> i <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isPalindrome</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> index<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            path<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">substr</span><span class="token punctuation">(</span>index<span class="token punctuation">,</span> i <span class="token operator">-</span> index <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 左闭右闭</span>
-            <span class="token function">dfs</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            path<span class="token punctuation">.</span><span class="token function">pop_back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <h2 id="LeetCode-279-Perfect-Squares"><a href="#LeetCode-279-Perfect-Squares" class="headerlink" title="LeetCode 279. Perfect Squares"></a>LeetCode 279. Perfect Squares</h2><p>Given an integer <code>n</code>, return the <strong>least number</strong> of <strong>perfect square numbers</strong> that <strong>sum to n</strong>.</p>
+<p>A perfect square is an integer that is the square of an integer; in other words, it is the product of some integer with itself. For example, <code>1</code>, <code>4</code>, <code>9</code>, and <code>16</code> are perfect squares while <code>3</code> and <code>11</code> are not.</p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> n <span class="token operator">=</span> <span class="token number">12</span>
+Output<span class="token operator">:</span> <span class="token number">3</span>
+Explanation<span class="token operator">:</span> <span class="token number">12</span> <span class="token operator">=</span> <span class="token number">4</span> <span class="token operator">+</span> <span class="token number">4</span> <span class="token operator">+</span> <span class="token number">4.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><br>Example 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> n <span class="token operator">=</span> <span class="token number">13</span>
+Output<span class="token operator">:</span> <span class="token number">2</span>
+Explanation<span class="token operator">:</span> <span class="token number">13</span> <span class="token operator">=</span> <span class="token number">4</span> <span class="token operator">+</span> <span class="token number">9.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
+<h3 id="method"><a href="#method" class="headerlink" title="method"></a>method</h3><p><code>dp[i]</code>：组成<code>dp[i]</code>需要的最少的完全平方数</p>
+<p>因为要最小，所以初始化为<code>INT_MAX</code><br>要确保是完全平方数才能<code>min</code>，所以<code>j*j&lt;=i</code>，递推公式也是要减去完全平方数，因为是数量，所以拆成<code>dp[i] = j + dp[i-j*j]</code>之后，组成dp<code>[i]</code>的完全平方数要<code>+1</code></p>
+<p>递推公式：<code>dp[i] = min(dp[i], dp[i-j*j])</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">numSquares</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">dp</span><span class="token punctuation">(</span>n <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> INT_MAX<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    dp<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> j <span class="token operator">*</span> j <span class="token operator">&lt;=</span> i<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> dp<span class="token punctuation">[</span>i <span class="token operator">-</span> j <span class="token operator">*</span> j<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span>
-        <span class="token keyword">else</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>  <span class="token comment">// 如果不是回文，就跳到下一个分割点</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-vector<span class="token operator">&lt;</span>vector<span class="token operator">&lt;</span>string<span class="token operator">>></span> <span class="token function">partition</span><span class="token punctuation">(</span>string s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">dfs</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-    <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h4><p>字符串可以直接截取，判断回文可以直接反转</p>
-<p><code>s[:i]</code>意思是截取<code>s[0]</code>到<code>s[i-1]</code><br><code>s[i-1::-1]</code>意思是截取<code>s[0]</code>到<code>s[i-1]</code>并反转</p>
-<pre class="line-numbers language-py" data-language="py"><code class="language-py">def partition(self, s: str) -&gt; List[List[str]]:
-    def dfs(s, path, res):
-        if not s:
-            res.append(path[:]) # 浅拷贝就够了
-            return
-        for i in range(1, len(s) + 1):
-            if s[:i] &#x3D;&#x3D; s[i-1::-1]: # 是否回文
-                path.append(s[:i])
-                dfs(s[i:], path, res)
-                path.pop()
-    res &#x3D; []
-    dfs(s, [], res)
-    return res<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">return</span> dp<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -637,7 +605,7 @@ vector<span class="token operator">&lt;</span>vector<span class="token operator"
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/06/24/LeetCode-131-%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2/">http://example.com/2021/06/24/LeetCode-131-%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2/</a>
+                    <a href="http://example.com/2021/11/29/LeetCode-279-%E5%AE%8C%E5%85%A8%E5%B9%B3%E6%96%B9%E6%95%B0/">http://example.com/2021/11/29/LeetCode-279-%E5%AE%8C%E5%85%A8%E5%B9%B3%E6%96%B9%E6%95%B0/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -675,8 +643,8 @@ vector<span class="token operator">&lt;</span>vector<span class="token operator"
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%9B%9E%E6%BA%AF/">
-                                    <span class="chip bg-color">回溯</span>
+                                <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                                    <span class="chip bg-color">动态规划</span>
                                 </a>
                             
                         </div>
@@ -852,13 +820,13 @@ vector<span class="token operator">&lt;</span>vector<span class="token operator"
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/06/24/LeetCode-94-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/">
+                <a href="/2021/11/30/LeetCode-231-2%E7%9A%84%E5%B9%82/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="94/144/145-二叉树的遍历">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="231-2的幂">
                         
-                        <span class="card-title">94/144/145-二叉树的遍历</span>
+                        <span class="card-title">231-2的幂</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -869,7 +837,7 @@ vector<span class="token operator">&lt;</span>vector<span class="token operator"
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-24
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-30
                         </span>
                         <span class="publish-author">
                             
@@ -886,8 +854,8 @@ vector<span class="token operator">&lt;</span>vector<span class="token operator"
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">
-                        <span class="chip bg-color">二叉树</span>
+                    <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/">
+                        <span class="chip bg-color">位运算</span>
                     </a>
                     
                 </div>
@@ -901,13 +869,13 @@ vector<span class="token operator">&lt;</span>vector<span class="token operator"
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/06/23/LeetCode-39-%E7%BB%84%E5%90%88%E6%80%BB%E5%92%8C/">
+                <a href="/2021/11/29/LeetCode-494-%E7%9B%AE%E6%A0%87%E5%92%8C/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="39/40/216-组合总和">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="目标和">
                         
-                        <span class="card-title">39/40/216-组合总和</span>
+                        <span class="card-title">目标和</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -918,7 +886,7 @@ vector<span class="token operator">&lt;</span>vector<span class="token operator"
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-23
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-29
                             </span>
                         <span class="publish-author">
                             
@@ -935,8 +903,8 @@ vector<span class="token operator">&lt;</span>vector<span class="token operator"
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%9B%9E%E6%BA%AF/">
-                        <span class="chip bg-color">回溯</span>
+                    <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                        <span class="chip bg-color">动态规划</span>
                     </a>
                     
                 </div>
