@@ -577,6 +577,12 @@ The largest rectangle is shown in the red area<span class="token punctuation">,<
 <p>维护一个从栈底到栈顶单调递增的栈，如果<code>heights[i]</code>比栈顶元素大就入栈，小就栈顶元素出栈。<br>计算面积的逻辑，高度就是栈顶元素的高度，宽度的确定：</p>
 <ul>
 <li>如果栈是空的，说明从下标0开始的所有元素都比<code>topIdx</code>大，而<code>heights[i]</code>比他小，所以他能到达的宽度区间就是<code>[0, i)</code>，即为<code>i</code></li>
+</ul>
+<center>
+<img src="https://github.com/kavinwkp/blogimage/raw/main/img/LeetCode/84/84.png" width="60%">
+</center>
+
+<ul>
 <li>如果栈非空，<code>top</code>肯定比刚弹出的<code>topIdx</code>小，并且<code>heights[i]</code>也比<code>topIdx</code>小，所以他能到达的宽度区间是<code>(st.top, i)</code>，即为<code>i-st.top-1</code></li>
 </ul>
 <p>栈非空有两种情况，为什么不是<code>i-topIdx</code>，因为现在的<code>top</code>和<code>topIdx</code>之间可能还有值，只不过已经弹出了</p>
