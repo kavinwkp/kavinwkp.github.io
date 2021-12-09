@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="Eigen_求秩, kunpeng">
+    <meta name="keywords" content="3.3-栈与数据传送指令, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Eigen_求秩 | kunpeng</title>
+    <title>3.3-栈与数据传送指令 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Eigen_求秩</h1>
+                    <h1 class="description center-align post-title">3.3-栈与数据传送指令</h1>
                 </div>
             </div>
         </div>
@@ -511,14 +511,23 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Eigen/">
-                                <span class="chip bg-color">Eigen</span>
+                            <a href="/tags/CSAPP/">
+                                <span class="chip bg-color">CSAPP</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/CS/" class="post-category">
+                                CS
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -527,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-21
+                    2021-11-20
                 </div>
                 
 
@@ -551,33 +560,58 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <!-- toc -->
-<h2 id="rank-基本用法"><a href="#rank-基本用法" class="headerlink" title="rank()基本用法"></a><code>rank()</code>基本用法</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">JacobiSVD<span class="token operator">&lt;</span>MatrixXd<span class="token operator">></span> <span class="token function">svd</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">;</span>
-svd<span class="token punctuation">.</span><span class="token function">rank</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cstring></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Eigen/Dense"</span></span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> Eigen<span class="token punctuation">;</span>
+                <h2 id="栈与数据传送指令"><a href="#栈与数据传送指令" class="headerlink" title="栈与数据传送指令"></a>栈与数据传送指令</h2><p>在程序的执行过程中，需要在CPU和内存之间进行频繁的数据存取，例如，CPU执行加法<code>c=a+b</code>，首先通过执行数据传送指令将<code>a</code>和<code>b</code>的值从内存读到寄存器内</p>
+<p>寄存器就是CPU内的一种数据存储部件，只不过容量比较小，比如，寄存器<code>rax</code>是<code>64Bit</code>，即<code>8Byte</code>，如果变量<code>a</code>是<code>long</code>类型，需要占用8个字节，因此，<code>rax</code>全部的数据位都用来保存变量<code>a</code>；如果变量<code>a</code>是<code>int</code>类型，就只需要低32位来存储，如果是<code>short</code>类型，则只需要低16位</p>
+<blockquote>
+<p>对于寄存器<code>rax</code>，如果使用全部的64位，用<code>%rax</code>表示，32位用<code>%eax</code>表示，低16位用<code>%ax</code>表示，低8位用<code>%al</code>表示</p>
+</blockquote>
+<p>计算完结果后，再通过数据传送指令将结果保存到内存</p>
+<h3 id="代码示例"><a href="#代码示例" class="headerlink" title="　代码示例"></a>　代码示例</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">long</span> <span class="token function">exchange</span><span class="token punctuation">(</span><span class="token keyword">long</span> <span class="token operator">*</span>xp<span class="token punctuation">,</span> <span class="token keyword">long</span> y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">long</span> x <span class="token operator">=</span> <span class="token operator">*</span>xp<span class="token punctuation">;</span>
+    <span class="token operator">*</span>xp <span class="token operator">=</span> y<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
 <span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">&#123;</span>
-    MatrixXd <span class="token function">a</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    a <span class="token operator">&lt;&lt;</span> <span class="token number">1</span><span class="token punctuation">,</span>  <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span>
-         <span class="token number">3</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span>
-         <span class="token number">0</span><span class="token punctuation">,</span>  <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">long</span> a <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+    <span class="token keyword">long</span> b <span class="token operator">=</span> <span class="token function">exchange</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>a<span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a = %ld, b = %ld\n"</span><span class="token punctuation">,</span> a<span class="token punctuation">,</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+a <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">,</span> b <span class="token operator">=</span> <span class="token number">4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这个程序会将变量<code>a</code>的值替换成3，变量<code>b</code>保存原来<code>a</code>的值4</p>
+<p><code>exchange</code>函数的汇编代码，包括两条数据传送指令和一条返回指令</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">xp <span class="token operator">-></span> <span class="token operator">%</span>rdi<span class="token punctuation">,</span> y <span class="token operator">-></span> <span class="token operator">%</span>rsi
+exchange<span class="token operator">:</span>
+    <span class="token function">movq</span>    <span class="token punctuation">(</span><span class="token operator">%</span>rdi<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">%</span>rax    <span class="token comment">// rdi指向的地址的值复制到rax</span>
+    movq    <span class="token operator">%</span>rsi<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token operator">%</span>rdi<span class="token punctuation">)</span>    <span class="token comment">// rsi的值复制到rdi指向的地址处</span>
+    ret<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>寄存器<code>rdi</code>和<code>rsi</code>分别用来保存函数传递的第一个参数和第二个参数，因此<code>rdi</code>中保存了<code>xp</code>的值，<code>rsi</code>中保存了变量<code>y</code>的值</p>
+<p>第一条<code>mov</code>指令从内存中读取数值到寄存器，内存地址保存在寄存器<code>rdi</code>中，目的操作数是寄存器<code>rax</code>，因为要返回<code>x</code>的值，所以直接放到<code>rax</code>里面</p>
+<p>第二条<code>mov</code>指令将变量<code>y</code>的值写到内存里，变量<code>y</code>存储在<code>rsi</code>中，内存地址保存在<code>rdi</code>中，也就是<code>xp</code>指向的地址</p>
+<h3 id="程序栈"><a href="#程序栈" class="headerlink" title="程序栈"></a>程序栈</h3><p>要将寄存器<code>rax</code>的值<code>0x123</code>放入栈中，可以使用<code>pushq</code>指令将数据压入栈中，该指令执行的过程可以分解为两步</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">pushq   <span class="token operator">%</span>rax    <span class="token comment">// 将rax的值压栈</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>首先指向栈顶的寄存器<code>rsp</code>进行减法操作，因为栈是从高地址指向低地址，例如此时<code>rsp</code>的值为<code>0x108</code>，rsp值减8之后指向<code>0x100</code>，然后将需要保存的数据复制到新的栈顶位置，此时地址<code>0x100</code>处将保存寄存器<code>rax</code>的数值<code>0x123</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">subq    $<span class="token number">8</span><span class="token punctuation">,</span> <span class="token operator">%</span>rsp        <span class="token comment">// rsp的值减8</span>
+movq    <span class="token operator">%</span>rax<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token operator">%</span>rsp<span class="token punctuation">)</span>    <span class="token comment">// 保存到rsp指向的地址处</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>区别在于<code>pushq</code>指令只要1个字节，而两条指令需要8个字节</p>
+<blockquote>
+<p><code>pushq</code>的本质是将数据写入到内存</p>
+</blockquote>
+<p>与之对应的<code>pop</code>指令就是从内存中读取数据，并且修改栈顶指针</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">popq    <span class="token operator">%</span>rbx<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这条指令将栈顶保存的值复制到寄存器<code>rbx</code>中，也可以分解为两步：</p>
+<blockquote>
+<ul>
+<li>首先从栈顶读出数据，复制到寄存器<code>rbx</code></li>
+<li>然后将栈顶指针加8</li>
+</ul>
+</blockquote>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">movq</span>    <span class="token punctuation">(</span><span class="token operator">%</span>rsp<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">%</span>rbx
+addq    $<span class="token number">8</span><span class="token punctuation">,</span> <span class="token operator">%</span>rsp<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>注意，此时地址<code>0x100</code>内保存的数据<code>0x123</code>依然存在，知道下次<code>push</code>操作，才会被覆盖</p>
 
-    MatrixXd <span class="token function">b</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    b <span class="token operator">&lt;&lt;</span> <span class="token number">2</span><span class="token punctuation">,</span>
-        <span class="token number">1</span><span class="token punctuation">,</span>
-        <span class="token number">1</span><span class="token punctuation">;</span>
-    MatrixXd m <span class="token operator">=</span> <span class="token class-name">MatrixXd</span><span class="token operator">::</span><span class="token function">Zero</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    m<span class="token punctuation">.</span><span class="token function">col</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">=</span> b<span class="token punctuation">;</span>
-    m<span class="token punctuation">.</span><span class="token function">col</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">=</span> a <span class="token operator">*</span> b<span class="token punctuation">;</span>
-    m<span class="token punctuation">.</span><span class="token function">col</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">=</span> a <span class="token operator">*</span> a <span class="token operator">*</span> b<span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> m <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    JacobiSVD<span class="token operator">&lt;</span>MatrixXd<span class="token operator">></span> <span class="token function">svd</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> svd<span class="token punctuation">.</span><span class="token function">rank</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -603,7 +637,7 @@ svd<span class="token punctuation">.</span><span class="token function">rank</sp
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/03/21/Eigen-Eigen-%E6%B1%82%E7%A7%A9/">http://example.com/2021/03/21/Eigen-Eigen-%E6%B1%82%E7%A7%A9/</a>
+                    <a href="http://example.com/2021/11/20/CS-CSAPP-3-3-%E6%A0%88%E4%B8%8E%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%81%E6%8C%87%E4%BB%A4/">http://example.com/2021/11/20/CS-CSAPP-3-3-%E6%A0%88%E4%B8%8E%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%81%E6%8C%87%E4%BB%A4/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -641,8 +675,8 @@ svd<span class="token punctuation">.</span><span class="token function">rank</sp
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Eigen/">
-                                    <span class="chip bg-color">Eigen</span>
+                                <a href="/tags/CSAPP/">
+                                    <span class="chip bg-color">CSAPP</span>
                                 </a>
                             
                         </div>
@@ -818,13 +852,13 @@ svd<span class="token punctuation">.</span><span class="token function">rank</sp
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/21/Eigen-Eigen-%E7%9F%A9%E9%98%B5%E5%B1%9E%E6%80%A7/">
+                <a href="/2021/11/29/LeetCode-509-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Eigen_矩阵属性">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="509-斐波那契数">
                         
-                        <span class="card-title">Eigen_矩阵属性</span>
+                        <span class="card-title">509-斐波那契数</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -835,12 +869,16 @@ svd<span class="token punctuation">.</span><span class="token function">rank</sp
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-03-21
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-29
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kunpeng
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -848,8 +886,8 @@ svd<span class="token punctuation">.</span><span class="token function">rank</sp
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Eigen/">
-                        <span class="chip bg-color">Eigen</span>
+                    <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                        <span class="chip bg-color">动态规划</span>
                     </a>
                     
                 </div>
@@ -863,13 +901,13 @@ svd<span class="token punctuation">.</span><span class="token function">rank</sp
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/21/Eigen-Eigen-%E8%BF%90%E7%AE%97%E7%AC%A6/">
+                <a href="/2021/11/20/CS-CSAPP-3-2-%E5%AF%84%E5%AD%98%E5%99%A8%E4%B8%8E%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%81%E6%8C%87%E4%BB%A4/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="Eigen_运算符">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="3.2-寄存器与数据传送指令">
                         
-                        <span class="card-title">Eigen_运算符</span>
+                        <span class="card-title">3.2-寄存器与数据传送指令</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -880,12 +918,16 @@ svd<span class="token punctuation">.</span><span class="token function">rank</sp
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-20
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kunpeng
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CS/" class="post-category">
+                                    CS
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -893,8 +935,8 @@ svd<span class="token punctuation">.</span><span class="token function">rank</sp
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Eigen/">
-                        <span class="chip bg-color">Eigen</span>
+                    <a href="/tags/CSAPP/">
+                        <span class="chip bg-color">CSAPP</span>
                     </a>
                     
                 </div>
