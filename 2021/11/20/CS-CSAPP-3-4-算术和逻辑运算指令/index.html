@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="50-Pow, kunpeng">
+    <meta name="keywords" content="3.4-算术和逻辑运算指令, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>50-Pow | kunpeng</title>
+    <title>3.4-算术和逻辑运算指令 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -392,7 +392,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">50-Pow</h1>
+                    <h1 class="description center-align post-title">3.4-算术和逻辑运算指令</h1>
                 </div>
             </div>
         </div>
@@ -511,8 +511,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2/">
-                                <span class="chip bg-color">记忆化搜索</span>
+                            <a href="/tags/CSAPP/">
+                                <span class="chip bg-color">CSAPP</span>
                             </a>
                         
                     </div>
@@ -523,8 +523,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/LeetCode/" class="post-category">
-                                LeetCode
+                            <a href="/categories/CS/" class="post-category">
+                                CS
                             </a>
                         
                     </div>
@@ -536,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-23
+                    2021-11-20
                 </div>
                 
 
@@ -560,24 +560,65 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="LeetCode-50-Pow"><a href="#LeetCode-50-Pow" class="headerlink" title="LeetCode 50. Pow"></a>LeetCode 50. Pow</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/powx-n/">LeetCode</a></p>
-<p>Implement <code>pow(x, n)</code>, which calculates <code>x</code> raised to the power <code>n</code>.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> x <span class="token operator">=</span> <span class="token number">2.00000</span><span class="token punctuation">,</span> n <span class="token operator">=</span> <span class="token number">10</span>
-Output<span class="token operator">:</span> <span class="token number">1024.00000</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>Example 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> x <span class="token operator">=</span> <span class="token number">2.10000</span><span class="token punctuation">,</span> n <span class="token operator">=</span> <span class="token number">3</span>
-Output<span class="token operator">:</span> <span class="token number">9.26100</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>Example 3:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> x <span class="token operator">=</span> <span class="token number">2.00000</span><span class="token punctuation">,</span> n <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">2</span>
-Output<span class="token operator">:</span> <span class="token number">0.25000</span>
-Explanation<span class="token operator">:</span> <span class="token number">2</span><span class="token operator">^</span><span class="token operator">-</span><span class="token number">2</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token operator">/</span><span class="token number">2</span><span class="token operator">^</span><span class="token number">2</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token operator">/</span><span class="token number">4</span> <span class="token operator">=</span> <span class="token number">0.25</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
-<h3 id="method-递归"><a href="#method-递归" class="headerlink" title="method: 递归"></a>method: 递归</h3><p>在算<code>Pow(x, n/2)</code>的时候可以把结果记录下来，后面就不用再算了，因为两颗子树是完全一样的，只算一边就可以了<br>注意<code>n &lt; 0</code>的情况，要变成倒数</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">double</span> <span class="token function">myPow</span><span class="token punctuation">(</span><span class="token keyword">double</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">1.0</span><span class="token punctuation">;</span>
-    <span class="token keyword">double</span> tmp <span class="token operator">=</span> <span class="token function">myPow</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> n <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">%</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>        <span class="token comment">// 奇数</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> tmp <span class="token operator">*</span> tmp<span class="token punctuation">;</span>
-        <span class="token keyword">else</span> <span class="token keyword">return</span> tmp <span class="token operator">/</span> x <span class="token operator">*</span> tmp<span class="token punctuation">;</span>  <span class="token comment">// 负指数要倒数</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> tmp <span class="token operator">*</span> tmp <span class="token operator">*</span> x<span class="token punctuation">;</span>   <span class="token comment">// 偶数，正负一样</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>时间复杂度：$O(logn)$<br><code>n &lt; 0</code>应该是<code>tmp * tmp * (1/x)</code>，为了防止<code>tmp * tmp</code>溢出，把除法提到前面</p>
+                <h2 id="算术和逻辑运算指令"><a href="#算术和逻辑运算指令" class="headerlink" title="算术和逻辑运算指令"></a>算术和逻辑运算指令</h2><h3 id="leaq指令"><a href="#leaq指令" class="headerlink" title="leaq指令"></a>leaq指令</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">leaq S<span class="token punctuation">,</span> D     <span class="token comment">// load effective address</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>q表示地址长度是64位</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">leaq <span class="token number">7</span><span class="token punctuation">(</span><span class="token operator">%</span>rdx<span class="token punctuation">,</span> <span class="token operator">%</span>rdx<span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">%</span>rax  <span class="token comment">// 地址复制到rax中</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>有效地址的计算方式</p>
+<script type="math/tex; mode=display">
+Imm(r_b, r_i, s) = Imm + R[r_b] + R[r_i] \cdot s</script><p>假设寄存器rdx内保存的数值是x，则有效地址为<code>7 + %rdx + %rdx * 4 = 5x + 7</code></p>
+<p><code>leaq</code>指令会将有效地址值<code>5x+7</code>直接写入到目的寄存器<code>rax</code></p>
+<h3 id="一元操作指令"><a href="#一元操作指令" class="headerlink" title="　一元操作指令"></a>　一元操作指令</h3><p>只要一个操作数，可以是寄存器，也可以是内存地址</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">INC D   <span class="token comment">// Increment 加一</span>
+DEC D   <span class="token comment">// Decrement 减一</span>
+NEG D   <span class="token comment">// Negate 取负</span>
+NOT D   <span class="token comment">// Complement 取补</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="二元操作指令"><a href="#二元操作指令" class="headerlink" title="二元操作指令"></a>二元操作指令</h3><p>第一个是源操作数可以是立即数、寄存器或内存地址<br>第二个既是源操作数，也是目的操作数，可以使寄存器或内存地址，但不能是立即数</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ADD S<span class="token punctuation">,</span>D     <span class="token comment">// D ← D + S 加</span>
+SUB S<span class="token punctuation">,</span>D     <span class="token comment">// D ← D - S 减</span>
+IMUL S<span class="token punctuation">,</span>D    <span class="token comment">// D ← D * S 乘</span>
+XOR S<span class="token punctuation">,</span>D     <span class="token comment">// D ← D ^ S 异或</span>
+OR S<span class="token punctuation">,</span>D      <span class="token comment">// D ← D | S 或</span>
+AND S<span class="token punctuation">,</span>D     <span class="token comment">// D ← D &amp; S 与</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>举例</strong></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">地址<span class="token operator">:</span>   <span class="token number">0x100</span>  <span class="token operator">|</span> <span class="token number">0x108</span>  <span class="token operator">|</span> <span class="token number">0x110</span>  <span class="token operator">|</span> <span class="token number">0x118</span>
+内容<span class="token operator">:</span>    <span class="token number">0xFF</span>  <span class="token operator">|</span>  <span class="token number">0xAB</span>  <span class="token operator">|</span>  <span class="token number">0x13</span>  <span class="token operator">|</span>  <span class="token number">0x11</span>
+
+<span class="token operator">%</span>rax <span class="token operator">-></span> <span class="token number">0x100</span>
+<span class="token operator">%</span>rcx <span class="token operator">-></span> <span class="token number">0x1</span>
+<span class="token operator">%</span>rdx <span class="token operator">-></span> <span class="token number">0x3</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">addq <span class="token operator">%</span>rcx<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token operator">%</span>rax<span class="token punctuation">)</span>    <span class="token comment">// Mem[0x100] = Men[0x100] + R[%rcx]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这条加法指令将内存地址<code>0x100</code>内的数据与寄存器<code>rcx</code>相加，二者之和再存储到内存地址<code>0x100</code>处，该指令执行完后，内存地址<code>0x100</code>处所存储的数据由0xFF变成<code>0x100</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">subq <span class="token operator">%</span>rdx<span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">(</span><span class="token operator">%</span>rax<span class="token punctuation">)</span>   <span class="token comment">// Mem[0x108] = Mem[0x108] - R[%rdx]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>减法指令将内存地址<code>0x108</code>内的数据减去寄存器<code>rdx</code>内的数据，二者之差存储到内存地址<code>0x108</code>处，该指令执行完后，内存地址<code>0x108</code>处所存储的数据由<code>0xAB</code>变成<code>0xA8</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">incq <span class="token number">16</span><span class="token punctuation">(</span><span class="token operator">%</span>rax<span class="token punctuation">)</span>    <span class="token comment">// Mem[0x110] = Mem[0x110] + 1</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>加一指令将内存地址<code>0x110</code>内的数据加1，由<code>0x13</code>变成<code>0x14</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">subq <span class="token operator">%</span>rdx<span class="token punctuation">,</span> <span class="token operator">%</span>rax  <span class="token comment">// R[%rax] = R[%rax] - R[%rdx]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>减法指令将寄存器<code>rax</code>内的值减去寄存器<code>rdx</code>内的值，所以由<code>0x100</code>变成<code>0xFD</code></p>
+<h3 id="移位操作指令"><a href="#移位操作指令" class="headerlink" title="移位操作指令"></a>移位操作指令</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">SAL k<span class="token punctuation">,</span> D    <span class="token comment">// D ← D &lt;&lt; k Left Shift 左移</span>
+SHL k<span class="token punctuation">,</span> D    <span class="token comment">// D ← D &lt;&lt; k Left Shift 左移，等同于SAL</span>
+SAR k<span class="token punctuation">,</span> D    <span class="token comment">// D ← D >> k(A) Arithmetic right shift 算术右移</span>
+SHR k<span class="token punctuation">,</span> D    <span class="token comment">// D ← D >> k(L) Logical right shift 逻辑右移</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<ul>
+<li>算术右移填符号位，逻辑右移填0</li>
+</ul>
+</blockquote>
+<p>对于移位量<code>k</code>，可以是立即数，或者是放在寄存器<code>cl</code>中的数</p>
+<blockquote>
+<ul>
+<li>移位指令只能用寄存器<code>cl</code>作为操作数</li>
+</ul>
+</blockquote>
+<p>对于<code>salb</code>，目的操作数数8位，所以移位量由<code>cl</code>的低3位来决定<br>对于<code>salw</code>，目的操作数数16位，所以移位量由<code>cl</code>的低4位来决定<br>对于<code>salw</code>，目的操作数数16位，所以移位量由<code>cl</code>的低4位来决定<br>对于<code>salq</code>，目的操作数数64位，所以移位量由<code>cl</code>的低6位来决定</p>
+<p><strong>举例</strong></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">long</span> t2 <span class="token operator">=</span> z <span class="token operator">*</span> <span class="token number">48</span><span class="token punctuation">;</span>
+
+汇编指令
+
+<span class="token function">leaq</span> <span class="token punctuation">(</span><span class="token operator">%</span>rdx<span class="token punctuation">,</span> <span class="token operator">%</span>rdx<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">%</span>rax   <span class="token comment">// R[%rdx] + R[%rdx]*2 = 3 * z</span>
+salq $<span class="token number">4</span><span class="token punctuation">,</span> <span class="token operator">%</span>rax    <span class="token comment">// 2^4 * R[%rax] = 16 * (3 * z) = 48 * z</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>乘法计算被分成两步</p>
+<p>第一步先计算<code>3 * z</code>，结果保存到寄存器<code>rax</code>中，第二步将寄存器<code>rax</code>左移4位，等价于乘以16，这样就通过一条<code>leaq</code>和一条左移指令实现了乘法操作</p>
 
                 
             </div>
@@ -604,7 +645,7 @@ Explanation<span class="token operator">:</span> <span class="token number">2</s
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/06/23/LeetCode-50-Pow/">http://example.com/2021/06/23/LeetCode-50-Pow/</a>
+                    <a href="http://example.com/2021/11/20/CS-CSAPP-3-4-%E7%AE%97%E6%9C%AF%E5%92%8C%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E6%8C%87%E4%BB%A4/">http://example.com/2021/11/20/CS-CSAPP-3-4-%E7%AE%97%E6%9C%AF%E5%92%8C%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E6%8C%87%E4%BB%A4/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -642,8 +683,8 @@ Explanation<span class="token operator">:</span> <span class="token number">2</s
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2/">
-                                    <span class="chip bg-color">记忆化搜索</span>
+                                <a href="/tags/CSAPP/">
+                                    <span class="chip bg-color">CSAPP</span>
                                 </a>
                             
                         </div>
@@ -819,13 +860,13 @@ Explanation<span class="token operator">:</span> <span class="token number">2</s
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/06/23/LeetCode-77-%E7%BB%84%E5%90%88/">
+                <a href="/2021/11/29/LeetCode-509-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="77-组合">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="509-斐波那契数">
                         
-                        <span class="card-title">77-组合</span>
+                        <span class="card-title">509-斐波那契数</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -836,7 +877,7 @@ Explanation<span class="token operator">:</span> <span class="token number">2</s
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-23
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-11-29
                         </span>
                         <span class="publish-author">
                             
@@ -853,8 +894,8 @@ Explanation<span class="token operator">:</span> <span class="token number">2</s
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%9B%9E%E6%BA%AF/">
-                        <span class="chip bg-color">回溯</span>
+                    <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                        <span class="chip bg-color">动态规划</span>
                     </a>
                     
                 </div>
@@ -868,13 +909,13 @@ Explanation<span class="token operator">:</span> <span class="token number">2</s
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/06/22/LeetCode-18-%E5%9B%9B%E6%95%B0%E4%B9%8B%E5%92%8C/">
+                <a href="/2021/11/20/CS-CSAPP-3-3-%E6%A0%88%E4%B8%8E%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%81%E6%8C%87%E4%BB%A4/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="18/454-四数之和">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="3.3-栈与数据传送指令">
                         
-                        <span class="card-title">18/454-四数之和</span>
+                        <span class="card-title">3.3-栈与数据传送指令</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -885,14 +926,14 @@ Explanation<span class="token operator">:</span> <span class="token number">2</s
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-22
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-11-20
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/LeetCode/" class="post-category">
-                                    LeetCode
+                            <a href="/categories/CS/" class="post-category">
+                                    CS
                                 </a>
                             
                             
@@ -902,12 +943,8 @@ Explanation<span class="token operator">:</span> <span class="token number">2</s
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">
-                        <span class="chip bg-color">双指针</span>
-                    </a>
-                    
-                    <a href="/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/">
-                        <span class="chip bg-color">哈希表</span>
+                    <a href="/tags/CSAPP/">
+                        <span class="chip bg-color">CSAPP</span>
                     </a>
                     
                 </div>
@@ -1038,13 +1075,6 @@ Explanation<span class="token operator">:</span> <span class="token number">2</s
 
 </main>
 
-
-<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-    MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
-    });
-</script>
 
 
 

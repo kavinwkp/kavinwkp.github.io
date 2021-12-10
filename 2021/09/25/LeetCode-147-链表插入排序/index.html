@@ -560,10 +560,17 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="LeetCode-147-Insertion-Sort-List"><a href="#LeetCode-147-Insertion-Sort-List" class="headerlink" title="LeetCode 147. Insertion Sort List"></a>LeetCode 147. Insertion Sort List</h2><p>Given the <code>head</code> of a singly linked list, <code>sort</code> the list using <code>insertion sort</code>, and return the sorted list’s head.</p>
+                <h2 id="LeetCode-147-Insertion-Sort-List"><a href="#LeetCode-147-Insertion-Sort-List" class="headerlink" title="LeetCode 147. Insertion Sort List"></a>LeetCode 147. Insertion Sort List</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/insertion-sort-list/">LeetCode-147</a></p>
+<p>Given the <code>head</code> of a singly linked list, <code>sort</code> the list using <code>insertion sort</code>, and return the sorted list’s head.</p>
 <p><img src="https://github.com/kavinwkp/blogimage/raw/main/img/LeetCode/147/147.jpg" alt><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> head <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span>
 Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
-<h2 id="method"><a href="#method" class="headerlink" title="method:"></a>method:</h2><p><code>head</code>指向要插入的元素，<code>pre</code>遍历已排序的链表，找到第一个大于<code>head-&gt;val</code>的元素或者最末尾的元素，插入<code>head</code></p>
+<h3 id="method"><a href="#method" class="headerlink" title="method:"></a>method:</h3><p><img src="https://github.com/kavinwkp/blogimage/raw/main/img/LeetCode/147/147.png" alt></p>
+<p><code>head</code>指向要插入的元素，<code>pre</code>遍历已排序的链表，找到第一个大于<code>head-&gt;val</code>的元素或者最末尾的元素，插入<code>head</code></p>
+<p>插入分两步：</p>
+<ol>
+<li><code>head</code>的<code>next</code>指向<code>pre</code>的<code>next</code></li>
+<li><code>pre</code>的<code>next</code>指向<code>head</code></li>
+</ol>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode<span class="token operator">*</span> <span class="token function">insertionSortList</span><span class="token punctuation">(</span>ListNode<span class="token operator">*</span> head<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     ListNode <span class="token operator">*</span>dummy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">ListNode</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     ListNode <span class="token operator">*</span>pre <span class="token operator">=</span> dummy<span class="token punctuation">;</span>
@@ -571,10 +578,10 @@ Output<span class="token operator">:</span> <span class="token punctuation">[</s
         ListNode <span class="token operator">*</span>tmp <span class="token operator">=</span> head<span class="token operator">-></span>next<span class="token punctuation">;</span>
         <span class="token keyword">while</span> <span class="token punctuation">(</span>pre<span class="token operator">-></span>next <span class="token operator">&amp;&amp;</span> pre<span class="token operator">-></span>next<span class="token operator">-></span>val <span class="token operator">&lt;</span> head<span class="token operator">-></span>val<span class="token punctuation">)</span> 
             pre <span class="token operator">=</span> pre<span class="token operator">-></span>next<span class="token punctuation">;</span>
-        head<span class="token operator">-></span>next <span class="token operator">=</span> pre<span class="token operator">-></span>next<span class="token punctuation">;</span>
-        pre<span class="token operator">-></span>next <span class="token operator">=</span> head<span class="token punctuation">;</span>
-        head <span class="token operator">=</span> tmp<span class="token punctuation">;</span>
-        pre <span class="token operator">=</span> dummy<span class="token punctuation">;</span>
+        head<span class="token operator">-></span>next <span class="token operator">=</span> pre<span class="token operator">-></span>next<span class="token punctuation">;</span> <span class="token comment">// 1</span>
+        pre<span class="token operator">-></span>next <span class="token operator">=</span> head<span class="token punctuation">;</span>       <span class="token comment">// 2</span>
+        head <span class="token operator">=</span> tmp<span class="token punctuation">;</span>     <span class="token comment">// head回到原来的链表</span>
+        pre <span class="token operator">=</span> dummy<span class="token punctuation">;</span>    <span class="token comment">// pre回到开头</span>
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> dummy<span class="token operator">-></span>next<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
