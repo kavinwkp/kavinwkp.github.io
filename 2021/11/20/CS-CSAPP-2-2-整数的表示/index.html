@@ -587,7 +587,13 @@ x_{w-1} \cdot {\color{tomato}{-2^{w-1}}} + x_{w-2} \cdot {\color{tomato}{2^{w-2}
 <p><code>a</code>和<code>b</code>的位模式其实是一样的，都是<code>1100 1111 1100 0111</code>，但是解释这些位的方式不同</p>
 <p>对于相同的位模式，有符号数和无符号数的转换关系为</p>
 <script type="math/tex; mode=display">
-B2U_{w} = B2T_{w} + x_{w-1} \cdot 2^{w}</script><blockquote>
+B2U_{w} = B2T_{w} + x_{w-1} \cdot 2^{w}</script><p>所以</p>
+<script type="math/tex; mode=display">
+T2U_w(x)=\left\{
+\begin{array}{cl}
+{\color{tomato}{x+2^w}} &  x < 0 \\
+x &  x \geq 0 \\
+\end{array} \right.</script><blockquote>
 <ul>
 <li>当最高位$x_{w-1}$为1时，此时有符号数$x$表示一个负数，要转换为无符号数需要加上$2^w$</li>
 <li>当最高位为0时，有符号数和无符号数是相等的</li>
@@ -595,13 +601,25 @@ B2U_{w} = B2T_{w} + x_{w-1} \cdot 2^{w}</script><blockquote>
 </blockquote>
 <p>无符号数到有符号数的转换</p>
 <script type="math/tex; mode=display">
-B2T_{w} = B2U_{w} - x_{w-1} \cdot 2^{w}</script><blockquote>
+B2T_{w} = B2U_{w} - x_{w-1} \cdot 2^{w}</script><p>所以</p>
+<script type="math/tex; mode=display">
+U2T_w(u)=\left\{
+\begin{array}{cl}
+u &  u \leq TMax_w \\
+{\color{LightSeaGreen}{u-2^w}} &  u > TMax_w \\
+\end{array} \right.</script><blockquote>
 <ul>
 <li>最高位等于0时，无符号数可以表示的数值小于有符号数的最大值，此时转换后的数值不变</li>
 <li>最高位等于1时，无符号数可以表示的数值大于有符号数的最大值，转换后得到的有符号数等于该无符号数减去$2^{w}$</li>
 </ul>
 </blockquote>
 <p>例如：无符号数<code>11D = 1011B</code>，转换为有符号数应该是$11-2^4=-5$</p>
+<table>
+<tr>
+<td bgcolor="#dfe2e5"><img src="https://github.com/kavinwkp/blogimage/raw/main/img/cs/3/T2U.png"></td>
+<td bgcolor="#dfe2e5"><img src="https://github.com/kavinwkp/blogimage/raw/main/img/cs/3/T2U.png"></td>
+</tr></table>
+
 <p>C语言中，执行运算时，如果一个运算数是有符号数，另一个运算数是无符号数，会将<font color="LightSeaGreen">有符号数隐式转换为无符号数</font>来执行运算</p>
 <h3 id="2-2-3-数据类型转换"><a href="#2-2-3-数据类型转换" class="headerlink" title="2.2.3 数据类型转换"></a>2.2.3 数据类型转换</h3><h4 id="数据扩展"><a href="#数据扩展" class="headerlink" title="数据扩展"></a>数据扩展</h4><blockquote>
 <ul>
