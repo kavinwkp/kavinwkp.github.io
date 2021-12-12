@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="115-最小栈, kunpeng">
+    <meta name="keywords" content="155-最小栈, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>115-最小栈 | kunpeng</title>
+    <title>155-最小栈 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">115-最小栈</h1>
+                    <h1 class="description center-align post-title">155-最小栈</h1>
                 </div>
             </div>
         </div>
@@ -560,7 +560,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="LeetCode-115-Min-Stack"><a href="#LeetCode-115-Min-Stack" class="headerlink" title="LeetCode 115. Min Stack"></a>LeetCode 115. Min Stack</h2><p>Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.</p>
+                <h2 id="LeetCode-155-Min-Stack"><a href="#LeetCode-155-Min-Stack" class="headerlink" title="LeetCode 155. Min Stack"></a>LeetCode 155. Min Stack</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/min-stack/">LeetCode-155</a></p>
+<p>Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.</p>
 <p>Implement the MinStack class:</p>
 <ul>
 <li><code>MinStack()</code> initializes the stack object.</li>
@@ -578,7 +579,8 @@ minStack<span class="token punctuation">.</span><span class="token function">min
 minStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 minStack<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token operator">--</span><span class="token operator">></span> 返回 <span class="token number">0.</span>
 minStack<span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token operator">--</span><span class="token operator">></span> 返回 <span class="token operator">-</span><span class="token number">2.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
-<h2 id="method-栈"><a href="#method-栈" class="headerlink" title="method: 栈"></a>method: 栈</h2><p>如果后面的数比当前的最小值大，那么他一定会先弹出，所以没必要入栈<br>比如，<code>1 2 3</code>分别入栈<code>stackValue</code><br><code>1</code>入栈<code>stackMin</code>，<code>2</code>和<code>3</code>不用，因为<code>2</code>和<code>3</code>肯定会在<code>1</code>之前出栈<code>stackValue</code>，在此期间最小值一直是<code>1</code></p>
+<h3 id="method-栈"><a href="#method-栈" class="headerlink" title="method: 栈"></a>method: 栈</h3><p>用两个栈，一个<code>stackValue</code>存储每个数值，一个<code>stackMin</code>作单调栈，从栈底到栈顶单调递减</p>
+<p>如果后面的数比当前的最小值大，那么他一定会先弹出，所以没必要入单调栈<br>比如，<code>1 2 3</code>分别入栈<code>stackValue</code><br><code>1</code>入栈<code>stackMin</code>，<code>2</code>和<code>3</code>不用，因为<code>2</code>和<code>3</code>肯定会在<code>1</code>之前出栈<code>stackValue</code>，在此期间最小值一直是<code>1</code></p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">MinStack</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     stack<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> stackValue<span class="token punctuation">;</span>
@@ -601,7 +603,7 @@ minStack<span class="token punctuation">.</span><span class="token function">min
         <span class="token keyword">return</span> stackValue<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
     
-    <span class="token keyword">int</span> <span class="token function">min</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> <span class="token function">getMin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">return</span> stackMin<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
@@ -630,7 +632,7 @@ minStack<span class="token punctuation">.</span><span class="token function">min
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/10/25/LeetCode-115-%E6%9C%80%E5%B0%8F%E6%A0%88/">http://example.com/2021/10/25/LeetCode-115-%E6%9C%80%E5%B0%8F%E6%A0%88/</a>
+                    <a href="http://example.com/2021/10/25/LeetCode-155-%E6%9C%80%E5%B0%8F%E6%A0%88/">http://example.com/2021/10/25/LeetCode-155-%E6%9C%80%E5%B0%8F%E6%A0%88/</a>
                 </span>
             </div>
             <div class="reprint__notice">
