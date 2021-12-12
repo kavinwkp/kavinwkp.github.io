@@ -638,8 +638,39 @@
 </ul>
 <h4 id="setup-function"><a href="#setup-function" class="headerlink" title="setup.function"></a>setup.function</h4><p>在<code>setup</code>中指定<code>MATLAB</code>函数名称的语法<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">setup<span class="token punctuation">.</span>functions<span class="token punctuation">.</span>continuous <span class="token operator">=</span> @continuousfun
 setup<span class="token punctuation">.</span>functions<span class="token punctuation">.</span>endpoint   <span class="token operator">=</span> @endpointfun<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
-<h4 id="bounds"><a href="#bounds" class="headerlink" title="bounds"></a>bounds</h4><p>包括3个成员：</p>
+<h5 id="setup-functions-continuousfun"><a href="#setup-functions-continuousfun" class="headerlink" title="setup.functions.continuousfun"></a>setup.functions.continuousfun</h5><p>格式</p>
+<script type="math/tex; mode=display">
+\mathbf{function \enspace output = continuousfun(input)}</script><p>输入包括</p>
 <ul>
+<li><code>input.phase(p).time</code>: p阶段N个配置点的时间，向量长度为$N^{(p)}$</li>
+<li><code>input.phase(p).state</code>: N个配置点*状态维度的矩阵，$N^{(p)} \times n_y^{(p)}$</li>
+<li><code>input.phase(p).control</code>: N个配置点*控制维度的矩阵，$N^{(p)} \times n_u^{(p)}$</li>
+<li><code>input.phase(p).parameter</code>: N个配置点*静态参数数量的矩阵，$N^{(p)} \times n_s$</li>
+</ul>
+<p>输出是一个长度为$P$的结构向量，包括</p>
+<ul>
+<li><code>output.dynamics</code>: N个配置点*状态维度的矩阵，$N^{(p)} \times n_y^{(p)}$</li>
+<li><code>output.path</code>: N个配置点*路径约束维度的矩阵，$N^{(p)} \times n_c^{(p)}$</li>
+<li><code>output.integrand</code>: N个配置点*积分维度的矩阵，$N^{(p)} \times n_d^{(p)}$</li>
+</ul>
+<h5 id="setup-functions-endpoint"><a href="#setup-functions-endpoint" class="headerlink" title="setup.functions.endpoint"></a>setup.functions.endpoint</h5><p>格式</p>
+<script type="math/tex; mode=display">
+\mathbf{function \enspace output = endpointfun(input)}</script><p>输入包括</p>
+<ul>
+<li><code>input.phase(p).initialtime</code>: 阶段p的起始时间</li>
+<li><code>input.phase(p).finaltime</code>: 阶段p的起始时间</li>
+<li><code>input.phase(p).initialstate</code>: 阶段p的起始状态</li>
+<li><code>input.phase(p).finalstate</code>: 阶段p的终止状态</li>
+<li><code>input.phase(p).integral</code>: 阶段p的积分</li>
+<li><code>input.parameter</code>: 阶段p的静态参数</li>
+</ul>
+<p>输出包括两个成员</p>
+<ul>
+<li><code>output.objective</code>: 标量，计算目标函数结果</li>
+<li><code>output.eventgroup</code></li>
+</ul>
+<h4 id="setup-bounds"><a href="#setup-bounds" class="headerlink" title="setup.bounds"></a>setup.bounds</h4><p>包括3个成员：</p>
+<ol>
 <li><p><code>bounds.phase</code>: 指定了时间、状态、控制、路径约束和每个阶段的积分的界限</p>
 <ul>
 <li><code>phase.initialtime.lower</code>: 起始时间的下界</li>
@@ -653,20 +684,81 @@ setup<span class="token punctuation">.</span>functions<span class="token punctua
 \mathbf{bounds.phase(\textit{p}).finaltime.upper} = t_f^{upper}</script></li>
 <li><p><code>phase(p).initialstate.lower</code>: 初始状态的下界</p>
 </li>
-<li><code>phase(p).initialstate.upper</code>: 初始状态的上界<script type="math/tex; mode=display">
+<li><p><code>phase(p).initialstate.upper</code>: 初始状态的上界</p>
+<script type="math/tex; mode=display">
 \mathbf{bounds.phase(\textit{p}).initialstate.lower} = [y_{0,1}^{lower} \cdots y_{0, n_y^{(p)}}^{lower}] \\
-\mathbf{bounds.phase(\textit{p}).initialstate.upper} = t_f^{upper}</script></li>
+\mathbf{bounds.phase(\textit{p}).initialstate.upper} = [y_{0,1}^{upper} \cdots y_{0, n_y^{(p)}}^{upper}]</script></li>
+<li><p><code>phase(p).state.lower</code>: 每个阶段状态的下界</p>
+</li>
+<li><p><code>phase(p).state.upper</code>: 每个阶段状态的上界</p>
+<script type="math/tex; mode=display">
+\mathbf{bounds.phase(\textit{p}).state.lower} = [y_{1}^{lower} \cdots y_{n_y^{(p)}}^{lower}] \\
+\mathbf{bounds.phase(\textit{p}).state.upper} = [y_{1}^{upper} \cdots y_{n_y^{(p)}}^{upper}]</script></li>
+<li><p><code>phase(p).finalstate.lower</code>: 终止状态的下界</p>
+</li>
+<li><p><code>phase(p).finalstate.upper</code>: 终止状态的上界</p>
+<script type="math/tex; mode=display">
+\mathbf{bounds.phase(\textit{p}).finalstate.lower} = [y_{f,1}^{lower} \cdots y_{f,n_y^{(p)}}^{lower}] \\
+\mathbf{bounds.phase(\textit{p}).finalstate.upper} = [y_{f,1}^{upper} \cdots y_{f,n_y^{(p)}}^{upper}]</script></li>
+<li><p><code>phase(p).control.lower</code>: 每个阶段控制的下界</p>
+</li>
+<li><p><code>phase(p).control.upper</code>: 每个阶段控制的上界</p>
+<script type="math/tex; mode=display">
+\mathbf{bounds.phase(\textit{p}).control.lower} = [u_{1}^{lower} \cdots y_{n_u^{(p)}}^{lower}] \\
+\mathbf{bounds.phase(\textit{p}).control.upper} = [u_{1}^{upper} \cdots y_{n_u^{(p)}}^{upper}]</script></li>
+<li><p><code>phase(p).path.lower</code>: 每个阶段路径约束的下界</p>
+</li>
+<li><p><code>phase(p).path.upper</code>: 每个阶段路径约束的上界</p>
+<script type="math/tex; mode=display">
+\mathbf{bounds.phase(\textit{p}).path.lower} = [c_{1}^{lower} \cdots c_{n_u^{(p)}}^{lower}] \\
+\mathbf{bounds.phase(\textit{p}).path.upper} = [c_{1}^{upper} \cdots c_{n_u^{(p)}}^{upper}]</script></li>
+<li><p><code>phase(p).integral.lower</code>: 每个阶段积分的下界</p>
+</li>
+<li><p><code>phase(p).integral.upper</code>: 每个阶段积分的上界</p>
+<script type="math/tex; mode=display">
+\mathbf{bounds.phase(\textit{p}).integral.lower} = [q_{1}^{lower} \cdots q_{n_q^{(p)}}^{lower}] \\
+\mathbf{bounds.phase(\textit{p}).integral.upper} = [q_{1}^{upper} \cdots q_{n_q^{(p)}}^{upper}]</script></li>
+<li><p><code>phase(p).duration.lower</code>: 每个阶段时间的下界</p>
+</li>
+<li><code>phase(p).duration.upper</code>: 每个阶段时间的上界</li>
 </ul>
 </li>
-<li><code>bounds.parameters</code>: 包含问题中静态参数的下界和上界</li>
-<li><code>bounds.eventgroup</code>: 长度为<code>G</code>的结构数组，其中<code>G</code>是问题中事件组的数量</li>
-</ul>
-<h4 id="guess"><a href="#guess" class="headerlink" title="guess"></a>guess</h4><p><code>guess</code>结构体里面的值代表了整个求解过程的初始值</p>
+</ol>
+<ol>
+<li><p><code>bounds.parameters</code>: 包含问题中静态参数的下界和上界</p>
+<script type="math/tex; mode=display">
+\mathbf{bounds.parameters.lower} = [s_{1}^{lower} \cdots s_{n_s}^{lower}] \\
+\mathbf{bounds.parameters.upper} = [s_{1}^{upper} \cdots s_{n_s}^{upper}]</script></li>
+<li><p><code>bounds.eventgroup</code>: 长度为<code>G</code>的结构数组，其中<code>G</code>是问题中事件组的数量</p>
+<script type="math/tex; mode=display">
+\mathbf{bounds.eventgroup(\textit{g}).lower} = [b_{1}^{lower} \cdots b_{n_b^{(g)}}^{lower}] \\
+\mathbf{bounds.eventgroup(\textit{g}).upper} = [b_{1}^{upper} \cdots b_{n_b^{(g)}}^{upper}]</script></li>
+</ol>
+<h4 id="setup-guess"><a href="#setup-guess" class="headerlink" title="setup.guess"></a>setup.guess</h4><p><code>guess</code>结构体里面的值代表了整个求解过程的初始值</p>
 <ul>
-<li><code>phase.time</code></li>
-<li><code>phase.state</code></li>
-<li><code>phase.control</code></li>
-<li><code>phase.integral</code></li>
+<li><code>guess.phase(p).time</code>: 长度为$M^{(p)}$的列向量，单调递增</li>
+<li><code>guess.phase(p).state</code>: $M^{(p)} \times n_y^{(p)}$的矩阵</li>
+<li><code>guess.phase(p).control</code>: $M^{(p)} \times n_u^{(p)}$的矩阵</li>
+<li><code>guess.phase(p).integral</code>: 长度为$n_d^{(p)}$的行向量</li>
+<li><code>guess.parameter</code>: 长度为$n_s$的行向量</li>
+</ul>
+<h4 id="output"><a href="#output" class="headerlink" title="output"></a>output</h4><p><code>gpops2</code>的输出包括</p>
+<ul>
+<li><code>result</code><ul>
+<li><code>result.solution</code>: 最优的时间、状态和控制以及静态参数<ul>
+<li><code>solution.phase(p).time</code></li>
+<li><code>solution.phase(p).state</code></li>
+<li><code>solution.phase(p).control</code></li>
+<li><code>solution.parameter</code></li>
+</ul>
+</li>
+<li><code>result.objective</code>: 最优值</li>
+<li><code>result.setup</code>: 问题设置</li>
+<li><code>result.nextsetup</code></li>
+</ul>
+</li>
+<li><code>meshhistory</code>: 对每个求解<code>NLP</code>的网格进行求解和误差估计</li>
+<li><code>meshiterations</code>: 迭代次数</li>
 </ul>
 
                 
