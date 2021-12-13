@@ -567,6 +567,15 @@
 <li>如果和大于等于$2^w$，结果会发生溢出，为${\color{tomato}{x+y-2^w}}$</li>
 </ul>
 </blockquote>
+<script type="math/tex; mode=display">
+x +_w^u y=\left\{
+\begin{array}{cl}
+{\color{SkyBlue}{x+y}} & {\color{SkyBlue}{x+y<2^w}} & \rm{Normal}\\
+{\color{tomato}{x+y-2^w}} & {\color{tomato}{2^w \leq x+y < 2^{w+1}}} & \rm{Overflow}\\
+\end{array} \right.</script><center>
+<img src="https://github.com/kavinwkp/blogimage/raw/main/img/cs/2/2.3/add-3.png" width="40%">
+</center>
+
 <p>可以有2种理解：</p>
 <blockquote>
 <ol>
@@ -575,8 +584,18 @@
 </ol>
 </blockquote>
 <p>溢出后的结果肯定比$x,y$小，所以可以作比较来判断有没有溢出</p>
-<h4 id="有符号加法"><a href="#有符号加法" class="headerlink" title="有符号加法"></a>有符号加法</h4><p>$w$位有符号数的取值范围是：${\color{tomato}{-2^{w-1} \leq x &lt; 2^{w-1}}}$</p>
+<h4 id="有符号加法"><a href="#有符号加法" class="headerlink" title="有符号加法"></a>有符号加法</h4><p>$w$位有符号数的取值范围是：${\color{tomato}{-2^{w-1} \leq x \leq 2^{w-1} - 1}}$<br>两个有符号数的相加的范围是：${\color{tomato}{-2^{w} \leq x+y \leq 2^{w} - 2}}$</p>
 <p>有符号数的溢出分为正溢出和负溢出</p>
+<script type="math/tex; mode=display">
+x+_w^ty=\left\{
+\begin{array}{cl}
+{\color{LightSeaGreen}{x+y-2^w}} & {\color{LightSeaGreen}{2^{w-1} \leq x+y}} & \rm{Positive\enspace overflow}\\
+{\color{Orange}{x+y}} & {\color{Orange}{-2^{w-1} \leq x+y < 2^w-1}} & \rm{Normal} \\
+{\color{tomato}{x+y+2^w}} & {\color{tomato}{x+y < -2^{w-1}}} & \rm{Negative \enspace overflow}\\
+\end{array} \right.</script><center>
+<img src="https://github.com/kavinwkp/blogimage/raw/main/img/cs/2/2.3/add-4.png" width="60%">
+</center>
+
 <blockquote>
 <ul>
 <li>结果大于等于$2^{w-1}$，发生正溢出，和为${\color{LightSeaGreen}{x+y-2^{w}}}$</li>
@@ -588,9 +607,18 @@
 <h4 id="无符号的加法逆元"><a href="#无符号的加法逆元" class="headerlink" title="无符号的加法逆元"></a>无符号的加法逆元</h4><p>如果$x=0$，相反数也是$x^{\prime}=0$</p>
 <p>如果$x \geq 0$，如果加到$2^w$会溢出，结果还是0，所以$x+x^{\prime}=2^w=0$，所以相反数是$x^{\prime} = 2^w-x$</p>
 <h4 id="有符号数的加法逆元"><a href="#有符号数的加法逆元" class="headerlink" title="有符号数的加法逆元"></a>有符号数的加法逆元</h4><p>当$x&gt;Tmin_w$，相反数就是$-x$</p>
-<p>当$x=Tmin_w$，因为补码表示的最大值比最小值小1，$|Tmin_w| = |Tmax_w| + 1$，所以要通过负溢出来表示，因为$Tmin_w + Tmin_w = -2^{w-1}-2^{w-1}=-2^w$，会发生负溢出，需要加上$2^w$，就得到0，所以$Tmin_w$的加法逆元就是它本身</p>
+<p>当$x=Tmin_w$，因为补码表示的最大值比最小值小1，$|Tmin_w| = |Tmax_w| + 1$，所以要通过负溢出来表示，因为$Tmin_w + Tmin_w = -2^{w-1}-2^{w-1}=-2^w$，会发生负溢出，需要加上$2^w$，就得到$0$，所以$Tmin_w$的加法逆元就是它本身</p>
 <h3 id="2-3-3-乘法"><a href="#2-3-3-乘法" class="headerlink" title="2.3.3 乘法"></a>2.3.3 乘法</h3><p>乘以$2^k$就相当于左移$k$位，可以把乘法分解为加法和移位<br>例如：$x$乘以$14=2^3+2^2+2^1$，就相当于$x \cdot (2^3+2^2+2^1) = (x&lt;&lt;3) + (x&lt;&lt;2) + (x&lt;&lt;1)$，这样就把乘法分解为3个移位操作和2个加法操作</p>
 <h3 id="2-3-4-除法"><a href="#2-3-4-除法" class="headerlink" title="2.3.4 除法"></a>2.3.4 除法</h3><p>除以$2^k$就相当于右移$k$位，注意<font color="LightCoral">无符号数</font>是<font color="LightCoral">逻辑右移</font>，<font color="LightSeaGreen">有符号数</font>是<font color="LightSeaGreen">算术右移</font></p>
+<blockquote>
+<ul>
+<li>整数除法向0取整，即负数上取整，整数下取整</li>
+</ul>
+</blockquote>
+<p>负数的补码除法会出现下取整的问题，与规定不符<br>所以，负数右移的时候要先加上一个偏置</p>
+<script type="math/tex; mode=display">
+\lceil x/y \rceil = \lfloor (x+y-1)/y \rfloor</script><p>所以负数除以$2^k$需要先加上$2^k-1$，$2^k$就是1左移$k$位</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token punctuation">(</span>x <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">?</span> x <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> k<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">:</span> x <span class="token punctuation">)</span> <span class="token operator">>></span> k<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
                 
             </div>
