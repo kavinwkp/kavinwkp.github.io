@@ -592,8 +592,8 @@ V = (-1)^S \times M \times 2^E</script><p><img src="https://github.com/kavinwkp/
 <script type="math/tex; mode=display">
 {\color{LightSeaGreen}{E = e - bias}}</script><p>偏置量的值与阶码的位数相关</p>
 <script type="math/tex; mode=display">
-bias(float) = 2^{8-1}-1 = 127 \\
-bias(double) = 2^{11-1}-1 = 1023</script><p>所以，阶码的范围是：$E_{min} = -126, E_{max} = 127$</p>
+\mathbf{bias(float)} = 2^{8-1}-1 = 127 \\
+\mathbf{bias(double)} = 2^{11-1}-1 = 1023</script><p>所以，阶码的范围是：$E_{min} = -126, E_{max} = 127$</p>
 <p>$f$表示尾数字段的二进制数，尾数${\color{tomato}{M = 1 + f}}$</p>
 <h4 id="非规格化的值"><a href="#非规格化的值" class="headerlink" title="非规格化的值"></a>非规格化的值</h4><p><img src="https://github.com/kavinwkp/blogimage/raw/main/img/cs/2/2.3/2.png" alt></p>
 <blockquote>
@@ -616,6 +616,78 @@ s=1, f=0, V=-\infty</script><p>也可以表示$NaN$</p>
 <blockquote>
 <p>阶码字段全为1，尾数字段不为0</p>
 </blockquote>
+<p><strong>规律</strong></p>
+<p><img src="https://github.com/kavinwkp/blogimage/raw/main/img/cs/2/2.4/1.png" alt></p>
+<p>考虑<code>k</code>位阶码，<code>n</code>位小数</p>
+<ul>
+<li>值0.0的位模式全为0</li>
+<li>最下的非规格化值的位模式，除了最低位是1，其余为都是0，所以尾数$M=f= 2^{-n}$，阶码$E = 1-(2^{k-1}-1)=-2^{k-1}+2$，所以数字值是$V=M \times 2^E = 2^{-n-2^{k-1}-2}$</li>
+<li>最大的非规格化值的位模式，阶码字段全为0，尾数字段全为1，所以尾数$M=f=1-2^{-n}$，写成$1-\epsilon$，阶码$E=-2^{k-1}+2$，所以数字值是$V=M \times 2^E=(1-2^{-n}) \times 2^{-2^{k-1}-2}$</li>
+<li>最小的正规格化值的位模式，阶码字段最低位是1，其余全为0，所以尾数$M=1+f=1$，阶码$E=1-(2^{k-1}-1)=-2^{k-1}+2$，所以数字值是$V=2^{-2^{k-1}+2}$</li>
+<li>值1.0的位模式，阶码字段最高位为0，其余都为1，尾数字段都为0，所以尾数$M=1$，阶码$E=0$</li>
+<li>最大的正规格化值的位模式，符号位为0，阶码最高位0，其余为1，尾数字段都为1，所以小数值$f=1-2^{-n}$，尾数$M=1+f=2-2^{-n}$，写作$2-\epsilon$，阶码值$E=e-bias=2^k-2-(2^{k-1}-1)=2^{k-1}-1$，所以数值为$V=M \times 2^E=(2-2^{-n}) \times 2^{2^{k-1}-1}=(1-2^{-n-1}) \times 2^{k-1}$</li>
+</ul>
+<h4 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h4><p>1.0的位模式是<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token number">0011</span> <span class="token number">1111</span> <span class="token number">1000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br>所以小端模式输出十六进制是<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token number">00</span> <span class="token number">00</span> <span class="token number">80</span> <span class="token number">3f</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></p>
+<p>反之，如果位模式是<code>3f 80 00 00</code>，用<code>float</code>来解释的话应该是1.0</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">typedef</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> byte_pointer<span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">show_bytes</span><span class="token punctuation">(</span>byte_pointer start<span class="token punctuation">,</span> <span class="token keyword">int</span> len<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> len<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">" %.2x"</span><span class="token punctuation">,</span> start<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 两位十六进制</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">void</span> <span class="token function">show_float</span><span class="token punctuation">(</span><span class="token keyword">float</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">show_bytes</span><span class="token punctuation">(</span><span class="token punctuation">(</span>byte_pointer<span class="token punctuation">)</span><span class="token operator">&amp;</span> x<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">0x3f800000</span><span class="token punctuation">;</span>
+    <span class="token keyword">float</span> <span class="token operator">*</span>y <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">float</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>x<span class="token punctuation">;</span>  <span class="token comment">// 强制转换为float解释</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%f\n"</span><span class="token punctuation">,</span> <span class="token operator">*</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">show_float</span><span class="token punctuation">(</span><span class="token operator">*</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token number">1.000000</span>
+<span class="token number">00</span> <span class="token number">00</span> <span class="token number">80</span> <span class="token number">3f</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果证明确实如此</p>
+<p>如果将1.0的解码字段最低位置0，尾数字段全部置1，这应该是小于1.0的最大数</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">   <span class="token number">3</span>    f    <span class="token number">8</span>    <span class="token number">0</span>    <span class="token number">0</span>    <span class="token number">0</span>    <span class="token number">0</span>    <span class="token number">0</span>
+<span class="token number">0011</span> <span class="token number">1111</span> <span class="token number">1000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span> <span class="token number">0000</span>
+<span class="token number">0011</span> <span class="token number">1111</span> <span class="token number">0111</span> <span class="token number">1111</span> <span class="token number">1111</span> <span class="token number">1111</span> <span class="token number">1111</span> <span class="token number">1111</span>
+   <span class="token number">3</span>    f    <span class="token number">7</span>    f    f    f    f    f<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">0x3f800000</span><span class="token punctuation">;</span>
+    <span class="token keyword">float</span> <span class="token operator">*</span>y <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">float</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>x<span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%f\n"</span><span class="token punctuation">,</span> <span class="token operator">*</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">show_float</span><span class="token punctuation">(</span><span class="token operator">*</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> x2 <span class="token operator">=</span> <span class="token number">0x3f7fffff</span><span class="token punctuation">;</span>
+    <span class="token keyword">float</span> <span class="token operator">*</span>y2 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">float</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>x2<span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%.30f\n"</span><span class="token punctuation">,</span> <span class="token operator">*</span>y2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">show_float</span><span class="token punctuation">(</span><span class="token operator">*</span>y2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token number">1.000000</span>
+ <span class="token number">00</span> <span class="token number">00</span> <span class="token number">80</span> <span class="token number">3f</span>
+<span class="token number">0.999999940395355224609375000000</span>
+ ff ff <span class="token number">7f</span> <span class="token number">3f</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果表明确实很接近，但是有效位数之后的就不准确了</p>
+<p>那么，如果指定一个很接近的1的小数，很可能因为这种误差导致他转换得到的位模式和1.0是一样的，所以如果放到判断语句里面，结果可能会出问题</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">float</span> y <span class="token operator">=</span> <span class="token number">1.0</span><span class="token punctuation">;</span>
+    <span class="token function">show_float</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">float</span> y2 <span class="token operator">=</span> <span class="token number">0.99999998</span><span class="token punctuation">;</span>
+    <span class="token function">show_float</span><span class="token punctuation">(</span>y2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>y <span class="token operator">==</span> y2<span class="token punctuation">)</span> <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Yes\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"No\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">//  00 00 80 3f</span>
+<span class="token comment">//  00 00 80 3f</span>
+<span class="token comment">// Yes</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>原因是<code>0.99999998</code>转换成的二进制和1.0的是一样的，所以，最好不要用这种浮点数的比较</p>
 
                 
             </div>
