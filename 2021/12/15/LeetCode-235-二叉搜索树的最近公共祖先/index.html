@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="236-二叉树的最近公共祖先, kunpeng">
+    <meta name="keywords" content="235/236-二叉搜索树的最近公共祖先, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>236-二叉树的最近公共祖先 | kunpeng</title>
+    <title>235/236-二叉搜索树的最近公共祖先 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">236-二叉树的最近公共祖先</h1>
+                    <h1 class="description center-align post-title">235/236-二叉搜索树的最近公共祖先</h1>
                 </div>
             </div>
         </div>
@@ -536,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-09-11
+                    2021-12-15
                 </div>
                 
 
@@ -560,7 +560,28 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="LeetCode-236-Lowest-Common-Ancestor-of-a-Binary-Tree"><a href="#LeetCode-236-Lowest-Common-Ancestor-of-a-Binary-Tree" class="headerlink" title="LeetCode 236. Lowest Common Ancestor of a Binary Tree"></a>LeetCode 236. Lowest Common Ancestor of a Binary Tree</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/">LeetCode-236</a></p>
+                <h2 id="LeetCode-235-Lowest-Common-Ancestor-of-a-Binary-Search-Tree"><a href="#LeetCode-235-Lowest-Common-Ancestor-of-a-Binary-Search-Tree" class="headerlink" title="LeetCode 235. Lowest Common Ancestor of a Binary Search Tree"></a>LeetCode 235. Lowest Common Ancestor of a Binary Search Tree</h2><p>Given a <code>binary search tree (BST)</code>, find the lowest common ancestor (LCA) of two given nodes in the BST.</p>
+<p>According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both <code>p</code> and <code>q</code> as descendants (where we allow <strong>a node to be a descendant of itself</strong>).”</p>
+<p>Example 1:</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> root <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span> p <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> q <span class="token operator">=</span> <span class="token number">8</span>
+Output<span class="token operator">:</span> <span class="token number">6</span>
+Explanation<span class="token operator">:</span> The LCA of nodes <span class="token number">2</span> <span class="token operator">and</span> <span class="token number">8</span> is <span class="token number">6.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3 id="method"><a href="#method" class="headerlink" title="method"></a>method</h3><p><img src="https://github.com/kavinwkp/blogimage/raw/main/img/LeetCode/236/binarysearchtree_improved.png" alt></p>
+<p>利用二叉搜索树的性质</p>
+<ul>
+<li>如果<code>root-&gt;val</code>大于区间<code>[p, q]</code>，就往左边找</li>
+<li>如果小于区间<code>[p, q]</code>，就往右边找</li>
+<li>如果在区间里面，就肯定是最近公共祖先，直接返回</li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">TreeNode<span class="token operator">*</span> <span class="token function">lowestCommonAncestor</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">,</span> TreeNode<span class="token operator">*</span> p<span class="token punctuation">,</span> TreeNode<span class="token operator">*</span> q<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span>val <span class="token operator">></span> p<span class="token operator">-></span>val <span class="token operator">&amp;&amp;</span> root<span class="token operator">-></span>val <span class="token operator">></span> q<span class="token operator">-></span>val<span class="token punctuation">)</span> 
+        <span class="token keyword">return</span> <span class="token function">lowestCommonAncestor</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">,</span> p<span class="token punctuation">,</span> q<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span>val <span class="token operator">&lt;</span> p<span class="token operator">-></span>val <span class="token operator">&amp;&amp;</span> root<span class="token operator">-></span>val <span class="token operator">&lt;</span> q<span class="token operator">-></span>val<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token function">lowestCommonAncestor</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">,</span> p<span class="token punctuation">,</span> q<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> root<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<hr>
+<h2 id="LeetCode-236-Lowest-Common-Ancestor-of-a-Binary-Tree"><a href="#LeetCode-236-Lowest-Common-Ancestor-of-a-Binary-Tree" class="headerlink" title="LeetCode 236. Lowest Common Ancestor of a Binary Tree"></a>LeetCode 236. Lowest Common Ancestor of a Binary Tree</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/">LeetCode-236</a></p>
 <p>Given a binary tree, find the <strong>lowest common ancestor (LCA)</strong> of two given nodes in the tree.</p>
 <p>According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes <code>p</code> and <code>q</code> as the lowest node in <code>T</code> that has both <code>p</code> and <code>q</code> as descendants (where we allow a node to be a descendant of itself).”</p>
 <p><img src="https://github.com/kavinwkp/blogimage/raw/main/img/LeetCode/236/236.png" alt></p>
@@ -616,7 +637,7 @@ Explanation<span class="token operator">:</span> The LCA of nodes <span class="t
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/09/11/LeetCode-236-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88/">http://example.com/2021/09/11/LeetCode-236-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88/</a>
+                    <a href="http://example.com/2021/12/15/LeetCode-235-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88/">http://example.com/2021/12/15/LeetCode-235-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -827,17 +848,18 @@ Explanation<span class="token operator">:</span> The LCA of nodes <span class="t
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/09/12/LeetCode-701-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%9A%84%E6%8F%92%E5%85%A5%E6%93%8D%E4%BD%9C/">
+                <a href="/2021/12/15/LeetCode-235-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="701-二叉搜索树中的插入操作">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="235/236-二叉搜索树的最近公共祖先">
                         
-                        <span class="card-title">701-二叉搜索树中的插入操作</span>
+                        <span class="card-title">235/236-二叉搜索树的最近公共祖先</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -847,9 +869,9 @@ Explanation<span class="token operator">:</span> The LCA of nodes <span class="t
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-09-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-15
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -862,6 +884,7 @@ Explanation<span class="token operator">:</span> The LCA of nodes <span class="t
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -880,13 +903,13 @@ Explanation<span class="token operator">:</span> The LCA of nodes <span class="t
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/09/11/LeetCode-530-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E6%9C%80%E5%B0%8F%E7%BB%9D%E5%AF%B9%E5%B7%AE/">
+                <a href="/2021/12/15/LeetCode-228-%E6%B1%87%E6%80%BB%E5%8C%BA%E9%97%B4/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="530-二叉搜索树的最小绝对差">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="228-汇总区间">
                         
-                        <span class="card-title">530-二叉搜索树的最小绝对差</span>
+                        <span class="card-title">228-汇总区间</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -897,7 +920,7 @@ Explanation<span class="token operator">:</span> The LCA of nodes <span class="t
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-11
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-15
                             </span>
                         <span class="publish-author">
                             
@@ -914,8 +937,8 @@ Explanation<span class="token operator">:</span> The LCA of nodes <span class="t
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">
-                        <span class="chip bg-color">二叉树</span>
+                    <a href="/tags/%E6%A8%A1%E6%8B%9F/">
+                        <span class="chip bg-color">模拟</span>
                     </a>
                     
                 </div>
