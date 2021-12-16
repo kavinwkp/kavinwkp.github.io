@@ -574,28 +574,28 @@
 <li>输出调用这个变量的<code>CMakeLists.txt</code>的完整路径</li>
 </ul>
 <h2 id="文件目录"><a href="#文件目录" class="headerlink" title="文件目录"></a>文件目录</h2><p><img src="/2021/04/16/C-cmake/CMake.png" alt></p>
-<h3 id="Solider目录的CMakeLists-txt"><a href="#Solider目录的CMakeLists-txt" class="headerlink" title="Solider目录的CMakeLists.txt"></a>Solider目录的CMakeLists.txt</h3><pre class="line-numbers language-py" data-language="py"><code class="language-py">aux_source_directory<span class="token punctuation">(</span><span class="token punctuation">.</span> SRC_LIST<span class="token punctuation">)</span>
-<span class="token comment"># 将此目录的源文件集合称为变量SRC_LIST</span>
+<h3 id="Solider目录的CMakeLists-txt"><a href="#Solider目录的CMakeLists-txt" class="headerlink" title="Solider目录的CMakeLists.txt"></a>Solider目录的CMakeLists.txt</h3><pre class="line-numbers language-py" data-language="py"><code class="language-py">aux_source_directory(. SRC_LIST)
+# 将此目录的源文件集合称为变量SRC_LIST
 
-message<span class="token punctuation">(</span>$<span class="token punctuation">&#123;</span>SRC_LIST<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+message($&#123;SRC_LIST&#125;)
 
-include_directories<span class="token punctuation">(</span>$<span class="token punctuation">&#123;</span>PROJECT_SOURCE_DIR<span class="token punctuation">&#125;</span><span class="token operator">/</span>include<span class="token punctuation">)</span>
-<span class="token comment"># 头文件目录</span>
+include_directories($&#123;PROJECT_SOURCE_DIR&#125;&#x2F;include)
+# 头文件目录
 
-add_library<span class="token punctuation">(</span>Solider_shared SHARED $<span class="token punctuation">&#123;</span>SRC_LIST<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token comment"># 库的名称，类型，源文件（动态库）</span>
+add_library(Solider_shared SHARED $&#123;SRC_LIST&#125;)
+# 库的名称，类型，源文件（动态库）
 
-add_library<span class="token punctuation">(</span>Solider_static STATIC $<span class="token punctuation">&#123;</span>SRC_LIST<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span class="token comment"># 静态库</span>
+add_library(Solider_static STATIC $&#123;SRC_LIST&#125;)
+# 静态库
 
-set_target_properties<span class="token punctuation">(</span>Solider_shared PROPERTIES OUTPUT_NAME <span class="token string">"Solider"</span><span class="token punctuation">)</span>
-<span class="token comment"># 库的名称，库的输出名称（动态库）</span>
+set_target_properties(Solider_shared PROPERTIES OUTPUT_NAME &quot;Solider&quot;)
+# 库的名称，库的输出名称（动态库）
 
-set_target_properties<span class="token punctuation">(</span>Solider_static PROPERTIES OUTPUT_NAME <span class="token string">"Solider"</span><span class="token punctuation">)</span>
-<span class="token comment"># 静态库</span>
+set_target_properties(Solider_static PROPERTIES OUTPUT_NAME &quot;Solider&quot;)
+# 静态库
 
-<span class="token builtin">set</span><span class="token punctuation">(</span>LIBRARY_OUTPUT_PATH $<span class="token punctuation">&#123;</span>PROJECT_SOURCE_DIR<span class="token punctuation">&#125;</span><span class="token operator">/</span>lib<span class="token punctuation">)</span>
-<span class="token comment"># 库文件输出到工作空间的lib目录下</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+set(LIBRARY_OUTPUT_PATH $&#123;PROJECT_SOURCE_DIR&#125;&#x2F;lib)
+# 库文件输出到工作空间的lib目录下<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="工作空间的CMakeLists-txt-生成库文件"><a href="#工作空间的CMakeLists-txt-生成库文件" class="headerlink" title="工作空间的CMakeLists.txt (生成库文件)"></a>工作空间的CMakeLists.txt (生成库文件)</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">cmake_minimum_required</span><span class="token punctuation">(</span>VERSION <span class="token number">3.0</span><span class="token punctuation">)</span>
 
 <span class="token function">project</span><span class="token punctuation">(</span>MAIN<span class="token punctuation">)</span>
