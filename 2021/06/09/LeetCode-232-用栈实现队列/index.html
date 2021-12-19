@@ -568,7 +568,7 @@
 <p>Implement a first in first out (FIFO) queue using <code>only two stacks</code>. The implemented queue should support all the functions of a normal queue <code>(push, peek, pop, and empty)</code>.</p>
 <p>Implement the MyQueue class:</p>
 <p><code>void push(int x)</code> Pushes element x to the back of the queue.<br><code>int pop()</code> Removes the element from the front of the queue and returns it.<br><code>int peek()</code> Returns the element at the front of the queue.<br><code>boolean empty()</code> Returns true if the queue is empty, false otherwise.</p>
-<h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>用两个栈模拟队列，需要<code>pop()</code>和<code>top()</code>的时候就把一个栈里面的输出来放到另一个栈里，在这过程中顺序就反了</p>
+<h3 id="method"><a href="#method" class="headerlink" title="method"></a>method</h3><p>用两个栈模拟队列，需要<code>pop()</code>和<code>top()</code>的时候就把一个栈里面的输出来放到另一个栈里，在这过程中顺序就反了</p>
 <p>注意：<br>如果<code>out</code>非空，那<code>top()</code>和<code>pop()</code>的操作都可以在<code>out</code>中实现，不需要用到<code>in</code>里面的元素，只有当<code>out</code>里面没元素了，才需要把<code>in</code>里的元素搞过来</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">MyQueue</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
@@ -593,8 +593,8 @@
     <span class="token punctuation">&#125;</span>
 
     <span class="token keyword">void</span> <span class="token function">in2out</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>out<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>in<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>out<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>  <span class="token comment">// out是空才需要移动</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>in<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>   <span class="token comment">// 把in的所有元素都移到out</span>
                 <span class="token keyword">int</span> x <span class="token operator">=</span> in<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
                 in<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
                 out<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
