@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="ROS图像处理, kunpeng">
+    <meta name="keywords" content="2.1-进程基础知识, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>ROS图像处理 | kunpeng</title>
+    <title>2.1-进程基础知识 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">ROS图像处理</h1>
+                    <h1 class="description center-align post-title">2.1-进程基础知识</h1>
                 </div>
             </div>
         </div>
@@ -511,18 +511,23 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/OpenCV/">
-                                <span class="chip bg-color">OpenCV</span>
-                            </a>
-                        
-                            <a href="/tags/ROS/">
-                                <span class="chip bg-color">ROS</span>
+                            <a href="/tags/OS/">
+                                <span class="chip bg-color">OS</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/LeetCode/" class="post-category">
+                                LeetCode
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -531,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-26
+                    2022-01-08
                 </div>
                 
 
@@ -555,143 +560,107 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <!-- toc -->
-<h2 id="OpenCV-3-3-1"><a href="#OpenCV-3-3-1" class="headerlink" title="OpenCV 3.3.1"></a>OpenCV 3.3.1</h2><h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> build <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> build
-<span class="token function">mkdir</span> installed
-cmake -DCMAKE_BUILD_TYPE<span class="token operator">=</span>RELEASE -DCMAKE_INSTALL_PREFIX<span class="token operator">=</span>~/Library/opencv-3.3.1/build/installed -DWITH_CUDA<span class="token operator">=</span>OFF -DBUILD_DOCS<span class="token operator">=</span>OFF -DBUILD_EXAMPLES<span class="token operator">=</span>OFF -DBUILD_TESTS<span class="token operator">=</span>OFF -DBUILD_PERF_TESTS<span class="token operator">=</span>OFF -DOPENCV_EXTRA_MODULES_PATH<span class="token operator">=</span><span class="token punctuation">..</span>/opencv_contrib/modules <span class="token punctuation">..</span>
-<span class="token function">make</span> -j4
-<span class="token function">sudo</span> <span class="token function">make</span> <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="修改系统默认版本"><a href="#修改系统默认版本" class="headerlink" title="修改系统默认版本"></a>修改系统默认版本</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> ~/.bashrc
-<span class="token builtin class-name">export</span> <span class="token assign-left variable">PKG_CONFIG_PATH</span><span class="token operator">=</span>~/Library/opencv-3.3.1/build/installed/lib/pkgconfig
-<span class="token builtin class-name">export</span> <span class="token assign-left variable">LD_LIBRARY_PATH</span><span class="token operator">=</span>~/Library/opencv-3.3.1/build/installed/lib
-<span class="token builtin class-name">source</span> ~/.bashrc<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="版本确认"><a href="#版本确认" class="headerlink" title="版本确认"></a>版本确认</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pkg-config --modversion opencv
-<span class="token number">3.3</span>.1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>查看头文件位置<br><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pkg-config --cflags opencv
--I/home/kavin/Library/opencv-3.3.1/build/installed/include/opencv
--I/home/kavin/Library/opencv-3.3.1/build/installed/include<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
-<p>查看库文件<br><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pkg-config --libs opencv
--L/home/kavin/Library/opencv-3.3.1/build/installed/lib -lopencv_stitching -lopencv_superres -lopencv_videostab -lopencv_photo -lopencv_aruco 
--lopencv_bgsegm -lopencv_bioinspired -lopencv_ccalib -lopencv_dpm -lopencv_face -lopencv_freetype -lopencv_fuzzy -lopencv_hdf -lopencv_img_hash 
--lopencv_line_descriptor -lopencv_optflow -lopencv_reg -lopencv_rgbd -lopencv_saliency -lopencv_sfm -lopencv_stereo -lopencv_structured_light -lopencv_viz -lopencv_phase_unwrapping 
--lopencv_surface_matching -lopencv_tracking -lopencv_datasets -lopencv_text -lopencv_dnn -lopencv_plot -lopencv_xfeatures2d -lopencv_shape -lopencv_video -lopencv_ml -lopencv_ximgproc 
--lopencv_calib3d -lopencv_features2d -lopencv_highgui -lopencv_videoio -lopencv_flann -lopencv_xobjdetect -lopencv_imgcodecs -lopencv_objdetect 
--lopencv_xphoto -lopencv_imgproc -lopencv_core<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
-<h3 id="CMakeLists指定版本"><a href="#CMakeLists指定版本" class="headerlink" title="CMakeLists指定版本"></a>CMakeLists指定版本</h3><p>不修改默认是在<code>/usr</code>查找</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">set<span class="token punctuation">(</span>OpenCV_DIR <span class="token string">"~/Library/opencv-3.3.1/build/installed/OpenCV"</span><span class="token punctuation">)</span>
-find_package<span class="token punctuation">(</span>OpenCV REQUIRED<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h2 id="发布图像"><a href="#发布图像" class="headerlink" title="发布图像"></a>发布图像</h2><p>使用<code>image_transport</code>进行图像话题发布订阅</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">image_transport<span class="token operator">::</span>ImageTransport <span class="token function">it</span><span class="token punctuation">(</span>nh<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">//用句柄初始化image_transport</span>
-image_transport<span class="token operator">::</span>Publisher image_pub <span class="token operator">=</span> it<span class="token punctuation">.</span><span class="token function">advertise</span><span class="token punctuation">(</span><span class="token string">"image_topic"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">//cv::Mat通过cv_bridge::CvImage转换为sensor_msgs::ImagePtr</span>
-sensor_msgs<span class="token operator">::</span>ImagePtr msg <span class="token operator">=</span> cv_bridge<span class="token operator">::</span><span class="token function">CvImage</span><span class="token punctuation">(</span>std_msgs<span class="token operator">::</span><span class="token function">Header</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"bgr8"</span><span class="token punctuation">,</span> image<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toImageMsg</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;image_transport/image_transport.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;opencv2/highgui/highgui.hpp></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;opencv2/core/core.hpp></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;cv_bridge/cv_bridge.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+                <h2 id="进程基础知识"><a href="#进程基础知识" class="headerlink" title="进程基础知识"></a>进程基础知识</h2><h3 id="1、进程的概念"><a href="#1、进程的概念" class="headerlink" title="1、进程的概念"></a>1、进程的概念</h3><p>我们编译的可执行文件只是储存在硬盘的静态文件，运行时被加载到内存，CPU执行内存中指令，这个运行的程序被称为进程</p>
+<blockquote>
+<p>进程是对运行时程序的封装，是操作系统进行资源调度和分配的基本单位</p>
+</blockquote>
+<h3 id="2、进程的实现"><a href="#2、进程的实现" class="headerlink" title="2、进程的实现"></a>2、进程的实现</h3><blockquote>
+<p>为了实现进程模型，操作系统维护着一张表格(一个结构数组)，即<strong>进程表</strong></p>
+</blockquote>
+<p>每个进程占有一个<strong>进程表项</strong>(有些著作称这些为<strong>进程控制块</strong>)<br>该表项包含了一个进程状态的重要信息，包括<font color="LightSeaGreen">程序计数器、堆栈指针、内存分配状况、所打开文件的状态、账号的调度信息，以及其他在进程由运行态转换到就绪态或阻塞态时必须保存的信息</font>，从而保证该进程随后能再次启动，就像从未中断过一样</p>
+<h3 id="3、并发与并行"><a href="#3、并发与并行" class="headerlink" title="3、并发与并行"></a>3、并发与并行</h3><ol>
+<li>单个核心在很短时间内分别执行多个进程，称为<font color="LightSeaGreen">并发</font></li>
+<li>多个核心同时执行多个进程称为<font color="LightCoral">并行</font></li>
+<li>对于<font color="LightSeaGreen">并发</font>来说，CPU需要从一个进程切换到另一个进程，这个过程需要保存进程的状态信息</li>
+</ol>
+<h4 id="4、进程的状态"><a href="#4、进程的状态" class="headerlink" title="4、进程的状态"></a>4、进程的状态</h4><p>某个进程在某个时刻所处的状态分为以下几种，运行态、就绪态、阻塞态<br>对于阻塞状态，比如read系统调用阻塞，进程会占用内存空间，这是一种浪费行为，于是操作系统会有跟内存管理中物理⻚置换到磁盘一样的行为，把阻塞的进程置换到磁盘中，此时进程未占用物理内存，我们称之为<strong>挂起</strong>；挂起不仅仅可能是物理内存不足，比如sleep系统调用过着用户执行Ctrl+Z也可能导致挂起</p>
+<p>除了创建和结束一般有三个状态</p>
+<blockquote>
+<ul>
+<li>运行态： 该时刻进程占用CPU</li>
+<li>就绪态： 可运行，由于其他进程处于运行状态而暂时停止运行</li>
+<li>阻塞态： 该进程正在等待某一事件发生(如等待输入/输出操作的完成)而暂时停止运行</li>
+</ul>
+</blockquote>
+<p>阻塞态的进程占用着物理内存，在虚拟内存管理的操作系统中，通常会把阻塞态的进程的物理内存空间换出到硬盘，等需要再次运行的时候，再从硬盘换入到物理内存。</p>
+<blockquote>
+<ul>
+<li>挂起态：新的状态，描述进程没有占用实际的物理内存空间的情况，这个状态就是挂起状态<ul>
+<li>阻塞挂起状态： 进程在外存(硬盘)并等待某个事件的出现</li>
+<li>就绪挂起状态： 进程在外存(硬盘)，但只要进入内存，⻢上运行</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p><strong>特点</strong></p>
+<blockquote>
+<ol>
+<li>就绪态和运行态可以相互转换，其它的都是单向转换。就绪态的进程通过调度算法从而获得CPU 时间，转为运行状态</li>
+<li>运行态的进程，在分配给它的 CPU 时间片用完之后就会转为就绪状态，等待下一次调度</li>
+<li>阻塞态是缺少需要的资源从而由运行态转换而来，但是该资源不包括 CPU 时间，缺少 CPU 时间会从运行态转换为就绪态</li>
+</ol>
+</blockquote>
+<h3 id="5、进程控制块-PCB"><a href="#5、进程控制块-PCB" class="headerlink" title="5、进程控制块(PCB)"></a>5、进程控制块(PCB)</h3><p>操作系统对进程的感知，是通过进程控制块PCB数据结构来描述的。它是<font color="LightSeaGreen">进程存在的唯一标识</font>，其包括以下信息：</p>
+<blockquote>
+<ol>
+<li>进程描述信息： 进程标识符、用户标识符等</li>
+<li>进程控制和管理信息： 进程状态，进程优先级等</li>
+<li>进程资源分配清单： 虚拟内存地址空间信息，打开文件列表，IO设备信息等</li>
+<li>CPU相关信息： 当进程切换时，CPU寄存器的值都被保存在相应PCB中，以便CPU重新执行该进程时能从断点处继续执行</li>
+</ol>
+</blockquote>
+<p>PCB通过链表形式组织起来，比如有<strong>就绪队列</strong>、<strong>阻塞队列</strong>等，方便增删，方便进程管理。</p>
+<h3 id="6、进程状态的切换"><a href="#6、进程状态的切换" class="headerlink" title="6、进程状态的切换"></a>6、进程状态的切换</h3><p>进程的状态分类：</p>
+<ol>
+<li>就绪状态(ready)：等待被调度</li>
+<li>运行状态(running)</li>
+<li>阻塞状态(waiting)：等待资源</li>
+</ol>
+<p>转换关系：</p>
+<ul>
+<li>只有就绪态和运行态可以互相转换，其他都是单向转换</li>
+<li>就绪态的进程通过调度算法从而获得CPU时间，转为运行状态；而运行状态的进程，在分配给它的CPU时间片完之后就会转为就绪状态，等待下一次调度</li>
+<li>进程因为等待资源而阻塞，但是该资源不包括 CPU 时间，缺少 CPU 时间会从运行态转换为就绪态</li>
+<li>当进程等待的外部事件发生时(如一些输入到达)，则由阻塞态转换为就绪态，如果此时没有其他进程运行，就转换为运行态，否则该进程将处于就绪态，等待CPU空闲轮到它运行</li>
+</ul>
+<h3 id="7、进程切换为何比线程慢"><a href="#7、进程切换为何比线程慢" class="headerlink" title="7、进程切换为何比线程慢"></a>7、进程切换为何比线程慢</h3><blockquote>
+<p>涉及到虚拟内存的问题，进程切换涉及虚拟地址空间的切换而线程不会</p>
+</blockquote>
+<p>因为每个进程都有自己的虚拟地址空间，而线程是共享所在进程的虚拟地址空间的，所以同一个进程中的线程进行线程切换时不涉及虚拟地址空间的转换。</p>
+<blockquote>
+<p>把虚拟地址转换为物理地址需要查找⻚表，⻚表查找是一个很慢的过程(至少访问2次内存)，因此通常使用Cache来缓存常用的地址映射，这样可以加速⻚表查找，这个Cache就是TLB(快表)</p>
+</blockquote>
+<p>由于每个进程都有自己的虚拟地址空间，那么显然每个进程都有自己的⻚表，那么当进程切换后⻚表也要进行切换，⻚表切换后TLB就失效了，cache失效导致命中率降低，那么虚拟地址转换为物理地址就会变慢，表现出来的就是程序运行会变慢，而线程切换则不会导致TLB失效，因为线程线程无需切换地址空间，这也就是进程切换要比同进程下线程切换慢的原因</p>
+<hr>
+<h2 id="进程调度算法"><a href="#进程调度算法" class="headerlink" title="进程调度算法"></a>进程调度算法</h2><h3 id="1、批处理系统中的调度"><a href="#1、批处理系统中的调度" class="headerlink" title="1、批处理系统中的调度"></a>1、批处理系统中的调度</h3><blockquote>
+<p>(1) 先来先服务</p>
+</blockquote>
+<p>非抢占式的调度算法，按照请求的顺序进行调度<br>有利于⻓作业，但不利于短作业，因为短作业必须一直等待前面的⻓作业执行完毕才能执行，而⻓作业又需要执行很⻓时间，造成了短作业等待时间过⻓。</p>
+<blockquote>
+<p>(2) 最短作业优先</p>
+</blockquote>
+<p>非抢占式的调度算法，按估计运行时间最短的顺序进行调度。<br>⻓作业有可能会饿死，处于一直等待短作业执行完毕的状态。因为如果一直有短作业到来，那么⻓作业永远得不到调度</p>
+<blockquote>
+<p>(3) 最短剩余时间优先</p>
+</blockquote>
+<p>最短作业优先的抢占式版本，按剩余运行时间的顺序进行调度。<br>当一个新的作业到达时，其整个运行时间与当前进程的剩余时间作比较。如果新的进程需要的时间更少，则挂起当前进程，运行新的进程。否则新的进程等待。</p>
+<h3 id="2、交互式系统中的调度"><a href="#2、交互式系统中的调度" class="headerlink" title="2、交互式系统中的调度"></a>2、交互式系统中的调度</h3><blockquote>
+<p>(1) 时间片轮转调度</p>
+</blockquote>
+<p>将所有就绪进程按 FCFS 的原则排成一个队列，每次调度时，把 CPU 时间分配给队首进程，该进程可以执行一个时间片。当时间片用完时，由计时器发出时钟中断，调度程序便停止该进程的执行，并将它送往就绪队列的末尾，同时继续把 CPU 时间分配给队首的进程</p>
+<blockquote>
+<p>(2) 优先级调度</p>
+</blockquote>
+<p>为每个进程分配一个优先级，按优先级进行调度。为了防止低优先级的进程永远等不到调度，可以随着时间的推移增加等待进程的优先级。</p>
+<blockquote>
+<p>(3) 多级队列</p>
+</blockquote>
+<p>一个进程需要执行 100 个时间片，如果采用时间片轮转调度算法，那么需要交换 100 次<br>多级队列是为这种需要连续执行多个时间片的进程考虑，它设置了多个队列，每个队列时间片大小都不同，例如1，2，4，8…。进程在第一个队列没执行完，就会被移到下一个队列。这种方式下，之前的进程只需要交换 7 次<br>每个队列优先权也不同，最上面的优先权最高。因此只有上一个队列没有进程在排队，才能调度当前队列上的进程<br>可以将这种调度算法看成是时间片轮转调度算法和优先级调度算法的结合</p>
+<blockquote>
+<p>(4) 最短进程优先</p>
+</blockquote>
+<p>如果我们将每一条命令的执行看作是一个独立的“作业”，则我们可以通过首先运行最短的作业来使响应事件最短</p>
 
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> cv<span class="token punctuation">;</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    ros<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"image_pub_node"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>NodeHandle nh<span class="token punctuation">;</span>
-    image_transport<span class="token operator">::</span>ImageTransport <span class="token function">it</span><span class="token punctuation">(</span>nh<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    image_transport<span class="token operator">::</span>Publisher image_pub <span class="token operator">=</span> it<span class="token punctuation">.</span><span class="token function">advertise</span><span class="token punctuation">(</span><span class="token string">"image_topic"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    Mat image <span class="token operator">=</span> <span class="token function">imread</span><span class="token punctuation">(</span><span class="token string">"/home/kavin/Pictures/test.png"</span><span class="token punctuation">,</span> IMREAD_COLOR<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>image<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
-        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"can't find picture"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    sensor_msgs<span class="token operator">::</span>ImagePtr msg <span class="token operator">=</span> cv_bridge<span class="token operator">::</span><span class="token function">CvImage</span><span class="token punctuation">(</span>std_msgs<span class="token operator">::</span><span class="token function">Header</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"bgr8"</span><span class="token punctuation">,</span> image<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toImageMsg</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>Rate <span class="token function">loop_rate</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span><span class="token punctuation">(</span>nh<span class="token punctuation">.</span><span class="token function">ok</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
-        image_pub<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span>msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"publish an image"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        loop_rate<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="接收图像"><a href="#接收图像" class="headerlink" title="接收图像"></a>接收图像</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">image_transport<span class="token operator">::</span>Subscriber image_sub <span class="token operator">=</span> it<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token string">"/simple_camera/image_raw"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> image_topic_cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">//sensor_msgs话题通过cv_bridge::toCvCopy转换为cv::Mat指针</span>
-cv_bridge<span class="token operator">::</span>CvImagePtr cv_ptr <span class="token operator">=</span> cv_bridge<span class="token operator">::</span><span class="token function">toCvCopy</span><span class="token punctuation">(</span>msg<span class="token punctuation">,</span> sensor_msgs<span class="token operator">::</span>image_encodings<span class="token operator">::</span>BGR8<span class="token punctuation">)</span><span class="token punctuation">;</span>
-Mat colorImg <span class="token operator">=</span> cv_ptr<span class="token operator">-></span>image<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="源代码-1"><a href="#源代码-1" class="headerlink" title="源代码"></a>源代码</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sensor_msgs/image_encodings.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;image_transport/image_transport.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;opencv2/opencv.hpp></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cv_bridge/cv_bridge.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> cv<span class="token punctuation">;</span>
-Mat colorImg<span class="token punctuation">;</span>
-
-<span class="token keyword">void</span> <span class="token function">image_topic_cb</span><span class="token punctuation">(</span><span class="token keyword">const</span> sensor_msgs<span class="token operator">::</span>ImageConstPtr<span class="token operator">&amp;</span> msg<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    <span class="token keyword">try</span>
-    <span class="token punctuation">&#123;</span>
-        <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"Receive an image successfully"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        cv_bridge<span class="token operator">::</span>CvImagePtr cv_ptr <span class="token operator">=</span> cv_bridge<span class="token operator">::</span><span class="token function">toCvCopy</span><span class="token punctuation">(</span>msg<span class="token punctuation">,</span> sensor_msgs<span class="token operator">::</span>image_encodings<span class="token operator">::</span>BGR8<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        colorImg <span class="token operator">=</span> cv_ptr<span class="token operator">-></span>image<span class="token punctuation">;</span>
-        <span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"image"</span><span class="token punctuation">,</span> colorImg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        Mat grayImg<span class="token punctuation">;</span>
-        <span class="token function">cvtColor</span><span class="token punctuation">(</span>colorImg<span class="token punctuation">,</span> grayImg<span class="token punctuation">,</span> COLOR_BGR2GRAY<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"gray"</span><span class="token punctuation">,</span> grayImg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token comment">// cv::imshow("image", cv_bridge::toCvShare(msg, "bgr8")->image);</span>
-        <span class="token comment">// cv::waitKey(10);</span>
-    <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span><span class="token punctuation">(</span>cv_bridge<span class="token operator">::</span>Exception<span class="token operator">&amp;</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        std<span class="token operator">::</span>cerr <span class="token operator">&lt;&lt;</span> e<span class="token punctuation">.</span><span class="token function">what</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    ros<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"image_sub"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>NodeHandle nh<span class="token punctuation">;</span>
-    image_transport<span class="token operator">::</span>ImageTransport <span class="token function">it</span><span class="token punctuation">(</span>nh<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token function">namedWindow</span><span class="token punctuation">(</span><span class="token string">"image"</span><span class="token punctuation">,</span> CV_WINDOW_AUTOSIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">namedWindow</span><span class="token punctuation">(</span><span class="token string">"gray"</span><span class="token punctuation">,</span> CV_WINDOW_AUTOSIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">startWindowThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    image_transport<span class="token operator">::</span>Subscriber image_sub <span class="token operator">=</span> it<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token string">"/simple_camera/image_raw"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> image_topic_cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span><span class="token function">spin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">destroyWindow</span><span class="token punctuation">(</span><span class="token string">"image"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">destroyWindow</span><span class="token punctuation">(</span><span class="token string">"gray"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token comment">#! /usr/bin/env python</span>
-<span class="token comment"># coding=utf-8</span>
-
-<span class="token keyword">import</span> rospy
-<span class="token keyword">from</span> sensor_msgs<span class="token punctuation">.</span>msg <span class="token keyword">import</span> Image
-<span class="token keyword">import</span> cv2
-<span class="token keyword">from</span> cv_bridge <span class="token keyword">import</span> CvBridge
-
-
-rospy<span class="token punctuation">.</span>init_node<span class="token punctuation">(</span><span class="token string">'py_image_sub'</span><span class="token punctuation">,</span> anonymous<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
-
-<span class="token keyword">def</span> <span class="token function">colorCallBack</span><span class="token punctuation">(</span>msg<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    bridge <span class="token operator">=</span> CvBridge<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    img <span class="token operator">=</span> bridge<span class="token punctuation">.</span>imgmsg_to_cv2<span class="token punctuation">(</span>msg<span class="token punctuation">,</span> <span class="token string">"bgr8"</span><span class="token punctuation">)</span>
-    cv2<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span><span class="token string">"color"</span><span class="token punctuation">,</span> img<span class="token punctuation">)</span>
-    cv2<span class="token punctuation">.</span>waitKey<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
-
-<span class="token keyword">def</span> <span class="token function">listener</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    rospy<span class="token punctuation">.</span>Subscriber<span class="token punctuation">(</span><span class="token string">"image_topic"</span><span class="token punctuation">,</span> Image<span class="token punctuation">,</span> colorCallBack<span class="token punctuation">)</span>
-    rospy<span class="token punctuation">.</span>spin<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-
-<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span>cv2<span class="token punctuation">.</span>__version__<span class="token punctuation">)</span>
-    listener<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'done'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -717,7 +686,7 @@ rospy<span class="token punctuation">.</span>init_node<span class="token punctua
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/03/26/ROS-ROS-CV/">http://example.com/2021/03/26/ROS-ROS-CV/</a>
+                    <a href="http://example.com/2022/01/08/CS-OS-2-1-%E8%BF%9B%E7%A8%8B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">http://example.com/2022/01/08/CS-OS-2-1-%E8%BF%9B%E7%A8%8B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -755,12 +724,8 @@ rospy<span class="token punctuation">.</span>init_node<span class="token punctua
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/OpenCV/">
-                                    <span class="chip bg-color">OpenCV</span>
-                                </a>
-                            
-                                <a href="/tags/ROS/">
-                                    <span class="chip bg-color">ROS</span>
+                                <a href="/tags/OS/">
+                                    <span class="chip bg-color">OS</span>
                                 </a>
                             
                         </div>
@@ -932,17 +897,18 @@ rospy<span class="token punctuation">.</span>init_node<span class="token punctua
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/04/01/OpenCV-OpenCV-RGB-GRAY/">
+                <a href="/2022/01/08/CS-OS-2-1-%E8%BF%9B%E7%A8%8B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="OpenCV_RGB&amp;GRAY">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="2.1-进程基础知识">
                         
-                        <span class="card-title">OpenCV_RGB&amp;GRAY</span>
+                        <span class="card-title">2.1-进程基础知识</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -952,26 +918,27 @@ rospy<span class="token punctuation">.</span>init_node<span class="token punctua
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-01
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-08
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/OpenCV/" class="post-category">
-                                    OpenCV
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/OpenCV/">
-                        <span class="chip bg-color">OpenCV</span>
+                    <a href="/tags/OS/">
+                        <span class="chip bg-color">OS</span>
                     </a>
                     
                 </div>
@@ -985,13 +952,13 @@ rospy<span class="token punctuation">.</span>init_node<span class="token punctua
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/26/ROS-ROS-action/">
+                <a href="/2022/01/08/LeetCode-300-%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="ROS action">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="300-最长上升子序列">
                         
-                        <span class="card-title">ROS action</span>
+                        <span class="card-title">300-最长上升子序列</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1002,12 +969,16 @@ rospy<span class="token punctuation">.</span>init_node<span class="token punctua
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-26
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-08
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kunpeng
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -1015,8 +986,8 @@ rospy<span class="token punctuation">.</span>init_node<span class="token punctua
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/ROS/">
-                        <span class="chip bg-color">ROS</span>
+                    <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                        <span class="chip bg-color">动态规划</span>
                     </a>
                     
                 </div>
