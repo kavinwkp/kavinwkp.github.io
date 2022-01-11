@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="ROS_MAVROS, kunpeng">
+    <meta name="keywords" content="53-最大子数组和, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>ROS_MAVROS | kunpeng</title>
+    <title>53-最大子数组和 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">ROS_MAVROS</h1>
+                    <h1 class="description center-align post-title">53-最大子数组和</h1>
                 </div>
             </div>
         </div>
@@ -511,14 +511,23 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/ROS/">
-                                <span class="chip bg-color">ROS</span>
+                            <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                                <span class="chip bg-color">动态规划</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/LeetCode/" class="post-category">
+                                LeetCode
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -527,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-26
+                    2022-01-11
                 </div>
                 
 
@@ -551,109 +560,23 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <!-- toc -->
-<p><img src="/2021/03/26/ROS-ROS-mavros/mavros/mavros.png" alt></p>
-<h2 id="常用MAVROS消息"><a href="#常用MAVROS消息" class="headerlink" title="常用MAVROS消息"></a>常用MAVROS消息</h2><h3 id="global-position-订阅-GPS-数据"><a href="#global-position-订阅-GPS-数据" class="headerlink" title="global_position 订阅 GPS 数据"></a>global_position 订阅 GPS 数据</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>global_position<span class="token operator">/</span>global
-类型名称<span class="token operator">:</span> sensor_msgs<span class="token operator">::</span>NavSatFix
-
-常用类成员变量<span class="token operator">:</span> 
-float64 latitude    <span class="token comment">//经</span>
-float64 longitude   <span class="token comment">//纬</span>
-float64 altitude    <span class="token comment">//海拔</span>
-float64<span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span> position_covariance
-uint8 position_covariance_type<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="imu-pub-订阅-IMU-原始数据"><a href="#imu-pub-订阅-IMU-原始数据" class="headerlink" title="imu_pub 订阅 IMU 原始数据"></a>imu_pub 订阅 IMU 原始数据</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>imu<span class="token operator">/</span><span class="token function">data</span>
-<span class="token punctuation">(</span>不是mavros<span class="token operator">/</span>imu<span class="token operator">/</span>data_raw<span class="token punctuation">,</span> mavros<span class="token operator">/</span>imu<span class="token operator">/</span>data 为经过滤波后的数据<span class="token punctuation">)</span>
-类型名称<span class="token operator">:</span> sensor_msgs<span class="token operator">::</span>Imu
-
-常用类成员变量<span class="token operator">:</span>
-geometry_msgs<span class="token operator">::</span>Quaternion orientation       <span class="token comment">//旋转四元数(xyzw)</span>
-float64<span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span> orientation_covariance           <span class="token comment">//方差</span>
-geometry_msgs<span class="token operator">::</span>Vector3 angular_velocity     <span class="token comment">//3 轴角速度(xyz)</span>
-float64<span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span> angular_velocity_covariance      <span class="token comment">//方差</span>
-geometry_msgs<span class="token operator">::</span>Vector3 linear_acceleration  <span class="token comment">//线性加速度(xyz)</span>
-float64<span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span> linear_acceleration_covariance   <span class="token comment">//方差</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="local-position-订阅本地位置数据"><a href="#local-position-订阅本地位置数据" class="headerlink" title="local_position 订阅本地位置数据"></a>local_position 订阅本地位置数据</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>local_position<span class="token operator">/</span>pose
-类型名称<span class="token operator">:</span> geometry_msgs<span class="token operator">::</span>PoseStamped
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h3 id="manual-control-订阅遥控器的值"><a href="#manual-control-订阅遥控器的值" class="headerlink" title="manual_control 订阅遥控器的值"></a>manual_control 订阅遥控器的值</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>manual_control<span class="token operator">/</span>control
-类型名称<span class="token operator">:</span> mavros_msgs<span class="token operator">::</span>ManualControl
-
-常用类成员变量<span class="token operator">:</span>
-float32 x
-float32 y
-float32 z
-float32 r
-uint16 buttons<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="sys-status-查询系统状态"><a href="#sys-status-查询系统状态" class="headerlink" title="sys_status 查询系统状态"></a>sys_status 查询系统状态</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>state
-类型名称<span class="token operator">:</span> mavros_msgs<span class="token operator">::</span>State
-
-常用类成员变量<span class="token operator">:</span>
-<span class="token keyword">bool</span> connected  <span class="token comment">//是否连接</span>
-<span class="token keyword">bool</span> armed      <span class="token comment">//是否解锁</span>
-<span class="token keyword">bool</span> guided     <span class="token comment">//是否被引导（offboard 模式）</span>
-string mode     <span class="token comment">//模式类型</span>
-uint8 system_status<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="waypoint-查询航点"><a href="#waypoint-查询航点" class="headerlink" title="waypoint 查询航点"></a>waypoint 查询航点</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">消息名称<span class="token operator">:</span> mavros<span class="token operator">/</span>mission<span class="token operator">/</span>waypoints
-类型名称<span class="token operator">:</span> mavros_msgs<span class="token operator">::</span>WaypointList
-
-常用类成员变量<span class="token operator">:</span>
-uint16 current_seq  <span class="token comment">//当前航点索引</span>
-mavros_msgs<span class="token operator">::</span>Waypoint<span class="token punctuation">[</span><span class="token punctuation">]</span> waypoints
-    uint8 frame     <span class="token comment">//坐标类型</span>
-    uint16 command  <span class="token comment">//命令 id，16 为航点</span>
-    <span class="token keyword">bool</span> is_current
-    <span class="token keyword">bool</span> autocontinue
-    float32 param1
-    float32 param2
-    float32 param3
-    float32 param4
-    float64 x_lat   <span class="token comment">//经度或者 x 坐标</span>
-    float64 y_long  <span class="token comment">//维度或者 y 坐标</span>
-    float64 z_alt   <span class="token comment">//海拔或者 z 坐标</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="坐标系"><a href="#坐标系" class="headerlink" title="坐标系"></a>坐标系</h2><p><code>px4</code>使用的坐标系为<code>NED</code>（北东地）坐标系或者<code>FRD</code>（前右下）坐标系。<br><code>mavros</code>中常使用的是<code>ENU</code>（东北天）坐标系或者<code>body</code>系，<code>mavros</code>会自动将输入的<code>ENU</code>坐标值或者<code>body</code>系坐标值转换到<code>NED</code>坐标系中，再通过<code>mavlink</code>发送给飞控。</p>
-<p>mavros的话题中常见的坐标系有<code>global</code>系、<code>local</code>系、<code>body</code>系</p>
-<ul>
-<li><p><code>global</code>系是gps坐标系，经纬度。</p>
-</li>
-<li><p><code>local</code>系指当地坐标系，一般是<code>ENU</code>坐标系，坐标原点一般在起飞点。如果有offset的话坐标原点在飞机上，这时其实是导航坐标系。</p>
-</li>
-<li><p><code>body</code>系在melodic版本中，改成了FLU（前左上）坐标系。</p>
-</li>
-</ul>
-<h3 id="note"><a href="#note" class="headerlink" title="note"></a>note</h3><ul>
-<li><code>coordinate_frame=1</code>虽然代表向px4发送<code>NED</code>坐标值，但是发送到这个话题的坐标系应该用<code>ENU</code>，<code>mavros</code>会自动完成这个坐标系的转换</li>
-<li><code>ROS</code>程序发布的给定姿态<code>topic</code>为<code>/mavros/setpoint_raw/attitude</code>，而非<code>/mavros/setpoint_attitude/attitude</code></li>
-<li><code>ROS</code>发布的速度指令<code>topic</code>为<code>/mavros/setpoint_velocity/cmd_vel_unstamped</code></li>
-</ul>
-<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token argument-name">topic</span><span class="token punctuation">:</span> <span class="token string double-quoted-string">"mavros/setpoint_raw/local"</span>
-rosmsg show marvros_msg<span class="token operator">/</span>PositionTarget
-    uint8 coordinate_frame
-    uint8 <span class="token constant">FRAME_LOCAL_NED</span> <span class="token operator">=</span> <span class="token number">1</span>
-    uint8 <span class="token constant">FRAME_LOCAL_OFFSET_NED</span> <span class="token operator">=</span> <span class="token number">7</span>
-    uint8 <span class="token constant">FRAME_BODY_NED</span> <span class="token operator">=</span> <span class="token number">8</span>
-    uint8 <span class="token constant">FRAME_BODY_OFFSET_NED</span> <span class="token operator">=</span> <span class="token number">9</span>
-
-    uint16 type_mask
-    uint16 <span class="token constant">IGNORE_PX</span> <span class="token operator">=</span> <span class="token number">1</span>    <span class="token comment"># Position ignore flags</span>
-    uint16 <span class="token constant">IGNORE_PY</span> <span class="token operator">=</span> <span class="token number">2</span>
-    uint16 <span class="token constant">IGNORE_PZ</span> <span class="token operator">=</span> <span class="token number">4</span>
-    uint16 <span class="token constant">IGNORE_VX</span> <span class="token operator">=</span> <span class="token number">8</span>    <span class="token comment"># Velocity vector ignore flags</span>
-    uint16 <span class="token constant">IGNORE_VY</span> <span class="token operator">=</span> <span class="token number">16</span>
-    uint16 <span class="token constant">IGNORE_VZ</span> <span class="token operator">=</span> <span class="token number">32</span>
-    uint16 <span class="token constant">IGNORE_AFX</span> <span class="token operator">=</span> <span class="token number">64</span>  <span class="token comment"># Acceleration/Force vector ignore flags</span>
-    uint16 <span class="token constant">IGNORE_AFY</span> <span class="token operator">=</span> <span class="token number">128</span>
-    uint16 <span class="token constant">IGNORE_AFZ</span> <span class="token operator">=</span> <span class="token number">256</span>
-    uint16 <span class="token constant">FORCE</span> <span class="token operator">=</span> <span class="token number">512</span>      <span class="token comment"># Force in af vector flag</span>
-    uint16 <span class="token constant">IGNORE_YAW</span> <span class="token operator">=</span> <span class="token number">1024</span>
-    uint16 <span class="token constant">IGNORE_YAW_RATE</span> <span class="token operator">=</span> <span class="token number">2048</span>
-
-    geometry_msgs<span class="token operator">/</span>Point position
-    geometry_msgs<span class="token operator">/</span>Vector3 velocity
-    geometry_msgs<span class="token operator">/</span>Vector3 acceleration_or_force
-    float32 yaw
-    float32 yaw_rate<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+                <h2 id="LeetCode-53-Maximum-Subarray"><a href="#LeetCode-53-Maximum-Subarray" class="headerlink" title="LeetCode 53. Maximum Subarray"></a>LeetCode 53. Maximum Subarray</h2><p>Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.</p>
+<p>A <strong>subarray</strong> is a <strong>contiguous</strong> part of an array.</p>
+<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">]</span>
+Output<span class="token operator">:</span> <span class="token number">6</span>
+Explanation<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span> has the largest sum <span class="token operator">=</span> <span class="token number">6.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
+<h3 id="method"><a href="#method" class="headerlink" title="method"></a>method</h3><p><code>dp[i]</code>：表示以<code>i</code>结尾的最大子数组和</p>
+<p>如果加上<code>nums[i]</code>会让<code>dp[i-1]</code>变大的话，<code>dp[i]=dp[i-1]+nums[i]</code>，反之，如果不能变大，<code>dp[i]</code>就保持<code>nums[i]</code>本身就好</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">maxSubArray</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">dp</span><span class="token punctuation">(</span>nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    dp<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> res <span class="token operator">=</span> dp<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">></span> res<span class="token punctuation">)</span> res <span class="token operator">=</span> dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -679,7 +602,7 @@ rosmsg show marvros_msg<span class="token operator">/</span>PositionTarget
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/03/26/ROS-ROS-mavros/">http://example.com/2021/03/26/ROS-ROS-mavros/</a>
+                    <a href="http://example.com/2022/01/11/LeetCode-53-%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C/">http://example.com/2022/01/11/LeetCode-53-%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -717,8 +640,8 @@ rosmsg show marvros_msg<span class="token operator">/</span>PositionTarget
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/ROS/">
-                                    <span class="chip bg-color">ROS</span>
+                                <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                                    <span class="chip bg-color">动态规划</span>
                                 </a>
                             
                         </div>
@@ -890,17 +813,18 @@ rosmsg show marvros_msg<span class="token operator">/</span>PositionTarget
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/03/26/ROS-ROS-find-red-pixels/">
+                <a href="/2022/01/11/LeetCode-53-%E6%9C%80%E5%A4%A7%E5%AD%90%E5%BA%8F%E5%92%8C/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="ROS find_red_pixels">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="53-最大子数组和">
                         
-                        <span class="card-title">ROS find_red_pixels</span>
+                        <span class="card-title">53-最大子数组和</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -910,26 +834,27 @@ rosmsg show marvros_msg<span class="token operator">/</span>PositionTarget
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-03-26
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-11
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kunpeng
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/OpenCV/">
-                        <span class="chip bg-color">OpenCV</span>
-                    </a>
-                    
-                    <a href="/tags/ROS/">
-                        <span class="chip bg-color">ROS</span>
+                    <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                        <span class="chip bg-color">动态规划</span>
                     </a>
                     
                 </div>
@@ -943,13 +868,13 @@ rosmsg show marvros_msg<span class="token operator">/</span>PositionTarget
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/26/ROS-ROS-param/">
+                <a href="/2022/01/09/LeetCode-718-%E6%9C%80%E9%95%BF%E9%87%8D%E5%A4%8D%E5%AD%90%E6%95%B0%E7%BB%84/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="ROS参数服务器">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="718/1143-最长重复子数组/子序列">
                         
-                        <span class="card-title">ROS参数服务器</span>
+                        <span class="card-title">718/1143-最长重复子数组/子序列</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -960,12 +885,16 @@ rosmsg show marvros_msg<span class="token operator">/</span>PositionTarget
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-26
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-09
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kunpeng
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -973,8 +902,8 @@ rosmsg show marvros_msg<span class="token operator">/</span>PositionTarget
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/ROS/">
-                        <span class="chip bg-color">ROS</span>
+                    <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                        <span class="chip bg-color">动态规划</span>
                     </a>
                     
                 </div>
