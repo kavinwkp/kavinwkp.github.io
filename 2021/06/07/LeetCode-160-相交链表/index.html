@@ -572,42 +572,9 @@ B<span class="token operator">:</span>    b1 → b2 → b3<span aria-hidden="tru
 <p>Example 1:</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> intersectVal <span class="token operator">=</span> <span class="token number">8</span><span class="token punctuation">,</span> listA <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span> listB <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span> skipA <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> skipB <span class="token operator">=</span> <span class="token number">3</span>
 Output<span class="token operator">:</span> Intersected at <span class="token string">'8'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h3 id="method-1-右端对齐"><a href="#method-1-右端对齐" class="headerlink" title="method 1: 右端对齐"></a>method 1: 右端对齐</h3><p>把短的链表往后移到跟长的链表右端对齐，长的链表的指针移动相同距离，然后两指针开始遍历</p>
-<ul>
-<li>指针相遇说明相交，返回当前指针</li>
-<li>没相遇会一直找到末尾<code>nullptr</code>，退出循环，也返回当前指针<code>nullptr</code></li>
-</ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ListNode <span class="token operator">*</span><span class="token function">getIntersectionNode</span><span class="token punctuation">(</span>ListNode <span class="token operator">*</span>headA<span class="token punctuation">,</span> ListNode <span class="token operator">*</span>headB<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> lenA <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> lenB <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    ListNode <span class="token operator">*</span>curA <span class="token operator">=</span> headA<span class="token punctuation">;</span>
-    ListNode <span class="token operator">*</span>curB <span class="token operator">=</span> headB<span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>curA<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>  <span class="token comment">// 得到A的长度</span>
-        lenA<span class="token operator">++</span><span class="token punctuation">;</span>
-        curA <span class="token operator">=</span> curA<span class="token operator">-></span>next<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>curB<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>  <span class="token comment">// 得到B的长度</span>
-        lenB<span class="token operator">++</span><span class="token punctuation">;</span>
-        curB <span class="token operator">=</span> curB<span class="token operator">-></span>next<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    curA <span class="token operator">=</span> headA<span class="token punctuation">;</span>
-    curB <span class="token operator">=</span> headB<span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>lenB <span class="token operator">></span> lenA<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>  <span class="token comment">// 交换，让A是长的那条</span>
-        <span class="token function">swap</span><span class="token punctuation">(</span>lenA<span class="token punctuation">,</span> lenB<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">swap</span><span class="token punctuation">(</span>curA<span class="token punctuation">,</span> curB<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">int</span> len <span class="token operator">=</span> lenA <span class="token operator">-</span> lenB<span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>len<span class="token operator">--</span><span class="token punctuation">)</span> curA <span class="token operator">=</span> curA<span class="token operator">-></span>next<span class="token punctuation">;</span>  <span class="token comment">// A移动到与B对应的地方</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>curA<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>curA <span class="token operator">==</span> curB<span class="token punctuation">)</span> <span class="token keyword">return</span> curA<span class="token punctuation">;</span>
-        curA <span class="token operator">=</span> curA<span class="token operator">-></span>next<span class="token punctuation">;</span>
-        curB <span class="token operator">=</span> curB<span class="token operator">-></span>next<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> curA<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="method-2-指针交叉遍历"><a href="#method-2-指针交叉遍历" class="headerlink" title="method 2: 指针交叉遍历"></a>method 2: 指针交叉遍历</h3><p>一个链表的指针遍历完了，就换到另一条链表继续遍历，两个指针相遇说明有相交，没相遇最后会都等于<code>nullptr</code>返回</p>
+<h3 id="method-指针交叉遍历"><a href="#method-指针交叉遍历" class="headerlink" title="method: 指针交叉遍历"></a>method: 指针交叉遍历</h3><p>一个链表的指针遍历完了，就换到另一条链表继续遍历，两个指针相遇说明有相交，没相遇最后会都等于<code>nullptr</code>返回</p>
 <center>
-<img src="https://github.com/kavinwkp/blogimage/raw/main/img/LeetCode/160/160.png#pic_center" width="100%" height="100%">
+<img src="https://github.com/kavinwkp/blogimage/raw/main/img/LeetCode/160/160.png#pic_center" width="80%" height="80%">
 </center>
 
 <p>情况一：两个链表相交</p>
@@ -881,9 +848,9 @@ Output<span class="token operator">:</span> Intersected at <span class="token st
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="83-删除链表重复元素">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="83/82-删除链表重复元素">
                         
-                        <span class="card-title">83-删除链表重复元素</span>
+                        <span class="card-title">83/82-删除链表重复元素</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
