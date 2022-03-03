@@ -560,12 +560,19 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="LeetCode-230-Kth-Smallest-Element-in-a-BST"><a href="#LeetCode-230-Kth-Smallest-Element-in-a-BST" class="headerlink" title="LeetCode 230. Kth Smallest Element in a BST"></a>LeetCode 230. Kth Smallest Element in a BST</h2><p>Given the root of a binary search tree, and an integer k, return the kth smallest value (1-indexed) of all the values of the nodes in the tree.</p>
+                <h2 id="LeetCode-230-Kth-Smallest-Element-in-a-BST"><a href="#LeetCode-230-Kth-Smallest-Element-in-a-BST" class="headerlink" title="LeetCode 230. Kth Smallest Element in a BST"></a>LeetCode 230. Kth Smallest Element in a BST</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/kth-smallest-element-in-a-bst/">LeetCode-230</a></p>
+<p>Given the root of a binary search tree, and an integer k, return the kth smallest value (1-indexed) of all the values of the nodes in the tree.</p>
 <p>Example 1:</p>
 <p><img src="https://github.com/kavinwkp/blogimage/raw/main/img/LeetCode/230/kthtree1.jpg" alt></p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> root <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">1</span>
 Output<span class="token operator">:</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h3 id="method"><a href="#method" class="headerlink" title="method"></a>method</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">traversal</span><span class="token punctuation">(</span>TreeNode <span class="token operator">*</span>root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<h3 id="method"><a href="#method" class="headerlink" title="method"></a>method</h3><p>算当前节点的左节点有<code>leftNum</code>个，当前节点是第<code>leftNum+1</code>小节点，如果</p>
+<ul>
+<li>如果<code>leftNum+1==k</code>，当前节点就是第<code>k</code>小节点，直接返回</li>
+<li>如果<code>leftNum+1&gt;k</code>，说明第<code>k</code>小的节点还在左边，继续往左边找</li>
+<li>如果<code>leftNum+1&lt;k</code>，说明第<code>k</code>小节点在右边，需要找右边的第<code>k-leftNum-1</code>小节点</li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">traversal</span><span class="token punctuation">(</span>TreeNode <span class="token operator">*</span>root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token function">traversal</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">traversal</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
