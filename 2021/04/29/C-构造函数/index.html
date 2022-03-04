@@ -560,22 +560,28 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <!-- toc -->
-<h2 id="一、类对象成员的构造"><a href="#一、类对象成员的构造" class="headerlink" title="一、类对象成员的构造"></a>一、类对象成员的构造</h2><p>先构造成员<br>再构造自身（调用构造函数）</p>
+                <h2 id="一、类对象成员的构造"><a href="#一、类对象成员的构造" class="headerlink" title="一、类对象成员的构造"></a>一、类对象成员的构造</h2><p>先构造成员<br>再构造自身（调用构造函数）</p>
 <h2 id="二、派生类构造函数"><a href="#二、派生类构造函数" class="headerlink" title="二、派生类构造函数"></a>二、派生类构造函数</h2><p>派生类可能有多个基类，也可能包括多个成员对象，在创建派生类对象时，派生类的构造函数除了要负责本类成员的初始化外，还要调用基类和成员对象的构造函数，并向它们传递参数，以完成基类子对象和成员对象的建立和初始化。</p>
 <p><strong>派生类只能采用构造函数初始化列表的方式向基类或成员对象的构造函数传递参数</strong>，形式如下：<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">派生类构造函数名<span class="token punctuation">(</span>参数表<span class="token punctuation">)</span><span class="token operator">:</span> 基类构造函数名<span class="token punctuation">(</span>参数表<span class="token punctuation">)</span><span class="token punctuation">,</span> 成员对象名<span class="token number">1</span><span class="token punctuation">(</span>参数表<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></p>
 <h2 id="三、构造函数和析构函数调用次序"><a href="#三、构造函数和析构函数调用次序" class="headerlink" title="三、构造函数和析构函数调用次序"></a>三、构造函数和析构函数调用次序</h2><p><strong>派生类对象的构造</strong></p>
+<blockquote>
 <ul>
 <li>先构造基类</li>
 <li>再构造成员</li>
 <li>最后构造自身（调用构造函数）</li>
 </ul>
-<p>基类构造顺序由派生层次决定：<strong>最远的基类最先构造</strong><br>成员构造顺序和定义顺序相同<br>析构函数的析构顺序与构造相反</p>
+</blockquote>
+<p>基类构造顺序由派生层次决定：<font color="LightSeaGreen">最远的基类最先构造</font></p>
+<blockquote>
+<ul>
+<li>成员构造顺序和定义顺序相同，与初始化列表的顺序无关</li>
+<li>析构函数的析构顺序与构造相反</li>
+</ul>
+</blockquote>
 <h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
 <span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 
-<span class="token keyword">class</span> <span class="token class-name">A</span>
-<span class="token punctuation">&#123;</span>
+<span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">int</span> x<span class="token punctuation">;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token function">A</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -584,8 +590,7 @@
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-<span class="token keyword">class</span> <span class="token class-name">B</span>
-<span class="token punctuation">&#123;</span>
+<span class="token keyword">class</span> <span class="token class-name">B</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">int</span> y<span class="token punctuation">;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token function">B</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -594,8 +599,7 @@
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-<span class="token keyword">class</span> <span class="token class-name">C</span>
-<span class="token punctuation">&#123;</span>
+<span class="token keyword">class</span> <span class="token class-name">C</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">int</span> z<span class="token punctuation">;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token function">C</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -604,8 +608,7 @@
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-<span class="token keyword">class</span> <span class="token class-name">D</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">B</span></span>
-<span class="token punctuation">&#123;</span>
+<span class="token keyword">class</span> <span class="token class-name">D</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">B</span></span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     C c1<span class="token punctuation">;</span>
     A<span class="token operator">*</span> a1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">A</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -613,25 +616,24 @@
     <span class="token function">D</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">a4</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">c1</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">B</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         cout <span class="token operator">&lt;&lt;</span> <span class="token string">"D constructor"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-    
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     D d<span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
+
 B constructor<span class="token operator">:</span> <span class="token number">1</span>    <span class="token comment">// 先调用基类构造函数</span>
 C constructor<span class="token operator">:</span> <span class="token number">1</span>    <span class="token comment">// 按照声明的顺序调用成员对象的构造函数，c1</span>
 A constructor<span class="token operator">:</span> <span class="token number">10</span>   <span class="token comment">// a1</span>
 A constructor<span class="token operator">:</span> <span class="token number">0</span>    <span class="token comment">// a0</span>
 A constructor<span class="token operator">:</span> <span class="token number">4</span>    <span class="token comment">// a4</span>
-D constructor       <span class="token comment">// 最后才是自身</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+D constructor       <span class="token comment">// 最后才是自身</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="explicit关键字"><a href="#explicit关键字" class="headerlink" title="explicit关键字"></a>explicit关键字</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token keyword">int</span> x<span class="token punctuation">;</span>
-    <span class="token function">A</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token keyword">this</span><span class="token operator">-></span>x <span class="token operator">=</span> x<span class="token punctuation">;</span><span class="token punctuation">&#125;</span>
-    <span class="token function">A</span><span class="token punctuation">(</span><span class="token keyword">const</span> A <span class="token operator">&amp;</span>a<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token keyword">this</span><span class="token operator">-></span>x <span class="token operator">=</span> a<span class="token punctuation">.</span>x<span class="token punctuation">;</span><span class="token punctuation">&#125;</span>
+    <span class="token function">A</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token keyword">this</span><span class="token operator">-></span>x <span class="token operator">=</span> x<span class="token punctuation">;</span><span class="token punctuation">&#125;</span> <span class="token comment">// 重载构造函数</span>
+    <span class="token function">A</span><span class="token punctuation">(</span><span class="token keyword">const</span> A <span class="token operator">&amp;</span>a<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token keyword">this</span><span class="token operator">-></span>x <span class="token operator">=</span> a<span class="token punctuation">.</span>x<span class="token punctuation">;</span><span class="token punctuation">&#125;</span>  <span class="token comment">// 拷贝构造函数</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
 <span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
