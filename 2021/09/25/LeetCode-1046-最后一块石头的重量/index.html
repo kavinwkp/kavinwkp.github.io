@@ -511,6 +511,10 @@
                     
                     <div class="article-tag">
                         
+                            <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                                <span class="chip bg-color">动态规划</span>
+                            </a>
+                        
                             <a href="/tags/%E5%A0%86/">
                                 <span class="chip bg-color">堆</span>
                             </a>
@@ -564,7 +568,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="LeetCode-1046-Last-Stone-Weight"><a href="#LeetCode-1046-Last-Stone-Weight" class="headerlink" title="LeetCode 1046. Last Stone Weight"></a>LeetCode 1046. Last Stone Weight</h2><p>You are given an array of integers <code>stones</code> where <code>stones[i]</code> is the weight of the i^th^ stone.</p>
+                <h2 id="LeetCode-1046-Last-Stone-Weight"><a href="#LeetCode-1046-Last-Stone-Weight" class="headerlink" title="LeetCode 1046. Last Stone Weight"></a>LeetCode 1046. Last Stone Weight</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/last-stone-weight/">LeetCode-1046</a></p>
+<p>You are given an array of integers <code>stones</code> where <code>stones[i]</code> is the weight of the i^th^ stone.</p>
 <p>We are playing a game with the stones. On each turn, we choose the heaviest two stones and smash them together. Suppose the heaviest two stones have weights <code>x</code> and <code>y</code> with <code>x &lt;= y</code>. The result of this smash is:</p>
 <p>If <code>x == y</code>, both stones are destroyed, and<br>If <code>x != y</code>, the stone of weight <code>x</code> is destroyed, and the stone of weight y has new weight <code>y - x</code>.<br>At the end of the game, there is <strong>at most one</strong> stone left.</p>
 <p>Return the smallest possible weight of the left stone. If there are no stones left, return <code>0</code>.</p>
@@ -589,7 +594,8 @@ we combine <span class="token number">1</span> <span class="token operator">and<
     <span class="token keyword">return</span> q<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token number">0</span> <span class="token operator">:</span> q<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 非空返回堆首</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <hr>
-<h2 id="LeetCode-1049-Last-Stone-Weight-II"><a href="#LeetCode-1049-Last-Stone-Weight-II" class="headerlink" title="LeetCode 1049. Last Stone Weight II"></a>LeetCode 1049. Last Stone Weight II</h2><p>You are given an array of integers <code>stones</code> where <code>stones[i]</code> is the weight of the i^th^ stone.</p>
+<h2 id="LeetCode-1049-Last-Stone-Weight-II"><a href="#LeetCode-1049-Last-Stone-Weight-II" class="headerlink" title="LeetCode 1049. Last Stone Weight II"></a>LeetCode 1049. Last Stone Weight II</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/last-stone-weight-ii/">LeetCode-1049</a></p>
+<p>You are given an array of integers <code>stones</code> where <code>stones[i]</code> is the weight of the i^th^ stone.</p>
 <p>We are playing a game with the stones. On each turn, we choose any two stones and smash them together. Suppose the stones have weights <code>x</code> and <code>y</code> with <code>x &lt;= y</code>. The result of this smash is:</p>
 <p>If <code>x == y</code>, both stones are destroyed, and<br>If <code>x != y</code>, the stone of weight <code>x</code> is destroyed, and the stone of weight y has new weight <code>y - x</code>.<br>At the end of the game, there is <strong>at most one</strong> stone left.</p>
 <p>Return the smallest possible weight of the left stone. If there are no stones left, return <code>0</code>.</p>
@@ -606,12 +612,11 @@ we can combine <span class="token number">1</span> <span class="token operator">
 </ul>
 <h3 id="method-01背包"><a href="#method-01背包" class="headerlink" title="method: 01背包"></a>method: 01背包</h3><p>把所有元素分成大小最接近的两堆，类似于<a target="_blank" rel="noopener" href="https://kavinwkp.github.io/2021/09/25/LeetCode-416-%E5%88%86%E5%89%B2%E7%AD%89%E5%92%8C%E5%AD%90%E9%9B%86/">416-分割等和子集</a></p>
 <p>用一个<code>sum/2</code>的背包去装，最大能装<code>dp[sum/2]</code>，肯定小于等于<code>sum - dp[sum/2]</code>，再做差就行</p>
-<p><code>sum</code>最大为<code>3000</code>，所以背包最大为<code>1500</code></p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">lastStoneWeightII</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">dp</span><span class="token punctuation">(</span><span class="token number">1501</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">int</span> sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> n <span class="token operator">:</span> nums<span class="token punctuation">)</span> sum <span class="token operator">+=</span> n<span class="token punctuation">;</span>
     <span class="token keyword">int</span> target <span class="token operator">=</span> sum <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">dp</span><span class="token punctuation">(</span>target <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> target<span class="token punctuation">;</span> j <span class="token operator">>=</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span> j<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
             dp<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> dp<span class="token punctuation">[</span>j <span class="token operator">-</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">+</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -681,6 +686,10 @@ we can combine <span class="token number">1</span> <span class="token operator">
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
+                            
+                                <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                                    <span class="chip bg-color">动态规划</span>
+                                </a>
                             
                                 <a href="/tags/%E5%A0%86/">
                                     <span class="chip bg-color">堆</span>
@@ -897,6 +906,10 @@ we can combine <span class="token number">1</span> <span class="token operator">
                 
                 <div class="card-action article-tags">
                     
+                    <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                        <span class="chip bg-color">动态规划</span>
+                    </a>
+                    
                     <a href="/tags/%E8%83%8C%E5%8C%85/">
                         <span class="chip bg-color">背包</span>
                     </a>
@@ -945,6 +958,10 @@ we can combine <span class="token number">1</span> <span class="token operator">
                 </div>
                 
                 <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                        <span class="chip bg-color">动态规划</span>
+                    </a>
                     
                     <a href="/tags/%E8%83%8C%E5%8C%85/">
                         <span class="chip bg-color">背包</span>
