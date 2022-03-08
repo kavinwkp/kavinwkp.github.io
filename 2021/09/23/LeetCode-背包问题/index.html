@@ -691,6 +691,23 @@ dp<span class="token punctuation">[</span><span class="token number">1</span><sp
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>既然背包变成从前往后遍历，那遍历的顺序也就没有影响了</p>
 <p>但是如果涉及到<font color="LightSeaGreen">组合与排列</font>的问题，遍历顺序就有影响了</p>
+<blockquote>
+<ul>
+<li>组合问题：先遍历物品，再遍历背包</li>
+<li>排列问题：先遍历背包，再遍历物品</li>
+</ul>
+</blockquote>
+<p>例如<a target="_blank" rel="noopener" href="https://kavinwkp.github.io/2021/09/25/LeetCode-322-%E6%89%BE%E9%9B%B6%E9%92%B1/">518-找零钱</a></p>
+<p><code>coins=&#123;1,2&#125;，amount=3</code></p>
+<p>按组合方式遍历的<code>dp</code>数组为<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token number">1</span> <span class="token number">1</span> <span class="token number">1</span> <span class="token number">1</span> 
+<span class="token number">1</span> <span class="token number">1</span> <span class="token number">2</span> <span class="token number">2</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>遍历硬币1时，<code>dp[3]+=dp[2]=1</code>，对应<code>&#123;1,1,1&#125;</code><br>遍历硬币2时，<code>dp[3]+=dp[1]=2</code>，对应<code>&#123;1,2&#125;</code></p>
+<p>按排列方式遍历的<code>dp</code>数组为<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token number">1</span> <span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span> 
+<span class="token number">1</span> <span class="token number">1</span> <span class="token number">0</span> <span class="token number">0</span> 
+<span class="token number">1</span> <span class="token number">1</span> <span class="token number">2</span> <span class="token number">0</span> 
+<span class="token number">1</span> <span class="token number">1</span> <span class="token number">2</span> <span class="token number">3</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></p>
+<p>遍历完硬币总值2时，<code>dp[1]=1</code>，<code>dp[2]=2</code>，<code>dp[1]</code>对应组成1的情况<code>&#123;1&#125;</code>，<code>dp[2]</code>对应组成2的情况<code>&#123;1,1&#125;</code>和<code>&#123;2&#125;</code></p>
+<p>当遍历到硬币总值3，硬币1时，<code>dp[3]+=dp[2]=2</code>，相当于在<code>&#123;1,1&#125;</code>和<code>&#123;2&#125;</code>的后面加个1，变成<code>&#123;1,1,1&#125;</code>和<code>&#123;2,1&#125;</code><br>然后遍历硬币2时，<code>dp[3]+=dp[1]=3</code>，相当于在<code>&#123;1&#125;</code>的后面加个2，变成<code>&#123;1,2&#125;</code></p>
+<p>所以，3种情况是<code>&#123;1,1,1&#125;</code>，<code>&#123;2,1&#125;</code>和<code>&#123;1,2&#125;</code></p>
 
                 
             </div>
