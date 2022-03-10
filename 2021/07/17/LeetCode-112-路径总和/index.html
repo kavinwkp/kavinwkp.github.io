@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="112/113-路径总和, kunpeng">
+    <meta name="keywords" content="112-路径总和, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>112/113-路径总和 | kunpeng</title>
+    <title>112-路径总和 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">112/113-路径总和</h1>
+                    <h1 class="description center-align post-title">112-路径总和</h1>
                 </div>
             </div>
         </div>
@@ -635,6 +635,50 @@ vector<span class="token operator">&lt;</span>vector<span class="token operator"
     <span class="token function">dfs</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span> targetSum<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> res<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<hr>
+<h2 id="LeetCode-437-Path-Sum-III"><a href="#LeetCode-437-Path-Sum-III" class="headerlink" title="LeetCode 437. Path Sum III"></a>LeetCode 437. Path Sum III</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/path-sum-iii/">LeetCode-437</a></p>
+<p>Given the <code>root</code> of a binary tree and an integer <code>targetSum</code>, return the number of paths where the sum of the values along the path equals <code>targetSum</code>.</p>
+<p>The path does not need to start or end at the root or a leaf, but it must go downwards (i.e., traveling only from parent nodes to child nodes).</p>
+<p>Example 1:</p>
+<p><img src="https://github.com/kavinwkp/blogimage/raw/main/img/LeetCode/437/pathsum3-1-tree.jpg" alt></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> root <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">11</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> targetSum <span class="token operator">=</span> <span class="token number">8</span>
+Output<span class="token operator">:</span> <span class="token number">3</span>
+Explanation<span class="token operator">:</span> The paths that sum to <span class="token number">8</span> are shown<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3 id="method-1：嵌套递归"><a href="#method-1：嵌套递归" class="headerlink" title="method 1：嵌套递归"></a>method 1：嵌套递归</h3><p>对于每个节点都要考虑取或不取该节点的情况，不取该节点由<code>pathSum</code>递归，取该节点由<code>dfs</code>递归</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">dfs</span><span class="token punctuation">(</span>TreeNode <span class="token operator">*</span>root<span class="token punctuation">,</span> <span class="token keyword">int</span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> res <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span>val <span class="token operator">==</span> target<span class="token punctuation">)</span> res <span class="token operator">+=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    res <span class="token operator">+=</span> <span class="token function">dfs</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">,</span> target <span class="token operator">-</span> root<span class="token operator">-></span>val<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 用了root的值</span>
+    res <span class="token operator">+=</span> <span class="token function">dfs</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">,</span> target <span class="token operator">-</span> root<span class="token operator">-></span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">int</span> <span class="token function">pathSum</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">,</span> <span class="token keyword">int</span> targetSum<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> res <span class="token operator">=</span> <span class="token function">dfs</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span> targetSum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    res <span class="token operator">+=</span> <span class="token function">pathSum</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">,</span> targetSum<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 没有用root的值</span>
+    res <span class="token operator">+=</span> <span class="token function">pathSum</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">,</span> targetSum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="method-2：前缀和"><a href="#method-2：前缀和" class="headerlink" title="method 2：前缀和"></a>method 2：前缀和</h3><p><code>cur</code>记录从根节点到当前节点的前缀和，并且保存在哈希表中，如果当前节点的前缀和减去<code>target</code>值在哈希表中，说明在从根节点到当前节点的路径上存在某点<code>node</code>，使得<code>node</code>到当前节点的前缀和为<code>target</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">hash<span class="token operator">&lt;</span><span class="token function">prefix</span><span class="token punctuation">(</span>root<span class="token operator">--</span><span class="token operator">></span>currentNode<span class="token punctuation">)</span><span class="token punctuation">,</span> frequency<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><code>hash[0]=1</code>记录<code>cur-target=0</code>的哈希值，说明从根节点到当前节点的前缀和刚好等于<code>target</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">unordered_map<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">></span> hash<span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">dfs</span><span class="token punctuation">(</span>TreeNode <span class="token operator">*</span>root<span class="token punctuation">,</span> <span class="token keyword">int</span> cur<span class="token punctuation">,</span> <span class="token keyword">int</span> target<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> res <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    cur <span class="token operator">+=</span> root<span class="token operator">-></span>val<span class="token punctuation">;</span>
+    res <span class="token operator">+=</span> hash<span class="token punctuation">[</span>cur <span class="token operator">-</span> target<span class="token punctuation">]</span><span class="token punctuation">;</span>  <span class="token comment">// 有等于target的前缀和值就累加</span>
+    hash<span class="token punctuation">[</span>cur<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>    <span class="token comment">// 记录当前节点的前缀和，向下层递归</span>
+    res <span class="token operator">+=</span> <span class="token function">dfs</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">,</span> cur<span class="token punctuation">,</span> target<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    res <span class="token operator">+=</span> <span class="token function">dfs</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">,</span> cur<span class="token punctuation">,</span> target<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    hash<span class="token punctuation">[</span>cur<span class="token punctuation">]</span><span class="token operator">--</span><span class="token punctuation">;</span>    <span class="token comment">// 回溯取消当前节点的前缀和</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">int</span> <span class="token function">pathSum</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">,</span> <span class="token keyword">int</span> targetSum<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    hash<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">dfs</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> targetSum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
