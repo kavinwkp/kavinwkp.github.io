@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="C++基础知识-1, kunpeng">
+    <meta name="keywords" content="关键字与运算符, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>C++基础知识-1 | kunpeng</title>
+    <title>关键字与运算符 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">C++基础知识-1</h1>
+                    <h1 class="description center-align post-title">关键字与运算符</h1>
                 </div>
             </div>
         </div>
@@ -511,8 +511,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/C/">
-                                <span class="chip bg-color">C++</span>
+                            <a href="/tags/Offer/">
+                                <span class="chip bg-color">Offer</span>
                             </a>
                         
                     </div>
@@ -523,8 +523,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Offer/" class="post-category">
-                                Offer
+                            <a href="/categories/C/" class="post-category">
+                                C++
                             </a>
                         
                     </div>
@@ -536,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-04-28
+                    2022-03-11
                 </div>
                 
 
@@ -560,69 +560,135 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="变量的声明和定义有什么区别"><a href="#变量的声明和定义有什么区别" class="headerlink" title="变量的声明和定义有什么区别"></a>变量的声明和定义有什么区别</h3><p>变量的定义是为变量<strong>分配地址和存储空间</strong>，变量的声明<strong>不分配地址</strong>。<br>一个变量可以在多个地方声明，但是<font color="LightSeaGreen">只在一个地方定义</font><br>加入<code>extern</code>修饰的是变量的声明，说明此变量将在文件以外或在文件后面部分定义。<br><strong>说明</strong>：很多时候一个变量，只是声明不分配内存空间，直到具体使用时才初始化，分配内存空间，如外部变量</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">extern</span> <span class="token keyword">int</span> A<span class="token punctuation">;</span>
-    <span class="token comment">// 这是声明不是定义，声明A是一个外部变量</span>
-    <span class="token comment">// 注意：声明外部变量时可以把变量类型去掉，如：extern A;</span>
+                <h2 id="关键字与运算符"><a href="#关键字与运算符" class="headerlink" title="关键字与运算符"></a>关键字与运算符</h2><p><strong>指针与引用</strong></p>
+<ol>
+<li>指针存放某个对象的地址,其本身就是变量(命了名的对象),本身就有地址,所以可以有指向指针的指针;可变,包括其所指向的地址的改变和其指向的地址中所存放的数据的改变</li>
+<li>引用就是变量的别名,从一而终,不可变,必须初始化</li>
+<li>不存在指向空值的引用,但是存在指向空值的指针</li>
+</ol>
+<p><strong>define 和 typedef 的区别</strong></p>
+<p>define:</p>
+<ol>
+<li>只是简单的字符串替换,没有类型检查</li>
+<li>是在编译的预处理阶段起作用</li>
+<li>可以用来防止头文件重复引用</li>
+<li>不分配内存,给出的是立即数,有多少次使用就进行多少次替换</li>
+</ol>
+<p>typedef:</p>
+<ol>
+<li>有对应的数据类型,是要进行判断的</li>
+<li>是在编译、运行的时候起作用</li>
+<li>在静态存储区中分配空间,在程序运行过程中内存中只有一个拷⻉</li>
+</ol>
+<p><strong>define 和 inline 的区别</strong><br>1、define:定义预编译时处理的宏,只是简单的字符串替换,无类型检查,不安全。<br>2、inline:先将内联函数编译完成的函数体直接插入被调用的地方,减少了压栈,跳转和返回的操作。没有普通函数调用时的额外开销<br>内联函数是一种特殊的函数,会进行类型检查<br>对编译器的一种请求,编译器有可能拒绝这种请求</p>
+<p><strong>C++中inline编译限制</strong></p>
+<ol>
+<li>不能存在任何形式的循环语句</li>
+<li>不能存在过多的条件判断语句</li>
+<li>函数体不能过于庞大</li>
+<li>内联函数声明必须在调用语句之前</li>
+</ol>
+<p><strong>override 和 overload</strong><br>1、override是重写（覆盖）了⼀个⽅法<br>以实现不同的功能，⼀般是⽤于⼦类在继承⽗类时，重写⽗类⽅法<br>规则：</p>
+<ol>
+<li>重写⽅法的参数列表，返回值，所抛出的异常与被重写⽅法⼀致</li>
+<li>被重写的⽅法不能为private</li>
+<li>静态⽅法不能被重写为⾮静态的⽅法</li>
+<li>重写⽅法的访问修饰符⼀定要⼤于被重写⽅法的访问修饰符（public&gt;protected&gt;default&gt;private）</li>
+</ol>
+<p>2、overload是重载，这些⽅法的名称相同⽽参数形式不同<br>⼀个⽅法有不同的版本，存在于⼀个类中。<br>规则：</p>
+<ol>
+<li>不能通过访问权限、返回类型、抛出的异常进⾏重载</li>
+<li>参数列表可以是不同的参数类型，不同的参数个数，不同的参数顺序（参数类型必须不⼀样）</li>
+<li>⽅法的异常类型和数⽬不会对重载造成影响</li>
+</ol>
+<p><strong>new 和 malloc</strong><br>1、new内存分配失败时，会抛出bad_alloc异常，它不会返回NULL；malloc分配内存失败时返回NULL。<br>2、使⽤new操作符申请内存分配时⽆须指定内存块的⼤⼩，⽽malloc则需要显式地指出所需内存的尺⼨。<br>3、opeartor new/operator delete可以被重载，⽽malloc/free并不允许重载。<br>4、new/delete会调⽤对象的构造函数/析构函数以完成对象的构造/析构。⽽malloc则不会<br>5、malloc与free是C++/C语⾔的标准库函数,new/delete是C++的运算符<br>6、new操作符从⾃由存储区上为对象动态分配内存空间，⽽malloc函数从堆上动态分配内存。 </p>
+<p><strong>constexpr 和 const</strong><br>const 表示“只读”的语义，constexpr 表示“常量”的语义<br>constexpr 只能定义编译期常量⽽ const 可以定义编译期常量也可以定义运⾏期常量。<br>你将⼀个成员函数标记为constexpr，则顺带也将它标记为了const。如果你将⼀个变量标记为constexpr，则同样它是const的。但相反并不成⽴，⼀个const的变量或函数，并不是constexpr的</p>
+<p><strong>constexpr变量</strong><br>复杂系统中很难分辨⼀个初始值是不是常量表达式，可以将变量声明为constexpr类型，由编译器来验证变量的值是否是⼀个常量表达式。<br>必须使⽤常量初始化<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">constexpr</span> <span class="token keyword">int</span> n <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
+<span class="token keyword">constexpr</span> <span class="token keyword">int</span> m <span class="token operator">=</span> n <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">static</span> <span class="token keyword">constexpr</span> <span class="token keyword">int</span> MOD <span class="token operator">=</span> <span class="token number">1000000007</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
+<p>如果constexpr声明中定义了⼀个指针，constexpr仅对指针有效，和所指对象⽆关</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">constexpr</span> <span class="token keyword">int</span> <span class="token operator">*</span>p <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span> <span class="token comment">// 常量指针，顶层const</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> <span class="token operator">*</span>q <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span> <span class="token comment">// 指向常量的指针，底层const</span>
+<span class="token keyword">int</span><span class="token operator">*</span> <span class="token keyword">const</span> q <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span> <span class="token comment">// 指针常量，顶层const</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p><strong>constexpr函数</strong><br>constexpr函数是指能⽤于常量表达式的函数<br>函数的返回类型和所有形参类型都是字⾯值类型，函数体有且只有⼀条return语句<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">constexpr</span> <span class="token keyword">int</span> <span class="token keyword">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token number">42</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br>为了可以在编译过程展开，constexpr函数被隐式转换成了内联函数。<br>constexpr和内联函数可以在程序中多次定义，⼀般定义在头⽂件</p>
+<p><strong>constexpr 构造函数</strong><br>构造函数不能说const，但字⾯值常量类的构造函数可以是constexpr<br>constexpr构造函数必须有⼀个空的函数体，即所有成员变量的初始化都放到初始化列表中。对象调⽤的成员函数必须使⽤ constexpr 修饰</p>
+<p>const<br>指针常量: <code>const int* d = new int(2);</code> 不能改变对象的值<br>常量指针: <code>int* const e = new int(2);</code> 不能改变指向<br>区别⽅法：<br>左定值，右定向：指的是const在*的左还是右边</p>
+<p>顶层const：指针本身是常量<br>底层const：指针所指的对象是常量<br>若要修改const修饰的变量的值，需要加上关键字volatile<br>若想要修改const成员函数中某些与类状态无关的数据成员，可以使用mutable关键字来修饰这个数据成员</p>
+<table> 
+<tr>
+<th>关键字</th>
+<th>修饰常量</th>
+<th>修饰成员变量</th>
+<th>修饰成员函数</th> 
+
+</tr><tr>
+<td>const</td>
+<td>超出其作用域后空间会被释放，在定义时必须初始化，之后无法更改
+const形参可以接受const和非const类型的实参</td>
+<td>只在某个对象的生命周期内是常量，而对整个对象而言是可变的不能赋值
+不能在类外定义，只能通过构造函数初始化列表进行初始化【因为不同的对象对其const数据成员的值可以不同，所以不能在类中声明时初始化】</td>
+<td>防止成员函数修改对象的内容【不能修改成员变量的值，但是可以访问】
+const对象不可以调用非const的函数，但是非const的对象可以调用</td>
+
+</tr><tr>
+<td>static</td>
+<td>在函数执行后不会释放其存储空间</td>
+<td>只能在类定义体内部声明，外部初始化，且不加static</td>
+<td>1. 作为类作用域的全局函数【不能访问和调用非静态数据成员和调用非静态成员函数】
+2. 没有this指针【不能直接存取类的非静态成员，调用非静态成员函数】
+3. 不能声明为virtual</td>
+</tr></table>
+
+<p>const和static不能同时修饰成员函数，因为静态成员函数不含有this指针，即不能实例化，而const成员函数必须具体到某一实例</p>
+<p><strong>constexpr的好处</strong></p>
+<ol>
+<li>为一些不能修改数据提供保障，写成变量则就有被意外修改的⻛险。</li>
+<li>有些场景，编译器可以在编译期对constexpr的代码进行优化，提高效率。</li>
+<li>相比宏来说，没有额外的开销，但更安全可靠</li>
+</ol>
+<p><strong>volatile</strong></p>
+<p>与const绝对对立的，是类型修饰符。影响编译器编译的结果，用该关键字声明的变量表示该变量随时可能发生变化，与该变量有关的运算，不要进行编译优化；会从内存中重新装载内容，而不是直接从寄存器拷⻉内容</p>
+<p>作用：指令关键字，确保本条指令不会因编译器的优化而省略，且要求每次直接读值，保证对特殊地址的稳定访问</p>
+<p>使用场合：在中断服务程序和cpu相关寄存器的定义</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">volatile</span> <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">10000</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 会执行，不会被优化掉</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><strong>extern</strong></p>
+<p>声明外部变量，在函数或者文件外部定义的全局变量</p>
+<p><strong>static</strong></p>
+<p>实现多个对象之间的数据共享+隐藏，并且使用静态成员还不会破坏隐藏原则；默认初始化为0</p>
+<p><strong>前置++与后置++</strong></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">self<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">++</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>    <span class="token comment">// 前置</span>
+    node <span class="token operator">=</span> <span class="token punctuation">(</span>linktype<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span><span class="token punctuation">.</span>next<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
-<span class="token keyword">int</span> A<span class="token punctuation">;</span>  <span class="token comment">// 定义，定义了A为整形的外部变量</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<hr>
-<h3 id="简述-ifdef、-else、-endif和-ifndef的作用"><a href="#简述-ifdef、-else、-endif和-ifndef的作用" class="headerlink" title="简述#ifdef、#else、#endif和#ifndef的作用"></a>简述#ifdef、#else、#endif和#ifndef的作用</h3><p>利用<code>#ifdef</code>、<code>#endif</code>将某程序功能模块包括进去，以向特定用户提供该功能<br>在不需要时用户可轻易将其屏蔽。<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">__MATH__ </span></span>
 
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"math.c"</span> </span>
-
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span> </span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>在子程序前加上标记，以便于追踪和调试。<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">DEBUG</span></span>
-
-<span class="token function">printf</span> <span class="token punctuation">(</span><span class="token string">"In debugging......!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>应对硬件的限制。由于一些具体应用环境的硬件不一样，限于条件，本地缺乏这种设备，只能绕过硬件，直接写出预期结果。<br><strong>注意</strong>：虽然不用条件编译命令而直接用<code>if</code>语句也能达到要求，但那样做目标程序长（因为所有语句都编译），运行时间长因为在程序运行时间对<code>if</code>语句进行测试）。<br>而采用条件编译，可以减少被编译的语句，从而减少目标程序的长度，减少运行时间</p>
+<span class="token keyword">const</span> self <span class="token keyword">operator</span><span class="token operator">++</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>    <span class="token comment">// 后置</span>
+    self tmp <span class="token operator">=</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token operator">++</span><span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> tmp
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>为了区分前后置，重载函数是以参数类型来区分，在调用的时候，编译器默默给int指定为0</p>
 <hr>
-<h3 id="写出int-bool-float-指针变量与“零值”比较的if语句"><a href="#写出int-bool-float-指针变量与“零值”比较的if语句" class="headerlink" title="写出int/bool/float/指针变量与“零值”比较的if语句"></a>写出int/bool/float/指针变量与“零值”比较的if语句</h3><h2 id><a href="#" class="headerlink" title></a><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// int与零值比较</span>
-<span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
-<span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span>
-
-<span class="token comment">// bool与零值比较 </span>
-<span class="token keyword">if</span> <span class="token punctuation">(</span>flag<span class="token punctuation">)</span>     <span class="token comment">// 表示flag为真 </span>
-<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>flag<span class="token punctuation">)</span>    <span class="token comment">// 表示flag为假 </span>
-
-<span class="token comment">// float与零值比较 </span>
-<span class="token keyword">const</span> <span class="token keyword">float</span> EPSINON <span class="token operator">=</span> <span class="token number">0.00001</span><span class="token punctuation">;</span>
-<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>x <span class="token operator">>=</span> <span class="token operator">-</span>EPSINON<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>x <span class="token operator">&lt;=</span> EPSINON<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//其中EPSINON是允许的误差（即精度） </span>
-
-<span class="token comment">// 指针变量与零值比较 </span>
-<span class="token keyword">if</span> <span class="token punctuation">(</span>p <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>
-<span class="token keyword">if</span> <span class="token punctuation">(</span>p <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></h2><h3 id="结构体可以直接赋值吗"><a href="#结构体可以直接赋值吗" class="headerlink" title="结构体可以直接赋值吗"></a>结构体可以直接赋值吗</h3><p>声明时可以直接初始化，同一结构体的不同对象之间也可以直接赋值，但是当结构体中含有指针成员时一定要小心。<br><strong>注意</strong>：当有多个指针指向同一段内存时，某个指针释放这段内存可能会导致其他指针的非法操作，因此在释放前一定要确保其他指针不再使用这段内存空间</p>
-<hr>
-<h3 id="sizeof-和strlen-的区别"><a href="#sizeof-和strlen-的区别" class="headerlink" title="sizeof 和strlen 的区别"></a>sizeof 和strlen 的区别</h3><ul>
-<li><code>sizeof</code>是一个操作符，<code>strlen</code>是库函数。</li>
-<li><code>sizeof</code>的参数可以是数据的类型，也可以是变量，而<code>strlen</code>只能以结尾为<code>&#39;\0&#39;</code>的字符串作参数。</li>
-<li>编译器在编译时就计算出了<code>sizeof</code>的结果，而<code>strlen</code>函数必须在运行时才能计算出来。并且<code>sizeof</code>计算的是数据类型占内存的大小，而<code>strlen</code>计算的是字符串实际的长度。</li>
-<li>数组做<code>sizeof</code>的参数不退化，传递给<code>strlen</code>就退化为指针了</li>
-</ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">char</span> str<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"hello"</span><span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>    <span class="token comment">// 输出数组大小：6</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token function">strlen</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>    <span class="token comment">// 输出字符串长度：5</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<hr>
-<h3 id="C-语言的关键字-static-和-C-的关键字-static-有什么区别"><a href="#C-语言的关键字-static-和-C-的关键字-static-有什么区别" class="headerlink" title="C 语言的关键字 static 和 C++ 的关键字 static 有什么区别"></a>C 语言的关键字 static 和 C++ 的关键字 static 有什么区别</h3><p>在<code>C</code>中<code>static</code>用来修饰局部静态变量和外部静态变量、函数。而<code>C++</code>中除了上述功能外，还用来定义类的成员变量和函数，即<font color="LightSeaGreen">静态成员和静态成员函数</font><br><strong>注意</strong>：编程时，<code>static</code>的记忆性和全局性的特点可以让在不同时期调用的函数进行通信，而<code>C++</code>的静态成员则可以在多个对象实例间进行通信</p>
-<h3 id="C-语言的-malloc-和-C-中的-new-有什么区别"><a href="#C-语言的-malloc-和-C-中的-new-有什么区别" class="headerlink" title="C 语言的 malloc 和 C++ 中的 new 有什么区别"></a>C 语言的 malloc 和 C++ 中的 new 有什么区别</h3><ul>
-<li><code>new</code>和<code>delete</code>是操作符，可以重载，只能在<code>C++</code>中使用</li>
-<li><code>malloc</code>和<code>free</code>是函数，可以覆盖，<code>C/C++</code>中都可以使用</li>
-<li><code>new</code>可以调用对象的<font color="LightSeaGreen">构造函数</font>，对应的<code>delete</code>调用相应的<font color="LightSeaGreen">析构函数</font></li>
-<li><code>malloc</code>仅仅<strong>分配内存</strong>，<code>free</code>仅仅<strong>回收内存</strong>，并不执行构造和析构函数</li>
-<li><code>new</code>和<code>delete</code>返回的是某种数据类型指针，<code>malloc</code>和<code>free</code>返回的是<code>void</code>指针</li>
-</ul>
-<p><strong>注意</strong>：<code>malloc</code>申请的内存空间要用<code>free</code>释放，而<code>new</code>申请的内存空间要用<code>delete</code>释放，不要混用</p>
-<hr>
-<h3 id="size-t"><a href="#size-t" class="headerlink" title="size_t"></a>size_t</h3><p><code>size_t</code> 是<code>cstddef</code>头文件定义的一种与机器实现有关的无符号整数类型，他的空间足够大，能够表示任意数的大小</p>
-<hr>
-<h3 id="写一个-“标准”宏MIN"><a href="#写一个-“标准”宏MIN" class="headerlink" title="写一个 “标准”宏MIN"></a>写一个 “标准”宏MIN</h3><h2 id="-1"><a href="#-1" class="headerlink" title></a><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">min</span><span class="token expression"><span class="token punctuation">(</span>a<span class="token punctuation">,</span>b<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token operator">&lt;=</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token operator">?</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token operator">:</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">)</span></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></h2><h3 id="volatile有什么作用"><a href="#volatile有什么作用" class="headerlink" title="volatile有什么作用"></a>volatile有什么作用</h3><p>状态寄存器一类的并行设备硬件寄存器。一个中断服务子程序会访问到的非自动变量。 多线程间被几个任务共享的变量。<br>注意：虽然<code>volatile</code>在嵌入式方面应用比较多，但是在PC软件的多线程中， <code>volatile</code>修饰的临界变量也是非常实用的</p>
-<hr>
-<h3 id="一个参数可以既是const又是volatile吗"><a href="#一个参数可以既是const又是volatile吗" class="headerlink" title="一个参数可以既是const又是volatile吗"></a>一个参数可以既是const又是volatile吗</h3><p>可以，用<code>const</code>和<code>volatile</code>同时修饰变量，表示这个变量在程序内部是<font color="LightSeaGreen">只读的</font>，不能改变的，只在程序外部条件变化下改变，并且编译器不会优化这个变量。每次使用这个变量时，都要小心地去内存读取这个变量的值，而不是去寄存器读取它的备份</p>
-<p><strong>注意</strong>：在此一定要注意<code>const</code>的意思，<code>const</code>只是不允许程序中的代码改变某一变量，其在编译期发挥作用，它并没有实际地禁止某段内存的读写特性</p>
+<p>1、某文件中定义的静态全局变量（或称静态外部变量），其作用域是<font color="LightSeaGreen">本文件</font>。静态全局变量只在定义该变量的源文件内有效，在同一源程序的其他源文件中不能使用它</p>
+<p>2、如何判断一段程序是由C编译器还是由C++编译器编译的</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">__cplusplus</span></span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"C++"</span><span class="token punctuation">;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">else</span></span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"C"</span><span class="token punctuation">;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>3、C++函数中值的传递方式有：值传递、指针传递和引用传递</p>
+<p>4、C和C++有什么不同？</p>
+<ol>
+<li>从机制上，C是面向过程的，C++是面向对象的，提供了类。C也可以编写面向对象的程序，但是C++编写面向对象的程序比C容易</li>
+<li>从使用场景：C适合要求代码体积小，效率高的场景，如嵌入式；C++适合更上层的复杂的场景；Linux的核心大部分是C写的，因为它是系统软件，效率要求极高</li>
+</ol>
+<p>5、内联函数在编译时要做参数类型检查，这是内联函数跟宏相比的优势</p>
+<p>6、内存的分配</p>
+<p>(1) 静态存储区，程序编译时就已经分配好了，这块内存在程序的整个运行期间都存在。例如全局变量<br>(2) 在栈上创建，在执行函数时，函数内局部变量的存储单元都可以在栈上创建，函数执行结束时这些存储单元被自动释放<br>(3) 在堆上分配，也称动态内存分配，程序在运行的时候用malloc或new申请任意大小的内存，程序员自己负责用free和delete释放内存</p>
+<p>7、全局变量和局部变量区别</p>
+<ol>
+<li>生命周期不同：全局变量随主程序开始而创建，随主程序结束而销毁；局部变量在局部函数内部或者局部循环体内部存在，退出就不存在了</li>
+<li>全局变量分配在全局数据段，局部变量则分配在堆栈里面</li>
+</ol>
 
                 
             </div>
@@ -649,7 +715,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/04/28/%E9%9D%A2%E8%AF%95-cpp-1/">http://example.com/2021/04/28/%E9%9D%A2%E8%AF%95-cpp-1/</a>
+                    <a href="http://example.com/2022/03/11/%E9%9D%A2%E8%AF%95-cpp-2/">http://example.com/2022/03/11/%E9%9D%A2%E8%AF%95-cpp-2/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -687,8 +753,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/C/">
-                                    <span class="chip bg-color">C++</span>
+                                <a href="/tags/Offer/">
+                                    <span class="chip bg-color">Offer</span>
                                 </a>
                             
                         </div>
@@ -864,13 +930,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/04/29/C-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/">
+                <a href="/2022/03/11/%E9%9D%A2%E8%AF%95-cpp-1/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="文件操作">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="C++基础知识-1">
                         
-                        <span class="card-title">文件操作</span>
+                        <span class="card-title">C++基础知识-1</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -881,7 +947,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-29
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-03-11
                         </span>
                         <span class="publish-author">
                             
@@ -898,8 +964,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/C/">
-                        <span class="chip bg-color">C++</span>
+                    <a href="/tags/Offer/">
+                        <span class="chip bg-color">Offer</span>
                     </a>
                     
                 </div>
@@ -913,13 +979,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/04/27/LeetCode-26-%E5%88%A0%E9%99%A4%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E9%A1%B9/">
+                <a href="/2022/03/11/LeetCode-329-%E7%9F%A9%E9%98%B5%E4%B8%AD%E7%9A%84%E6%9C%80%E9%95%BF%E9%80%92%E5%A2%9E%E8%B7%AF%E5%BE%84/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="26/80-删除有序数组中的重复项">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="329-矩阵中的最长递增路径">
                         
-                        <span class="card-title">26/80-删除有序数组中的重复项</span>
+                        <span class="card-title">329-矩阵中的最长递增路径</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -930,7 +996,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-11
                             </span>
                         <span class="publish-author">
                             
@@ -947,12 +1013,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">
-                        <span class="chip bg-color">双指针</span>
+                    <a href="/tags/%E5%9B%9E%E6%BA%AF/">
+                        <span class="chip bg-color">回溯</span>
                     </a>
                     
-                    <a href="/tags/%E6%95%B0%E7%BB%84/">
-                        <span class="chip bg-color">数组</span>
+                    <a href="/tags/%E8%AE%B0%E5%BF%86%E5%8C%96%E6%90%9C%E7%B4%A2/">
+                        <span class="chip bg-color">记忆化搜索</span>
                     </a>
                     
                 </div>
