@@ -511,14 +511,23 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/C-Primer/">
-                                <span class="chip bg-color">C++Primer</span>
+                            <a href="/tags/Primer/">
+                                <span class="chip bg-color">Primer</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/C/" class="post-category">
+                                C++
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -551,18 +560,82 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="static-cast"><a href="#static-cast" class="headerlink" title="static_cast"></a>static_cast</h2><p>任何具有明确定义的类型转换，只要不包括底层<code>const</code>，都可以使用<code>static_cast</code></p>
+                <h3 id="static-cast"><a href="#static-cast" class="headerlink" title="static_cast"></a>static_cast</h3><p>没有运⾏时类型检查来保证转换的安全性<br>进⾏<font color="LightSeaGreen">上⾏转换（把派⽣类的指针或引⽤转换成基类表示）</font>是安全的<br>进⾏<font color="Coral">下⾏转换（把基类的指针或引⽤转换为派⽣类表示）</font>，由于没有动态类型检查，所以是不安全的</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Base</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">Base</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">b</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">fun</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">int</span> b<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Derived</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Base</span></span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">Derived</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">d</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">int</span> d<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    Base <span class="token operator">*</span>b1 <span class="token operator">=</span> <span class="token keyword">new</span> Derived<span class="token punctuation">;</span> <span class="token comment">// 基类指针指向派生类对象</span>
+    Base <span class="token operator">*</span>b2 <span class="token operator">=</span> <span class="token keyword">new</span> Base<span class="token punctuation">;</span>    <span class="token comment">// 基类指针指向基类对象</span>
+    Derived <span class="token operator">*</span>d1 <span class="token operator">=</span> <span class="token keyword">static_cast</span><span class="token operator">&lt;</span>Derived<span class="token operator">*</span><span class="token operator">></span><span class="token punctuation">(</span>b1<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 同类转换</span>
+    Derived <span class="token operator">*</span>d2 <span class="token operator">=</span> <span class="token keyword">static_cast</span><span class="token operator">&lt;</span>Derived<span class="token operator">*</span><span class="token operator">></span><span class="token punctuation">(</span>b2<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 下行转换，不安全</span>
+    cout <span class="token operator">&lt;&lt;</span> d1<span class="token operator">-></span>d <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>  <span class="token comment">// 2</span>
+    cout <span class="token operator">&lt;&lt;</span> d2<span class="token operator">-></span>d <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>  <span class="token comment">// 0，基类没有d这个成员，也没报错</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>使⽤：</p>
+<blockquote>
+<ol>
+<li>⽤于基本数据类型之间的转换，如把int转换成char。</li>
+<li>把任何类型的表达式转换成void类型。</li>
+</ol>
+</blockquote>
+<p>任何具有明确定义的类型转换，只要不包括底层<code>const</code>，都可以使用<code>static_cast</code></p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">double</span> slope <span class="token operator">=</span> <span class="token keyword">static_cast</span><span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token operator">></span><span class="token punctuation">(</span>j<span class="token punctuation">)</span> <span class="token operator">/</span> i<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>使用<code>static_cast</code>将<code>void*</code>指针转换回原来的类型。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 任何非常量对象的地址都能存入void*</span>
+<span class="token keyword">double</span> d <span class="token operator">=</span> <span class="token number">3.14</span><span class="token punctuation">;</span>
 <span class="token keyword">void</span> <span class="token operator">*</span>p <span class="token operator">=</span> <span class="token operator">&amp;</span>d<span class="token punctuation">;</span>
-doule <span class="token operator">*</span>dp <span class="token operator">=</span> <span class="token keyword">static_cast</span><span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token operator">*</span><span class="token operator">></span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h2 id="const-cast"><a href="#const-cast" class="headerlink" title="const_cast"></a>const_cast</h2><p>改变对象的底层const，不能改变类型<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>p<span class="token punctuation">;</span>
-<span class="token keyword">char</span> <span class="token operator">*</span>p <span class="token operator">=</span> <span class="token keyword">const_cast</span><span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">></span><span class="token punctuation">(</span>pc<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 通过p写值是未定义的行为</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
-<h2 id="reinterpret-cast"><a href="#reinterpret-cast" class="headerlink" title="reinterpret_cast"></a>reinterpret_cast</h2><p>强制类型转换</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token operator">*</span>ip<span class="token punctuation">;</span>
-<span class="token keyword">char</span> <span class="token operator">*</span>pc <span class="token operator">=</span> <span class="token keyword">reinterpret_cast</span><span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">></span><span class="token punctuation">(</span>ip<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+doule <span class="token operator">*</span>dp <span class="token operator">=</span> <span class="token keyword">static_cast</span><span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token operator">*</span><span class="token operator">></span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="const-cast"><a href="#const-cast" class="headerlink" title="const_cast"></a>const_cast</h3><p>常指针转换为⾮常指针，并且仍然指向原来的对象。常引⽤被转换为⾮常引⽤，并且仍然指向原来的对象。去掉类型的<code>const</code>或<code>volatile</code>属性</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> <span class="token operator">*</span>p2 <span class="token operator">=</span> <span class="token operator">&amp;</span>n<span class="token punctuation">;</span> <span class="token comment">// 常量指针</span>
+<span class="token keyword">int</span> <span class="token operator">*</span>p3 <span class="token operator">=</span> <span class="token keyword">const_cast</span><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">*</span><span class="token operator">></span><span class="token punctuation">(</span>p2<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 转换为普通指针</span>
+<span class="token operator">*</span>p3 <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>  <span class="token comment">// 可以修改指向的对象</span>
+cout <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>p2 <span class="token operator">&lt;&lt;</span> <span class="token string">", "</span> <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>p3 <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token comment">// 100, 100</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="reinterpret-cast"><a href="#reinterpret-cast" class="headerlink" title="reinterpret_cast"></a>reinterpret_cast</h3><p>可以将整型转换为指针，也可以把指针转换为数组；可以在指针和引⽤⾥进⾏肆⽆忌惮的转换，平台移植性比较差</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> n <span class="token operator">=</span> <span class="token number">97</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token operator">*</span>p <span class="token operator">=</span> <span class="token operator">&amp;</span>n<span class="token punctuation">;</span>
+<span class="token keyword">char</span> <span class="token operator">*</span>c <span class="token operator">=</span> <span class="token keyword">reinterpret_cast</span><span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">></span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// int*指针转换为char*指针</span>
+<span class="token keyword">char</span> <span class="token operator">*</span>c2 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span>p<span class="token punctuation">;</span>
+cout <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>c <span class="token operator">&lt;&lt;</span> <span class="token string">", "</span> <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>c2 <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>  <span class="token comment">// a, a</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="dynamic-cast"><a href="#dynamic-cast" class="headerlink" title="dynamic_cast"></a>dynamic_cast</h3><p>在进⾏下⾏转换时，<code>dynamic_cast</code>具有类型检查（信息在虚函数中）的功能，⽐<code>static_cast</code>更安全。转换后必须是类的指针、引⽤或者void*，基类要有虚函数，可以交叉转换。<br><code>dynamic_cast</code>本身只能⽤于存在虚函数的⽗⼦关系的强制类型转换；对于指针，转换失败则返回<code>nullptr</code>，对于引⽤，转换失败会抛出异常</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Base</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">Base</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">b</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">fun</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">int</span> b<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Derived</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Base</span></span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">Derived</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">d</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">int</span> d<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    Derived <span class="token operator">*</span>d3 <span class="token operator">=</span> <span class="token keyword">dynamic_cast</span><span class="token operator">&lt;</span>Derived<span class="token operator">*</span><span class="token operator">></span><span class="token punctuation">(</span>b1<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 同类转换</span>
+    Derived <span class="token operator">*</span>d4 <span class="token operator">=</span> <span class="token keyword">dynamic_cast</span><span class="token operator">&lt;</span>Derived<span class="token operator">*</span><span class="token operator">></span><span class="token punctuation">(</span>b2<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 下行转换，安全</span>
+    cout <span class="token operator">&lt;&lt;</span> d3<span class="token operator">-></span>d <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>  <span class="token comment">// 2 转换成功</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>d4 <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"d4 is nullptr"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>    <span class="token comment">// d4 is nullptr 转换失败</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        cout <span class="token operator">&lt;&lt;</span> d4<span class="token operator">-></span>d <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -626,8 +699,8 @@ doule <span class="token operator">*</span>dp <span class="token operator">=</sp
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/C-Primer/">
-                                    <span class="chip bg-color">C++Primer</span>
+                                <a href="/tags/Primer/">
+                                    <span class="chip bg-color">Primer</span>
                                 </a>
                             
                         </div>
