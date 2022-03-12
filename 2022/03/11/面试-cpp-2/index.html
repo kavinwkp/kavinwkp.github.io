@@ -585,31 +585,31 @@
 <li>函数体不能过于庞大</li>
 <li>内联函数声明必须在调用语句之前</li>
 </ol>
-<h3 id="override-和-overload"><a href="#override-和-overload" class="headerlink" title="override 和 overload"></a>override 和 overload</h3><p>1、override是重写（覆盖）了⼀个⽅法<br>以实现不同的功能，⼀般是⽤于⼦类在继承⽗类时，重写⽗类⽅法<br>规则：</p>
+<h3 id="override-和-overload"><a href="#override-和-overload" class="headerlink" title="override 和 overload"></a>override 和 overload</h3><p>1、override是重写（覆盖）了⼀个方法<br>以实现不同的功能，⼀般是用于子类在继承父类时，重写父类方法<br>规则：</p>
 <ol>
-<li>重写⽅法的参数列表，返回值，所抛出的异常与被重写⽅法⼀致</li>
-<li>被重写的⽅法不能为private</li>
-<li>静态⽅法不能被重写为⾮静态的⽅法</li>
-<li>重写⽅法的访问修饰符⼀定要⼤于被重写⽅法的访问修饰符（public&gt;protected&gt;default&gt;private）</li>
+<li>重写方法的参数列表，返回值，所抛出的异常与被重写方法⼀致</li>
+<li>被重写的方法不能为private</li>
+<li>静态方法不能被重写为非静态的方法</li>
+<li>重写方法的访问修饰符一定要大于被重写方法的访问修饰符（public&gt;protected&gt;default&gt;private）</li>
 </ol>
-<p>2、overload是重载，这些⽅法的名称相同⽽参数形式不同<br>⼀个⽅法有不同的版本，存在于⼀个类中。<br>规则：</p>
+<p>2、overload是重载，这些方法的名称相同而参数形式不同<br>⼀个方法有不同的版本，存在于⼀个类中。<br>规则：</p>
 <ol>
-<li>不能通过访问权限、返回类型、抛出的异常进⾏重载</li>
-<li>参数列表可以是不同的参数类型，不同的参数个数，不同的参数顺序（参数类型必须不⼀样）</li>
-<li>⽅法的异常类型和数⽬不会对重载造成影响</li>
+<li>不能通过访问权限、返回类型、抛出的异常进行重载</li>
+<li>参数列表可以是不同的参数类型，不同的参数个数，不同的参数顺序（参数列表必须不⼀样）</li>
+<li>方法的异常类型和数目不会对重载造成影响</li>
 </ol>
-<h3 id="new-和-malloc"><a href="#new-和-malloc" class="headerlink" title="new 和 malloc"></a>new 和 malloc</h3><p>1、new内存分配失败时，会抛出bad_alloc异常，它不会返回NULL；malloc分配内存失败时返回NULL。<br>2、使⽤new操作符申请内存分配时⽆须指定内存块的⼤⼩，⽽malloc则需要显式地指出所需内存的尺⼨。<br>3、opeartor new/operator delete可以被重载，⽽malloc/free并不允许重载。<br>4、new/delete会调⽤对象的构造函数/析构函数以完成对象的构造/析构。⽽malloc则不会<br>5、malloc与free是C++/C语⾔的标准库函数,new/delete是C++的运算符<br>6、new操作符从⾃由存储区上为对象动态分配内存空间，⽽malloc函数从堆上动态分配内存。 </p>
-<h3 id="constexpr-和-const"><a href="#constexpr-和-const" class="headerlink" title="constexpr 和 const"></a>constexpr 和 const</h3><p>const 表示“只读”的语义，constexpr 表示“常量”的语义<br>constexpr 只能定义编译期常量⽽ const 可以定义编译期常量也可以定义运⾏期常量。<br>你将⼀个成员函数标记为constexpr，则顺带也将它标记为了const。如果你将⼀个变量标记为constexpr，则同样它是const的。但相反并不成⽴，⼀个const的变量或函数，并不是constexpr的</p>
-<h3 id="constexpr变量"><a href="#constexpr变量" class="headerlink" title="constexpr变量"></a>constexpr变量</h3><p>复杂系统中很难分辨⼀个初始值是不是常量表达式，可以将变量声明为constexpr类型，由编译器来验证变量的值是否是⼀个常量表达式。<br>必须使⽤常量初始化<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">constexpr</span> <span class="token keyword">int</span> n <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
+<h3 id="new-和-malloc"><a href="#new-和-malloc" class="headerlink" title="new 和 malloc"></a>new 和 malloc</h3><p>1、new内存分配失败时，会抛出bad_alloc异常，它不会返回NULL；malloc分配内存失败时返回NULL<br>2、使用new操作符申请内存分配时无须指定内存块的大小，而malloc则需要显式地指出所需内存的尺寸<br>3、opeartor new/operator delete可以被重载，而malloc/free并不允许重载<br>4、new/delete会调用对象的构造函数/析构函数以完成对象的构造/析构。而malloc则不会<br>5、malloc与free是C++/C语⾔的标准库函数,new/delete是C++的运算符<br>6、new操作符从自由存储区上为对象动态分配内存空间，而malloc函数从堆上动态分配内存</p>
+<h3 id="constexpr-和-const"><a href="#constexpr-和-const" class="headerlink" title="constexpr 和 const"></a>constexpr 和 const</h3><p>const 表示“只读”的语义，constexpr 表示“常量”的语义<br>constexpr 只能定义编译期常量而 const 可以定义编译期常量也可以定义运⾏期常量。<br>你将⼀个成员函数标记为constexpr，则顺带也将它标记为了const。如果你将⼀个变量标记为constexpr，则同样它是const的。但相反并不成立，⼀个const的变量或函数，并不是constexpr的</p>
+<h3 id="constexpr变量"><a href="#constexpr变量" class="headerlink" title="constexpr变量"></a>constexpr变量</h3><p>复杂系统中很难分辨⼀个初始值是不是常量表达式，可以将变量声明为constexpr类型，由编译器来验证变量的值是否是⼀个常量表达式。<br>必须使用常量初始化<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">constexpr</span> <span class="token keyword">int</span> n <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
 <span class="token keyword">constexpr</span> <span class="token keyword">int</span> m <span class="token operator">=</span> n <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
 <span class="token keyword">static</span> <span class="token keyword">constexpr</span> <span class="token keyword">int</span> MOD <span class="token operator">=</span> <span class="token number">1000000007</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
 <p>如果constexpr声明中定义了⼀个指针，constexpr仅对指针有效，和所指对象⽆关</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">constexpr</span> <span class="token keyword">int</span> <span class="token operator">*</span>p <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span> <span class="token comment">// 常量指针，顶层const</span>
 <span class="token keyword">const</span> <span class="token keyword">int</span> <span class="token operator">*</span>q <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span> <span class="token comment">// 指向常量的指针，底层const</span>
-<span class="token keyword">int</span><span class="token operator">*</span> <span class="token keyword">const</span> q <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span> <span class="token comment">// 指针常量，顶层const</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h3 id="constexpr函数"><a href="#constexpr函数" class="headerlink" title="constexpr函数"></a>constexpr函数</h3><p>constexpr函数是指能⽤于常量表达式的函数<br>函数的返回类型和所有形参类型都是字⾯值类型，函数体有且只有⼀条return语句<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">constexpr</span> <span class="token keyword">int</span> <span class="token keyword">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token number">42</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br>为了可以在编译过程展开，constexpr函数被隐式转换成了内联函数。<br>constexpr和内联函数可以在程序中多次定义，⼀般定义在头⽂件</p>
-<h3 id="constexpr-构造函数"><a href="#constexpr-构造函数" class="headerlink" title="constexpr 构造函数"></a>constexpr 构造函数</h3><p>构造函数不能说const，但字⾯值常量类的构造函数可以是constexpr<br>constexpr构造函数必须有⼀个空的函数体，即所有成员变量的初始化都放到初始化列表中。对象调⽤的成员函数必须使⽤ constexpr 修饰</p>
-<p>const<br>指针常量: <code>const int* d = new int(2);</code> 不能改变对象的值<br>常量指针: <code>int* const e = new int(2);</code> 不能改变指向<br>区别⽅法：<br>左定值，右定向：指的是const在*的左还是右边</p>
+<span class="token keyword">int</span><span class="token operator">*</span> <span class="token keyword">const</span> q <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span> <span class="token comment">// const常量指针，顶层const</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3 id="constexpr函数"><a href="#constexpr函数" class="headerlink" title="constexpr函数"></a>constexpr函数</h3><p>constexpr函数是指能用于常量表达式的函数<br>函数的返回类型和所有形参类型都是字⾯值类型，函数体有且只有⼀条return语句<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">constexpr</span> <span class="token keyword">int</span> <span class="token keyword">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token number">42</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br>为了可以在编译过程展开，constexpr函数被隐式转换成了内联函数。<br>constexpr和内联函数可以在程序中多次定义，⼀般定义在头⽂件</p>
+<h3 id="constexpr-构造函数"><a href="#constexpr-构造函数" class="headerlink" title="constexpr 构造函数"></a>constexpr 构造函数</h3><p>构造函数不能说const，但字⾯值常量类的构造函数可以是constexpr<br>constexpr构造函数必须有⼀个空的函数体，即所有成员变量的初始化都放到初始化列表中。对象调用的成员函数必须使用 constexpr 修饰</p>
+<p>const<br>指针常量: <code>const int* d = new int(2);</code> 不能改变对象的值<br>常量指针: <code>int* const e = new int(2);</code> 不能改变指向<br>区别方法：<br>左定值，右定向：指的是const在*的左还是右边</p>
 <p>顶层const：指针本身是常量<br>底层const：指针所指的对象是常量<br>若要修改const修饰的变量的值，需要加上关键字volatile<br>若想要修改const成员函数中某些与类状态无关的数据成员，可以使用mutable关键字来修饰这个数据成员</p>
 <table> 
 <tr>

@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="C++指针, kunpeng">
+    <meta name="keywords" content="指针和const, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>C++指针 | kunpeng</title>
+    <title>指针和const | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">C++指针</h1>
+                    <h1 class="description center-align post-title">指针和const</h1>
                 </div>
             </div>
         </div>
@@ -560,22 +560,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <!-- toc -->
-<h2 id="指针大小"><a href="#指针大小" class="headerlink" title="指针大小"></a>指针大小</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    
-    cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span class="token number">4</span>
-<span class="token number">1</span>
-<span class="token number">8</span>
-<span class="token number">8</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>可见不管是什么类型的指针，大小都是<strong>8个字节</strong></p>
-<h2 id="const指针"><a href="#const指针" class="headerlink" title="const指针"></a>const指针</h2><h3 id="指向常量的指针"><a href="#指向常量的指针" class="headerlink" title="指向常量的指针"></a>指向常量的指针</h3><ol>
+                <h2 id="指针和const"><a href="#指针和const" class="headerlink" title="指针和const"></a>指针和const</h2><h3 id="指向常量的指针"><a href="#指向常量的指针" class="headerlink" title="指向常量的指针"></a>指向常量的指针</h3><ol>
 <li><code>const</code>修饰的是<code>int</code>，说明<code>int</code>是常量不可修改，不能通过指针修改他的值，但可以指向别处</li>
 <li>指针指向的对象可以不是<code>const</code>，但是还是不能用指针去修改他，可以用其他方法修改</li>
 <li>必须用<code>const void*</code>才能指向<code>const</code>对象</li>
@@ -591,10 +576,13 @@ pInteger <span class="token operator">=</span> <span class="token operator">&amp
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">char</span> ch <span class="token operator">=</span> <span class="token string">'a'</span><span class="token punctuation">;</span>
 <span class="token comment">// void* p = &amp;ch;   //error</span>
 <span class="token keyword">const</span> <span class="token keyword">void</span><span class="token operator">*</span> p <span class="token operator">=</span> <span class="token operator">&amp;</span>ch<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h3 id="常指针、const指针"><a href="#常指针、const指针" class="headerlink" title="常指针、const指针"></a>常指针、const指针</h3><ol>
-<li><code>const</code>修饰的是指针，说明指针是常数，所以他存储的地址不能变，也就是不能改变指向，可以通过指针改变指向对象的值</li>
-<li>常指针必须进行初始化</li>
-<li>常指针不能指向<code>const</code>变量</li>
+<blockquote>
+<p>所谓指向常量的指针或引用，不过是指针或引用“自以为是”罢了，它们觉得自己指向了常量，所以自觉地不去改变所指对象的值</p>
+</blockquote>
+<h3 id="常量指针、const指针"><a href="#常量指针、const指针" class="headerlink" title="常量指针、const指针"></a>常量指针、const指针</h3><ol>
+<li><code>*</code>在前，<code>const</code>修饰的是指针，说明指针是常量，所以他存储的地址不能变，也就是不能改变指向，可以通过指针改变指向对象的值</li>
+<li>常量指针必须进行初始化</li>
+<li>常量指针不能指向<code>const</code>变量，只能用指向常量的指针指向<code>const</code>变量</li>
 </ol>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
 <span class="token comment">// const int num = 10;  // error，const int* -> int*</span>
@@ -604,11 +592,27 @@ pInteger <span class="token operator">=</span> <span class="token operator">&amp
 <span class="token comment">// pInt = &amp;another;     // error, 常指针不能修改指向</span>
 
 <span class="token operator">*</span>pInt <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>            <span class="token comment">// yes，变量不是const，可以改变他的值</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>用名词<font color="LightSeaGreen"><b>顶层const</b>表示指针本身是个常量</font>，而用名词<font color="Coral"><b>底层const</b>表示指针所指对象是一个常量</font></p>
 <h2 id="指向常量的常指针"><a href="#指向常量的常指针" class="headerlink" title="指向常量的常指针"></a>指向常量的常指针</h2><ul>
 <li>只能指向<code>const</code>变量</li>
 </ul>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
 <span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">*</span> <span class="token keyword">const</span> ptr <span class="token operator">=</span> <span class="token operator">&amp;</span>num<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="指针大小"><a href="#指针大小" class="headerlink" title="指针大小"></a>指针大小</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    
+    cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token number">4</span>
+<span class="token number">1</span>
+<span class="token number">8</span>
+<span class="token number">8</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>可见不管是什么类型的指针，大小都是<strong>8个字节</strong></p>
+
                 
             </div>
             <hr/>
@@ -634,7 +638,7 @@ pInteger <span class="token operator">=</span> <span class="token operator">&amp
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/03/25/C-C-%E6%8C%87%E9%92%88/">http://example.com/2021/03/25/C-C-%E6%8C%87%E9%92%88/</a>
+                    <a href="http://example.com/2021/03/25/C-%E6%8C%87%E9%92%88%E5%92%8Cconst/">http://example.com/2021/03/25/C-%E6%8C%87%E9%92%88%E5%92%8Cconst/</a>
                 </span>
             </div>
             <div class="reprint__notice">
