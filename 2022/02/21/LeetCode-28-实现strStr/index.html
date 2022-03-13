@@ -569,9 +569,11 @@ Output<span class="token operator">:</span> <span class="token number">2</span><
 <p><code>next</code>数组记录最大的前后缀相等的长度，这样当某个元素不匹配的时候，就可以跳到最大相等前缀的位置重新匹配，而不用跳到开头</p>
 <p>因为知道了这一串的某个后缀与前缀是相等的，所以就直接跳到相等前缀的位置开始匹配，节省时间</p>
 <p>1、求next数组</p>
+<p>前缀是包含首字符，不包含尾字符的所有子串，<code>a, aa, aab, aaba, aabaa</code><br>后缀是包含尾字符，不包含首字符的所有子串，<code>f, af, aaf, baaf, abaaf</code></p>
+<p><code>aa</code>的前缀是a，后缀是a，所以最长相等前后缀长度为1<br><code>aabaa</code>有个是aa，有个后缀是aa，所以最长相等前后缀长度为2</p>
 <ul>
-<li>定义两个指针<code>i</code>和<code>j</code>，<code>j</code>指向前缀末尾位置，还表示<code>i</code>及<code>i</code>之前的子串的最长相等前后缀长度，初始化为0</li>
-<li><code>i</code>指向后缀末尾位置，从1到末尾遍历文本串</li>
+<li>定义两个指针<code>i</code>和<code>j</code>，<code>j</code>指向前缀末尾位置，刚开始前缀为空，所以j初始化为0，还表示<code>i</code>及<code>i</code>之前的子串的最长相等前后缀长度，所以后面<code>next[i]=j</code></li>
+<li><code>i</code>指向后缀末尾位置，后缀要从后往前看，刚开始后缀为<code>abaaf</code>，所以i指向1的位置</li>
 <li><code>s[j]!=s[i]</code>时，<code>j</code>要根据前一个字符的<code>next</code>值回退，直至退到<code>0</code></li>
 <li><code>s[j]==s[i]</code>时，<code>j</code>递增</li>
 <li><code>i</code>位置的<code>next</code>值就是<code>j</code></li>
@@ -613,7 +615,7 @@ next <span class="token operator">:</span>       <span class="token number">0</s
             j <span class="token operator">=</span> next<span class="token punctuation">[</span>j <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span>
         <span class="token keyword">if</span> <span class="token punctuation">(</span>needle<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">==</span> haystack<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> j<span class="token operator">++</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>j <span class="token operator">==</span> needle<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> i <span class="token operator">-</span> j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>   <span class="token comment">// j刚好是模式串的长度</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>j <span class="token operator">==</span> needle<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> i <span class="token operator">-</span> j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>   <span class="token comment">// j刚好是模式串的长度 [res,i] i - res + 1 = len = j</span>
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
@@ -893,8 +895,8 @@ next <span class="token operator">:</span>       <span class="token number">0</s
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E7%BB%84/">
-                        <span class="chip bg-color">数组</span>
+                    <a href="/tags/%E6%A8%A1%E6%8B%9F/">
+                        <span class="chip bg-color">模拟</span>
                     </a>
                     
                 </div>
