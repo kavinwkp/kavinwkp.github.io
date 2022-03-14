@@ -566,7 +566,13 @@
 <p>The replacement must be <strong>in place</strong> and use only constant extra memory.</p>
 <p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">]</span>
 Output<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
-<h3 id="method"><a href="#method" class="headerlink" title="method"></a>method</h3><ol>
+<h3 id="method"><a href="#method" class="headerlink" title="method"></a>method</h3><ul>
+<li>我们想要最小的解，所以尽可能去动位数最小的数字</li>
+<li>单调递减是没有解的，如<code>4321</code>，所以第一个不是单调递减的位置就存在解，如<code>1243</code>，第一个不是单调递减的是2，即为突破口</li>
+<li>把突破口的数字换成后面比自己大的最小值，才能保证最优解</li>
+<li>交换之后保证后面尽可能小，就把递减变成递增，<code>4321</code>变成<code>1234</code>就变得更小</li>
+</ul>
+<ol>
 <li>从后往前找第一个非递增的数，即<code>nums[i] &lt; nums[i+1]</code></li>
 <li>从后往前找第一个大于<code>nums[i]</code>的数，即<code>nums[j] &gt; nums[i]</code></li>
 <li>交换<code>nums[i]</code>和<code>nums[j]</code></li>
@@ -583,7 +589,7 @@ Output<span class="token operator">:</span> <span class="token punctuation">[</s
             j<span class="token operator">--</span><span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span>
         <span class="token function">swap</span><span class="token punctuation">(</span>nums<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>   <span class="token comment">// i&lt;0就是全部单调递减，4321，反过来就行</span>
     <span class="token function">reverse</span><span class="token punctuation">(</span>nums<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> nums<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
