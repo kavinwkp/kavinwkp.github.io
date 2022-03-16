@@ -563,14 +563,15 @@
                 <h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><ul>
 <li><p>与进程(process)类似，线程(thread)是允许应用程序并发执行多个任务的一种机制。一个进程可以包含多个线程，同一个进程中的线程均会独立执行相同的程序，且共享同一份全局内存区域，包括初始化数据段，未初始化数据段，以及堆内存段</p>
 </li>
-<li><p>进程是CPU分配资源的最小单位，线程是操作系统调度执行的最小单位</p>
+<li><p><strong>进程是CPU分配资源的最小单位，线程是操作系统调度执行的最小单位</strong></p>
 </li>
 <li><p>线程是轻量级进程(LWP: Light Weight Process)，在Linux环境下线程的本质仍是进程</p>
 </li>
-<li><p>查看指定进程的LWP号：ps -Lf pid</p>
+<li><p>查看指定进程的LWP号：<code>ps -Lf pid</code></p>
 </li>
 </ul>
 <p><strong>线程共享资源</strong></p>
+<blockquote>
 <ul>
 <li>进程ID和父进程ID</li>
 <li>进程组ID和会话ID</li>
@@ -580,7 +581,9 @@
 <li>文件系统的相关信息：文件权限掩码(umask)，当前工作目录</li>
 <li>虚拟地址空间（除栈、.text）</li>
 </ul>
+</blockquote>
 <p><strong>线程非共享资源</strong></p>
+<blockquote>
 <ul>
 <li>线程ID</li>
 <li>信号掩码</li>
@@ -589,9 +592,10 @@
 <li>实时调度策略和优先级</li>
 <li>栈、本地变量和函数的调用链接信息</li>
 </ul>
+</blockquote>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">getconf GNU_LIBPTHREAD_VERSION
 NPTL <span class="token number">2.27</span>   <span class="token comment">// Native POSIX Thread Library</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><h4 id="创建线程"><a href="#创建线程" class="headerlink" title="创建线程"></a>创建线程</h4><p><code>main</code>函数所在的线程称为主线程，其余线程称为子线程</p>
+<h3 id="线程相关API"><a href="#线程相关API" class="headerlink" title="线程相关API"></a>线程相关API</h3><h4 id="创建线程"><a href="#创建线程" class="headerlink" title="创建线程"></a>创建线程</h4><p><code>main</code>函数所在的线程称为主线程，其余线程称为子线程</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pthread.h></span></span>
 <span class="token keyword">int</span> <span class="token function">pthread_create</span><span class="token punctuation">(</span>pthread_t <span class="token operator">*</span>thread<span class="token punctuation">,</span> <span class="token keyword">const</span> pthread_attr_t <span class="token operator">*</span>attr<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">*</span>start_routine<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span>arg<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 创建一个线程</span>
@@ -600,7 +604,7 @@ NPTL <span class="token number">2.27</span>   <span class="token comment">// Nat
 <span class="token operator">-</span> start_routine<span class="token operator">:</span> 子线程需要处理的逻辑代码
 <span class="token operator">-</span> arg<span class="token operator">:</span> 给第三个参数使用
 <span class="token comment">// 成功返回0，失败返回错误号，与errno不一样</span>
-<span class="token comment">// 获取错误号信息：char *strerror(int errnum)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">// 获取错误号信息：char* strerror(int errnum)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pthread.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
@@ -632,18 +636,19 @@ child thread<span class="token punctuation">.</span><span class="token punctuati
 arg<span class="token operator">:</span> <span class="token number">10</span> <span class="token comment">// 主线程和子线程交替执行</span>
 <span class="token number">2</span>
 <span class="token number">3</span>
-<span class="token number">4</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token number">4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="终止线程"><a href="#终止线程" class="headerlink" title="终止线程"></a>终止线程</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pthread.h></span></span>
 <span class="token keyword">void</span> <span class="token function">pthread_exit</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>retval<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 终止一个线程，在哪个线程中调用，就表示终止哪个线程</span>
-<span class="token operator">-</span> retval<span class="token operator">:</span> 作为返回值，可以在pthread_join中获取到
-<span class="token operator">--</span><span class="token operator">-</span>
+<span class="token operator">-</span> retval<span class="token operator">:</span> 作为返回值，可以在<span class="token function">pthread_join</span><span class="token punctuation">(</span><span class="token punctuation">)</span>中获取到
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+
 pthread_t <span class="token function">pthread_self</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 返回当前线程id</span>
-<span class="token operator">--</span><span class="token operator">-</span>
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+
 <span class="token keyword">int</span> <span class="token function">pthread_equal</span><span class="token punctuation">(</span>pthread_t t1<span class="token punctuation">,</span> pthread_t t2<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 比较两个线程id是否相等</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">// 比较两个线程id是否相等</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pthread.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
@@ -666,8 +671,8 @@ pthread_t <span class="token function">pthread_self</span><span class="token pun
         <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
     <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"tid: %ld, main id: %ld\n"</span><span class="token punctuation">,</span> tid<span class="token punctuation">,</span> <span class="token function">pthread_self</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">// 主线程退出，对子线程没有影响</span>
-    <span class="token function">pthread_exit</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">pthread_exit</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 主线程退出，对子线程没有影响</span>
 
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
@@ -678,12 +683,12 @@ pthread_t <span class="token function">pthread_self</span><span class="token pun
 <span class="token number">4</span>
 tid<span class="token operator">:</span> <span class="token number">140341352228608</span><span class="token punctuation">,</span> main id<span class="token operator">:</span> <span class="token number">140341360527168</span>
 child thread<span class="token operator">:</span> <span class="token number">140341352228608</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="连接已终止的线程"><a href="#连接已终止的线程" class="headerlink" title="连接已终止的线程"></a>连接已终止的线程</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">pthread_join</span><span class="token punctuation">(</span>pthread_t thread<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span>retval<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 和一个已经终止的线程进行连接，来回收子线程的资源</span>
-<span class="token comment">//阻塞函数，调用一次回收一个子线程，一般在主线程中使用</span>
+<h4 id="连接已终止的线程"><a href="#连接已终止的线程" class="headerlink" title="连接已终止的线程"></a>连接已终止的线程</h4><p>和一个已经终止的线程进行连接，来回收子线程的资源</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">pthread_join</span><span class="token punctuation">(</span>pthread_t thread<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span>retval<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 阻塞函数，调用一次回收一个子线程，一般在主线程中使用</span>
 <span class="token operator">-</span> thread<span class="token operator">:</span> 需要回收的子线程id
 <span class="token operator">-</span> retval<span class="token operator">:</span> 接受子线程退出的返回值
-<span class="token comment">// 成功返回0，失败返回错误号</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">// 成功返回0，失败返回错误号</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pthread.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
@@ -693,8 +698,6 @@ child thread<span class="token operator">:</span> <span class="token number">140
 
 <span class="token keyword">void</span><span class="token operator">*</span> <span class="token function">callback</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> arg<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"child thread: %ld\n"</span><span class="token punctuation">,</span> <span class="token function">pthread_self</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 获取当前线程id</span>
-    <span class="token comment">// sleep(3);</span>
-    <span class="token comment">// return NULL;</span>
     <span class="token function">pthread_exit</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// return (void *)&amp;val</span>
 <span class="token punctuation">&#125;</span>
 
@@ -731,11 +734,11 @@ child thread<span class="token operator">:</span> <span class="token number">140
 tid<span class="token operator">:</span> <span class="token number">140608466753280</span><span class="token punctuation">,</span> main id<span class="token operator">:</span> <span class="token number">140608475051840</span>
 child thread<span class="token operator">:</span> <span class="token number">140608466753280</span>
 <span class="token keyword">return</span> value<span class="token operator">:</span> <span class="token number">10</span>
-recovery success<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="线程分离"><a href="#线程分离" class="headerlink" title="线程分离"></a>线程分离</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">pthread_detach</span><span class="token punctuation">(</span>pthread_t thread<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 分离一个线程，不能多次分离，分离之后不能再连接</span>
+recovery success<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="线程分离"><a href="#线程分离" class="headerlink" title="线程分离"></a>线程分离</h4><p>分离一个线程，不能多次分离，分离之后不能再连接<br>该线程结束退出后，系统会自动回收它的资源，不再需要join函数了</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">pthread_detach</span><span class="token punctuation">(</span>pthread_t thread<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token operator">-</span> thread<span class="token operator">:</span> 要分离的线程id
-<span class="token comment">// 成功返回0，失败返回错误号</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">// 成功返回0，失败返回错误号</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <h4 id="线程取消"><a href="#线程取消" class="headerlink" title="线程取消"></a>线程取消</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">pthread_cancel</span><span class="token punctuation">(</span>pthread_t thread<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 取消线程，让线程终止</span>
 <span class="token comment">// 不是立刻终止，而是当子线程执行到一个取消点才会终止</span>
@@ -848,7 +851,7 @@ tid<span class="token operator">:</span> <span class="token number">140210217600
 </ul>
 <h3 id="互斥量"><a href="#互斥量" class="headerlink" title="互斥量"></a>互斥量</h3><p>为避免线程更新共享变量时出现问题，可以使用互斥量(mutex, mutual exclusion)来确保同一时间只有一个线程可以访问共享资源</p>
 <p>互斥量有两种状态：已锁定(locked)和未锁定(unlocked)，任何时候，至多只有一个线程可以锁定该互斥量</p>
-<p>一旦线程锁定互斥量，随即称为该互斥量的所有者，只有所有者才能给互斥量解锁</p>
+<p>一旦线程锁定互斥量，随即成为该互斥量的所有者，只有所有者才能给互斥量解锁</p>
 <blockquote>
 <ol>
 <li>针对共享资源锁定互斥量</li>
@@ -856,21 +859,21 @@ tid<span class="token operator">:</span> <span class="token number">140210217600
 <li>对互斥量解锁</li>
 </ol>
 </blockquote>
-<h4 id="API-1"><a href="#API-1" class="headerlink" title="API"></a>API</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">pthread_mutex_init</span><span class="token punctuation">(</span>pthread_mutex_t <span class="token operator">*</span>restrict mutex<span class="token punctuation">,</span> <span class="token keyword">const</span> pthread_mutexattr_t <span class="token operator">*</span>restrict attr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">pthread_mutex_init</span><span class="token punctuation">(</span>pthread_mutex_t <span class="token operator">*</span>restrict mutex<span class="token punctuation">,</span> <span class="token keyword">const</span> pthread_mutexattr_t <span class="token operator">*</span>restrict attr<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 初始化互斥量</span>
 <span class="token operator">-</span> mutex<span class="token operator">:</span> 需要初始化的互斥量
 <span class="token operator">-</span> attr<span class="token operator">:</span> 互斥量的属性，<span class="token constant">NULL</span>
 <span class="token operator">-</span> restrict<span class="token operator">:</span> 修饰符，被修饰的指针不能由另外的指针进行操作
-<span class="token operator">--</span><span class="token operator">-</span>
+
 <span class="token keyword">int</span> <span class="token function">pthread_mutex_destroy</span><span class="token punctuation">(</span>pthread_mutex_t <span class="token operator">*</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 释放互斥量资源</span>
-<span class="token operator">--</span><span class="token operator">-</span>
+
 <span class="token keyword">int</span> <span class="token function">pthread_mutex_lock</span><span class="token punctuation">(</span>pthread_mutex_t <span class="token operator">*</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 加锁，阻塞的，一个线程加锁，其他线程阻塞</span>
-<span class="token operator">--</span><span class="token operator">-</span>
+
 <span class="token keyword">int</span> <span class="token function">pthread_mutex_trylock</span><span class="token punctuation">(</span>pthread_mutex_t <span class="token operator">*</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 尝试加锁，如果失败，不会阻塞，直接返回</span>
-<span class="token operator">--</span><span class="token operator">-</span>
+
 <span class="token keyword">int</span> <span class="token function">pthread_mutex_unlock</span><span class="token punctuation">(</span>pthread_mutex_t <span class="token operator">*</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 解锁</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
@@ -894,7 +897,7 @@ pthread_mutex_t mutex<span class="token punctuation">;</span>
             tickets<span class="token operator">--</span><span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span>
         <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
-            <span class="token comment">// 这里也要解锁</span>
+            <span class="token comment">// 这里也要解锁，不然break之后就没解锁了</span>
             <span class="token function">pthread_mutex_unlock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
             <span class="token keyword">break</span><span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span>
@@ -914,42 +917,49 @@ pthread_mutex_t mutex<span class="token punctuation">;</span>
     <span class="token function">pthread_create</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>tid1<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> sellticket<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">pthread_create</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>tid2<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> sellticket<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">pthread_create</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>tid3<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> sellticket<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">// 回收子线程的资源</span>
-    <span class="token function">pthread_join</span><span class="token punctuation">(</span>tid1<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token function">pthread_join</span><span class="token punctuation">(</span>tid1<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 阻塞，回收子线程的资源</span>
     <span class="token function">pthread_join</span><span class="token punctuation">(</span>tid2<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">pthread_join</span><span class="token punctuation">(</span>tid3<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">// 退出主线程</span>
-    <span class="token function">pthread_exit</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token function">pthread_exit</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 退出主线程</span>
 
-    <span class="token comment">// 释放互斥量资源</span>
-    <span class="token function">pthread_mutex_destroy</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">pthread_mutex_destroy</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 释放互斥量资源</span>
 
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h3><p>两个或两个以上的进程在执行过程中，因争夺共享资源而造成的一种互相等待的现象，若无外力作用，他们都将无法推进下去，此时系统处于死锁状态</p>
 <p>死锁的几个场景</p>
+<blockquote>
 <ol>
 <li>忘记释放锁</li>
 <li>重复加锁</li>
 <li>多线程多锁，抢占锁资源</li>
 </ol>
+</blockquote>
 <hr>
 <h2 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h2><p>读写锁的特点：</p>
+<blockquote>
 <ol>
 <li>如果有其他线程读数据，则允许，但不允许写操作</li>
 <li>如果有线程写数据，则其他线程不能读数据、写数据</li>
 <li>写是独占的，写的优先级高</li>
 </ol>
+</blockquote>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">pthread_rwlock_init</span><span class="token punctuation">(</span>pthread_rwlock_t <span class="token operator">*</span>restrict rwlock<span class="token punctuation">,</span> <span class="token keyword">const</span> pthread_rwlockattr_t <span class="token operator">*</span>restrict attr<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 初始化读写锁</span>
+
 <span class="token keyword">int</span> <span class="token function">pthread_rwlock_rdlock</span><span class="token punctuation">(</span>pthread_rwlock_t <span class="token operator">*</span>rwlock<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 加读锁</span>
+
 <span class="token keyword">int</span> <span class="token function">pthread_rwlock_wrlock</span><span class="token punctuation">(</span>pthread_rwlock_t <span class="token operator">*</span>rwlock<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 加写锁</span>
+
 <span class="token keyword">int</span> <span class="token function">pthread_rwlock_unlock</span><span class="token punctuation">(</span>pthread_rwlock_t <span class="token operator">*</span>rwlock<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 解锁</span>
+
 <span class="token keyword">int</span> <span class="token function">pthread_rwlock_destroy</span><span class="token punctuation">(</span>pthread_rwlock_t <span class="token operator">*</span>rwlock<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 释放读写锁</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">// 释放读写锁</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pthread.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>

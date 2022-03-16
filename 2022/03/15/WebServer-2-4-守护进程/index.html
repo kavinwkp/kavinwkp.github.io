@@ -574,12 +574,12 @@
 <li><p>进程组拥有一个声明周期，其开始时间为首进程创建组的时刻，结束时间为最后一个成员进程退出组的时刻。一个进程可能会因为终止而退出进程组，也可能会因为加入另一个进程组而退出当前组。进程组的首进程不一定是最后一个离开的</p>
 </li>
 </ul>
-<h3 id="会话"><a href="#会话" class="headerlink" title="会话"></a>会话</h3><ul>
+<h3 id="会话（session）"><a href="#会话（session）" class="headerlink" title="会话（session）"></a>会话（session）</h3><ul>
 <li><p>会话是一组进程组的集合，会话首进程是创建该会话的进程，其进程ID就是会话ID，新进程会继承父进程的会话ID</p>
 </li>
 <li><p>一个会话中的所有进程共享单个控制终端，控制终端会在会话首进程第一次打开一个终端设备时被创建，一个终端最多可以作为一个会话的控制终端</p>
 </li>
-<li><p>在任一时刻，会话中的其中一个进程组会成为终端的前台进程组，其他进程组会称为后台进程组。只有前台进程组中的进程才能从控制终端读取数据。当用户在终端输入终端字符生成信号后，该信号会被发送到前台进程组的所有成员</p>
+<li><p>在任一时刻，会话中的其中一个进程组会成为终端的<font color="LightSeaGreen">前台进程组</font>，其他进程组会称为<font color="Coral">后台进程组</font>。<font color="LightSeaGreen">只有前台进程组中的进程才能从控制终端读取数据</font>。当用户在终端输入终端字符生成信号后，该信号会被发送到前台进程组的所有成员</p>
 </li>
 <li><p>当控制终端的连接建立起来后，会话首进程会成为该终端的控制进程</p>
 </li>
@@ -587,13 +587,15 @@
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">pid_t <span class="token function">getpgrp</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 获取当前进程的进程组id</span>
 pid_t <span class="token function">getpgid</span><span class="token punctuation">(</span>pid_t pid<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 获取指定进程的进程组id</span>
 <span class="token keyword">int</span> <span class="token function">setpgid</span><span class="token punctuation">(</span>pid_t pid<span class="token punctuation">,</span> pid_t pgid<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 设置某个进程的进程组id</span>
-pid_t <span class="token function">getsid</span><span class="token punctuation">(</span>pid_t pid<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 获取指定进程的会话id</span>
-pid_t <span class="token function">setsid</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 创建会话并设置会话id</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+pid_t <span class="token function">setsid</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 创建会话并设置会话id</span>
+pid_t <span class="token function">getsid</span><span class="token punctuation">(</span>pid_t pid<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 获取指定进程的会话id</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="守护进程-1"><a href="#守护进程-1" class="headerlink" title="守护进程"></a>守护进程</h3><p>守护进程(Daemon Process)，是后台服务进程，生存期较长，通常独立于控制终端并且周期性地执行某种任务或等待处理某些发生的事件。一般以d结尾</p>
+<blockquote>
 <ul>
 <li>生命周期较长，守护进程会在系统启动的时候被创建直到系统被关闭</li>
 <li>在后台运行并且不拥有控制终端，确保内核不会为守护进程自动生成任何控制信号以及终端相关的信号(SIGINT/SIGQUIT)</li>
 </ul>
+</blockquote>
 <p>Linux的大多数服务器就是用守护进程实现的，如Internet服务器inetd，Web服务器httpd</p>
 
                 
