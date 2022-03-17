@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="4.3-IO多路复用, kunpeng">
+    <meta name="keywords" content="4.4-IO多路复用, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>4.3-IO多路复用 | kunpeng</title>
+    <title>4.4-IO多路复用 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">4.3-IO多路复用</h1>
+                    <h1 class="description center-align post-title">4.4-IO多路复用</h1>
                 </div>
             </div>
         </div>
@@ -571,10 +571,13 @@
 </blockquote>
 <p><strong>非阻塞，忙轮询</strong></p>
 <blockquote>
-<p>优点：提高了程序的执行效率<br>缺点：需要占用更多的CPU和系统资源</p>
+<ul>
+<li>优点：提高了程序的执行效率</li>
+<li>缺点：需要占用更多的CPU和系统资源</li>
+</ul>
 </blockquote>
 <p><strong>NIO非阻塞模型</strong></p>
-<p>每次循环内O(n)的系统调用</p>
+<p>每次循环内$O(n)$的系统调用</p>
 <h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><ol>
 <li>构造一个关于文件描述符的列表，将要监听的文件描述符添加到列表中</li>
 <li>调用系统函数，监听该列表中的文件描述符，直到有文件描述符进行IO调用时才返回，阻塞，由内核完成</li>
@@ -614,12 +617,14 @@
 <span class="token keyword">void</span> <span class="token function">FD_ZERO</span><span class="token punctuation">(</span>fd_set <span class="token operator">*</span>set<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// fd集合全部初始化为0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>缺点：</p>
+<blockquote>
 <ol>
-<li>每次调用<code>select</code>，都需要把<code>fd</code>集合从用户态拷贝到内核态，这个开销在fd很多时会很大</li>
+<li>每次调用<code>select</code>，都需要把<code>fd</code>集合从用户态拷贝到内核态，这个开销在<code>fd</code>很多时会很大</li>
 <li>每次调用<code>select</code>都需要在内核遍历传递进来的所有<code>fd</code>，这个开销在<code>fd</code>很多时也很大</li>
 <li><code>select</code>支持的文件描述符数量太少，默认是<code>1024</code></li>
 <li><code>fd</code>集合不能重用，每次都需要重置</li>
 </ol>
+</blockquote>
 <h3 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;poll.h></span></span>
 <span class="token keyword">int</span> <span class="token function">poll</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">pollfd</span> <span class="token operator">*</span>fds<span class="token punctuation">,</span> nfds_t nfds<span class="token punctuation">,</span> <span class="token keyword">int</span> timeout<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token operator">-</span> fds<span class="token operator">:</span> 需要检测的文件描述符集合
@@ -639,7 +644,8 @@
 <h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/epoll.h></span></span>
 
 <span class="token keyword">int</span> <span class="token function">epoll_create</span><span class="token punctuation">(</span><span class="token keyword">int</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 创建了一个epoll实例，在内核中创建了一个数据，一个是需要检测的文件描述符的信息（红黑树），一个是就绪列表，存放检测到数据发送的文件描述符信息（双向链表）</span>
+<span class="token comment">// 创建了一个epoll实例，在内核中创建了一个数据，一个是需要检测的文件描述符的信息（红黑树）</span>
+<span class="token comment">// 一个是就绪列表，存放检测到数据发送的文件描述符信息（双向链表）</span>
 <span class="token operator">-</span> size<span class="token operator">:</span> 现在不用了，给个非<span class="token number">0</span>值就行
 <span class="token comment">// 返回值：成功返回大于0的文件描述符，操作epoll实例，失败返回-1</span>
 <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
@@ -654,6 +660,11 @@
 <span class="token operator">-</span> fd<span class="token operator">:</span> 要检测的文件描述符
 <span class="token operator">-</span> event<span class="token operator">:</span> 检测文件描述符的哪个事件
 
+<span class="token keyword">struct</span> <span class="token class-name">epoll_event</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">uint32_t</span>     events<span class="token punctuation">;</span>      <span class="token comment">/* Epoll events */</span>
+    epoll_data_t data<span class="token punctuation">;</span>        <span class="token comment">/* User data variable */</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
 <span class="token keyword">typedef</span> <span class="token keyword">union</span> epoll_data <span class="token punctuation">&#123;</span>
     <span class="token keyword">void</span>        <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
     <span class="token keyword">int</span>          fd<span class="token punctuation">;</span>
@@ -661,11 +672,7 @@
     <span class="token keyword">uint64_t</span>     u64<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span> epoll_data_t<span class="token punctuation">;</span>
 
-<span class="token keyword">struct</span> <span class="token class-name">epoll_event</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">uint32_t</span>     events<span class="token punctuation">;</span>      <span class="token comment">/* Epoll events */</span>
-    epoll_data_t data<span class="token punctuation">;</span>        <span class="token comment">/* User data variable */</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-检测事件：
+<span class="token operator">-</span> 检测事件：
     <span class="token operator">-</span> EPOLLIN
     <span class="token operator">-</span> EPOLLOUT
     <span class="token operator">-</span> EPOLLERR
@@ -677,7 +684,7 @@
 <span class="token operator">-</span> events<span class="token operator">:</span> 传出参数，保存发生变化的文件描述符信息
 <span class="token operator">-</span> maxevents<span class="token operator">:</span> 第二个参数结构体数组的大小
 <span class="token operator">-</span> timeout<span class="token operator">:</span> 阻塞时间，<span class="token number">0</span>表示不阻塞，<span class="token operator">-</span><span class="token number">1</span>表示永久阻塞，大于<span class="token number">0</span>表示阻塞的时长（毫秒）
-<span class="token comment">// 返回值：成功返回发生变化的文件描述符的个数，失败返回-1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">// 返回值：成功返回发生变化的文件描述符的个数，失败返回-1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="epoll的工作模式"><a href="#epoll的工作模式" class="headerlink" title="epoll的工作模式"></a>epoll的工作模式</h4><blockquote>
 <ul>
 <li>LT模式（水平触发）</li>
@@ -717,7 +724,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2022/03/16/WebServer-4-3-IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/">http://example.com/2022/03/16/WebServer-4-3-IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/</a>
+                    <a href="http://example.com/2022/03/16/WebServer-4-4-IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/">http://example.com/2022/03/16/WebServer-4-4-IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -932,13 +939,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/03/16/WebServer-4-4-UDP%E5%92%8C%E6%9C%AC%E5%9C%B0Socket/">
+                <a href="/2022/03/16/WebServer-4-5-UDP%E5%92%8C%E6%9C%AC%E5%9C%B0Socket/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="4.4-UDP和本地Socket">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="4.5-UDP和本地Socket">
                         
-                        <span class="card-title">4.4-UDP和本地Socket</span>
+                        <span class="card-title">4.5-UDP和本地Socket</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1147,6 +1154,13 @@
 
 </main>
 
+
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
 
 
 
