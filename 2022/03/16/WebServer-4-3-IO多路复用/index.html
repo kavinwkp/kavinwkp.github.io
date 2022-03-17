@@ -560,15 +560,19 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="IO多路复用"><a href="#IO多路复用" class="headerlink" title="IO多路复用"></a>IO多路复用</h2><p>IO多路复用使得程序能同时监听多个文件描述符，能够提高程序的性能，Linux下实现IO多路复用的系统调用主要有select、poll和epoll</p>
+                <h2 id="IO多路复用"><a href="#IO多路复用" class="headerlink" title="IO多路复用"></a>IO多路复用</h2><p>IO多路复用使得程序能同时监听多个文件描述符，能够提高程序的性能，Linux下实现IO多路复用的系统调用主要有<code>select</code>、<code>poll</code>和<code>epoll</code></p>
 <p><strong>BIO阻塞模型</strong></p>
 <p>缺点：</p>
+<blockquote>
 <ol>
 <li>线程或进程会消耗资源</li>
 <li>线程或进程调度消耗CPU资源</li>
 </ol>
+</blockquote>
 <p><strong>非阻塞，忙轮询</strong></p>
+<blockquote>
 <p>优点：提高了程序的执行效率<br>缺点：需要占用更多的CPU和系统资源</p>
+</blockquote>
 <p><strong>NIO非阻塞模型</strong></p>
 <p>每次循环内O(n)的系统调用</p>
 <h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><ol>
@@ -587,51 +591,59 @@
 <span class="token operator">-</span> exceptfds<span class="token operator">:</span> 检测异常
 <span class="token operator">-</span> timeout<span class="token operator">:</span> 设置的超时时间
     <span class="token operator">-</span> <span class="token constant">NULL</span><span class="token operator">:</span> 永久阻塞，直到文件描述符有变化
+
 <span class="token keyword">struct</span> <span class="token class-name">timeval</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">long</span>    tv_sec<span class="token punctuation">;</span>         <span class="token comment">/* seconds */</span>
-    <span class="token keyword">long</span>    tv_usec<span class="token punctuation">;</span>        <span class="token comment">/* microseconds */</span>
+    <span class="token keyword">long</span>    tv_sec<span class="token punctuation">;</span>         <span class="token comment">/* 秒 */</span>
+    <span class="token keyword">long</span>    tv_usec<span class="token punctuation">;</span>        <span class="token comment">/* 微秒 */</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 <span class="token comment">// 成功返回检测的集合中发生变化的文件描述符数量，失败返回-1</span>
-<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+
 <span class="token keyword">void</span> <span class="token function">FD_CLR</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span> fd_set <span class="token operator">*</span>set<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 将文件描述符对应的标志位置1</span>
-<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+
 <span class="token keyword">int</span>  <span class="token function">FD_ISSET</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span> fd_set <span class="token operator">*</span>set<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 判断某个fd是0还是1</span>
-<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+
 <span class="token keyword">void</span> <span class="token function">FD_SET</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span> fd_set <span class="token operator">*</span>set<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 设置某个fd为标志位为1</span>
-<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
+
 <span class="token keyword">void</span> <span class="token function">FD_ZERO</span><span class="token punctuation">(</span>fd_set <span class="token operator">*</span>set<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// fd集合全部初始化为0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">// fd集合全部初始化为0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>缺点：</p>
 <ol>
-<li>每次调用select，都需要把fd集合从用户态拷贝到内核态，这个开销在fd很多时会很大</li>
-<li>每次调用select都需要在内核遍历传递进来的所有fd，这个开销在fd很多时也很大</li>
-<li>select支持的文件描述符数量太少，默认是1024</li>
-<li>fd集合不能重用，每次都需要重置</li>
+<li>每次调用<code>select</code>，都需要把<code>fd</code>集合从用户态拷贝到内核态，这个开销在fd很多时会很大</li>
+<li>每次调用<code>select</code>都需要在内核遍历传递进来的所有<code>fd</code>，这个开销在<code>fd</code>很多时也很大</li>
+<li><code>select</code>支持的文件描述符数量太少，默认是<code>1024</code></li>
+<li><code>fd</code>集合不能重用，每次都需要重置</li>
 </ol>
 <h3 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;poll.h></span></span>
 <span class="token keyword">int</span> <span class="token function">poll</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">pollfd</span> <span class="token operator">*</span>fds<span class="token punctuation">,</span> nfds_t nfds<span class="token punctuation">,</span> <span class="token keyword">int</span> timeout<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token operator">-</span> fds<span class="token operator">:</span> 需要检测的文件描述符集合
+
 <span class="token keyword">struct</span> <span class="token class-name">pollfd</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">int</span>   fd<span class="token punctuation">;</span>         <span class="token comment">/* 委托内核检测的文件描述符*/</span>
     <span class="token keyword">short</span> events<span class="token punctuation">;</span>     <span class="token comment">/* 检测什么事件 */</span>
     <span class="token keyword">short</span> revents<span class="token punctuation">;</span>    <span class="token comment">/* 文件描述符实际发生的事情 */</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
 <span class="token operator">-</span> events
     <span class="token operator">-</span> POLLIN<span class="token operator">:</span> 读事件
     <span class="token operator">-</span> POLLOUT<span class="token operator">:</span> 写事件
 <span class="token operator">-</span> nfds<span class="token operator">:</span> 最大文件描述符的下标 <span class="token operator">+</span> <span class="token number">1</span>
 <span class="token operator">-</span> timeout<span class="token operator">:</span> 阻塞时长，<span class="token number">0</span>表示不阻塞，<span class="token operator">-</span><span class="token number">1</span>表示阻塞，检测到fd有变化解除阻塞，大于<span class="token number">0</span>表示阻塞的时长
-<span class="token comment">// 返回值：成功返回n个文件描述符发生变化，失败返回-1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">// 返回值：成功返回n个文件描述符发生变化，失败返回-1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/epoll.h></span></span>
 
 <span class="token keyword">int</span> <span class="token function">epoll_create</span><span class="token punctuation">(</span><span class="token keyword">int</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 创建了一个epoll实例，在内核中创建了一个数据，一个是需要检测的文件描述符的信息（红黑树），一个是就绪列表，存放检测到数据发送的文件描述符信息（双向链表）</span>
 <span class="token operator">-</span> size<span class="token operator">:</span> 现在不用了，给个非<span class="token number">0</span>值就行
 <span class="token comment">// 返回值：成功返回大于0的文件描述符，操作epoll实例，失败返回-1</span>
-<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
+
 <span class="token keyword">int</span> <span class="token function">epoll_ctl</span><span class="token punctuation">(</span><span class="token keyword">int</span> epfd<span class="token punctuation">,</span> <span class="token keyword">int</span> op<span class="token punctuation">,</span> <span class="token keyword">int</span> fd<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">epoll_event</span> <span class="token operator">*</span>event<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 对epoll实例进行管理，添加、删除、修改文件描述符信息</span>
 <span class="token operator">-</span> epfd<span class="token operator">:</span> epoll实例对应的文件描述符
@@ -641,6 +653,7 @@
     <span class="token operator">-</span> EPOLL_CTL_DEL<span class="token operator">:</span> 删除
 <span class="token operator">-</span> fd<span class="token operator">:</span> 要检测的文件描述符
 <span class="token operator">-</span> event<span class="token operator">:</span> 检测文件描述符的哪个事件
+
 <span class="token keyword">typedef</span> <span class="token keyword">union</span> epoll_data <span class="token punctuation">&#123;</span>
     <span class="token keyword">void</span>        <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
     <span class="token keyword">int</span>          fd<span class="token punctuation">;</span>
@@ -657,22 +670,27 @@
     <span class="token operator">-</span> EPOLLOUT
     <span class="token operator">-</span> EPOLLERR
     <span class="token operator">-</span> EPOLLET
-<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
+
 <span class="token keyword">int</span> <span class="token function">epoll_wait</span><span class="token punctuation">(</span><span class="token keyword">int</span> epfd<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">epoll_event</span> <span class="token operator">*</span>events<span class="token punctuation">,</span> <span class="token keyword">int</span> maxevents<span class="token punctuation">,</span> <span class="token keyword">int</span> timeout<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token operator">-</span> epfd<span class="token operator">:</span> epoll实例的文件描述符
 <span class="token operator">-</span> events<span class="token operator">:</span> 传出参数，保存发生变化的文件描述符信息
 <span class="token operator">-</span> maxevents<span class="token operator">:</span> 第二个参数结构体数组的大小
 <span class="token operator">-</span> timeout<span class="token operator">:</span> 阻塞时间，<span class="token number">0</span>表示不阻塞，<span class="token operator">-</span><span class="token number">1</span>表示永久阻塞，大于<span class="token number">0</span>表示阻塞的时长（毫秒）
-<span class="token comment">// 返回值：成功返回发生变化的文件描述符的个数，失败返回-1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="epoll的工作模式"><a href="#epoll的工作模式" class="headerlink" title="epoll的工作模式"></a>epoll的工作模式</h4><ul>
+<span class="token comment">// 返回值：成功返回发生变化的文件描述符的个数，失败返回-1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="epoll的工作模式"><a href="#epoll的工作模式" class="headerlink" title="epoll的工作模式"></a>epoll的工作模式</h4><blockquote>
+<ul>
 <li>LT模式（水平触发）</li>
 </ul>
+</blockquote>
 <p>支持阻塞和非阻塞，内核告诉你一个文件描述符是否就绪了，就可以对fd进行IO操作，如果不进行任何操作，还是会继续通知</p>
+<blockquote>
 <ul>
 <li>ET模式（边沿触发）</li>
 </ul>
+</blockquote>
 <p>非阻塞，当描述符从未就绪变为就绪时，内核会告知，并且不会再发送更多的就绪通知，直到文件描述符不再为就绪状态</p>
-<p>ET模式在很大程度上减少了epoll事件被重复触发的次数，效率要比LT模式高，epoll工作在ET模式时，必须使用非阻塞套接字，以避免由于一个文件描述符的阻塞读写操作把处理多个文件描述符的任务饿死</p>
+<p>ET模式在很大程度上减少了<code>epoll</code>事件被重复触发的次数，效率要比LT模式高，<code>epoll</code>工作在ET模式时，必须使用非阻塞套接字，以避免由于一个文件描述符的阻塞读写操作把处理多个文件描述符的任务饿死</p>
 
                 
             </div>
