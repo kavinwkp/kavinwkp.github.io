@@ -929,6 +929,13 @@ pthread_mutex_t mutex<span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h3><p>两个或两个以上的进程在执行过程中，因争夺共享资源而造成的一种互相等待的现象，若无外力作用，他们都将无法推进下去，此时系统处于死锁状态</p>
+<p>死锁只有同时满足四个条件才会发生：</p>
+<ol>
+<li>互斥条件</li>
+<li>持有并等待条件</li>
+<li>不可剥夺条件</li>
+<li>环路等待条件</li>
+</ol>
 <p>死锁的几个场景</p>
 <blockquote>
 <ol>
@@ -937,6 +944,7 @@ pthread_mutex_t mutex<span class="token punctuation">;</span>
 <li>多线程多锁，抢占锁资源</li>
 </ol>
 </blockquote>
+<p>避免死锁问题只需要破坏其中一个条件就可以，最常见且可行的是<font color="LightSeaGreen"><b>使用资源有序分配法，来破坏环路等待条件</b></font>，即线程总是以相同的顺序申请自己想要的资源</p>
 <hr>
 <h2 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h2><p>读写锁的特点：</p>
 <blockquote>
