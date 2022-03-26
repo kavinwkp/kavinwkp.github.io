@@ -560,15 +560,47 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p>创建索引</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">create</span> <span class="token keyword">index</span> 索引名 <span class="token keyword">on</span> 表名（列名）<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>删除索引</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">drop</span> <span class="token keyword">index</span> 索引名 <span class="token keyword">on</span> 表名<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+                <h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><blockquote>
+<p>索引的出现就是为了提高查询的效率，就像书的目录一样</p>
+</blockquote>
+<p>查询主要有2种方式：</p>
+<ol>
+<li>全表扫描</li>
+<li>根据索引检索</li>
+</ol>
 <p>查看是否使用了索引：在SQL语句前添加<code>explain</code>关键字</p>
 <ul>
 <li><code>type=ALL</code>，表示使用全表查询</li>
 <li><code>tyep=RES</code>，表示使用索引</li>
 </ul>
+<p>创建索引</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">create</span> <span class="token keyword">index</span> 索引名 <span class="token keyword">on</span> 表名（列名）<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>删除索引</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">drop</span> <span class="token keyword">index</span> 索引名 <span class="token keyword">on</span> 表名<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<blockquote>
+<ul>
+<li>主键会自动添加索引对象</li>
+<li>一个字段如果有unique约束，也会自动创建索引对象</li>
+</ul>
+</blockquote>
+<p>索引的类型</p>
+<ol>
+<li>普通索引：最基本的索引，没有任何限制</li>
+<li>唯一索引：与普通索引类似，但索引列的值必须是唯一的，允许空值</li>
+<li>主键索引：一种特殊的唯一索引，一个表只能有一个主键，不允许有空值</li>
+<li>组合索引：在多个字段上创建的索引，只有在查询条件中使用了创建索引的第一个字段，索引才会被使用</li>
+<li>全文索引：主要用来查找⽂本中的关键字，类似于搜索引擎</li>
+</ol>
+<h4 id="InnoDB的索引模型"><a href="#InnoDB的索引模型" class="headerlink" title="InnoDB的索引模型"></a>InnoDB的索引模型</h4><p>InnoDB使用了B+树索引模型</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">create</span> <span class="token keyword">table</span> T <span class="token punctuation">(</span>
+    id <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span> <span class="token comment">-- 主键，自动创建索引</span>
+    k <span class="token keyword">int</span> <span class="token operator">not</span> <span class="token boolean">null</span><span class="token punctuation">,</span>
+    name <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">index</span> <span class="token punctuation">(</span>k<span class="token punctuation">)</span>   <span class="token comment">-- 给字段k添加索引</span>
+<span class="token punctuation">)</span>
+<span class="token keyword">engine</span><span class="token operator">=</span><span class="token keyword">InnoDB</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="主键索引与非主键索引（二级索引）的区别"><a href="#主键索引与非主键索引（二级索引）的区别" class="headerlink" title="主键索引与非主键索引（二级索引）的区别"></a>主键索引与非主键索引（二级索引）的区别</h4><p>根据叶子节点的内容，索引分为主键索引（聚簇索引，clustered index）和非主键索引（二级索引，secondary index）</p>
+<p>通过聚簇索引可以查到需要的数据，而通过非聚簇索引可以查到记录对应的主键值 ，再使用主键的值通过聚簇索引查找到需要的数据。聚簇索引和非聚簇索引的根本区别是表记录的排列顺序和与索引的排列顺序是否一致。</p>
 <h3 id="索引失效的情况"><a href="#索引失效的情况" class="headerlink" title="索引失效的情况"></a>索引失效的情况</h3><ul>
 <li>对索引使用左或者左右模糊匹配，如<code>like %x</code>或者<code>like %x%</code></li>
 <li>对索引使用函数</li>
@@ -579,10 +611,10 @@
 </ul>
 <hr>
 <h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><h3 id="MySQL事务特性"><a href="#MySQL事务特性" class="headerlink" title="MySQL事务特性"></a>MySQL事务特性</h3><ul>
-<li><font color="LightSeaGreen">原子性（Atomicity）</font>：一个事务（transaction）中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被回滚（rollback）到事务开始前的状态，就像这个事务从来没有执行过一样</li>
+<li><font color="LightSeaGreen">原子性（Atomicity）</font>：一个事务（transaction）中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被回滚（rollback）到事务开始前的状态，就像这个事务从来没有执行过一样，至于怎么回到执行之前的状态，是通过<code>undo log</code>（重做日志）实现的，它记录了与事务处理的相反操作，事务执行了一个insert，回滚就执行一个delete</li>
 <li><font color="LightSeaGreen">一致性（Consistency）</font>：数据库的完整性不会因为事务的执行而受到破坏，比如表中有一个字段为姓名，它有唯一约束，也就是表中姓名不能重复，如果一个事务对姓名字段进行了修改，但是在事务提交后，表中的姓名变得非唯一性了，这就破坏了事务的一致性要求，这时数据库就要撤销该事务，返回初始化的状态</li>
 <li><font color="LightSeaGreen">隔离性（Isolation）</font>：数据库允许多个并发事务同时对其数据进行读写和修改，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。事务隔离分为不同级别，包括读未提交（read uncommitted）、读提交（read committed）、可重复读（repeatable read）和串行化（serializable）</li>
-<li><font color="LightSeaGreen">持久性（Durability）</font>：事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失</li>
+<li><font color="LightSeaGreen">持久性（Durability）</font>：事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失，是通过<code>redo log</code>（预写日志）实现的，InnoDB读取磁盘数据后会放在一个缓冲区中，用户修改数据会先修改buffer中的数据，然后定期将buffer中的数据刷新到磁盘中，如果数据还没刷新到磁盘中，MySQL就宕机了，buffer中的数据就会丢失，所以引入<code>redo log</code>，用户会把所有的修改先写到日志里，再更新到buffer里面</li>
 </ul>
 <h3 id="并发事务会引起问题"><a href="#并发事务会引起问题" class="headerlink" title="并发事务会引起问题"></a>并发事务会引起问题</h3><p>MySQL服务端允许多个客户端连接，并发处理多个事务可能引起问题</p>
 <blockquote>
