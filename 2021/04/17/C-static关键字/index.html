@@ -560,34 +560,27 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="函数中使用static"><a href="#函数中使用static" class="headerlink" title="函数中使用static"></a>函数中使用static</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span> </span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string></span> </span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span> 
-
-<span class="token keyword">void</span> <span class="token function">demo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 
-<span class="token punctuation">&#123;</span> 
-
-    <span class="token keyword">static</span> <span class="token keyword">int</span> count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> 
+                <h3 id="静态变量"><a href="#静态变量" class="headerlink" title="静态变量"></a>静态变量</h3><h4 id="函数中使用static"><a href="#函数中使用static" class="headerlink" title="函数中使用static"></a>函数中使用static</h4><p>当变量声明为<code>static</code>时，<font color="LightSeaGreen">变量空间将在程序的生命周期内分配</font>。即使多次调用该函数，静态变量的空间也『只分配一次』，前一次调用中的变量值通过下一次函数调用传递。这对于在C/C++或需要存储先前函数状态的任何其他应用程序非常有用</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">demo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">static</span> <span class="token keyword">int</span> count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
     cout <span class="token operator">&lt;&lt;</span> count <span class="token operator">&lt;&lt;</span> <span class="token string">" "</span><span class="token punctuation">;</span> 
     count<span class="token operator">++</span><span class="token punctuation">;</span> 
 <span class="token punctuation">&#125;</span> 
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 
-<span class="token punctuation">&#123;</span> 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> 
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
         <span class="token function">demo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span> 
 <span class="token punctuation">&#125;</span>
-<span class="token number">0</span> <span class="token number">1</span> <span class="token number">2</span> <span class="token number">3</span> <span class="token number">4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token number">0</span> <span class="token number">1</span> <span class="token number">2</span> <span class="token number">3</span> <span class="token number">4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以看到<code>count</code>在不断累加，<code>static</code>变量的空间只分配一次，每次调用之后不会再进行初始化</p>
-<h2 id="类中使用static"><a href="#类中使用static" class="headerlink" title="类中使用static"></a>类中使用static</h2><ul>
+<h4 id="类中使用static"><a href="#类中使用static" class="headerlink" title="类中使用static"></a>类中使用static</h4><blockquote>
+<ul>
 <li>类中的<code>static</code>变量只能声明，定义要放在类外面</li>
 </ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
-
-<span class="token keyword">class</span> <span class="token class-name">Human</span>
-<span class="token punctuation">&#123;</span>
+</blockquote>
+<p>由于声明为static的变量只被初始化一次，因为它们在单独的静态存储中分配了空间，因此类中的静态变量<strong>由对象共享</strong>。对于不同的对象，不能有相同静态变量的多个副本。也是因为这个原因，<font color="LightSeaGreen">静态变量不能使用构造函数初始化</font></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Human</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token keyword">static</span> <span class="token keyword">int</span> ip<span class="token punctuation">;</span>  <span class="token comment">// 类中声明static变量</span>
 <span class="token keyword">private</span><span class="token operator">:</span>
@@ -595,32 +588,29 @@
     <span class="token keyword">int</span> _age<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-
 <span class="token keyword">int</span> Human<span class="token operator">::</span>ip <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>  <span class="token comment">// 类外定义static变量</span>
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     Human <span class="token function">kavin</span><span class="token punctuation">(</span><span class="token string">"kavin"</span><span class="token punctuation">,</span> <span class="token number">23</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> kavin<span class="token punctuation">.</span>ip <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> kavin<span class="token punctuation">.</span>ip <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>   <span class="token comment">// 0</span>
     kavin<span class="token punctuation">.</span>ip <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
 
     Human<span class="token operator">*</span> jack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">Human</span><span class="token punctuation">(</span><span class="token string">"jack"</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     jack<span class="token operator">-></span>ip <span class="token operator">=</span> <span class="token number">30</span><span class="token punctuation">;</span>
 
-    cout <span class="token operator">&lt;&lt;</span> kavin<span class="token punctuation">.</span>ip <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> kavin<span class="token punctuation">.</span>ip <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>   <span class="token comment">// 30</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span class="token number">0</span>
-<span class="token number">30</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以看到不同对象都可以对<code>static</code>变量进行修改，他们是共享的</p>
-<h2 id="静态变量需要初值"><a href="#静态变量需要初值" class="headerlink" title="静态变量需要初值"></a>静态变量需要初值</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
+<h4 id="静态变量需要初值"><a href="#静态变量需要初值" class="headerlink" title="静态变量需要初值"></a>静态变量需要初值</h4><p>在C++11标准下，<code>static</code>搭配<code>const</code>就可以在类内初始化</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">static</span> <span class="token keyword">const</span> <span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
-    或者 <span class="token keyword">enum</span> <span class="token punctuation">&#123;</span> num <span class="token operator">=</span> <span class="token number">5</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token comment">// 或者 enum &#123; num = 5 &#125;;</span>
     <span class="token keyword">int</span> arr<span class="token punctuation">[</span>num<span class="token punctuation">]</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这里数组必须知道大小，所以就必须在给<code>num</code>赋初值<br>也可以用<code>enum</code></p>
-<h2 id="静态对象"><a href="#静态对象" class="headerlink" title="静态对象"></a>静态对象</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<h3 id="静态成员"><a href="#静态成员" class="headerlink" title="静态成员"></a>静态成员</h3><h4 id="类对象为静态"><a href="#类对象为静态" class="headerlink" title="类对象为静态"></a>类对象为静态</h4><p>先看看非静态对象的效果</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>x <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">int</span> num1 <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
@@ -630,10 +620,10 @@
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 Destructor<span class="token operator">:</span> <span class="token keyword">delete</span> ptr
-main function end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>因为<code>kavin</code>对象的生命周期在if语句结束之后就没了，所以就会调用析构函数</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+main function end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>因为<code>kavin</code>对象的生命周期在<code>if</code>语句结束之后就结束了，所以就会调用析构函数</p>
+<p>如果将对象声明为静态</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>x <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">int</span> num1 <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
@@ -643,10 +633,16 @@ main function end<span aria-hidden="true" class="line-numbers-rows"><span></span
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 main function end
-Destructor<span class="token operator">:</span> <span class="token keyword">delete</span> ptr<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+Destructor<span class="token operator">:</span> <span class="token keyword">delete</span> ptr  <span class="token comment">// main结束后才调用析构函数</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>静态对象的声明周期贯穿整个程序，所以在程序结束之后才会调用析构函数</p>
-<h2 id="静态成员函数"><a href="#静态成员函数" class="headerlink" title="静态成员函数"></a>静态成员函数</h2><p>类中的静态成员函数只能使用类中的静态成员变量和成员函数<br>建议使用类名和范围解析运算符调用静态成员函数<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Human</span>
-<span class="token punctuation">&#123;</span>
+<h4 id="类中的静态函数"><a href="#类中的静态函数" class="headerlink" title="类中的静态函数"></a>类中的静态函数</h4><p>就像类中的静态数据成员或静态变量一样，静态成员函数也不依赖于类的对象。我们被允许使用对象和<code>.</code>来调用静态成员函数</p>
+<blockquote>
+<ul>
+<li>建议使用类名和范围解析运算符调用静态成员</li>
+<li>静态成员函数仅能访问静态数据成员或其他静态成员函数，它们无法访问类的非静态数据成员或成员函数。</li>
+</ul>
+</blockquote>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Human</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token keyword">static</span> <span class="token keyword">int</span> ip<span class="token punctuation">;</span>
     <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">info</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -659,15 +655,12 @@ Destructor<span class="token operator">:</span> <span class="token keyword">dele
     <span class="token comment">// Introduce();    //error，不能调用非静态成员函数</span>
 <span class="token punctuation">&#125;</span>
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     Human <span class="token function">kavin</span><span class="token punctuation">(</span><span class="token string">"kavin"</span><span class="token punctuation">,</span> <span class="token number">23</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     kavin<span class="token punctuation">.</span>ip <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
-    <span class="token class-name">Human</span><span class="token operator">::</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">Human</span><span class="token operator">::</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 10</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span class="token number">10</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
-
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

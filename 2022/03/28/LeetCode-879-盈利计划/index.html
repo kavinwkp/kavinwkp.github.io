@@ -572,8 +572,13 @@
 输出：<span class="token number">7</span>
 解释：至少产生 <span class="token number">5</span> 的利润，只要完成其中一种工作就行，所以该集团可以完成任何工作。
 有 <span class="token number">7</span> 种可能的计划：<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>，<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>，<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>，<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>，<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span>，<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span>，以及 <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span> 。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></p>
-<h3 id="method"><a href="#method" class="headerlink" title="method"></a>method</h3><p><code>dp[i][j][k]</code>：前面<code>i</code>份工作，刚好<code>j</code>个人，利润至少为<code>k</code>的方案数<br>相当于是两个维度的背包<br>且第二个维度是价值（利润）至少为某个值，而不是普通的不超过某个值（背包容量）</p>
-<p>初始化：前面0份工作，刚好0人的时候，利润至少为0的方案数是1</p>
+<h3 id="method"><a href="#method" class="headerlink" title="method"></a>method</h3><p><code>dp[i][j][k]</code>：前面<code>i</code>份工作，刚好<code>j</code>个人，利润至少为<code>k</code>的方案数<br>相当于是两个维度的背包，且第二个维度是价值（利润）至少为某个值，而不是普通的不超过某个值（背包容量）</p>
+<p>对于每件物品（令下标从 1 开始），我们有「选」和「不选」两种决策：</p>
+<p><strong>不选</strong>：显然有：</p>
+<script type="math/tex; mode=display">
+f[i - 1][j][k]</script><p><strong>选</strong>：首先需要满足人数达到要求（<code>j &gt;= group[i - 1]</code>），还需要考虑「至少利润」负值问题<br>如果直接令「利润维度」为 <code>k - profit[i - 1]</code> 可能会出现负值，那么负值是否为合法状态呢？这需要结合「状态定义」来看，由于是「利润至少为 k」，因此属于「合法状态」，需要参与转移。<br>由于我们没有设计动规数组存储「利润至少为负权」状态，我们需要根据「状态定义」做一个等价替换，将这个「状态」映射到 <code>f[i][j][0]</code>。这主要是利用所有的任务利润都为“非负数”，所以不可能出现利润为负的情况，这时候「利润至少为某个负数 k」的方案数其实是完全等价于「利润至少为 0」的方案数。</p>
+<script type="math/tex; mode=display">
+f[i - 1][j - group[i - 1]][\max(k - profit[i - 1], 0)]</script><p>初始化：前面0份工作，刚好0人的时候，利润至少为0的方案数是1</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">profitableSchemes</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">,</span> <span class="token keyword">int</span> minProfit<span class="token punctuation">,</span> vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> group<span class="token punctuation">,</span> vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> profit<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">int</span> MOD <span class="token operator">=</span> <span class="token number">1e9</span> <span class="token operator">+</span> <span class="token number">7</span><span class="token punctuation">;</span>
     <span class="token keyword">int</span> m <span class="token operator">=</span> group<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -891,18 +896,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/03/28/LeetCode-879-%E7%9B%88%E5%88%A9%E8%AE%A1%E5%88%92/">
+                <a href="/2022/03/29/C-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="879-盈利计划">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="单例模式">
                         
-                        <span class="card-title">879-盈利计划</span>
+                        <span class="card-title">单例模式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -912,27 +916,26 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-28
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-03-29
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/LeetCode/" class="post-category">
-                                    LeetCode
+                            <a href="/categories/C/" class="post-category">
+                                    C++
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E8%83%8C%E5%8C%85/">
-                        <span class="chip bg-color">背包</span>
+                    <a href="/tags/C/">
+                        <span class="chip bg-color">C++</span>
                     </a>
                     
                 </div>
