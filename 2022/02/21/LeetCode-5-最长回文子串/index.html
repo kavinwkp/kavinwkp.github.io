@@ -628,6 +628,7 @@ string <span class="token function">longestPalindrome</span><span class="token p
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> s<span class="token punctuation">.</span><span class="token function">substr</span><span class="token punctuation">(</span>l<span class="token punctuation">,</span> maxLen<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>相当于一个指针<code>i</code>从后往前遍历，另一个指针<code>j</code>从<code>i</code>开始往后遍历，枚举所有以<code>s[i]</code>开始的子串</p>
 <hr>
 <h2 id="LeetCode-647-Palindromic-Substrings"><a href="#LeetCode-647-Palindromic-Substrings" class="headerlink" title="LeetCode 647. Palindromic Substrings"></a>LeetCode 647. Palindromic Substrings</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/palindromic-substrings/">LeetCode-647</a></p>
 <p>Given a string <code>s</code>, return the number of <strong>palindromic substrings</strong> in it.</p>
@@ -636,7 +637,7 @@ string <span class="token function">longestPalindrome</span><span class="token p
 <p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> s <span class="token operator">=</span> <span class="token string">"abcb"</span>
 Output<span class="token operator">:</span> <span class="token number">5</span>
 Explanation<span class="token operator">:</span> Three palindromic strings<span class="token operator">:</span> <span class="token string">"a"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token string">"c"</span><span class="token punctuation">,</span> <span class="token string">"b"</span><span class="token punctuation">,</span> <span class="token string">"bcb"</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
-<h2 id="method"><a href="#method" class="headerlink" title="method"></a>method</h2><p>中心是单个字符，会形成奇数回文，如<code>aba</code><br>中心是两个字符，会形成偶数回文，如<code>baab</code><br>在字符串中用两个指针从中心向两边扩展，如果相同就继续扩展，否则该中心结束</p>
+<h3 id="method"><a href="#method" class="headerlink" title="method"></a>method</h3><p>中心是单个字符，会形成奇数回文，如<code>aba</code><br>中心是两个字符，会形成偶数回文，如<code>baab</code><br>在字符串中用两个指针从中心向两边扩展，如果相同就继续扩展，否则该中心结束</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> cnt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token keyword">void</span> <span class="token function">isValue</span><span class="token punctuation">(</span>string s<span class="token punctuation">,</span> <span class="token keyword">int</span> i<span class="token punctuation">,</span> <span class="token keyword">int</span> j<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token comment">// 这里用while，如果是回文可以一直扩展下去</span>
@@ -688,8 +689,8 @@ Explanation<span class="token operator">:</span> One possible longest palindromi
 <p>如果<code>s[i] == s[j]</code>，那么<code>dp[i][j] = dp[i+1][j-1] + 2</code></p>
 <p>如果<code>s[i] != s[j]</code>，说明<code>s[i]</code>和<code>s[j]</code>的同时加入不能增加区间<code>[i,j]</code>的回文长度，考虑分别加入<code>s[i]</code>或<code>s[j]</code>看哪个可以使得回文长度增加</p>
 <ul>
-<li>加入<code>s[i]</code>长度为<code>dp[i][j-1]</code></li>
-<li>加入<code>s[j]</code>长度为<code>dp[i+1][j]</code></li>
+<li>加入<code>s[i]</code>长度为<code>dp[i][j-1]</code>，相当于删掉<code>s[j]</code></li>
+<li>加入<code>s[j]</code>长度为<code>dp[i+1][j]</code>，相当于删掉<code>s[i]</code></li>
 </ul>
 <p>所以，<code>dp[i][j] = max(dp[i][j-1], dp[i+1][j])</code></p>
 <center>
