@@ -569,7 +569,11 @@
 <span class="token number">2</span>
 输出<span class="token operator">:</span> <span class="token number">700</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
 <h3 id="method-Bellman-Ford"><a href="#method-Bellman-Ford" class="headerlink" title="method: Bellman Ford"></a>method: Bellman Ford</h3><blockquote>
-<p>从起点到终点最多经过k个点（k+1条边）的问题</p>
+<ul>
+<li>从起点到终点最多经过k个点（k+1条边）的问题</li>
+<li>处理负边权</li>
+<li>判负环</li>
+</ul>
 </blockquote>
 <p><code>dp[t][i]</code>：从起点刚好经过<code>t</code>条边到节点<code>i</code>所需的代价</p>
 <ul>
@@ -582,7 +586,7 @@
     dp<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span>src<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
     <span class="token keyword">int</span> res <span class="token operator">=</span> inf<span class="token punctuation">;</span>
     <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> k <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> f <span class="token operator">:</span> flights<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> f <span class="token operator">:</span> flights<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>    <span class="token comment">// 遍历每一条边</span>
             <span class="token keyword">int</span> u <span class="token operator">=</span> f<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> v <span class="token operator">=</span> f<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> w <span class="token operator">=</span> f<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
             dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">,</span> dp<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">+</span> w<span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span>
