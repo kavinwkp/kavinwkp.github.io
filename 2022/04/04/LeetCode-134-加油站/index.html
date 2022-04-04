@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="stm32-基础, kunpeng">
+    <meta name="keywords" content="134-加油站, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>stm32-基础 | kunpeng</title>
+    <title>134-加油站 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">stm32-基础</h1>
+                    <h1 class="description center-align post-title">134-加油站</h1>
                 </div>
             </div>
         </div>
@@ -511,8 +511,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/">
-                                <span class="chip bg-color">嵌入式</span>
+                            <a href="/tags/%E8%B4%AA%E5%BF%83/">
+                                <span class="chip bg-color">贪心</span>
                             </a>
                         
                     </div>
@@ -523,8 +523,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" class="post-category">
-                                嵌入式
+                            <a href="/categories/LeetCode/" class="post-category">
+                                LeetCode
                             </a>
                         
                     </div>
@@ -536,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-10-01
+                    2022-04-04
                 </div>
                 
 
@@ -560,155 +560,34 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="LED"><a href="#LED" class="headerlink" title="LED"></a>LED</h2><h3 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">__LED_H</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">__LED_H</span>	 </span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"sys.h"</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">LED0</span> <span class="token expression"><span class="token function">PBout</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span>   </span><span class="token comment">// PB5</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">LED1</span> <span class="token expression"><span class="token function">PEout</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span>   </span><span class="token comment">// PE5	</span></span>
-<span class="token keyword">void</span> <span class="token function">LED_Init</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//初始化</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="源文件"><a href="#源文件" class="headerlink" title="源文件"></a>源文件</h3><p><code>RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE)</code>: 使能端口的时钟<br><code>GPIO_Init(GPIOB, &amp;GPIO_InitStructure)</code>: 端口初始化</p>
-<p><code>GPIO_InitTypeDef</code>的成员变量：</p>
-<ul>
-<li><code>GPIO_Pin</code>: 指定哪个端口</li>
-<li><code>GPIO_Mode</code>: 输入输出的模式<ul>
-<li><code>GPIO_Mode_Out_PP</code>: 推挽输出(Push Pull)</li>
-<li><code>GPIO_Mode_IPU</code>: 上拉输入(Input Up)</li>
-<li><code>GPIO_Mode_IPD</code>: 下拉输入(Input Down)</li>
-</ul>
-</li>
-<li><code>GPIO_Speed</code>: 端口速度<ul>
-<li><code>GPIO_Speed_50MHz</code></li>
-<li><code>GPIO_Speed_10MHz</code></li>
-</ul>
-</li>
-</ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"led.h"</span></span>
-<span class="token keyword">void</span> <span class="token function">LED_Init</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    GPIO_InitTypeDef GPIO_InitStructure<span class="token punctuation">;</span>
-    <span class="token function">RCC_APB2PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB2Periph_GPIOB<span class="token operator">|</span>RCC_APB2Periph_GPIOE<span class="token punctuation">,</span> ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span>	 <span class="token comment">//使能PB,PE端口时钟</span>
-
-    GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Pin <span class="token operator">=</span> GPIO_Pin_5<span class="token punctuation">;</span>           <span class="token comment">// LED0-->PB.5 端口配置</span>
-    GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Mode <span class="token operator">=</span> GPIO_Mode_Out_PP<span class="token punctuation">;</span>    <span class="token comment">// 推挽输出</span>
-    GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Speed <span class="token operator">=</span> GPIO_Speed_50MHz<span class="token punctuation">;</span>   <span class="token comment">// IO口速度为50MHz</span>
-    <span class="token function">GPIO_Init</span><span class="token punctuation">(</span>GPIOB<span class="token punctuation">,</span> <span class="token operator">&amp;</span>GPIO_InitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>              <span class="token comment">// 根据设定参数初始化GPIOB.5</span>
-    <span class="token function">GPIO_SetBits</span><span class="token punctuation">(</span>GPIOB<span class="token punctuation">,</span>GPIO_Pin_5<span class="token punctuation">)</span><span class="token punctuation">;</span>                     <span class="token comment">// PB.5 输出高</span>
-
-    GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Pin <span class="token operator">=</span> GPIO_Pin_5<span class="token punctuation">;</span>   <span class="token comment">// LED1-->PE.5 端口配置, 推挽输出</span>
-    <span class="token function">GPIO_Init</span><span class="token punctuation">(</span>GPIOE<span class="token punctuation">,</span> <span class="token operator">&amp;</span>GPIO_InitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">// 推挽输出，IO口速度为50MHz</span>
-    <span class="token function">GPIO_SetBits</span><span class="token punctuation">(</span>GPIOE<span class="token punctuation">,</span>GPIO_Pin_5<span class="token punctuation">)</span><span class="token punctuation">;</span>             <span class="token comment">// PE.5 输出高</span>
+                <h2 id="LeetCode-134-加油站"><a href="#LeetCode-134-加油站" class="headerlink" title="LeetCode 134. 加油站"></a>LeetCode 134. 加油站</h2><p>在一条环路上有 n 个加油站，其中第 i 个加油站有汽油 gas[i] 升。</p>
+<p>你有一辆油箱容量无限的的汽车，从第 i 个加油站开往第 i+1 个加油站需要消耗汽油 cost[i] 升。你从其中的一个加油站出发，开始时油箱为空。</p>
+<p>给定两个整数数组 gas 和 cost ，如果你可以绕环路行驶一周，则返回出发时加油站的编号，否则返回 -1 。如果存在解，则 保证 它是 唯一 的。</p>
+<p>示例 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入<span class="token operator">:</span> gas <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span> cost <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span>
+输出<span class="token operator">:</span> <span class="token number">3</span>
+解释<span class="token operator">:</span>
+从 <span class="token number">3</span> 号加油站<span class="token punctuation">(</span>索引为 <span class="token number">3</span> 处<span class="token punctuation">)</span>出发，可获得 <span class="token number">4</span> 升汽油。此时油箱有 <span class="token operator">=</span> <span class="token number">0</span> <span class="token operator">+</span> <span class="token number">4</span> <span class="token operator">=</span> <span class="token number">4</span> 升汽油
+开往 <span class="token number">4</span> 号加油站，此时油箱有 <span class="token number">4</span> <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token number">5</span> <span class="token operator">=</span> <span class="token number">8</span> 升汽油
+开往 <span class="token number">0</span> 号加油站，此时油箱有 <span class="token number">8</span> <span class="token operator">-</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">=</span> <span class="token number">7</span> 升汽油
+开往 <span class="token number">1</span> 号加油站，此时油箱有 <span class="token number">7</span> <span class="token operator">-</span> <span class="token number">3</span> <span class="token operator">+</span> <span class="token number">2</span> <span class="token operator">=</span> <span class="token number">6</span> 升汽油
+开往 <span class="token number">2</span> 号加油站，此时油箱有 <span class="token number">6</span> <span class="token operator">-</span> <span class="token number">4</span> <span class="token operator">+</span> <span class="token number">3</span> <span class="token operator">=</span> <span class="token number">5</span> 升汽油
+开往 <span class="token number">3</span> 号加油站，你需要消耗 <span class="token number">5</span> 升汽油，正好足够你返回到 <span class="token number">3</span> 号加油站
+因此，<span class="token number">3</span> 可为起始索引<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<h3 id="method"><a href="#method" class="headerlink" title="method"></a>method</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">canCompleteCircuit</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> gas<span class="token punctuation">,</span> vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> cost<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> start <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> curSum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> totalSum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> gas<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        curSum <span class="token operator">+=</span> gas<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">-</span> cost<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        totalSum <span class="token operator">+=</span> gas<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">-</span> cost<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>curSum <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            curSum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+            start <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>totalSum <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> start<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="main文件"><a href="#main文件" class="headerlink" title="main文件"></a>main文件</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"sys.h"</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"delay.h"</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"usart.h"</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"led.h"</span></span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">delay_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">//延时函数初始化	  </span>
-    <span class="token function">LED_Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">//初始化与LED连接的硬件接口</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        LED0 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>   <span class="token comment">// LED0亮</span>
-        LED1 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>   <span class="token comment">// LED1灭</span>
-        <span class="token function">delay_ms</span><span class="token punctuation">(</span><span class="token number">300</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        LED0 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>   <span class="token comment">// LED0灭</span>
-        LED1 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>   <span class="token comment">// LED1亮</span>
-        <span class="token function">delay_ms</span><span class="token punctuation">(</span><span class="token number">300</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token comment">// 库函数写法</span>
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">delay_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">LED_Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token function">GPIO_ResetBits</span><span class="token punctuation">(</span>GPIOB<span class="token punctuation">,</span>GPIO_Pin_5<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">//LED0引脚GPIOB.5拉低，亮 等同LED0=0;</span>
-        <span class="token function">GPIO_SetBits</span><span class="token punctuation">(</span>GPIOE<span class="token punctuation">,</span>GPIO_Pin_5<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">//LED1引脚GPIOE.5拉高，灭 等同LED1=1;</span>
-        <span class="token function">delay_ms</span><span class="token punctuation">(</span><span class="token number">300</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">GPIO_SetBits</span><span class="token punctuation">(</span>GPIOB<span class="token punctuation">,</span>GPIO_Pin_5<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">//LED0引脚GPIOB.5拉高，灭 等同LED0=1;</span>
-        <span class="token function">GPIO_ResetBits</span><span class="token punctuation">(</span>GPIOE<span class="token punctuation">,</span>GPIO_Pin_5<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">//LED1引脚GPIOE.5拉低，亮 等同LED1=0;</span>
-        <span class="token function">delay_ms</span><span class="token punctuation">(</span><span class="token number">300</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="按键输入"><a href="#按键输入" class="headerlink" title="按键输入"></a>按键输入</h2><h3 id="头文件-1"><a href="#头文件-1" class="headerlink" title="头文件"></a>头文件</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">__KEY_H</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">__KEY_H</span>	 </span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"sys.h"</span></span>
-
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">KEY0</span>    <span class="token expression"><span class="token function">GPIO_ReadInputDataBit</span><span class="token punctuation">(</span>GPIOE<span class="token punctuation">,</span>GPIO_Pin_4<span class="token punctuation">)</span></span><span class="token comment">//读取按键0</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">KEY1</span>    <span class="token expression"><span class="token function">GPIO_ReadInputDataBit</span><span class="token punctuation">(</span>GPIOE<span class="token punctuation">,</span>GPIO_Pin_3<span class="token punctuation">)</span></span><span class="token comment">//读取按键1</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">WK_UP</span>   <span class="token expression"><span class="token function">GPIO_ReadInputDataBit</span><span class="token punctuation">(</span>GPIOA<span class="token punctuation">,</span>GPIO_Pin_0<span class="token punctuation">)</span></span><span class="token comment">//读取按键3(WK_UP) </span></span>
-
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">KEY0_PRES</span>   <span class="token expression"><span class="token number">1</span>	</span><span class="token comment">//KEY0按下</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">KEY1_PRES</span>   <span class="token expression"><span class="token number">2</span>	</span><span class="token comment">//KEY1按下</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">WKUP_PRES</span>   <span class="token expression"><span class="token number">3</span>	</span><span class="token comment">//KEY_UP按下</span></span>
-
-<span class="token keyword">void</span> <span class="token function">KEY_Init</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//IO初始化</span>
-u8 <span class="token function">KEY_Scan</span><span class="token punctuation">(</span>u8<span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment">//按键扫描函数</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="源文件-1"><a href="#源文件-1" class="headerlink" title="源文件"></a>源文件</h3><p>按键对应的端口要设置为<strong>上拉或下拉输入</strong><br>通过按键扫描函数的返回值确定是哪个按键被按下了</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"stm32f10x.h"</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"key.h"</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"sys.h"</span> </span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"delay.h"</span></span>
-
-<span class="token keyword">void</span> <span class="token function">KEY_Init</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    GPIO_InitTypeDef GPIO_InitStructure<span class="token punctuation">;</span>
-
-    <span class="token function">RCC_APB2PeriphClockCmd</span><span class="token punctuation">(</span>RCC_APB2Periph_GPIOA<span class="token operator">|</span>RCC_APB2Periph_GPIOE<span class="token punctuation">,</span>ENABLE<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//使能PORTA,PORTE时钟</span>
-
-    GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Pin  <span class="token operator">=</span> GPIO_Pin_4<span class="token operator">|</span>GPIO_Pin_3<span class="token punctuation">;</span>   <span class="token comment">//KEY0-KEY1</span>
-    GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Mode <span class="token operator">=</span> GPIO_Mode_IPU<span class="token punctuation">;</span>           <span class="token comment">//上拉输入</span>
-    <span class="token function">GPIO_Init</span><span class="token punctuation">(</span>GPIOE<span class="token punctuation">,</span> <span class="token operator">&amp;</span>GPIO_InitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span>                  <span class="token comment">//初始化GPIOE3/4</span>
-
-    <span class="token comment">//初始化 WK_UP-->GPIOA.0	  下拉输入</span>
-    GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Pin  <span class="token operator">=</span> GPIO_Pin_0<span class="token punctuation">;</span>
-    GPIO_InitStructure<span class="token punctuation">.</span>GPIO_Mode <span class="token operator">=</span> GPIO_Mode_IPD<span class="token punctuation">;</span> <span class="token comment">//PA0设置成输入，默认下拉	  </span>
-    <span class="token function">GPIO_Init</span><span class="token punctuation">(</span>GPIOA<span class="token punctuation">,</span> <span class="token operator">&amp;</span>GPIO_InitStructure<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//初始化GPIOA.0</span>
-<span class="token punctuation">&#125;</span>
-
-u8 <span class="token function">KEY_Scan</span><span class="token punctuation">(</span>u8 mode<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">static</span> u8 key_up <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>   <span class="token comment">//按键按松开标志</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>mode<span class="token punctuation">)</span> key_up <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>   <span class="token comment">//支持连按</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>key_up <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>KEY0<span class="token operator">==</span><span class="token number">0</span> <span class="token operator">||</span> KEY1<span class="token operator">==</span><span class="token number">0</span> <span class="token operator">||</span> WK_UP<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token function">delay_ms</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment">//去抖动 </span>
-        key_up <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>KEY0 <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> KEY0_PRES<span class="token punctuation">;</span>
-        <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>KEY1 <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> KEY1_PRES<span class="token punctuation">;</span>
-        <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>WK_UP <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span> WKUP_PRES<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>KEY0<span class="token operator">==</span><span class="token number">1</span> <span class="token operator">&amp;&amp;</span> KEY1<span class="token operator">==</span><span class="token number">1</span> <span class="token operator">&amp;&amp;</span> WK_UP<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span> key_up <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>               <span class="token comment">// 无按键按下</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="main函数"><a href="#main函数" class="headerlink" title="main函数"></a>main函数</h3><p>根据按键扫描函数的返回值做相应的动作</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"led.h"</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"delay.h"</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"key.h"</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"sys.h"</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"beep.h"</span></span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    u8 key <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>	
-    <span class="token function">delay_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">//延时函数初始化</span>
-    <span class="token function">LED_Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">//初始化与LED连接的硬件接口</span>
-    <span class="token function">BEEP_Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//初始化蜂鸣器端口</span>
-    <span class="token function">KEY_Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">//初始化与按键连接的硬件接口</span>
-    LED0 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>       <span class="token comment">//先点亮红灯</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        key <span class="token operator">=</span> <span class="token function">KEY_Scan</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">//得到键值</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>key<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>              <span class="token comment">// 返回非0说明有按键被按下了</span>
-            <span class="token keyword">switch</span> <span class="token punctuation">(</span>key<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                <span class="token keyword">case</span> WKUP_PRES<span class="token operator">:</span> <span class="token comment">//控制蜂鸣器</span>
-                    BEEP <span class="token operator">=</span> <span class="token operator">!</span>BEEP<span class="token punctuation">;</span>
-                    <span class="token keyword">break</span><span class="token punctuation">;</span> 
-                <span class="token keyword">case</span> KEY1_PRES<span class="token operator">:</span> <span class="token comment">//LED1翻转	 </span>
-                    LED1 <span class="token operator">=</span> <span class="token operator">!</span>LED1<span class="token punctuation">;</span>
-                    <span class="token keyword">break</span><span class="token punctuation">;</span>
-                <span class="token keyword">case</span> KEY0_PRES<span class="token operator">:</span> <span class="token comment">//LED0,LED1同时翻转 </span>
-                    LED0 <span class="token operator">=</span> <span class="token operator">!</span>LED0<span class="token punctuation">;</span>
-                    LED1 <span class="token operator">=</span> <span class="token operator">!</span>LED1<span class="token punctuation">;</span>
-                    <span class="token keyword">break</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span>
-        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token function">delay_ms</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-    <span class="token punctuation">&#125;</span>	 
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -734,7 +613,7 @@ u8 <span class="token function">KEY_Scan</span><span class="token punctuation">(
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/10/01/%E5%B5%8C%E5%85%A5%E5%BC%8F-stm32-%E5%9F%BA%E7%A1%80/">http://example.com/2021/10/01/%E5%B5%8C%E5%85%A5%E5%BC%8F-stm32-%E5%9F%BA%E7%A1%80/</a>
+                    <a href="http://example.com/2022/04/04/LeetCode-134-%E5%8A%A0%E6%B2%B9%E7%AB%99/">http://example.com/2022/04/04/LeetCode-134-%E5%8A%A0%E6%B2%B9%E7%AB%99/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -772,8 +651,8 @@ u8 <span class="token function">KEY_Scan</span><span class="token punctuation">(
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/">
-                                    <span class="chip bg-color">嵌入式</span>
+                                <a href="/tags/%E8%B4%AA%E5%BF%83/">
+                                    <span class="chip bg-color">贪心</span>
                                 </a>
                             
                         </div>
@@ -949,13 +828,13 @@ u8 <span class="token function">KEY_Scan</span><span class="token punctuation">(
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/10/07/LeetCode-189-%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84/">
+                <a href="/2022/04/04/LeetCode-%E5%9B%BE%E8%AE%BA-%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="189-旋转数组">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="图论-最小生成树">
                         
-                        <span class="card-title">189-旋转数组</span>
+                        <span class="card-title">图论-最小生成树</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -966,8 +845,45 @@ u8 <span class="token function">KEY_Scan</span><span class="token punctuation">(
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-07
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-04-04
                         </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            kunpeng
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/04/04/LeetCode-435-%E6%97%A0%E9%87%8D%E5%8F%A0%E5%8C%BA%E9%97%B4/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="435-无重叠区间">
+                        
+                        <span class="card-title">435-无重叠区间</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-04
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -983,57 +899,8 @@ u8 <span class="token function">KEY_Scan</span><span class="token punctuation">(
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%A8%A1%E6%8B%9F/">
-                        <span class="chip bg-color">模拟</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/09/29/%E5%A4%9A%E6%97%8B%E7%BF%BC-%E7%9B%B4%E5%8D%87%E6%9C%BA%E5%8A%A8%E5%8A%9B%E5%AD%A6/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="直升机动力学">
-                        
-                        <span class="card-title">直升机动力学</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-09-29
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E5%A4%9A%E6%97%8B%E7%BF%BC/" class="post-category">
-                                    多旋翼
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E5%A4%9A%E6%97%8B%E7%BF%BC/">
-                        <span class="chip bg-color">多旋翼</span>
+                    <a href="/tags/%E8%B4%AA%E5%BF%83/">
+                        <span class="chip bg-color">贪心</span>
                     </a>
                     
                 </div>
