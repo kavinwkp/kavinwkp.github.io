@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="内存管理, kunpeng">
+    <meta name="keywords" content="3.1-内存管理, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>内存管理 | kunpeng</title>
+    <title>3.1-内存管理 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">内存管理</h1>
+                    <h1 class="description center-align post-title">3.1-内存管理</h1>
                 </div>
             </div>
         </div>
@@ -509,12 +509,25 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/OS/">
+                                <span class="chip bg-color">OS</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/CS/" class="post-category">
+                                CS
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -569,7 +582,7 @@
 </ul>
 <p>分段机制会把程序的虚拟地址分成 4 个段，每个段在段表中有一个项，在每一项中找到段的基地址，再加上偏移量，就能找到物理内存中的地址</p>
 <center>
-<img src="/2022/04/04/CS-OS-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/7-分段寻址-例子.jpg" width="80%">
+<img src="/2022/04/04/CS-OS-3-1-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/7-分段寻址-例子.jpg" width="80%">
 </center>
 
 <p>如果要访问段 3 中偏移量 500 的虚拟地址，我们可以计算出物理地址为，段 3 基地址 7000 + 偏移量 500 = 7500。</p>
@@ -587,7 +600,7 @@
 <h3 id="内存分页"><a href="#内存分页" class="headerlink" title="内存分页"></a>内存分页</h3><p>分页是把整个虚拟和物理内存空间切成一段段固定尺寸的大小。这样一个连续并且尺寸固定的内存空间，我们叫页（Page）。在 Linux 下，每一页的大小为 4KB。</p>
 <p>虚拟地址与物理地址之间通过页表来映射</p>
 <center>
-<img src="/2022/04/04/CS-OS-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/9-分页.jpg" width="80%">
+<img src="/2022/04/04/CS-OS-3-1-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/9-分页.jpg" width="80%">
 </center>
 
 <p>页表是存储在内存里的，内存管理单元 （MMU）就做将虚拟内存地址转换成物理地址的工作。</p>
@@ -597,7 +610,7 @@
 <p>更进一步地，分页的方式使得我们在加载程序的时候，不再需要一次性都把程序加载到物理内存中。我们完全可以在进行虚拟内存和物理内存的页之间的映射之后，并不真的把页加载到物理内存里，而是只有在程序运行中，需要用到对应虚拟内存页里面的指令和数据时，再加载到物理内存里面去。</p>
 <p>在分页机制下，虚拟地址分为两部分，页号和页内偏移。页号作为页表的索引，页表包含物理页每页所在物理内存的基地址，这个基地址与页内偏移的组合就形成了物理内存地址</p>
 <center>
-<img src="/2022/04/04/CS-OS-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/11-分页寻址.jpg" width="80%">
+<img src="/2022/04/04/CS-OS-3-1-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/11-分页寻址.jpg" width="80%">
 </center>
 
 <ol>
@@ -620,7 +633,7 @@
 </ul>
 <p>可用软、硬件相结合的方法实现段页式地址变换，这样虽然增加了硬件成本和系统开销，但提高了内存的利用率</p>
 <h3 id="Linux内存管理"><a href="#Linux内存管理" class="headerlink" title="Linux内存管理"></a>Linux内存管理</h3><center>
-<img src="/2022/04/04/CS-OS-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/22-进程空间结构.jpg" width="80%">
+<img src="/2022/04/04/CS-OS-3-1-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/22-进程空间结构.jpg" width="80%">
 </center>
 
 <p>用户空间内存，从低到高分别是 7 种不同的内存段：</p>
@@ -659,7 +672,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2022/04/04/CS-OS-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">http://example.com/2022/04/04/CS-OS-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</a>
+                    <a href="http://example.com/2022/04/04/CS-OS-3-1-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">http://example.com/2022/04/04/CS-OS-3-1-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -696,7 +709,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/OS/">
+                                    <span class="chip bg-color">OS</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -871,13 +888,13 @@
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/2022/04/04/CS-OS-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
+                <a href="/2022/04/04/CS-OS-3-1-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="内存管理">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="3.1-内存管理">
                         
-                        <span class="card-title">内存管理</span>
+                        <span class="card-title">3.1-内存管理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -892,13 +909,25 @@
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kunpeng
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CS/" class="post-category">
+                                    CS
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
 
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/OS/">
+                        <span class="chip bg-color">OS</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -1075,6 +1104,13 @@
 
 </main>
 
+
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
 
 
 
