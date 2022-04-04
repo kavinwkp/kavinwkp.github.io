@@ -620,7 +620,9 @@
 </ul>
 <font color="LightSeaGreen"><b>4、CPU相关信息</b></font>
 
-<p>= 当进程切换时，CPU寄存器的值都被保存在相应PCB中，以便CPU重新执行该进程时能从断点处继续执行</p>
+<ul>
+<li>当进程切换时，CPU寄存器的值都被保存在相应PCB中，以便CPU重新执行该进程时能从断点处继续执行</li>
+</ul>
 <p>PCB通过链表形式组织起来，比如有<strong>就绪队列</strong>、<strong>阻塞队列</strong>等，方便增删，方便进程管理</p>
 <h3 id="7、进程切换为何比线程慢"><a href="#7、进程切换为何比线程慢" class="headerlink" title="7、进程切换为何比线程慢"></a>7、进程切换为何比线程慢</h3><blockquote>
 <p>涉及到虚拟内存的问题，进程切换涉及虚拟地址空间的切换而线程不会</p>
@@ -632,28 +634,20 @@
 <p>由于每个进程都有自己的虚拟地址空间，那么显然每个进程都有自己的页表，那么当进程切换后页表也要进行切换，页表切换后TLB就失效了，cache失效导致命中率降低，那么虚拟地址转换为物理地址就会变慢，表现出来的就是程序运行会变慢，而线程切换则不会导致TLB失效，因为线程线程无需切换地址空间，这就是进程切换要比同进程下线程切换慢的原因</p>
 <hr>
 <h2 id="进程调度算法"><a href="#进程调度算法" class="headerlink" title="进程调度算法"></a>进程调度算法</h2><h3 id="1、批处理系统中的调度"><a href="#1、批处理系统中的调度" class="headerlink" title="1、批处理系统中的调度"></a>1、批处理系统中的调度</h3><blockquote>
-<ul>
-<li>先来先服务（First Come First Served, FCFS）</li>
-</ul>
+<p>01 先来先服务（First Come First Served, FCFS）</p>
 </blockquote>
 <p>非抢占式的调度算法，按照请求的顺序进行调度<br>有利于长作业，但不利于短作业，因为短作业必须一直等待前面的长作业执行完毕才能执行，而长作业又需要执行很长时间，造成了短作业等待时间过长</p>
 <blockquote>
-<ul>
-<li>最短作业优先（Shortest Job First, SJF）</li>
-</ul>
+<p>02 最短作业优先（Shortest Job First, SJF）</p>
 </blockquote>
 <p>非抢占式的调度算法，按估计运行时间最短的顺序进行调度<br>长作业有可能会饿死，处于一直等待短作业执行完毕的状态。因为如果一直有短作业到来，那么长作业永远得不到调度</p>
 <blockquote>
-<ul>
-<li>高响应比优先（Hightest Response Ratio Next, HRRN）</li>
-</ul>
+<p>03 高响应比优先（Hightest Response Ratio Next, HRRN）</p>
 </blockquote>
 <p>权衡短作业和长作业，每次进行进程调度时，先计算响应比优先级，然后把响应比优先级最高的进程投入运行</p>
 <script type="math/tex; mode=display">
 优先权=\frac{等待时间+要求服务时间}{要求服务时间}</script><h3 id="2、交互式系统中的调度"><a href="#2、交互式系统中的调度" class="headerlink" title="2、交互式系统中的调度"></a>2、交互式系统中的调度</h3><blockquote>
-<ul>
-<li>时间片轮转调度（Round Robin, RR）</li>
-</ul>
+<p>04 时间片轮转调度（Round Robin, RR）</p>
 </blockquote>
 <p>每个进程被分配一个时间段，允许该进程在该时间段内运行</p>
 <ul>
@@ -661,9 +655,7 @@
 <li>如果进程在时间片结束前阻塞或结束，则CPU立即切换</li>
 </ul>
 <blockquote>
-<ul>
-<li>最高优先级调度（Highest Priority First, HPF）</li>
-</ul>
+<p>05 最高优先级调度（Highest Priority First, HPF）</p>
 </blockquote>
 <p>为每个进程分配一个优先级，按优先级进行调度。为了防止低优先级的进程永远等不到调度，可以随着时间的推移增加等待进程的优先级</p>
 <p>进程的优先级可分为<font color="LightSeaGreen">静态优先级</font>和<font color="Coral">动态优先级</font></p>
@@ -672,9 +664,7 @@
 <li><font color="Coral">动态优先级</font>：根据进行的动态变化调整优先级，例如进程运行时间增加，则降低其优先级；如果进程等待时间增加，则升高其优先级</li>
 </ul>
 <blockquote>
-<ul>
-<li>多级反馈队列</li>
-</ul>
+<p>06 多级反馈队列</p>
 </blockquote>
 <ul>
 <li>多级：表示有多个队列，每个队列的优先级从高到低，同时优先级越高时间片越短</li>
