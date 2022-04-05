@@ -588,7 +588,7 @@
 
 <span class="token keyword">int</span> <span class="token function">pthread_cond_broadcast</span><span class="token punctuation">(</span>pthread_cond_t <span class="token operator">*</span>cond<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 唤醒所有等待的线程</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>条件变量一定要配合互斥锁来使用，目的就是弥补互斥锁功能的单一性。在条件不满足的时候阻塞进程/线程，在临界区资源满足访问要求时，激活一个或者全部进程/线程去访问资源。相较于互斥锁，不需要在临界区内使用if代码去判断，在满足访问要求后，直接使用<code>signal</code>函数激活一个进程/线程即可</p>
+<p>条件变量一定要配合互斥锁来使用，目的就是弥补互斥锁功能的单一性。在条件不满足的时候阻塞进程/线程，在临界区资源满足访问要求时，激活一个或者全部进程/线程去访问资源。相较于互斥锁，不需要在临界区内使用<code>if</code>代码去判断，在满足访问要求后，直接使用<code>signal</code>函数激活一个进程/线程即可</p>
 <p><strong>使用条件变量解决生产者消费者问题</strong></p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pthread.h></span></span>

@@ -685,10 +685,11 @@ tid<span class="token operator">:</span> <span class="token number">140341352228
 child thread<span class="token operator">:</span> <span class="token number">140341352228608</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="连接已终止的线程"><a href="#连接已终止的线程" class="headerlink" title="连接已终止的线程"></a>连接已终止的线程</h4><p>和一个已经终止的线程进行连接，来回收子线程的资源</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">pthread_join</span><span class="token punctuation">(</span>pthread_t thread<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span>retval<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 阻塞函数，调用一次回收一个子线程，一般在主线程中使用</span>
+<span class="token comment">// 阻塞函数，调用一次回收一个子线程</span>
+<span class="token comment">// 主线程调用，等待子线程退出并回收其资源，类似于进程中wait/waitpid回收僵尸进程</span>
 <span class="token operator">-</span> thread<span class="token operator">:</span> 需要回收的子线程id
 <span class="token operator">-</span> retval<span class="token operator">:</span> 接受子线程退出的返回值
-<span class="token comment">// 成功返回0，失败返回错误号</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">// 成功返回0，失败返回错误号</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pthread.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
@@ -735,7 +736,7 @@ tid<span class="token operator">:</span> <span class="token number">140608466753
 child thread<span class="token operator">:</span> <span class="token number">140608466753280</span>
 <span class="token keyword">return</span> value<span class="token operator">:</span> <span class="token number">10</span>
 recovery success<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="线程分离"><a href="#线程分离" class="headerlink" title="线程分离"></a>线程分离</h4><p>分离一个线程，不能多次分离，分离之后不能再连接<br>该线程结束退出后，系统会自动回收它的资源，不再需要join函数了</p>
+<h4 id="线程分离"><a href="#线程分离" class="headerlink" title="线程分离"></a>线程分离</h4><p>分离一个线程，不能多次分离，分离之后不能再连接<br>该线程结束退出后，系统会自动回收它的资源，不再需要<code>pthread_join</code></p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">pthread_detach</span><span class="token punctuation">(</span>pthread_t thread<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token operator">-</span> thread<span class="token operator">:</span> 要分离的线程id
 <span class="token comment">// 成功返回0，失败返回错误号</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
@@ -841,7 +842,7 @@ tid<span class="token operator">:</span> <span class="token number">140210217600
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <hr>
-<h2 id="线程同步"><a href="#线程同步" class="headerlink" title="线程同步"></a>线程同步</h2><ul>
+<h2 id="线程同步与互斥"><a href="#线程同步与互斥" class="headerlink" title="线程同步与互斥"></a>线程同步与互斥</h2><ul>
 <li><p>线程的优势在于，能够通过全局变量共享信息，但是，必须确保多个线程不会同时修改同一变量，或者某个线程不会去读取正在由其他线程修改的变量</p>
 </li>
 <li><p>临界区是指访问某一共享资源的代码片段，并且这段代码的执行应为原子操作</p>
@@ -859,6 +860,7 @@ tid<span class="token operator">:</span> <span class="token number">140210217600
 <li>对互斥量解锁</li>
 </ol>
 </blockquote>
+<p>操作系统负责线程调度，为了实现『锁的状态改变时再唤醒』就需要把锁也交给操作系统管理，所以互斥量的加锁操作通常都需要涉及到上下文切换，开销比自旋锁大</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">pthread_mutex_init</span><span class="token punctuation">(</span>pthread_mutex_t <span class="token operator">*</span>restrict mutex<span class="token punctuation">,</span> <span class="token keyword">const</span> pthread_mutexattr_t <span class="token operator">*</span>restrict attr<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 初始化互斥量</span>
 <span class="token operator">-</span> mutex<span class="token operator">:</span> 需要初始化的互斥量
@@ -1030,6 +1032,15 @@ pthread_rwlock_t rwlock<span class="token punctuation">;</span>    <span class="
 <span class="token operator">==</span><span class="token operator">=</span>read<span class="token punctuation">,</span> tid<span class="token operator">:</span> <span class="token number">140571251304192</span><span class="token punctuation">,</span> num<span class="token operator">:</span> <span class="token number">21904</span>
 <span class="token operator">==</span><span class="token operator">=</span>read<span class="token punctuation">,</span> tid<span class="token operator">:</span> <span class="token number">140571259696896</span><span class="token punctuation">,</span> num<span class="token operator">:</span> <span class="token number">21904</span>
 <span class="token operator">==</span><span class="token operator">=</span>read<span class="token punctuation">,</span> tid<span class="token operator">:</span> <span class="token number">140571355985664</span><span class="token punctuation">,</span> num<span class="token operator">:</span> <span class="token number">21904</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<hr>
+<h2 id="自旋锁（spin）"><a href="#自旋锁（spin）" class="headerlink" title="自旋锁（spin）"></a>自旋锁（spin）</h2><p>自旋锁属于<code>busy-waiting</code>类型的锁，如果线程A是使用<code>pthread_spin_lock</code>操作去请求锁，如果自旋锁已经被线程B所持有，那么线程A就会一直在core 0上进行忙等待并不停的进行锁请求，检查该自旋锁是否已经被线程B释放，直到得到这个锁为止。因为自旋锁不会引起调用者睡眠，所以自旋锁的效率远高于互斥锁</p>
+<p>虽然它的效率比互斥锁高，但是它也有些不足之处：</p>
+<ul>
+<li>自旋锁一直占用CPU，在未获得锁的情况下，一直进行自旋，所以占用着CPU，如果不能在很短的时间内获得锁，无疑会使CPU效率降低</li>
+<li>在用自旋锁时有可能造成死锁，当递归调用时有可能造成死锁</li>
+</ul>
+<p>自旋锁适用于锁使用者保持锁时间比较短的情况</p>
+
                 
             </div>
             <hr/>
