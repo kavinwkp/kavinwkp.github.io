@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="Eigen_Quaternion, kunpeng">
+    <meta name="keywords" content="15.5-继承中的类作用域, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Eigen_Quaternion | kunpeng</title>
+    <title>15.5-继承中的类作用域 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Eigen_Quaternion</h1>
+                    <h1 class="description center-align post-title">15.5-继承中的类作用域</h1>
                 </div>
             </div>
         </div>
@@ -511,14 +511,23 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Eigen/">
-                                <span class="chip bg-color">Eigen</span>
+                            <a href="/tags/Primer/">
+                                <span class="chip bg-color">Primer</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/C/" class="post-category">
+                                C++
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -527,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-21
+                    2022-01-20
                 </div>
                 
 
@@ -551,55 +560,97 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <!-- toc -->
-<h2 id="旋转向量到旋转矩阵"><a href="#旋转向量到旋转矩阵" class="headerlink" title="旋转向量到旋转矩阵"></a>旋转向量到旋转矩阵</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">double</span> alpha <span class="token operator">=</span> M_PI <span class="token operator">/</span> <span class="token number">3</span><span class="token punctuation">;</span>
-AngleAxisd <span class="token function">rotation_vector</span><span class="token punctuation">(</span>alpha<span class="token punctuation">,</span> <span class="token function">Vector3d</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// x轴: 1 0 0</span>
-<span class="token comment">// y轴: 0 1 0</span>
-<span class="token comment">// z轴: 0 0 1</span>
+                <h2 id="15-5-继承中的类作用域"><a href="#15-5-继承中的类作用域" class="headerlink" title="15.5 继承中的类作用域"></a>15.5 继承中的类作用域</h2><p>如果一个名字在派生类的作用域无法解析，则编译器将继续在外层的基类作用域中寻找该名字的定义</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">继承关系
+Bulk_quote <span class="token operator">-></span> Disc_quote <span class="token operator">-></span> Quote<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Bulk_quote bulk<span class="token punctuation">;</span>
+cout <span class="token operator">&lt;&lt;</span> bulk<span class="token punctuation">.</span><span class="token function">isbn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>在<code>Bulk_quote</code>中查找<code>isbn</code>函数失败，没定义，所以往上找，<code>Disc_quote</code>中也没有，再往上，在<code>Quote</code>中找到了</p>
+<blockquote>
+<p>静态类型决定了哪些成员是可见的</p>
+</blockquote>
+<p>在<code>Disc_quote</code>中定义了一个函数<code>discount_policy</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Disc_quote</span> <span class="token punctuation">&#123;</span>
+    pair<span class="token operator">&lt;</span>size_t<span class="token punctuation">,</span> <span class="token keyword">double</span><span class="token operator">></span> <span class="token function">discount_policy</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>quantity<span class="token punctuation">,</span> discount<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-MatrixXd rotation_matrix<span class="token punctuation">;</span>
+Bulk_quote bulk<span class="token punctuation">;</span>
+Bulk_quote <span class="token operator">*</span>buliP <span class="token operator">=</span> <span class="token operator">&amp;</span>bulk<span class="token punctuation">;</span>  <span class="token comment">// 静态类型与动态类型一致</span>
+Quote <span class="token operator">*</span>itemP <span class="token operator">=</span> <span class="token operator">&amp;</span>bulk<span class="token punctuation">;</span>       <span class="token comment">// 静态类型与动态类型不一致</span>
+bulkP<span class="token operator">-></span><span class="token function">discount_policy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 正确</span>
+itemP<span class="token operator">-></span><span class="token function">discount_policy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 错误</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>bulkP</code>的静态类型是<code>Bulk_quote</code>，调用<code>discount_policy</code>时，先在<code>Bulk_quote</code>中找，没找到，就往上，在<code>Disc_quote</code>中找到，调用成功</p>
+<p><code>itemP</code>的静态类型是<code>Quote</code>，调用<code>discount_policy</code>时，在<code>Quote</code>中找没找到，往上已经没有了，所以调用失败</p>
+<blockquote>
+<p>派生类的成员将隐藏同名的基类成员</p>
+</blockquote>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">Base</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">Base</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">mem</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>   <span class="token comment">// Base::mem进行默认初始化</span>
+<span class="token keyword">protected</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> mem<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-rotation_matrix <span class="token operator">=</span> rotation_vector<span class="token punctuation">.</span><span class="token function">matrix</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// rotation_matrix = rotation_vector.toRotationMatrix();</span>
+<span class="token keyword">struct</span> <span class="token class-name">Derived</span><span class="token operator">:</span> <span class="token base-clause"><span class="token class-name">Base</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token function">Derive</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">mem</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>    <span class="token comment">// 用i初始化Derived::mem</span>
+    <span class="token keyword">int</span> <span class="token function">get_mem</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> mem<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token keyword">protected</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> mem<span class="token punctuation">;</span>    <span class="token comment">// 隐藏基类中的mem</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">Base</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> <span class="token function">memfcn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-cout <span class="token operator">&lt;&lt;</span> rotation_matrix <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">// 1         0         0</span>
-<span class="token comment">// 0       0.5 -0.866025</span>
-<span class="token comment">// 0  0.866025       0.5</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="旋转向量到欧拉角"><a href="#旋转向量到欧拉角" class="headerlink" title="旋转向量到欧拉角"></a>旋转向量到欧拉角</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Vector3d eulerAngle <span class="token operator">=</span> rotation_vector<span class="token punctuation">.</span><span class="token function">matrix</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">eulerAngles</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// ZYX: 2, 1, 0</span>
+<span class="token keyword">struct</span> <span class="token class-name">Derived</span><span class="token operator">:</span> <span class="token base-clause"><span class="token class-name">Base</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> <span class="token function">memfcn</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 隐藏了基类的memfcn</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-cout <span class="token operator">&lt;&lt;</span> eulerAngle <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">//      0</span>
-<span class="token comment">//     -0</span>
-<span class="token comment">// 1.0472</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="旋转向量到四元数"><a href="#旋转向量到四元数" class="headerlink" title="旋转向量到四元数"></a>旋转向量到四元数</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Quaterniond <span class="token function">quaternion</span><span class="token punctuation">(</span>rotation_vector<span class="token punctuation">)</span><span class="token punctuation">;</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">coeffs</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">//      0.5</span>
-<span class="token comment">//        0</span>
-<span class="token comment">//        0</span>
-<span class="token comment">// 0.866025</span>
+Base b<span class="token punctuation">;</span>
+Derived d<span class="token punctuation">;</span>
+b<span class="token punctuation">.</span><span class="token function">memfcn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 调用Base::memfcn</span>
+d<span class="token punctuation">.</span><span class="token function">memfcn</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 调用Derived::memfcn</span>
+d<span class="token punctuation">.</span><span class="token function">memfcn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 错误，基类的memfcn被隐藏了无法调用</span>
+d<span class="token punctuation">.</span><span class="token class-name">Base</span><span class="token operator">::</span><span class="token function">memfcn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 显式地说明要调用基类的memfcn</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="虚函数与作用域"><a href="#虚函数与作用域" class="headerlink" title="虚函数与作用域"></a>虚函数与作用域</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">Base</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">int</span> <span class="token function">fcn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">x</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">y</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">z</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion<span class="token punctuation">.</span><span class="token function">w</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">// 0.5</span>
-<span class="token comment">// 0</span>
-<span class="token comment">// 0</span>
-<span class="token comment">// 0.866025</span>
+<span class="token keyword">class</span> <span class="token class-name">D1</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Base</span></span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token comment">// 继承了Base::fcn的定义，没有override</span>
+    <span class="token keyword">int</span> <span class="token function">fcn</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 隐藏了基类的fcn，不是虚函数</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">f2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 声明了一个虚函数</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-Quaterniond quaternion2<span class="token punctuation">;</span>
-quaternion2 <span class="token operator">=</span> rotation_vector<span class="token punctuation">;</span>  <span class="token comment">// 重载了'='</span>
-cout <span class="token operator">&lt;&lt;</span> quaternion2<span class="token punctuation">.</span><span class="token function">coeffs</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token comment">//      0.5</span>
-<span class="token comment">//        0</span>
-<span class="token comment">//        0</span>
-<span class="token comment">// 0.866025</span>
+<span class="token keyword">struct</span> <span class="token class-name">D2</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">D1</span></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> <span class="token function">fcn</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 不是虚函数，隐藏了D1::fcn(int)</span>
+    <span class="token keyword">int</span> <span class="token function">fcn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// override Base::fcn()</span>
+    <span class="token keyword">void</span> <span class="token function">f2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// override D1::f2()</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-<span class="token comment">// 四元数的初始化</span>
-Quaterniond <span class="token function">quaternion</span><span class="token punctuation">(</span>w<span class="token punctuation">,</span> x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> z<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+Base bobj<span class="token punctuation">;</span> 
+D1 d1obj<span class="token punctuation">;</span> 
+D2 d2obj<span class="token punctuation">;</span>
+Base <span class="token operator">*</span>bp1 <span class="token operator">=</span> <span class="token operator">&amp;</span>bobj<span class="token punctuation">,</span> <span class="token operator">*</span>bp2 <span class="token operator">=</span> <span class="token operator">&amp;</span>d1obj<span class="token punctuation">,</span> <span class="token operator">*</span>bp3 <span class="token operator">=</span> <span class="token operator">&amp;</span>d2obj<span class="token punctuation">;</span>
+bp1<span class="token operator">-></span><span class="token function">fcn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 调用Base::fcn()</span>
+bp2<span class="token operator">-></span><span class="token function">fcn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 调用Base::fcn()</span>
+bp3<span class="token operator">-></span><span class="token function">fcn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 调用D2::fcn()</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>bp2</code>的静态类型是<code>Base</code>，动态类型是<code>D1</code>，调用<code>fcn</code>时，因为<code>D1</code>没有覆盖<code>Base</code>的<code>fcn</code>，所以还是调用<code>Base</code>的<code>fcn</code></p>
+<p><code>bp3</code>的静态类型是<code>Base</code>，动态类型是<code>D2</code>, 调用<code>fcn</code>时，因为<code>D2</code>有覆盖<code>Base</code>的<code>fcn</code>，所以调用<code>D2</code>版本的<code>fcn</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">D1 <span class="token operator">*</span>d1p <span class="token operator">=</span> <span class="token operator">&amp;</span>d1obj<span class="token punctuation">;</span>
+D2 <span class="token operator">*</span>d2p <span class="token operator">=</span> <span class="token operator">&amp;</span>d2obj<span class="token punctuation">;</span>
+bp2<span class="token operator">-></span><span class="token function">f2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 错误，Base中没有f2，调用失败，静态类型决定接口</span>
+d1p<span class="token operator">-></span><span class="token function">f2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 正确，调用D1::f2()</span>
+d2p<span class="token operator">-></span><span class="token function">d2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 正确，调用D2::f2()</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>bp2</code>的静态类型是<code>Base</code>，调用<code>f2</code>时，在<code>Base</code>中没找到<code>f2</code>，所以调用失败<br><code>d1p</code>的静态类型和动态类型是<code>D1</code>，调用<code>f2</code>时，在<code>D1</code>中找到了<code>f2</code>，所以调用<code>D1::f2</code><br><code>d2p</code>的静态类型和动态类型是<code>D2</code>，调用<code>f2</code>时，在<code>D2</code>中找到了<code>f2</code>，所以调用<code>D2::f2</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Base <span class="token operator">*</span>p1 <span class="token operator">=</span> <span class="token operator">&amp;</span>d2obj<span class="token punctuation">;</span>  <span class="token comment">// 静态类型Base，动态类型D2</span>
+D1 <span class="token operator">*</span>p2 <span class="token operator">=</span> <span class="token operator">&amp;</span>d2obj<span class="token punctuation">;</span>    <span class="token comment">// 静态类型D1，动态类型D2</span>
+D2 <span class="token operator">*</span>p3 <span class="token operator">=</span> <span class="token operator">&amp;</span>d2obj<span class="token punctuation">;</span>    <span class="token comment">// 静态类型D2，动态类型D2</span>
+p1<span class="token operator">-></span><span class="token function">fcn</span><span class="token punctuation">(</span><span class="token number">42</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 错误，静态类型Base中没有fcn(int)</span>
+p2<span class="token operator">-></span><span class="token function">fcn</span><span class="token punctuation">(</span><span class="token number">42</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 静态绑定，非虚函数，调用D1::fcn(int)</span>
+p3<span class="token operator">-></span><span class="token function">fcn</span><span class="token punctuation">(</span><span class="token number">42</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 静态绑定，非虚函数，调用D2::fcn(int)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -625,7 +676,7 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/03/21/Eigen-Eigen-Quaternion/">http://example.com/2021/03/21/Eigen-Eigen-Quaternion/</a>
+                    <a href="http://example.com/2022/01/20/C-Primer-15-5-%E7%BB%A7%E6%89%BF%E4%B8%AD%E7%9A%84%E7%B1%BB%E4%BD%9C%E7%94%A8%E5%9F%9F/">http://example.com/2022/01/20/C-Primer-15-5-%E7%BB%A7%E6%89%BF%E4%B8%AD%E7%9A%84%E7%B1%BB%E4%BD%9C%E7%94%A8%E5%9F%9F/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -663,8 +714,8 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Eigen/">
-                                    <span class="chip bg-color">Eigen</span>
+                                <a href="/tags/Primer/">
+                                    <span class="chip bg-color">Primer</span>
                                 </a>
                             
                         </div>
@@ -840,13 +891,13 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/21/Eigen-Eigen-%E5%90%91%E9%87%8F/">
+                <a href="/2022/01/20/C-Primer-15-6-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E4%B8%8E%E6%8B%B7%E8%B4%9D%E6%8E%A7%E5%88%B6/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Eigen_向量">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="15.6-构造函数与拷贝控制">
                         
-                        <span class="card-title">Eigen_向量</span>
+                        <span class="card-title">15.6-构造函数与拷贝控制</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -857,12 +908,16 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-03-21
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-01-20
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kunpeng
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/C/" class="post-category">
+                                    C++
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -870,8 +925,8 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Eigen/">
-                        <span class="chip bg-color">Eigen</span>
+                    <a href="/tags/Primer/">
+                        <span class="chip bg-color">Primer</span>
                     </a>
                     
                 </div>
@@ -885,13 +940,13 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/21/Eigen-Eigen-%E7%9F%A9%E9%98%B5%E5%B1%9E%E6%80%A7/">
+                <a href="/2022/01/20/C-Primer-15-4-%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E4%B8%8E%E7%BB%A7%E6%89%BF/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Eigen_矩阵属性">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="15.4-访问控制与继承">
                         
-                        <span class="card-title">Eigen_矩阵属性</span>
+                        <span class="card-title">15.4-访问控制与继承</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -902,12 +957,16 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-20
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kunpeng
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/C/" class="post-category">
+                                    C++
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -915,8 +974,8 @@ Quaterniond <span class="token function">quaternion</span><span class="token pun
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Eigen/">
-                        <span class="chip bg-color">Eigen</span>
+                    <a href="/tags/Primer/">
+                        <span class="chip bg-color">Primer</span>
                     </a>
                     
                 </div>
