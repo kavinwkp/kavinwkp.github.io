@@ -562,7 +562,7 @@
             <div id="articleContent">
                 <h2 id="LeetCode-787-K-站中转内最便宜的航班"><a href="#LeetCode-787-K-站中转内最便宜的航班" class="headerlink" title="LeetCode 787. K 站中转内最便宜的航班"></a>LeetCode 787. K 站中转内最便宜的航班</h2><p>有 n 个城市通过一些航班连接。给你一个数组 <code>flights</code> ，其中 <code>flights[i] = [fromi, toi, pricei]</code> ，表示该航班都从城市 <code>fromi</code> 开始，以价格 <code>pricei</code> 抵达 <code>toi</code>。</p>
 <p>现在给定所有的城市和航班，以及出发城市 <code>src</code> 和目的地 <code>dst</code>，你的任务是找到出一条最多经过 <code>k</code> 站中转的路线，使得从 <code>src</code> 到 <code>dst</code> 的 价格最便宜 ，并返回该价格。 如果不存在这样的路线，则输出 -1。</p>
-<p>示例 1：<br><img src="https://github.com/kavinwkp/blogimage/raw/main/img/LeetCode/787/787.png" width="50%"><br>输入:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token number">4</span>
+<p>示例 1：<br><img src="https://github.com/kavinwkp/blogimage/raw/main/img/LeetCode/787/787.png" alt><br>输入:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token number">4</span>
 <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">100</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">100</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">100</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">600</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">200</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
 <span class="token number">0</span>
 <span class="token number">3</span>
@@ -575,11 +575,13 @@
 <li>判负环</li>
 </ul>
 </blockquote>
-<p><code>dp[t][i]</code>：从起点刚好经过<code>t</code>条边到节点<code>i</code>所需的代价</p>
+<p><code>dp[t][i]</code>：从起点刚好经过<code>t</code>个航站到节点<code>i</code>所需的代价</p>
 <ul>
-<li>外层循环枚举<code>[1, k+1]</code></li>
-<li>内层循环枚举每一条边</li>
+<li>外层循环枚举<code>[1, k+1]</code>，表示分别经过<code>1,2,...,k+1</code>个航站</li>
+<li>内层需要枚举<code>i</code>前面的一个节点</li>
 </ul>
+<p>这样结果就是<code>dp[1][i],dp[2][i],...,dp[k+1][i]</code>中的最小值</p>
+<p>枚举<code>i</code>前面的每个节点，再看有没有到<code>i</code>的边了，这样比较麻烦<br>可以直接枚举每一条边，看看能不能更新<code>dp[t][i]</code></p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> inf <span class="token operator">=</span> <span class="token number">0x3f3f3f3f</span><span class="token punctuation">;</span>
 <span class="token keyword">int</span> <span class="token function">findCheapestPrice</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">,</span> vector<span class="token operator">&lt;</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">>></span><span class="token operator">&amp;</span> flights<span class="token punctuation">,</span> <span class="token keyword">int</span> src<span class="token punctuation">,</span> <span class="token keyword">int</span> dst<span class="token punctuation">,</span> <span class="token keyword">int</span> k<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     vector<span class="token operator">&lt;</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">>></span> <span class="token function">dp</span><span class="token punctuation">(</span>k <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">,</span> vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token punctuation">(</span>n<span class="token punctuation">,</span> inf<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
