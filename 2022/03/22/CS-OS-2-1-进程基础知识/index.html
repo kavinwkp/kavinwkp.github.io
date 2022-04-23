@@ -673,7 +673,7 @@
 <p>可以将这种调度算法看成是<strong>时间片轮转调度算法</strong>和<strong>优先级调度算法</strong>的结合</p>
 <hr>
 <h2 id="进程间通信有哪几种方式"><a href="#进程间通信有哪几种方式" class="headerlink" title="进程间通信有哪几种方式"></a>进程间通信有哪几种方式</h2><p>包括管道（匿名管道和有名管道）、消息队列、共享内存、信号量和套接字。其中前四个属于同一台机器下进程间的通信，套接字则是用于网络通信。</p>
-<h4 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h4><ul>
+<h3 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h3><ul>
 <li>匿名管道<ul>
 <li>特点<ul>
 <li>匿名管道是一种特殊的文件，只存在于内存中</li>
@@ -708,7 +708,7 @@
 <blockquote>
 <p>不管是匿名管道还是有名管道，进程写入的数据都是缓存在内核中，读进程也要从内核中读取</p>
 </blockquote>
-<h4 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h4><ul>
+<h3 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h3><ul>
 <li>特点<ul>
 <li>在内核中创建，生命周期随内核，独立于读写进程存在，如果没有释放消息队列或者关闭操作系统，消息队列会一直存在</li>
 <li>全双工通信，每个进程都可以往队列中插入节点和获取节点，节点是带有类型的数据块</li>
@@ -721,7 +721,7 @@
 <li>消息队列不适合大数据的传输，每个消息体（数据块）都有最大长度限制，队列所包含的消息体的总长度也有限制</li>
 <li>消息队列通信过程中，存在用户态与内核态之间的数据拷贝开销，因为进程写入数据到内核中的消息队列时，会发生从用户态拷贝数据到内核态的过程，同理另一个进程读取内核中的数据时，会发生从内核态拷贝数据到用户态的过程</li>
 </ul>
-<h4 id="共享内存"><a href="#共享内存" class="headerlink" title="共享内存"></a>共享内存</h4><p>从进程中拿出一块虚拟地址空间，映射到相同的物理内存中，速度比较快</p>
+<h3 id="共享内存"><a href="#共享内存" class="headerlink" title="共享内存"></a>共享内存</h3><p>从进程中拿出一块虚拟地址空间，映射到相同的物理内存中，速度比较快</p>
 <ul>
 <li>创建共享内存<ul>
 <li><code>int shmget(key_t key, int size, int flag)</code><ul>
@@ -751,7 +751,7 @@
 </li>
 </ul>
 <p>因为多个进程都可以同时修改共享内存，容易引起冲突，所以需要信号量来实现进程的同步与互斥</p>
-<h4 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h4><blockquote>
+<h3 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h3><blockquote>
 <ul>
 <li>信号量其实是一个整型的计数器，主要用于实现进程间的互斥与同步</li>
 </ul>
@@ -768,7 +768,7 @@
 <li>信号量初始化为0，代表同步信号量，保证进程A在进程B之前执行</li>
 </ul>
 </blockquote>
-<h4 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h4><p>用于不同主机之间的通信</p>
+<h3 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h3><p>用于不同主机之间的通信</p>
 
                 
             </div>
