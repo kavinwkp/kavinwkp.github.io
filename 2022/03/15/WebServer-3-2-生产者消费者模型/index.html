@@ -684,7 +684,24 @@ add Node<span class="token punctuation">,</span> num<span class="token operator"
 add Node<span class="token punctuation">,</span> num<span class="token operator">:</span> <span class="token number">44</span><span class="token punctuation">,</span> tid<span class="token operator">:</span> <span class="token number">140067862865664</span>
 <span class="token keyword">delete</span> node<span class="token punctuation">,</span> num<span class="token operator">:</span> <span class="token number">44</span><span class="token punctuation">,</span> tid<span class="token operator">:</span> <span class="token number">140067871258368</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <hr>
-<h3 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;semaphore.h></span></span>
+<h3 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h3><blockquote>
+<ul>
+<li>信号量其实是一个整型的计数器，主要用于实现进程间的互斥与同步</li>
+</ul>
+</blockquote>
+<p>信号量表示资源的数量，操作信号量有2种原子操作：</p>
+<ul>
+<li>P操作：把信号量-1，如果减完后信号量&lt;0，表示没有资源可用，进程阻塞，否则正常执行</li>
+<li>V操作：把信号量+1，如果加完后信号量&lt;=0，表示有进程阻塞，则唤醒阻塞的进程</li>
+</ul>
+<p>P操作用在进入临界区之前，V操作用在离开临界区之后，必须成对出现</p>
+<blockquote>
+<ul>
+<li>信号量初始化为1，代表互斥信号量，可以保证任何时刻只有一个进程访问临界区资源</li>
+<li>信号量初始化为0，代表同步信号量，保证进程A在进程B之前执行</li>
+</ul>
+</blockquote>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;semaphore.h></span></span>
 <span class="token keyword">int</span> <span class="token function">sem_init</span><span class="token punctuation">(</span>sem_t <span class="token operator">*</span>sem<span class="token punctuation">,</span> <span class="token keyword">int</span> pshared<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">int</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 初始化信号量</span>
 <span class="token operator">-</span> sem<span class="token operator">:</span> 信号量变量的地址

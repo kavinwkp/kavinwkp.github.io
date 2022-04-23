@@ -878,7 +878,7 @@ tid<span class="token operator">:</span> <span class="token number">140210217600
 
 <span class="token keyword">int</span> <span class="token function">pthread_mutex_unlock</span><span class="token punctuation">(</span>pthread_mutex_t <span class="token operator">*</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 解锁</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pthread.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
 
@@ -924,31 +924,14 @@ pthread_mutex_t mutex<span class="token punctuation">;</span>
     <span class="token function">pthread_join</span><span class="token punctuation">(</span>tid2<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">pthread_join</span><span class="token punctuation">(</span>tid3<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     
-    <span class="token function">pthread_exit</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 退出主线程</span>
-
     <span class="token function">pthread_mutex_destroy</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 释放互斥量资源</span>
+
+    <span class="token function">pthread_exit</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 退出主线程</span>
 
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h3><p>两个或两个以上的进程在执行过程中，因争夺共享资源而造成的一种互相等待的现象，若无外力作用，他们都将无法推进下去，此时系统处于死锁状态</p>
-<p>死锁只有同时满足四个条件才会发生：</p>
-<ol>
-<li>互斥条件</li>
-<li>持有并等待条件</li>
-<li>不可剥夺条件</li>
-<li>环路等待条件</li>
-</ol>
-<p>死锁的几个场景</p>
-<blockquote>
-<ol>
-<li>忘记释放锁</li>
-<li>重复加锁</li>
-<li>多线程多锁，抢占锁资源</li>
-</ol>
-</blockquote>
-<p>避免死锁问题只需要破坏其中一个条件就可以，最常见且可行的是<font color="LightSeaGreen"><b>使用资源有序分配法，来破坏环路等待条件</b></font>，即线程总是以相同的顺序申请自己想要的资源</p>
 <hr>
-<h2 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h2><p>读写锁的特点：</p>
+<h3 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h3><p>读写锁的特点：</p>
 <blockquote>
 <ol>
 <li>如果有其他线程读数据，则允许，但不允许写操作</li>
@@ -1019,9 +1002,10 @@ pthread_rwlock_t rwlock<span class="token punctuation">;</span>    <span class="
         <span class="token function">pthread_detach</span><span class="token punctuation">(</span>rtids<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 
+    <span class="token function">pthread_rwlock_destroy</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>rwlock<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 释放读写锁</span>
+
     <span class="token function">pthread_exit</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">// 释放读写锁</span>
-    <span class="token function">pthread_rwlock_destroy</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>rwlock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 <span class="token operator">++</span>write<span class="token punctuation">,</span> tid<span class="token operator">:</span> <span class="token number">140571381163776</span><span class="token punctuation">,</span> num<span class="token operator">:</span> <span class="token number">21902</span>
@@ -1031,15 +1015,33 @@ pthread_rwlock_t rwlock<span class="token punctuation">;</span>    <span class="
 <span class="token operator">==</span><span class="token operator">=</span>read<span class="token punctuation">,</span> tid<span class="token operator">:</span> <span class="token number">140571347592960</span><span class="token punctuation">,</span> num<span class="token operator">:</span> <span class="token number">21904</span>
 <span class="token operator">==</span><span class="token operator">=</span>read<span class="token punctuation">,</span> tid<span class="token operator">:</span> <span class="token number">140571251304192</span><span class="token punctuation">,</span> num<span class="token operator">:</span> <span class="token number">21904</span>
 <span class="token operator">==</span><span class="token operator">=</span>read<span class="token punctuation">,</span> tid<span class="token operator">:</span> <span class="token number">140571259696896</span><span class="token punctuation">,</span> num<span class="token operator">:</span> <span class="token number">21904</span>
-<span class="token operator">==</span><span class="token operator">=</span>read<span class="token punctuation">,</span> tid<span class="token operator">:</span> <span class="token number">140571355985664</span><span class="token punctuation">,</span> num<span class="token operator">:</span> <span class="token number">21904</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token operator">==</span><span class="token operator">=</span>read<span class="token punctuation">,</span> tid<span class="token operator">:</span> <span class="token number">140571355985664</span><span class="token punctuation">,</span> num<span class="token operator">:</span> <span class="token number">21904</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <hr>
-<h2 id="自旋锁（spin）"><a href="#自旋锁（spin）" class="headerlink" title="自旋锁（spin）"></a>自旋锁（spin）</h2><p>自旋锁属于<code>busy-waiting</code>类型的锁，如果线程A是使用<code>pthread_spin_lock</code>操作去请求锁，如果自旋锁已经被线程B所持有，那么线程A就会一直在core 0上进行忙等待并不停的进行锁请求，检查该自旋锁是否已经被线程B释放，直到得到这个锁为止。因为自旋锁不会引起调用者睡眠，所以自旋锁的效率远高于互斥锁</p>
+<h3 id="自旋锁（spin）"><a href="#自旋锁（spin）" class="headerlink" title="自旋锁（spin）"></a>自旋锁（spin）</h3><p>自旋锁属于<code>busy-waiting</code>类型的锁，如果线程A是使用<code>pthread_spin_lock</code>操作去请求锁，如果自旋锁已经被线程B所持有，那么线程A就会一直在core 0上进行忙等待并不停的进行锁请求，检查该自旋锁是否已经被线程B释放，直到得到这个锁为止。因为自旋锁不会引起调用者睡眠，所以自旋锁的效率远高于互斥锁</p>
 <p>虽然它的效率比互斥锁高，但是它也有些不足之处：</p>
 <ul>
 <li>自旋锁一直占用CPU，在未获得锁的情况下，一直进行自旋，所以占用着CPU，如果不能在很短的时间内获得锁，无疑会使CPU效率降低</li>
 <li>在用自旋锁时有可能造成死锁，当递归调用时有可能造成死锁</li>
 </ul>
 <p>自旋锁适用于锁使用者保持锁时间比较短的情况</p>
+<hr>
+<h3 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h3><p>两个或两个以上的进程在执行过程中，因争夺共享资源而造成的一种互相等待的现象，若无外力作用，他们都将无法推进下去，此时系统处于死锁状态</p>
+<p>死锁只有同时满足四个条件才会发生：</p>
+<ol>
+<li>互斥条件</li>
+<li>持有并等待条件</li>
+<li>不可剥夺条件</li>
+<li>环路等待条件</li>
+</ol>
+<p>死锁的几个场景</p>
+<blockquote>
+<ol>
+<li>忘记释放锁</li>
+<li>重复加锁</li>
+<li>多线程多锁，抢占锁资源</li>
+</ol>
+</blockquote>
+<p>避免死锁问题只需要破坏其中一个条件就可以，最常见且可行的是<font color="LightSeaGreen"><b>使用资源有序分配法，来破坏环路等待条件</b></font>，即线程总是以相同的顺序申请自己想要的资源</p>
 
                 
             </div>
