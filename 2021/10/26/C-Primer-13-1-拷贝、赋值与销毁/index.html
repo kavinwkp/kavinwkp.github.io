@@ -569,15 +569,12 @@
 Person <span class="token function">p2</span><span class="token punctuation">(</span>p1<span class="token punctuation">)</span><span class="token punctuation">;</span>              <span class="token comment">// 直接初始化</span>
 Person p3 <span class="token operator">=</span> p1<span class="token punctuation">;</span>             <span class="token comment">// 拷贝初始化</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>使用拷贝初始化时，我们要求编译器将右侧运算对象拷贝到正在创建的对象中，如果需要的话还要进行类型转换</p>
-<p>代码示例</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Person</span>
-<span class="token punctuation">&#123;</span>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Person</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">private</span><span class="token operator">:</span>
     string name<span class="token punctuation">;</span>
     <span class="token keyword">int</span> age<span class="token punctuation">;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token function">Person</span><span class="token punctuation">(</span>string name<span class="token punctuation">,</span> <span class="token keyword">int</span> age<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">name</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">age</span><span class="token punctuation">(</span>age<span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
+    <span class="token function">Person</span><span class="token punctuation">(</span>string name<span class="token punctuation">,</span> <span class="token keyword">int</span> age<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">name</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">age</span><span class="token punctuation">(</span>age<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         cout <span class="token operator">&lt;&lt;</span> <span class="token string">"constructor"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
     <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">const</span> Person<span class="token operator">&amp;</span> rhs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -587,32 +584,33 @@ Person p3 <span class="token operator">=</span> p1<span class="token punctuation
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     Person <span class="token function">p1</span><span class="token punctuation">(</span><span class="token string">"kavin"</span><span class="token punctuation">,</span> <span class="token number">23</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 调用自定义构造函数</span>
     Person <span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token string">"kavin"</span><span class="token punctuation">,</span> <span class="token number">34</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 调用自定义构造函数</span>
     Person <span class="token function">p2</span><span class="token punctuation">(</span>p1<span class="token punctuation">)</span><span class="token punctuation">;</span>          <span class="token comment">// 调用拷贝构造函数直接初始化</span>
-    Person p3 <span class="token operator">=</span> p1<span class="token punctuation">;</span>         <span class="token comment">// 调用拷贝构造函数</span>
+    Person p3 <span class="token operator">=</span> p1<span class="token punctuation">;</span>         <span class="token comment">// 调用拷贝构造函数拷贝初始化</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 <span class="token comment">// constructor</span>
 <span class="token comment">// constructor</span>
 <span class="token comment">// copy constructor</span>
-<span class="token comment">// copy constructor</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">// copy constructor</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>用等号来构造对象就是拷贝初始化，后面带个括号的是直接初始化</p>
+</blockquote>
 <p>拷贝初始化不仅在我们用<code>=</code>定义变量时发生，在下列情况下也会发生<br>1、将一个对象作为实参传递给一个<font color="LightSeaGreen">非引用类型的形参</font></p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">func</span><span class="token punctuation">(</span>Person p<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Entering func"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
     <span class="token keyword">return</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     Person <span class="token function">p1</span><span class="token punctuation">(</span><span class="token string">"kavin"</span><span class="token punctuation">,</span> <span class="token number">23</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">func</span><span class="token punctuation">(</span>p1<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 <span class="token comment">// constructor</span>
 <span class="token comment">// copy constructor 调用了拷贝构造函数</span>
-<span class="token comment">// Entering func</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">// Entering func</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>也说明了拷贝构造函数必须是<code>const</code>，如果不是<code>const</code>，实参传递给形参时就得再调用拷贝构造函数，就会陷入循环</p>
 <p>2、 从一个返回类型为<font color="LightSeaGreen">非引用类型</font>的函数返回一个对象</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Person <span class="token function">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -620,13 +618,12 @@ Person p3 <span class="token operator">=</span> p1<span class="token punctuation
     <span class="token keyword">return</span> <span class="token operator">*</span>p<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     Person p1 <span class="token operator">=</span> <span class="token function">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 <span class="token comment">// constructor</span>
-<span class="token comment">// copy constructor 调用了拷贝构造函数</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">// copy constructor 调用了拷贝构造函数</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="13-1-2-copy-assignment-operator"><a href="#13-1-2-copy-assignment-operator" class="headerlink" title="13.1.2 copy-assignment operator"></a>13.1.2 copy-assignment operator</h3><div class="uk-alert uk-alert-success"><i class="fa fa-check-circle"></i> 拷贝赋值运算符</div> 
 <p>参数是类类型的<code>const</code>引用<br>返回值是指向其左侧运算对象的引用</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Foo<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> foo<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -645,23 +642,23 @@ Person p3 <span class="token operator">=</span> p1<span class="token punctuation
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     Person <span class="token function">p1</span><span class="token punctuation">(</span><span class="token string">"kavin"</span><span class="token punctuation">,</span> <span class="token number">23</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 调用自定义构造函数</span>
     Person p2<span class="token punctuation">;</span>  <span class="token comment">// 调用默认构造函数</span>
     p2 <span class="token operator">=</span> p1<span class="token punctuation">;</span>    <span class="token comment">// 调用拷贝赋值运算符</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里是给对象赋值，不是构造对象，所以调用拷贝赋值运算符，而不是拷贝构造函数</p>
 <h3 id="13-3-3-destructor"><a href="#13-3-3-destructor" class="headerlink" title="13.3.3 destructor"></a>13.3.3 destructor</h3><div class="uk-alert uk-alert-success"><i class="fa fa-check-circle"></i> 析构函数</div> 
 <ol>
 <li>不接受参数，也没有返回值</li>
 <li>不能被重载</li>
 <li>对一个给定类，只会有唯一一个析构函数</li>
-<li>当指向一个对象的<strong>引用</strong>或<strong>指针</strong>离开作用域时，<strong>不会调用析构函数</strong></li>
+<li>当指向一个对象的<font color="LightSeaGreen">引用</font>或<font color="LightSeaGreen">指针</font>离开作用域时，<font color="LightSeaGreen">『不会调用析构函数』</font></li>
 </ol>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token operator">~</span><span class="token function">Foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>在一个析构函数中，首先执行<strong>函数体</strong>，然后<strong>销毁成员</strong>，成员按初始化顺序的逆序销毁</p>
-<p>如果一个类需要<strong>析构函数</strong>，那肯定也需要<strong>拷贝构造函数</strong>和<strong>拷贝赋值运算符</strong>，尤其是含有动态分配内存的类，因为合成析构函数不会<code>delete</code>一个指针数据成员</p>
+<p>在一个析构函数中，首先执行<font color="Coral">函数体</font>，然后<font color="Coral">销毁成员</font>，成员按初始化顺序的逆序销毁</p>
+<p>如果一个类需要<font color="Coral">析构函数</font>，那肯定也需要<font color="LightSeaGreen">拷贝构造函数</font>和<font color="LightSeaGreen">拷贝赋值运算符</font>，尤其是含有动态分配内存的类，因为合成析构函数不会<code>delete</code>一个指针数据成员</p>
 
                 
             </div>
