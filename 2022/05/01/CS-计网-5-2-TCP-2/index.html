@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="5.1-TCP, kunpeng">
+    <meta name="keywords" content="5.2-TCP（下）, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>5.1-TCP | kunpeng</title>
+    <title>5.2-TCP（下） | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">5.1-TCP</h1>
+                    <h1 class="description center-align post-title">5.2-TCP（下）</h1>
                 </div>
             </div>
         </div>
@@ -536,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-04-28
+                    2022-05-01
                 </div>
                 
 
@@ -560,86 +560,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="TCP和UDP的对比"><a href="#TCP和UDP的对比" class="headerlink" title="TCP和UDP的对比"></a>TCP和UDP的对比</h3><ul>
-<li><font color="Coral">UDP是无连接的</font>，随时可以通信；<font color="LightSeaGreen">TCP是面向连接的</font>，通信前要三次握手，通信完要四次挥手</li>
-<li><font color="Coral">UDP支持单播、多播以及广播</font>；<font color="LightSeaGreen">TCP仅支持一对一通信</font></li>
-<li><font color="Coral">UDP是面向应用报文的</font>，UDP对应用进程交下来的报文既不合并也不拆分，而是保留这些报文的边界；<font color="LightSeaGreen">TCP是面向字节流的</font>，TCP把应用进程交付下来的数据块，仅仅看作是一连串的、无结构的字节流，这是TCP实现可靠传输、流量控制和拥塞控制的基础</li>
-<li><font color="Coral">UDP提供无连接不可靠的传输服务</font>，适合实时应用，例如IP电话，视频会议等；<font color="LightSeaGreen">TCP提供面向连接的可靠传输服务</font>，不会出现传输差错（误码，丢失，乱序，重复），适合于要求可靠传输的应用，例如文件传输</li>
-<li><font color="Coral">UDP用户数据报的首部只有8个字节</font>；<font color="LightSeaGreen">TCP报文段首部最小长度为20字节，最大长度为60字节</font>
-
-
-</li>
-</ul>
-<h3 id="TCP的流量控制"><a href="#TCP的流量控制" class="headerlink" title="TCP的流量控制"></a>TCP的流量控制</h3><p><font color="LightSeaGreen">流量控制</font>就是让发送方的发送速率不要太快，要让接收方来得及接收</p>
-<p>假设主机A要给主机B发送数据</p>
-<p>（1）主机A一开始的发送窗口为400，可以将落入发送窗口的数据1-400发送出去，主机A先发送1-100的数据，然后发送101-200的数据，接着发送201-300的数据，但该数据在传输过程中丢失了</p>
-<p>主机B对收到的201号以前的数据进行累计确认，并将窗口调整为300，对主机A进行流量控制</p>
-<p>（2）主机A收到累计确认后，将发送窗口向前滑动，使已发送并收到确认的数据1-200移出发送窗口，并删除。由于主机B将接收窗口调整为300，因此主机A相应地将自己的发送窗口调整为300，现在发送窗口内的数据为201-500，其中201-300是已发送但未确认的数据，如果重传计时器超时，它们会被重传。</p>
-<p>（3）现在，主机A分别将301-400以及401-500的数据封装成TCP报文段发送出去，至此发送窗口内的数据都发送出去了，不能再发送数据了。现在201-300这100个字节数据的重传计时器超时了，主机A将它们重新发送</p>
-<p>主机B对501号以前的数据进行累计确认，并将接收窗口调整为100，这是主机B对主机A进行的第二次流量控制</p>
-<p>（4）主机A收到后，将窗口向前滑动，并调整为窗口大小为100，可以将201-500内的数据删除，此时窗口内的数据为501-600，依此类推</p>
-<center>
-<img src="https://github.com/kavinwkp/blogimage/raw/main/img/net/window.png" width="90%">
-</center>
-
-<p><strong>零窗口死锁</strong></p>
-<p>如果主机B某次确认时将接收窗口调整为0，则主机A也将发送窗口调整为0，这样就不能发送数据了，如果主机B过了一会又有接收缓存可以接收数据了，将接收窗口调整为300，并通告主机A，但该通告丢失了，这样就会出现主机A等待主机B发送的非零窗口的通知，而主机B也在等待主机A发送数据的死锁局面</p>
-<p>为了解决这个问题，TCP为每个连接设置了一个持续计时器，只要TCP连接的一方收到了对方的零窗口通知，就启动持续计时器，若持续计时器超时，就发送一个零窗口探测报文，仅携带一字节的数据，而对方在确认这个探测报文段时，给出自己现在的接收窗口值，如果接收窗口仍然是零，那收到这个报文段的一方就重新启动持续计时器，如果接收窗口不是零，那死锁的局面就被打破了</p>
-<blockquote>
-<p>TCP发送方的发送窗口=min{自身拥塞窗口，TCP接收方的接收窗口}</p>
-</blockquote>
-<h3 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h3><p>在某段时间，若网络中某一资源的需求超过了该资源所能提供的可用部分，网络性能就要变坏，这种情况就是拥塞</p>
-<p>TCP的四种拥塞控制算法</p>
-<blockquote>
-<ul>
-<li>慢开始</li>
-<li>拥塞避免</li>
-<li>快重传</li>
-<li>快恢复</li>
-</ul>
-</blockquote>
-<p>发送方维护一个叫做拥塞窗口<code>cwnd</code>的状态变量，其值取决于网络的拥塞程度，并且动态变化</p>
-<ul>
-<li>拥塞窗口的维护原则：只要网络没有出现拥塞，拥塞窗口就再增大一些，但只要网络出现拥塞，拥塞窗口就减少一些</li>
-<li>判断出现网络拥塞的依据：没有按时收到应当到达的确认报文（即发生超时重传）</li>
-</ul>
-<p>发送方将拥塞窗口作为发送窗口<code>swnd</code>，此处不考虑流量控制</p>
-<p>发送方还要维护一个慢开始门限状态变量<code>ssthresh</code></p>
-<ul>
-<li>当<code>cwnd&lt;ssthresh</code>时，使用慢开始算法</li>
-<li>当<code>cwnd&gt;ssthresh</code>时，停止使用慢开始算法而改用拥塞避免算法</li>
-<li>当<code>cwnd=ssthresh</code>时，既可以使用慢开始算法，也可使用拥塞避免算法</li>
-</ul>
-<h4 id="慢开始和拥塞避免算法"><a href="#慢开始和拥塞避免算法" class="headerlink" title="慢开始和拥塞避免算法"></a>慢开始和拥塞避免算法</h4><center>
-<img src="https://github.com/kavinwkp/blogimage/raw/main/img/net/congestion.svg" width="95%">
-</center>
-
-<p>一开始拥塞窗口大小为1，慢开始门限初始值为16</p>
-<p>由于发送窗口等于拥塞窗口，所以一开始只能发送一个TCP报文段，换句话说，拥塞窗口是几，就能发送几个TCP报文段。</p>
-<p>拥塞窗口为1，发送方先发送0号报文段</p>
-<p>收到0号报文段的确认后，发送方将拥塞窗口增加到2，这样发送方就能发送1-2号共两个报文段</p>
-<p>收到1-2号报文段的确认后，发送方将拥塞窗口增加到4，这样发送方就能发送3-6号共四个报文段</p>
-<p>收到3-6号报文段的确认后，发送方将拥塞窗口增加到8，这样发送方就能发送7-14号共八个报文段</p>
-<p>收到7-14号报文段的确认后，发送方将拥塞窗口增加到16，这样发送方就能发送15-30号共十六个报文段</p>
-<p>此时，拥塞窗口值已经增加到慢开始门限，要改用拥塞避免算法：每个传输轮次后，拥塞窗口值只能线性加1，而不像慢开始算法那样指数增长</p>
-<p>收到15-30号报文段的确认后，发送方将拥塞窗口增加到17，这样发送方就能发送31-47号共十七个报文段</p>
-<p>收到31-47号报文段的确认后，发送方将拥塞窗口增加到18，依次类推</p>
-<p>假设拥塞窗口增加到24时，发送方就能发送171-194号共24个报文段，假设这24个报文段中丢失了几个，引起发送方的超时重传，发送方以此判断网络可能出现拥塞，就要采取以下措施</p>
-<ol>
-<li>将慢开始门限值更新为发送拥塞时拥塞窗口的一半，也就是<code>ssthresh=12</code></li>
-<li>将拥塞窗口减小为1，重新开始执行慢开始算法，也就是<code>cwnd=1</code></li>
-</ol>
-<p>当拥塞窗口值增大到新的慢开始门限时，就停止慢开始算法，转而使用拥塞避免算法</p>
-<p><strong>总结</strong></p>
-<p>TCP发送方一开始使用慢开始算法，让拥塞窗口值从1开始按指数规律增大，但拥塞窗口值增大到慢开始门限时停止使用慢开始算法，转而执行拥塞避免算法，让拥塞窗口值按线性加1的规律增大，当发生超时重传时，就判断网络可能出现拥塞，采取响应措施，一方面将慢开始门限值更新为发生拥塞时拥塞窗口的一半；另一方面，将拥塞窗口减小为1，并重新开始执行慢开始算法</p>
-<blockquote>
-<ul>
-<li>“慢开始”是指一开始向网络中注入的报文段少，并不是指拥塞窗口增长速度慢</li>
-<li>“拥塞避免”并非完全能够避免拥塞，而是指在拥塞避免阶段将拥塞窗口控制为按线性规律增长，使网络比较不容易出现拥塞</li>
-</ul>
-</blockquote>
-<h3 id="TCP报文段格式"><a href="#TCP报文段格式" class="headerlink" title="TCP报文段格式"></a>TCP报文段格式</h3><center>
-<img src="https://github.com/kavinwkp/blogimage/raw/main/img/net/TCPhead.png" width="90%">
+                <h3 id="TCP报文段格式"><a href="#TCP报文段格式" class="headerlink" title="TCP报文段格式"></a>TCP报文段格式</h3><center>
+<img src="https://github.com/kavinwkp/blogimage/raw/main/img/net/TCPhead.svg" width="90%">
 </center>
 
 <ul>
@@ -693,7 +615,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2022/04/28/CS-%E8%AE%A1%E7%BD%91-5-1-TCP/">http://example.com/2022/04/28/CS-%E8%AE%A1%E7%BD%91-5-1-TCP/</a>
+                    <a href="http://example.com/2022/05/01/CS-%E8%AE%A1%E7%BD%91-5-2-TCP-2/">http://example.com/2022/05/01/CS-%E8%AE%A1%E7%BD%91-5-2-TCP-2/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -908,13 +830,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/04/29/LeetCode-187-%E9%87%8D%E5%A4%8D%E7%9A%84DNA%E5%BA%8F%E5%88%97/">
+                <a href="/2022/05/01/LeetCode-540-%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E5%8D%95%E4%B8%80%E5%85%83%E7%B4%A0/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="187-重复的DNA序列">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="540-有序数组中的单一元素">
                         
-                        <span class="card-title">187-重复的DNA序列</span>
+                        <span class="card-title">540-有序数组中的单一元素</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -925,7 +847,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-04-29
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-05-01
                         </span>
                         <span class="publish-author">
                             
@@ -942,8 +864,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/">
-                        <span class="chip bg-color">滑动窗口</span>
+                    <a href="/tags/%E4%BA%8C%E5%88%86%E6%B3%95/">
+                        <span class="chip bg-color">二分法</span>
                     </a>
                     
                 </div>
@@ -957,13 +879,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/04/21/LeetCode-%E6%8E%92%E5%BA%8F%E6%80%BB%E7%BB%93/">
+                <a href="/2022/05/01/CS-%E8%AE%A1%E7%BD%91-5-1-TCP-1/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="排序总结">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="5.1-TCP（上）">
                         
-                        <span class="card-title">排序总结</span>
+                        <span class="card-title">5.1-TCP（上）</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -974,14 +896,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-01
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/LeetCode/" class="post-category">
-                                    LeetCode
+                            <a href="/categories/CS/" class="post-category">
+                                    CS
                                 </a>
                             
                             
@@ -991,8 +913,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E7%BB%84/">
-                        <span class="chip bg-color">数组</span>
+                    <a href="/tags/%E8%AE%A1%E7%BD%91/">
+                        <span class="chip bg-color">计网</span>
                     </a>
                     
                 </div>
