@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="背包-01/完全背包, kunpeng">
+    <meta name="keywords" content="01背包/完全背包, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>背包-01/完全背包 | kunpeng</title>
+    <title>01背包/完全背包 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">背包-01/完全背包</h1>
+                    <h1 class="description center-align post-title">01背包/完全背包</h1>
                 </div>
             </div>
         </div>
@@ -560,7 +560,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h2><h3 id="01背包"><a href="#01背包" class="headerlink" title="01背包"></a>01背包</h3><h4 id="动态规划五部曲"><a href="#动态规划五部曲" class="headerlink" title="动态规划五部曲"></a>动态规划五部曲</h4><p>1、确定dp数组以及下标的含义</p>
+                <h3 id="01背包"><a href="#01背包" class="headerlink" title="01背包"></a>01背包</h3><h4 id="动态规划五部曲"><a href="#动态规划五部曲" class="headerlink" title="动态规划五部曲"></a>动态规划五部曲</h4><p>1、确定dp数组以及下标的含义</p>
 <p>使用二维数组，<code>dp[i][j]</code>表示对于下标为<code>0~i</code>的物品，背包重量为<code>j</code>时的最大价值</p>
 <p>背包最大重量为4</p>
 <div class="table-container">
@@ -671,7 +671,7 @@ dp<span class="token punctuation">[</span><span class="token number">1</span><sp
 <span class="token comment">// 0 15 15 20 35 </span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>注意</strong>：改成滚动数组之后，就必须先遍历物品，再遍历背包，不能反过来</p>
 <hr>
-<h2 id="完全背包"><a href="#完全背包" class="headerlink" title="完全背包"></a>完全背包</h2><p>首先在回顾一下01背包的核心代码</p>
+<h3 id="完全背包"><a href="#完全背包" class="headerlink" title="完全背包"></a>完全背包</h3><p>首先在回顾一下01背包的核心代码</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> weight<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 遍历物品</span>
     <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> bagWeight<span class="token punctuation">;</span> j <span class="token operator">>=</span> weight<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span> j<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 遍历背包容量</span>
         dp<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> dp<span class="token punctuation">[</span>j <span class="token operator">-</span> weight<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">+</span> value<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -704,18 +704,24 @@ dp<span class="token punctuation">[</span><span class="token number">1</span><sp
 <p>遍历完硬币总值2时，<code>dp[1]=1</code>，<code>dp[2]=2</code>，<code>dp[1]</code>对应组成1的情况<code>&#123;1&#125;</code>，<code>dp[2]</code>对应组成2的情况<code>&#123;1,1&#125;</code>和<code>&#123;2&#125;</code></p>
 <p>当遍历到硬币总值3，硬币1时，<code>dp[3]+=dp[2]=2</code>，相当于在<code>&#123;1,1&#125;</code>和<code>&#123;2&#125;</code>的后面加个1，变成<code>&#123;1,1,1&#125;</code>和<code>&#123;2,1&#125;</code><br>然后遍历硬币2时，<code>dp[3]+=dp[1]=3</code>，相当于在<code>&#123;1&#125;</code>的后面加个2，变成<code>&#123;1,2&#125;</code></p>
 <p>所以，3种情况是<code>&#123;1,1,1&#125;</code>，<code>&#123;2,1&#125;</code>和<code>&#123;1,2&#125;</code></p>
-<h3 id="【模板】完全背包"><a href="#【模板】完全背包" class="headerlink" title="【模板】完全背包"></a>【模板】完全背包</h3><p>你有一个背包，最多能容纳的体积是V。</p>
+<h4 id="【模板】完全背包"><a href="#【模板】完全背包" class="headerlink" title="【模板】完全背包"></a>【模板】完全背包</h4><p>你有一个背包，最多能容纳的体积是V。</p>
 <p>现在有n种物品，每种物品有任意多个，第i种物品的体积为$v_i$，价值为$w_i$<br>（1）求这个背包至多能装多大价值的物品？<br>（2）若背包恰好装满，求至多能装多大价值的物品？</p>
-<p>输出有两行，第一行输出第一问的答案，第二行输出第二问的答案，如果无解请输出0。<br>示例1<br>输入：<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token number">2</span> <span class="token number">6</span>
+<p>输出有两行，第一行输出第一问的答案，第二行输出第二问的答案，如果无解请输出0。<br>示例1<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入：
+<span class="token number">2</span> <span class="token number">6</span>
 <span class="token number">5</span> <span class="token number">10</span>
-<span class="token number">3</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><br>输出：<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token number">10</span>
-<span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>示例2<br>输入：<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token number">3</span> <span class="token number">8</span>
+<span class="token number">3</span> <span class="token number">1</span>
+输出：
+<span class="token number">10</span>
+<span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>示例2<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入：
+<span class="token number">3</span> <span class="token number">8</span>
 <span class="token number">3</span> <span class="token number">10</span>
 <span class="token number">9</span> <span class="token number">1</span>
-<span class="token number">10</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><br>输出：<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token number">20</span>
+<span class="token number">10</span> <span class="token number">1</span>
+输出：
+<span class="token number">20</span>
 <span class="token number">0</span>
-说明：无法恰好装满背包。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
-<h4 id="method"><a href="#method" class="headerlink" title="method"></a>method</h4><p>考虑能否装满，就把<code>dp</code>初始化为无穷小，如果<code>j-w[i]</code>的背包装不满，那<code>dp[j-w[i]]+v[i]</code>依然是一个负数，最后只要判断<code>dp[V]</code>是否大于0就可以知道有没有装满了</p>
+说明：无法恰好装满背包。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<h5 id="method"><a href="#method" class="headerlink" title="method"></a>method</h5><p>考虑能否装满，就把<code>dp</code>初始化为无穷小，如果<code>j-w[i]</code>的背包装不满，那<code>dp[j-w[i]]+v[i]</code>依然是一个负数，最后只要判断<code>dp[V]</code>是否大于0就可以知道有没有装满了</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;algorithm></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cstring></span></span>
@@ -751,7 +757,7 @@ dp<span class="token punctuation">[</span><span class="token number">1</span><sp
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <hr>
-<h2 id="题型总结"><a href="#题型总结" class="headerlink" title="题型总结"></a>题型总结</h2><center>
+<h3 id="题型总结"><a href="#题型总结" class="headerlink" title="题型总结"></a>题型总结</h3><center>
 <img src="https://github.com/kavinwkp/blogimage/raw/main/img/LeetCode/879/bag.svg">
 </center>
                 
@@ -1209,6 +1215,13 @@ dp<span class="token punctuation">[</span><span class="token number">1</span><sp
 
 </main>
 
+
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
 
 
 

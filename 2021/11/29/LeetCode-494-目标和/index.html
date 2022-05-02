@@ -572,8 +572,8 @@ Explanation<span class="token operator">:</span> There are <span class="token nu
 <span class="token operator">+</span><span class="token number">1</span> <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">=</span> <span class="token number">3</span>
 <span class="token operator">+</span><span class="token number">1</span> <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">=</span> <span class="token number">3</span>
 <span class="token operator">+</span><span class="token number">1</span> <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">=</span> <span class="token number">3</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
-<h3 id="method"><a href="#method" class="headerlink" title="method"></a>method</h3><p>把<code>nums</code>分成两堆，一堆<code>left</code>，一堆<code>right</code>，<code>left</code>都给正号，<code>right</code>都给负号，所以<code>left-right=target</code>，又因为<code>left+right=sum</code>是固定的，所以有<code>left-(sum-left)=target</code>，即<code>left=(target-sum)/2</code></p>
-<p><code>dp[j]</code>：填满容量为j的背包有<code>dp[j]</code>种填法</p>
+<h3 id="method"><a href="#method" class="headerlink" title="method"></a>method</h3><p>把<code>nums</code>分成两堆，一堆<code>left</code>，一堆<code>right</code>，<code>left</code>都给正号，<code>right</code>都给负号，所以<code>left-right=target</code>，又因为<code>left+right=sum</code>是固定的，所以有<code>left-(sum-left)=target</code>，即<code>left=(target+sum)/2</code></p>
+<p><code>dp[j]</code>：填满容量为<code>j</code>的背包有<code>dp[j]</code>种填法</p>
 <p>转化为容量为<code>(target+sum)/2</code>的背包有多少种装法，例如容量为3的背包有<code>dp[3]</code>种装法，又来了一个<code>weight[i]=2</code>，则容量为5的背包的装法应该加上<code>dp[5-weight[i]]=dp[3]</code>，多一个物品<code>nums[i]</code>，就会多<code>dp[j-nums[i]]</code>种装法</p>
 <blockquote>
 <p>求装满背包有几种方法，一般公式都是：<code>dp[j] += dp[j - nums[i]]</code></p>
@@ -595,6 +595,8 @@ Explanation<span class="token operator">:</span> There are <span class="token nu
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> dp<span class="token punctuation">[</span>bagSize<span class="token punctuation">]</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>如果<code>sum</code>是奇数，不管怎么组合都组合不出偶数，<code>sum</code>是奇数也组合不出偶数</p>
+
                 
             </div>
             <hr/>
