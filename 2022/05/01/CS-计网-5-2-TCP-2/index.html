@@ -589,6 +589,34 @@
 <li>选择确认选项</li>
 </ul>
 <p>填充字段：由于选项的长度可变，因此使用填充来确保报文段首部能被4整除，因为首部长度字段是以<font color="Coral">4字节</font>为单位的</p>
+<h3 id="TCP三次握手"><a href="#TCP三次握手" class="headerlink" title="TCP三次握手"></a>TCP三次握手</h3><center>
+<img src="https://github.com/kavinwkp/blogimage/raw/main/img/net/TCP3.png">
+</center>
+
+<p>最初，客户端和服务器端的TCP进程都处于关闭状态，一开始，TCP服务器进程首先创建传输控制块，之后进入监听状态，等待客户端的连接请求</p>
+<p>TCP客户端进程也是首先创建传输控制块，然后在打算建立TCP连接时，向服务器进程发送连接请求报文段，并进入<font color="LightSeaGreen">同步已发送状态</font><code>SYN_SENT</code>，连接请求报文段首部中的SYN被设置为1，序号字段seq设置一个初始值x，作为TCP客户端进程所选择的初始序号</p>
+<blockquote>
+<p>TCP规定SYN被设置为1的报文段不能携带数据，但要消耗掉一个序号</p>
+</blockquote>
+<p>服务器进程收到连接请求报文段后，就向客户进程发送TCP连接请求的确认报文段，并进入<font color="LightSeaGreen">同步已接收状态</font><code>SYN_RCVD</code>，该报文段首部中的同步位<code>SYN</code>和确认位<code>ACK</code>都设置为1，序号字段<code>seq</code>设置为初始值y，作为TCP服务器进程所选择的初始序号，确认号字段<code>ack</code>设置为x+1，这个报文段也不能携带数据</p>
+<p>TCP客户进程收到确认报文段后，还要回一个普通的确认报文段，并进入<font color="LightSeaGreen">连接已建立状态</font><code>ESTABLISHED</code>，将确认位<code>ACK</code>设置为1，序号字段<code>seq</code>设置为x+1，这是因为客户进程发送的第一个报文段的序号为x，并且不携带数据，因此第二个报文段的序号为x+1，确认字段<code>ack</code>被设置为y+1，这是对服务器进程所选择的初始序号的确认，服务器进程收到该报文后也进入<font color="LightSeaGreen">连接已建立状态</font><code>ESTABLISHED</code>，现在，双方都进入了连接已建立状态，可以进行数据传输了</p>
+<blockquote>
+<p>采用“三次握手”而不是“两次握手”建立TCP连接，是为了防止已失效的连接请求报文段突然又传到了服务器，因而导致错误</p>
+</blockquote>
+<h3 id="TCP四次挥手"><a href="#TCP四次挥手" class="headerlink" title="TCP四次挥手"></a>TCP四次挥手</h3><center>
+<img src="https://github.com/kavinwkp/blogimage/raw/main/img/net/TCP4.png">
+</center>
+
+<p>TCP客户进程会发送连接释放报文段，并进入<font color="LightSeaGreen">终止等待1</font><code>FIN_WAIT_1</code>状态，该报文段首部中的终止位<code>FIN</code>和确认位<code>ACK</code>被设置为1，表明这是一个TCP连接释放报文段，同时也对之前收到的报文段进行确认，序号<code>seq</code>字段设置为u，等于客户进程之前已发送过的数据的最后一个字节的序号加1，确认号<code>ack</code>设置为v</p>
+<p>TCP服务器进程收到连接释放报文段后，会发送一个普通的确认报文段，并进入<font color="LightSeaGreen">关闭等待状态</font><code>CLOSE_WAIT</code>，ACK设置为1，序号<code>seq</code>设置为v，确认号<code>ack</code>设置为u+1，这是对客户端发送的连接释放报文段的确认。此时，客户端到服务端的方向的连接就释放了，这时的TCP连接处于半关闭状态，也就是客户端没有数据要发送了，但服务器如果还有数据要发送，客户端依然要接收</p>
+<p>客户端收到确认报文段就进入<font color="LightSeaGreen">终止等待2</font><code>FIN_WAIT_2</code>状态</p>
+<p>如果服务器也没有数据要发送了，就发送连接释放报文段并进入<font color="LightSeaGreen">最后确认状态</font><code>LAST_ACK</code>，该报文段首部中的终止位<code>FIN</code>和确认位<code>ACK</code>都设置为1，假定序号<code>seq</code>字段的值为w，确认号<code>ack</code>的值为u+1，这是对之前收到的连接释放报文段的重复确认</p>
+<p>客户端收到连接释放报文段后，发送普通的确认报文段，然后进入<font color="LightSeaGreen">时间等待状态</font><code>TIME_WAIT</code>，该报文段首部中的确认位<code>ACK</code>设置为1，序号<code>seq</code>的值为u+1，确认号<code>ack</code>的值为w+1</p>
+<p>服务器收到确认报文段后就进入关闭状态</p>
+<p>而客户端要进过<code>2MSL</code>（Maximum Segment Lifetime）后才能进入关闭状态</p>
+<p>如果客户端发送完确认报文段后就直接进入关闭状态，该报文段可能在传输过程中丢失了，这会导致服务器端的连接释放报文段的超时重传，但此时客户端已经处于关闭状态，因此不理会该报文段，这会导致TCP服务器反复重传连接释放报文段，并一直处于最后确认状态而无法进入关闭状态</p>
+<p>因此，时间等待状态以及处于该状态<code>2MSL</code>时长，<font color="LightSeaGreen">可以确保服务器可以收到最后一个确认报文段而进入关闭状态</font></p>
+<p>另外，客户端发送完最后一个确认报文段后，再经过2MSL时长，<font color="LightSeaGreen">就可以使本次连接持续时间内所产生的所有报文段都从网络中消失，这样就可以使下一个新的连接中不会出现旧连接中的报文段</font></p>
 
                 
             </div>
