@@ -578,6 +578,7 @@
 <li><font color="LightSeaGreen">『502 Bad Gateway』</font>网关错误</li>
 <li><font color="LightSeaGreen">『503 Service Unavailable』</font>表示服务器暂时无法响应</li>
 </ul>
+<hr>
 <h3 id="GET与POST"><a href="#GET与POST" class="headerlink" title="GET与POST"></a>GET与POST</h3><blockquote>
 <ul>
 <li>GET是从服务器获取指定的资源</li>
@@ -591,6 +592,7 @@
 <blockquote>
 <p>GET是安全且幂等的，POST是不安全的，也不会幂等的</p>
 </blockquote>
+<hr>
 <h3 id="HTTP特性"><a href="#HTTP特性" class="headerlink" title="HTTP特性"></a>HTTP特性</h3><p><strong>HTTP（1.1）的优点</strong></p>
 <ol>
 <li><font color="LightSeaGreen">简单</font>。报文格式是<code>header+body</code>，头部信息是<code>key-value</code>的形式，易于理解</li>
@@ -618,6 +620,7 @@
 <p>HTTP/1.0使用串行的请求-应答模式，只有接收到上一个请求的应答后，才能发送下一个请求，这样如果上一个请求的应答迟迟未到，之后就请求就一直被阻塞无法发送了</p>
 <p>HTTP/1.1使用管线化，即可在同一个TCP连接里面，客户端可以发送多个请求，也就是不必等上一个请求的应答回来，就可以发送下一个请求了，这样可以减少响应时间。但是服务器必须按照接收请求的顺序对这些请求进行响应，如果一个请求的响应时间较长，后面的请求的处理就会被阻塞，称为<font color="LightSeaGreen">队头阻塞</font></p>
 <p>所以，HTTP/1.1管线化解决了请求的队头阻塞，但是没有解决响应的队头阻塞</p>
+<hr>
 <h3 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h3><h4 id="HTTP与HTTPS的区别"><a href="#HTTP与HTTPS的区别" class="headerlink" title="HTTP与HTTPS的区别"></a>HTTP与HTTPS的区别</h4><ol>
 <li>HTTP的信息是明文传输，存在安全风险；HTTPS在HTTP和TCP之间加入了SSL/TSL安全协议层，使得报文能耗加密传输</li>
 <li>HTTP连接建立相对简单，TCP三次握手之后就可以进行报文传输；而HTTPS在三次握手之后还需进行SSL/TSL的握手过程，才可以进行加密数据传输</li>
@@ -669,23 +672,45 @@
 
 <p>服务器收到客户端的响应后，计算出本次通信的「会话秘钥」，然后，向客户端发送最后的信息：</p>
 <p>（1）加密通信算法改变通知，表示随后的信息都将用「会话秘钥」进行加密通信<br>（2）服务器握手结束通知</p>
+<hr>
 <h3 id="HTTP-2-的优化"><a href="#HTTP-2-的优化" class="headerlink" title="HTTP/2 的优化"></a>HTTP/2 的优化</h3><h4 id="HTTP-1-1的性能瓶颈"><a href="#HTTP-1-1的性能瓶颈" class="headerlink" title="HTTP 1.1的性能瓶颈"></a>HTTP 1.1的性能瓶颈</h4><ul>
 <li>请求和响应头部未经压缩就发送，首部信息越多延迟越大，只能压缩body部分</li>
 <li>服务器是按请求的顺序响应的，存在队头阻塞问题</li>
 <li>没有请求优先级控制</li>
 <li>请求只能从客户端开始，服务器只能被动响应</li>
 </ul>
-<h4 id="HTTP-2-的改进"><a href="#HTTP-2-的改进" class="headerlink" title="HTTP/2 的改进"></a>HTTP/2 的改进</h4><p>1、头部压缩</p>
+<h4 id="HTTP-2-的改进"><a href="#HTTP-2-的改进" class="headerlink" title="HTTP/2 的改进"></a>HTTP/2 的改进</h4><font color="Tomato">1、头部压缩</font>
+
 <p>如果多个请求的头部是相似的，协议会消除重复的部分。使用HPACK算法：在客户端和服务器同时维护一张头信息表，所有字段都会存入这个表，生成一个索引，这样就不用发送同样的字段了，只发送索引号就行</p>
-<p>2、二进制格式</p>
+<font color="Tomato">2、二进制格式</font>
+
 <p>HTTP/2不再使用纯文本，而是采用二进制格式，头信息和数据体都是二进制，统称为帧：头信息帧（<code>Header Frame</code>）和数据帧（<code>Data Frame</code>）</p>
-<p>3、数据流</p>
+<font color="Tomato">3、数据流</font>
+
 <p>HTTP/2中每个请求的数据包称为一个数据流（<code>Stream</code>），每个数据流都有一个编号，不同<code>Stream</code>的帧是可以乱序发送的，因此可以并发不同的<code>Stream</code>，因为每个帧的头部都有编号信息，所以接收端可以通过编号有序组装HTTP消息</p>
 <p>客户端还可以指定数据流的优先级，优先级高的请求，服务器就先响应该请求</p>
-<p>4、多路复用</p>
+<font color="Tomato">4、多路复用</font>
+
 <p>HTTP/2可以不按顺序处理请求，这样就不会有响应的队头阻塞问题。如果一个请求非常耗时，可以先回应处理好的部分，先去处理其他请求，过后再来处理</p>
-<p>5、服务器推送</p>
+<font color="Tomato">5、服务器推送</font>
+
 <p>服务器可以主动向客户端发送消息，改善了传统的请求-应答工作模式</p>
+<h4 id="HTTP-2的不足"><a href="#HTTP-2的不足" class="headerlink" title="HTTP/2的不足"></a>HTTP/2的不足</h4><p>HTTP/2通过Stream的并发能力，解决了应用层的队头阻塞问题，但因为是基于TCP来传输数据，而TCP必须保证收到的字节数据是完整且连续的，这样内核才会将缓冲区中的数据上交给HTTP应用进程，如果当前有一个报文段还没有到达，后面收到的报文段只能暂时存放在内存缓冲区中，只有等到这一个报文段到达到达时，才能一起上交给应用进程</p>
+<p>一旦发生了丢包现象，就会触发TCP的重传机制，这样其他先到达的报文段都必须等待这个丢失的报文段被重传回来</p>
+<hr>
+<h3 id="HTTP-3-的优化"><a href="#HTTP-3-的优化" class="headerlink" title="HTTP/3 的优化"></a>HTTP/3 的优化</h3><p>HTTP/3为解决传输层的队头阻塞问题，将传输层协议换成了基于UDP的QUIC协议，可以实现类似TCP的可靠传输</p>
+<p>QUIC有3个特点</p>
+<font color="Tomato">1、无队头阻塞</font>
+
+<p>QUIC协议可以在一条连接上传输多个Stream，每个Stream可以看成一条HTTP请求。当某个流发生丢包时，只会阻塞这个流，其他流不会受影响，因此就不存在队头阻塞问题<br>所以，QUIC连接上的多个Stream之间没有依赖，都是独立的</p>
+<font color="Tomato">2、更快的连接建立</font>
+
+<p>HTTP/2中，TCP和TLS是分层的，所以通信前需要先TCP握手，再TLS握手；</p>
+<p>QUIC协议内部包含了TLS，所以只需要三次握手就可以建立连接</p>
+<font color="Tomato">3、连接迁移</font>
+
+<p>基于TCP的HTTP协议，由于是通过四元组（源IP、源端口、目的IP、目的端口）确定一条TCP连接，当设备的网络切换时，意味着IP地址变化了，所以就必须断开连接，再重新建立连接，连接的迁移成本较高</p>
+<p>而QUIC是通过连接ID来标记通信的两个端点，因此即使设备的网络发生变化导致IP地址变化了，只要仍保有上下文信息，就可以复用原连接，达到连接迁移的功能</p>
 
                 
             </div>
