@@ -603,7 +603,7 @@
 <li><font color="LightSeaGreen">『幂等』</font>是指多次执行相同的操作，结果都是相同的</li>
 </ul>
 <blockquote>
-<p>GET是安全且幂等的，POST是不安全的，也不会幂等的</p>
+<p>GET是安全且幂等的，POST是不安全的，也不是幂等的</p>
 </blockquote>
 <hr>
 <h3 id="HTTP特性"><a href="#HTTP特性" class="headerlink" title="HTTP特性"></a>HTTP特性</h3><p><strong>HTTP（1.1）的优点</strong></p>
@@ -632,7 +632,7 @@
 
 <p>HTTP/1.0使用串行的请求-应答模式，只有接收到上一个请求的应答后，才能发送下一个请求，这样如果上一个请求的应答迟迟未到，之后就请求就一直被阻塞无法发送了</p>
 <p>HTTP/1.1使用管线化，即可在同一个TCP连接里面，客户端可以发送多个请求，也就是不必等上一个请求的应答回来，就可以发送下一个请求了，这样可以减少响应时间。但是服务器必须按照接收请求的顺序对这些请求进行响应，如果一个请求的响应时间较长，后面的请求的处理就会被阻塞，称为<font color="LightSeaGreen">队头阻塞</font></p>
-<p>所以，HTTP/1.1管线化解决了请求的队头阻塞，但是没有解决响应的队头阻塞</p>
+<p>所以，HTTP/1.1管线化解决了<font color="LightSeaGreen">请求的队头阻塞</font>，但是没有解决<font color="LightSeaGreen">响应的队头阻塞</font></p>
 <hr>
 <h3 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h3><h4 id="HTTP与HTTPS的区别"><a href="#HTTP与HTTPS的区别" class="headerlink" title="HTTP与HTTPS的区别"></a>HTTP与HTTPS的区别</h4><ol>
 <li>HTTP的信息是明文传输，存在安全风险；HTTPS在HTTP和TCP之间加入了SSL/TSL安全协议层，使得报文能耗加密传输</li>
@@ -657,10 +657,10 @@
 <p>摘要算法能够为数据生成独一无二的指纹，用于校验数据的完整性，解决了篡改的风险</p>
 <font color="Tomato">3、数字证书</font>
 
+<p>公钥是服务器给的，如何保证公钥不被篡改？</p>
 <blockquote>
-<p>公钥是服务器给的，如何保证公钥不被篡改</p>
-</blockquote>
 <p>需要借助第三方权威机构，将服务器公钥放在数字证书中，只要证书是可信的，公钥就是可信的</p>
+</blockquote>
 <h4 id="HTTPS连接建立"><a href="#HTTPS连接建立" class="headerlink" title="HTTPS连接建立"></a>HTTPS连接建立</h4><p>SSL/TSL协议基本流程</p>
 <ul>
 <li>客户端向服务器索要并验证服务器的公钥</li>
