@@ -578,7 +578,7 @@
 <blockquote>
 <p>基类通常都应该定义一个虚析构函数，即使该函数不执行任何实际操作也是如此</p>
 </blockquote>
-<p>protected: 派生类可以访问，普通对象不能访问</p>
+<p><code>protected</code>：<font color="LightSeaGreen">派生类可以访问，普通对象不能访问</font></p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Bulk_quote</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Quote</span></span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token function">Bulk_quote</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">default</span><span class="token punctuation">;</span>
@@ -661,7 +661,8 @@ Quote <span class="token operator">*</span>itemP <span class="token operator">=<
 Bulk_quote <span class="token operator">*</span>bulkP <span class="token operator">=</span> itemP<span class="token punctuation">;</span>  <span class="token comment">// 错误，编译器只能通过检验静态类型来判断</span>
 <span class="token comment">// 派生类指针和基类指针指向派生类对象，看起来可以，但编译器还是报错</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以通过<code>dynamic_cast</code>或<code>static_cast</code>进行转换</p>
-<p>对象间不存在类型转换</p>
+<font color="LightSeaGreen">对象间不存在类型转换</font>
+
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Bulk_quote bulk<span class="token punctuation">;</span>
 Quote <span class="token function">item</span><span class="token punctuation">(</span>bulk<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 调用Quote::Quote(const Quote&amp;)构造函数</span>
 item <span class="token operator">=</span> bulk<span class="token punctuation">;</span>    <span class="token comment">// 调用Quote::operator=(const Quote&amp;)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
