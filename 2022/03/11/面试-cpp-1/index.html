@@ -621,12 +621,35 @@
 <hr>
 <h3 id="size-t"><a href="#size-t" class="headerlink" title="size_t"></a>size_t</h3><p><code>size_t</code> 是<code>cstddef</code>头文件定义的一种与机器实现有关的无符号整数类型，他的空间足够大，能够表示任意数的大小</p>
 <hr>
-<h3 id="写一个-“标准”宏MIN"><a href="#写一个-“标准”宏MIN" class="headerlink" title="写一个 “标准”宏MIN"></a>写一个 “标准”宏MIN</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">min</span><span class="token expression"><span class="token punctuation">(</span>a<span class="token punctuation">,</span>b<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token operator">&lt;=</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token operator">?</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token operator">:</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">)</span></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<hr>
-<h3 id="volatile有什么作用"><a href="#volatile有什么作用" class="headerlink" title="volatile有什么作用"></a>volatile有什么作用</h3><p>状态寄存器一类的并行设备硬件寄存器。一个中断服务子程序会访问到的非自动变量。 多线程间被几个任务共享的变量。<br>注意：虽然<code>volatile</code>在嵌入式方面应用比较多，但是在PC软件的多线程中， <code>volatile</code>修饰的临界变量也是非常实用的</p>
-<hr>
-<h3 id="一个参数可以既是const又是volatile吗"><a href="#一个参数可以既是const又是volatile吗" class="headerlink" title="一个参数可以既是const又是volatile吗"></a>一个参数可以既是const又是volatile吗</h3><p>可以，用<code>const</code>和<code>volatile</code>同时修饰变量，表示这个变量在程序内部是<font color="LightSeaGreen">只读的</font>，不能改变的，只在程序外部条件变化下改变，并且编译器不会优化这个变量。每次使用这个变量时，都要小心地去内存读取这个变量的值，而不是去寄存器读取它的备份</p>
-<p><strong>注意</strong>：在此一定要注意<code>const</code>的意思，<code>const</code>只是不允许程序中的代码改变某一变量，其在编译期发挥作用，它并没有实际地禁止某段内存的读写特性</p>
+<h3 id="extern-“C”"><a href="#extern-“C”" class="headerlink" title="extern “C”"></a>extern “C”</h3><p>之所以C++支持函数重载，是因为C++在函数编译阶段对函数名进行再次命名，生成一个函数的签名，这个签名不仅包含函数名，还包含函数的参数列表，所以只要参数列表不同，就可以实现函数的重载</p>
+<p>而C语言不支持函数重载，所以函数的签名仅包含函数名信息</p>
+<p>假设一个函数display声明在myfun.h头文件中，定义在mufun.c文件中，然后要再main.cpp文件中使用</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// myfun.h</span>
+<span class="token keyword">void</span> <span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// myfun.c</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"myfun.h"</span></span>
+<span class="token keyword">void</span> <span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// main.cpp</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"myfun.h"</span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>预处理的时候会将头文件的内容拷贝到myfun.c和main.cpp文件中，编译时，由于myfun.c是用C语言编译的，编译后的函数签名仅跟函数名有关，而main.cpp是用C++编译的，函数签名与函数名和参数列表有关，这样，当调用display时，由于函数签名不同，就找不到display函数的定义了</p>
+<p>所以我们应该让display函数在main.cpp中使用C语言的编译方式，只要在myfun.h中使用extern “C”来修饰display就可以了</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">__cplusplus</span></span>
+<span class="token keyword">extern</span> <span class="token string">"C"</span> <span class="token keyword">void</span> <span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">else</span></span>
+<span class="token keyword">void</span> <span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这样在拷贝到main.cpp文件时，会选择extern “C”修饰的display函数，而在拷贝到myfun.c时，会选择不带extern “C”修饰的display函数，保证都可以按C语言的标准来处理</p>
 
                 
             </div>
