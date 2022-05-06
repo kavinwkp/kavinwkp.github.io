@@ -605,7 +605,7 @@ cout <span class="token operator">&lt;&lt;</span> basket<span class="token punct
 <p>现在的<code>add_item</code>只能接收智能指针参数，如果我们想要接收对象，可以重载该函数</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">add_item</span><span class="token punctuation">(</span><span class="token keyword">const</span> Quote<span class="token operator">&amp;</span> sale<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 拷贝给定的对象</span>
 <span class="token keyword">void</span> <span class="token function">add_item</span><span class="token punctuation">(</span>Quote<span class="token operator">&amp;&amp;</span> sale<span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment">// 移动给定的对象</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>但是这里的<code>Quote</code>引用或右值引用并知道它所绑定的对象的实际类型，插入到集合中的时候，需要调用<code>new</code>来分配内存，但我们并不知道对象的实际类型，它可能是<code>Quote</code>，也可能是<code>Bulk_quote</code>，如果分配的时候是<code>new Quote(sale)</code>，就会丢失掉派生类部分的数据</p>
+<p>但是这里的<code>Quote</code>引用或右值引用并不知道它所绑定的对象的实际类型，插入到集合中时，需要调用<code>new</code>来分配内存，但我们并不知道对象的实际类型，它可能是<code>Quote</code>，也可能是<code>Bulk_quote</code>，如果分配的时候是<code>new Quote(sale)</code>，就会丢失掉派生类部分的数据</p>
 <p><strong>模拟虚拷贝</strong></p>
 <p>为了解决上述问题，我们给<code>Quote</code>定义一个虚函数，该虚函数会申请一份当前的对象的拷贝</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Quote</span> <span class="token punctuation">&#123;</span>
@@ -621,7 +621,7 @@ cout <span class="token operator">&lt;&lt;</span> basket<span class="token punct
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
 <span class="token keyword">class</span> <span class="token class-name">Bulk_quote</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Quote</span></span> <span class="token punctuation">&#123;</span>
-    Bulk_quote<span class="token operator">*</span> <span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">)</span> cosnt <span class="token operator">&amp;</span> <span class="token punctuation">&#123;</span>
+    Bulk_quote<span class="token operator">*</span> <span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token operator">&amp;</span> <span class="token punctuation">&#123;</span>
         <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token function">Bulk_quote</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
     Bulk_quote<span class="token operator">*</span> <span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">&#123;</span>
@@ -638,7 +638,7 @@ cout <span class="token operator">&lt;&lt;</span> basket<span class="token punct
         items<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>shared_ptr<span class="token operator">&lt;</span>Quote<span class="token operator">></span><span class="token punctuation">(</span>std<span class="token operator">::</span><span class="token function">move</span><span class="token punctuation">(</span>sale<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>sale</code>的动态类型决定调用<code>Quote</code>版本的<code>clone</code>还是<code>Bulk_quote</code>版本的<code>clone</code>，然后返回一个新分配对象的指针，用来给智能指针绑定，这样只能指针就知道它所绑定的对象的大小</p>
+<p><code>sale</code>的动态类型决定调用<code>Quote</code>版本的<code>clone</code>还是<code>Bulk_quote</code>版本的<code>clone</code>，然后返回一个新分配对象的指针，用来给智能指针绑定，这样智能指针就知道它所绑定的对象的大小</p>
 
                 
             </div>

@@ -578,7 +578,7 @@
 <span class="token keyword">void</span> <span class="token function">clobber</span><span class="token punctuation">(</span>Base <span class="token operator">&amp;</span>b<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     b<span class="token punctuation">.</span>prot_mem <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>     <span class="token comment">// 错误</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>友元函数可以访问<code>Sneaky</code>的所有成员，所以访问私有的<code>j</code>和受保护的<code>prot_mem</code>都没问题<br>但是它不是Base的友元，所有不能访问Base的受保护成员</p>
+<p>友元函数可以访问<code>Sneaky</code>的所有成员，所以访问私有的<code>j</code>和受保护的<code>prot_mem</code>都没问题<br>但是它不是<code>Base</code>的友元，所有不能访问<code>Base</code>的受保护成员</p>
 <p>某个类对其继承而来的成员的访问权限受到两个因素的影响：</p>
 <blockquote>
 <ul>
@@ -657,7 +657,7 @@ d2<span class="token punctuation">.</span><span class="token function">pub_mem</
     <span class="token keyword">int</span> <span class="token function">f2</span><span class="token punctuation">(</span>Sneaky s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> s<span class="token punctuation">.</span>j<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>    <span class="token comment">// 错误，友元不能访问派生类的私有成员</span>
     <span class="token keyword">int</span> <span class="token function">f3</span><span class="token punctuation">(</span>Sneaky s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> s<span class="token punctuation">.</span>prot_mem<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>     <span class="token comment">// 正确，友元可以访问派生类的基类部分</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>Pal能够访问Base的成员，这种访问包括了Base对象内嵌在其派生类对象中的情况</p>
+<p><code>Pal</code>能够访问<code>Base</code>的成员，这种访问包括了<code>Base</code>对象内嵌在其派生类对象中的情况</p>
 <blockquote>
 <p>对基类的访问权限由基类本身控制，即使对于派生类的基类部分也是如此</p>
 </blockquote>
