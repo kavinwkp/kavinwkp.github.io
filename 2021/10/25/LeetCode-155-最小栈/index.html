@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="155-最小栈, kunpeng">
+    <meta name="keywords" content="155-最小栈/最大栈, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>155-最小栈 | kunpeng</title>
+    <title>155-最小栈/最大栈 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">155-最小栈</h1>
+                    <h1 class="description center-align post-title">155-最小栈/最大栈</h1>
                 </div>
             </div>
         </div>
@@ -511,8 +511,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%A0%88/">
-                                <span class="chip bg-color">栈</span>
+                            <a href="/tags/%E5%8D%95%E8%B0%83%E6%A0%88/">
+                                <span class="chip bg-color">单调栈</span>
                             </a>
                         
                     </div>
@@ -607,6 +607,74 @@ minStack<span class="token punctuation">.</span><span class="token function">min
         <span class="token keyword">return</span> stackMin<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<hr>
+<h2 id="LeetCode-716-最大栈"><a href="#LeetCode-716-最大栈" class="headerlink" title="LeetCode 716. 最大栈"></a>LeetCode 716. 最大栈</h2><p>设计一个最大栈数据结构，既支持栈操作，又支持查找栈中最大元素。</p>
+<p>实现 <code>MaxStack</code> 类：</p>
+<p><code>MaxStack()</code> 初始化栈对象<br><code>void push(int x)</code> 将元素 <code>x</code> 压入栈中。<br><code>int pop()</code> 移除栈顶元素并返回这个元素。<br><code>int top()</code> 返回栈顶元素，无需移除。<br><code>int peekMax()</code> 检索并返回栈中最大元素，无需移除。<br><code>int popMax()</code> 检索并返回栈中最大元素，并将其移除。如果有多个最大元素，只要移除 最靠近栈顶 的那个。</p>
+<p>示例：<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入
+<span class="token punctuation">[</span><span class="token string">"MaxStack"</span><span class="token punctuation">,</span> <span class="token string">"push"</span><span class="token punctuation">,</span> <span class="token string">"push"</span><span class="token punctuation">,</span> <span class="token string">"push"</span><span class="token punctuation">,</span> <span class="token string">"top"</span><span class="token punctuation">,</span> <span class="token string">"popMax"</span><span class="token punctuation">,</span> <span class="token string">"top"</span><span class="token punctuation">,</span> <span class="token string">"peekMax"</span><span class="token punctuation">,</span> <span class="token string">"pop"</span><span class="token punctuation">,</span> <span class="token string">"top"</span><span class="token punctuation">]</span>
+<span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+输出
+<span class="token punctuation">[</span>null<span class="token punctuation">,</span> null<span class="token punctuation">,</span> null<span class="token punctuation">,</span> null<span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span>
+
+解释
+MaxStack stk <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">MaxStack</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+stk<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// [5] - 5 既是栈顶元素，也是最大元素</span>
+stk<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// [5, 1] - 栈顶元素是 1，最大元素是 5</span>
+stk<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// [5, 1, 5] - 5 既是栈顶元素，也是最大元素</span>
+stk<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 返回 5，[5, 1, 5] - 栈没有改变</span>
+stk<span class="token punctuation">.</span><span class="token function">popMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 返回 5，[5, 1] - 栈发生改变，栈顶元素不再是最大元素</span>
+stk<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 返回 1，[5, 1] - 栈没有改变</span>
+stk<span class="token punctuation">.</span><span class="token function">peekMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 返回 5，[5, 1] - 栈没有改变</span>
+stk<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 返回 1，[5] - 此操作后，5 既是栈顶元素，也是最大元素</span>
+stk<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 返回 5，[5] - 栈没有改变</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<h3 id="method"><a href="#method" class="headerlink" title="method"></a>method</h3><p>入队的时候，看要入队的元素是否比当前最大值大，如果较大，则<code>stMax</code>需要插入这个数，否则，<code>stMax</code>插入当前的栈顶元素</p>
+<p>弹出最大值的时候，<code>stMax.top()</code>记录着最大值<code>Max</code>，先把<code>stVal</code>中不等于<code>Max</code>的元素放到一个临时的栈中，等找到<code>stVal</code>中等于<code>Max</code>的元素时，先把这个元素弹出，再将临时栈中的元素插入回去，注意这里调用的是前面实现的自定义的<code>push</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">MaxStack</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    stack<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> stVal<span class="token punctuation">;</span>
+    stack<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> stMax<span class="token punctuation">;</span>
+    <span class="token function">MaxStack</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    
+    <span class="token keyword">void</span> <span class="token function">push</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        stVal<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> max <span class="token operator">=</span> stMax<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span> x <span class="token operator">:</span> stMax<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        stMax<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>max <span class="token operator">></span> x <span class="token operator">?</span> max <span class="token operator">:</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 插入较大的</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token keyword">int</span> <span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> x <span class="token operator">=</span> stVal<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        stVal<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        stMax<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token keyword">int</span> <span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> stVal<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token keyword">int</span> <span class="token function">peekMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> stMax<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token keyword">int</span> <span class="token function">popMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        stack<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> tmp<span class="token punctuation">;</span>
+        <span class="token keyword">int</span> x <span class="token operator">=</span> stMax<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>stVal<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!=</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            tmp<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>stVal<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            stVal<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            stMax<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        stVal<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        stMax<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>tmp<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">this</span><span class="token operator">-></span><span class="token function">push</span><span class="token punctuation">(</span>tmp<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 这里调用前面自定义的push</span>
+            tmp<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
                 
             </div>
             <hr/>
@@ -670,8 +738,8 @@ minStack<span class="token punctuation">.</span><span class="token function">min
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%A0%88/">
-                                    <span class="chip bg-color">栈</span>
+                                <a href="/tags/%E5%8D%95%E8%B0%83%E6%A0%88/">
+                                    <span class="chip bg-color">单调栈</span>
                                 </a>
                             
                         </div>
