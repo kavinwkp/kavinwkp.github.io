@@ -580,8 +580,15 @@ Output<span class="token operator">:</span> <span class="token number">1</span><
     <span class="token keyword">int</span> leftNum <span class="token operator">=</span> <span class="token function">traversal</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>leftNum <span class="token operator">==</span> k <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span> root<span class="token operator">-></span>val<span class="token punctuation">;</span>
     <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>leftNum <span class="token operator">></span> k <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">kthSmallest</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">,</span> k<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">else</span> <span class="token keyword">return</span> <span class="token function">kthSmallest</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">,</span> k <span class="token operator">-</span> leftNum <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">kthSmallest</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">,</span> k <span class="token operator">-</span> leftNum <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>假设要找第4小的节点，</p>
+<ul>
+<li>如果<code>leftNum=3</code>，说明该节点左边有3个元素，该节点就是第4小的节点</li>
+<li>如果<code>leftNum=5</code>，说明第4小的节点还在左边，往左边找第4小的节点</li>
+<li>如果<code>leftNum=2</code>，说明该节点是第3小的节点，第4小的节点在它的右边第一个，如果应该往右边找第1小的节点，这个1是通过<code>4-leftNum-1</code>算出来的</li>
+</ul>
+
                 
             </div>
             <hr/>

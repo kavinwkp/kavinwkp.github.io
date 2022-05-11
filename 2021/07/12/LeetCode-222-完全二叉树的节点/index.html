@@ -573,7 +573,7 @@ Output<span class="token operator">:</span> <span class="token number">6</span><
     <span class="token keyword">int</span> rightNum <span class="token operator">=</span> <span class="token function">countNodes</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> leftNum <span class="token operator">+</span> rightNum <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>时间复杂度：$O(n)$<br>空间复杂度：$O(logn)$，算上了递归系统栈占用的空间</p>
+<p>时间复杂度：$O(n)$<br>空间复杂度：$O(n)$，算上了递归系统栈占用的空间</p>
 <h3 id="method-2-层序遍历"><a href="#method-2-层序遍历" class="headerlink" title="method 2: 层序遍历"></a>method 2: 层序遍历</h3><p>累计每层的节点数</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">countNodes</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     queue<span class="token operator">&lt;</span>TreeNode<span class="token operator">*</span><span class="token operator">></span> q<span class="token punctuation">;</span>
@@ -593,7 +593,17 @@ Output<span class="token operator">:</span> <span class="token number">6</span><
     <span class="token keyword">return</span> count<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>时间复杂度：$O(n)$<br>空间复杂度：$O(n)$</p>
-<h3 id="method-3-利用完全二叉树性质"><a href="#method-3-利用完全二叉树性质" class="headerlink" title="method 3: 利用完全二叉树性质"></a>method 3: 利用完全二叉树性质</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">countNodes</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<h3 id="method-3-利用完全二叉树性质"><a href="#method-3-利用完全二叉树性质" class="headerlink" title="method 3: 利用完全二叉树性质"></a>method 3: 利用完全二叉树性质</h3><p>完全二叉树的根节点为第0层，最底层为第h层</p>
+<p>则第$i$层的节点个数为</p>
+<ul>
+<li>$0\leq i&lt;h$时，第$i$层节点个数为$2^i$</li>
+<li>$i=h$时，最底层节点个数最少为$1$，最多为$2^h$</li>
+</ul>
+<p>如果是一棵满二叉树，则节点个数为</p>
+<script type="math/tex; mode=display">
+2^0 + 2^1 + \cdots + 2^h = 2^{h+1}-1</script><p>所以，如果能找到满二叉树的子树，就可以快速计算出该子树的节点数</p>
+<p>左移一位是乘以2，右移一位是除以2</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">countNodes</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>root <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
     TreeNode<span class="token operator">*</span> leftNode <span class="token operator">=</span> root<span class="token operator">-></span>left<span class="token punctuation">;</span>
     TreeNode<span class="token operator">*</span> rightNode <span class="token operator">=</span> root<span class="token operator">-></span>right<span class="token punctuation">;</span>
@@ -607,7 +617,7 @@ Output<span class="token operator">:</span> <span class="token number">6</span><
         rightDepth<span class="token operator">++</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>leftDepth <span class="token operator">==</span> rightDepth<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">&lt;&lt;</span> leftDepth<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">&lt;&lt;</span> leftDepth<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>    <span class="token comment">// 2的leftDepth+1次方</span>
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> <span class="token function">countNodes</span><span class="token punctuation">(</span>root<span class="token operator">-></span>left<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">countNodes</span><span class="token punctuation">(</span>root<span class="token operator">-></span>right<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
