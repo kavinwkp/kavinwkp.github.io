@@ -611,35 +611,36 @@
 <h3 id="constexpr-构造函数"><a href="#constexpr-构造函数" class="headerlink" title="constexpr 构造函数"></a>constexpr 构造函数</h3><p>构造函数不能说const，但字⾯值常量类的构造函数可以是constexpr<br>constexpr构造函数必须有一个空的函数体，即所有成员变量的初始化都放到初始化列表中。对象调用的成员函数必须使用 constexpr 修饰</p>
 <p>const<br>指针常量: <code>const int* d = new int(2);</code> 不能改变对象的值<br>常量指针: <code>int* const e = new int(2);</code> 不能改变指向<br>区别方法：<br>左定值，右定向：指的是const在*的左还是右边</p>
 <p>顶层const：指针本身是常量<br>底层const：指针所指的对象是常量<br>若要修改const修饰的变量的值，需要加上关键字volatile<br>若想要修改const成员函数中某些与类状态无关的数据成员，可以使用mutable关键字来修饰这个数据成员</p>
-<table> 
+<h3 id="const和static成员"><a href="#const和static成员" class="headerlink" title="const和static成员"></a>const和static成员</h3><div class="table-container">
+<table>
+<thead>
 <tr>
 <th>关键字</th>
 <th>修饰常量</th>
 <th>修饰成员变量</th>
-<th>修饰成员函数</th> 
-
-</tr><tr>
+<th>修饰成员函数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
 <td>const</td>
-<td>超出其作用域后空间会被释放，在定义时必须初始化，之后无法更改
-const形参可以接受const和非const类型的实参</td>
-<td>只在某个对象的生命周期内是常量，而对整个对象而言是可变的不能赋值
-不能在类外定义，只能通过构造函数初始化列表进行初始化【因为不同的对象对其const数据成员的值可以不同，所以不能在类中声明时初始化】</td>
-<td>防止成员函数修改对象的内容【不能修改成员变量的值，但是可以访问】
-const对象不可以调用非const的函数，但是非const的对象可以调用</td>
-
-</tr><tr>
+<td>超出其作用域后空间会被释放，在定义时必须初始化，之后无法更改。<br>const形参可以接受const和非const类型的实参</td>
+<td>只在某个对象的生命周期内是常量，而对整个对象而言是可变的不能赋值<br>不能在类外定义，只能通过构造函数初始化列表进行初始化【因为不同的对象对其const数据成员的值可以不同，所以不能在类中声明时初始化】</td>
+<td>防止成员函数修改对象的内容<font color="LightSeaGreen">『不能修改成员变量的值，但是可以访问』</font><br>const对象不可以调用非const的函数，但是非const的对象可以</td>
+</tr>
+<tr>
 <td>static</td>
 <td>在函数执行后不会释放其存储空间</td>
 <td>只能在类定义体内部声明，外部初始化，且不加static</td>
-<td>1. 作为类作用域的全局函数【不能访问和调用非静态数据成员和调用非静态成员函数】
-2. 没有this指针【不能直接存取类的非静态成员，调用非静态成员函数】
-3. 不能声明为virtual</td>
-</tr></table>
-
-<p>const和static不能同时修饰成员函数，因为静态成员函数不含有this指针，即不能实例化，而const成员函数必须具体到某一实例</p>
+<td>1.作为类作用域的全局函数<font color="LightSeaGreen">『不能访问和调用非静态数据成员和调用非静态成员函数』</font><br>2.没有this指针<font color="LightSeaGreen">『不能直接存取类的非静态成员，调用非静态成员函数』</font><br>3.不能声明为virtual</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code>const</code>和<code>static</code>不能同时修饰成员函数，因为<font color="LightSeaGreen">静态成员函数不含有this指针</font>，即不能实例化，而<font color="LightSeaGreen">const成员函数必须具体到某一实例</font></p>
 <p><strong>constexpr的好处</strong></p>
 <ol>
-<li>为一些不能修改数据提供保障，写成变量则就有被意外修改的⻛险。</li>
+<li>为一些不能修改数据提供保障，写成变量则就有被意外修改的风险。</li>
 <li>有些场景，编译器可以在编译期对constexpr的代码进行优化，提高效率。</li>
 <li>相比宏来说，没有额外的开销，但更安全可靠</li>
 </ol>

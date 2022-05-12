@@ -592,6 +592,78 @@ Entity created<span class="token operator">!</span>
 <span class="token number">1</span>
 <span class="token operator">>></span><span class="token operator">>></span><span class="token operator">></span>Leaving ex3<span class="token operator">&lt;&lt;</span><span class="token operator">&lt;&lt;</span><span class="token operator">&lt;</span>
 Entity destroyed<span class="token operator">!</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="shared-ptr相互引用问题"><a href="#shared-ptr相互引用问题" class="headerlink" title="shared_ptr相互引用问题"></a>shared_ptr相互引用问题</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">B</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">A</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"A constructor"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    shared_ptr<span class="token operator">&lt;</span>B<span class="token operator">></span> b<span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"A test"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token operator">~</span><span class="token function">A</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"A destructor"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">B</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">B</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"B constructor"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    shared_ptr<span class="token operator">&lt;</span>A<span class="token operator">></span> a<span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"B test"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token operator">~</span><span class="token function">B</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"B destructor"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    shared_ptr<span class="token operator">&lt;</span>A<span class="token operator">></span> pa <span class="token operator">=</span> make_shared<span class="token operator">&lt;</span>A<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    shared_ptr<span class="token operator">&lt;</span>B<span class="token operator">></span> pb <span class="token operator">=</span> make_shared<span class="token operator">&lt;</span>B<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    pa<span class="token operator">-></span>b <span class="token operator">=</span> pb<span class="token punctuation">;</span>
+    pb<span class="token operator">-></span>a <span class="token operator">=</span> pa<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> pa<span class="token operator">-></span>b<span class="token punctuation">.</span><span class="token function">use_count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> pb<span class="token operator">-></span>a<span class="token punctuation">.</span><span class="token function">use_count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+A constructor
+B constructor
+<span class="token number">2</span>
+<span class="token number">2</span>   <span class="token comment">// 没有调用析构函数</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里<code>pa</code>指针指向的<code>A</code>对象中的指针指向<code>B</code>对象，<code>pb</code>指针指向的<code>B</code>对象中的指针指向<code>A</code>对象，所以<code>A</code>对象和<code>B</code>对象的引用计数都为2</p>
+<p>程序结束时，<code>pb</code>指针先析构，这样<code>B</code>对象的引用计数减一变成1，还不能释放，<code>pa</code>指针再析构，这样<code>A</code>对象的引用计数减一变成1，也不能释放，所以就变成两个对象相互引用，都不能释放，导致内存泄漏</p>
+<p>解决方法：声明对象时使用强指针<code>shared_ptr</code>，引用对象时使用弱指针<code>weak_ptr</code></p>
+<p>这里类<code>A</code>需要引用<code>B</code>对象，所以可以用<code>weak_ptr</code>替换<code>shared_ptr</code>，类<code>B</code>同理</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">B</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">A</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"A constructor"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    weak_ptr<span class="token operator">&lt;</span>B<span class="token operator">></span> b<span class="token punctuation">;</span>  <span class="token comment">// 换成weak_ptr</span>
+    <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"A test"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token operator">~</span><span class="token function">A</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"A destructor"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">B</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">B</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"B constructor"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    weak_ptr<span class="token operator">&lt;</span>A<span class="token operator">></span> a<span class="token punctuation">;</span>  <span class="token comment">// 换成weak_ptr</span>
+    <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"B test"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token operator">~</span><span class="token function">B</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"B destructor"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    shared_ptr<span class="token operator">&lt;</span>A<span class="token operator">></span> pa <span class="token operator">=</span> make_shared<span class="token operator">&lt;</span>A<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    shared_ptr<span class="token operator">&lt;</span>B<span class="token operator">></span> pb <span class="token operator">=</span> make_shared<span class="token operator">&lt;</span>B<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    pa<span class="token operator">-></span>b <span class="token operator">=</span> pb<span class="token punctuation">;</span>
+    pb<span class="token operator">-></span>a <span class="token operator">=</span> pa<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> pa<span class="token operator">-></span>b<span class="token punctuation">.</span><span class="token function">use_count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> pb<span class="token operator">-></span>a<span class="token punctuation">.</span><span class="token function">use_count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+A constructor
+B constructor
+<span class="token number">1</span>
+<span class="token number">1</span>
+B destructor    <span class="token comment">// 调用B的析构函数</span>
+A destructor    <span class="token comment">// 调用A的析构函数</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>改成<code>weak_ptr</code>后，不会增加对象的引用计数，所以<code>A</code>对象只有指针<code>pa</code>引用，所以引用计数为1，<code>B</code>对象只有指针<code>pb</code>引用，所以引用计数也为1</p>
+<p>指针<code>pb</code>析构时，<code>B</code>对象引用计数减一后变成0，调用析构函数，释放内存，指针<code>pa</code>析构时，<code>A</code>对象的引用计数减一后变成0，也调用析构函数，释放内存，这样就不会内存泄漏了</p>
 <h3 id="weak-ptr"><a href="#weak-ptr" class="headerlink" title="weak_ptr"></a>weak_ptr</h3><p><code>weak_ptr</code>使用前检查对象是否还存在，确认存在才能使用</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">observe</span><span class="token punctuation">(</span>std<span class="token operator">::</span>weak_ptr<span class="token operator">&lt;</span>Entity<span class="token operator">></span> ew<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"*****Entering observe*****"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
