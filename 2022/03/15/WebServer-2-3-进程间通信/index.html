@@ -577,7 +577,7 @@
     MAP_PRIVATE<span class="token operator">:</span> 不同步，映射区数据改变，对原来文件不会修改，会创建一个新文件<span class="token punctuation">(</span>copy on write<span class="token punctuation">)</span>
 <span class="token operator">-</span> fd<span class="token operator">:</span> 需要映射的文件的文件描述符，通过open得到，文件大小要大于<span class="token number">0</span>，open的权限不能和prot冲突
 <span class="token operator">-</span> offset<span class="token operator">:</span> 映射文件的偏移，必须是<span class="token number">4</span>k的整数倍
-<span class="token comment">// 返回创建的内存的首地址，失败返回MAP_FAILED，(void *) -1</span>
+<span class="token comment">// 返回创建的内存的首地址，失败返回MAP_FAILED，即(void *)-1</span>
 <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
 
 <span class="token keyword">int</span> <span class="token function">munmap</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>addr<span class="token punctuation">,</span> size_t length<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -618,6 +618,164 @@
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <hr>
+<h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><blockquote>
+<p>3种System V进程间通信方式：<font color="LightSeaGreen">信号量、消息队列和共享内存</font>。它们都是由AT&amp;T System V2版本的UNIX引入的，所以统称为System V IPC</p>
+</blockquote>
+<p>消息队列是在两个进程之间传递二进制块数据的一种简单有效的方法，每个数据块都有一个特定的类型，接收方可以根据类型有选择地接收数据，而不一定像匿名管道和有名管道那样必须以先进先出的方式接收数据</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/msg.h></span></span>
+<span class="token keyword">int</span> <span class="token function">msgget</span><span class="token punctuation">(</span>key_t key<span class="token punctuation">,</span> <span class="token keyword">int</span> msgflg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 创建一个消息队列，或者获取一个已有的消息队列</span>
+<span class="token operator">-</span> key<span class="token operator">:</span> 用来标识一个全局唯一的消息队列
+<span class="token operator">-</span> msgflg<span class="token operator">:</span> 由<span class="token number">9</span>个权限标志组成，用法和创建文件时使用的mode模式标志是一样的
+    <span class="token operator">-</span> IPC_CREAT<span class="token operator">:</span> 如果消息队列对象不存在，则创建之，否则则进行打开操作
+<span class="token comment">// 成功返回消息队列的标识符，失败返回-1，并设置errno</span>
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
+        
+<span class="token keyword">int</span> <span class="token function">msgsnd</span><span class="token punctuation">(</span><span class="token keyword">int</span> msqid<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">void</span><span class="token operator">*</span> msgp<span class="token punctuation">,</span> size_t msgsz<span class="token punctuation">,</span> <span class="token keyword">int</span> msgflg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 把一条消息添加到消息队列中</span>
+<span class="token operator">-</span> msqid<span class="token operator">:</span> 由msgget调用返回的消息队列标识符
+<span class="token operator">-</span> msgp<span class="token operator">:</span> 指向一个准备发送的消息，消息必须被定义为如下类型
+<span class="token keyword">struct</span> <span class="token class-name">mymsg</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">long</span> mtype<span class="token punctuation">;</span>	<span class="token comment">// 消息类型</span>
+    <span class="token keyword">char</span> mtext<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>	<span class="token comment">// 消息数据</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token operator">-</span> msgsz<span class="token operator">:</span> 消息数据部分mtext的长度
+<span class="token operator">-</span> msgflg<span class="token operator">:</span> 控制msgsnd的行为，仅支持IPC_NOWAIT标志，即以非阻塞的方式发送消息。默认情况下，发送消息时如果消息队列满了，则msgsnd将阻塞，若IPC_NOWAIT标志被指定，则msgsnd将立即返回并设置errno为EAGAIN
+<span class="token comment">// 成功返回0，失败返回-1，并设置errno</span>
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
+    
+ssize_t <span class="token function">msgrcv</span><span class="token punctuation">(</span><span class="token keyword">int</span> msqid<span class="token punctuation">,</span> <span class="token keyword">void</span><span class="token operator">*</span> msgp<span class="token punctuation">,</span> size_t msgsz<span class="token punctuation">,</span> <span class="token keyword">long</span> msgtype<span class="token punctuation">,</span> <span class="token keyword">int</span> msgflg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 从消息队列中获取消息</span>
+<span class="token operator">-</span> msqid<span class="token operator">:</span> 由msgget调用返回的消息队列标识符
+<span class="token operator">-</span> msgp<span class="token operator">:</span> 存储接收的数据
+<span class="token operator">-</span> msgsz<span class="token operator">:</span> 消息数据部分mtext的长度
+<span class="token operator">-</span> msgtype<span class="token operator">:</span> 指定接收何种类型的消息
+	<span class="token operator">-</span> msgtyp等于<span class="token number">0</span>，读取消息队列中的第一个消息
+    <span class="token operator">-</span> msgtyp大于<span class="token number">0</span>，读取消息队列中第一个类型为msgtype的消息
+<span class="token comment">// 成功返回0，失败返回-1，并设置errno</span>
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
+
+<span class="token keyword">int</span> <span class="token function">msgctl</span><span class="token punctuation">(</span>ing msqid<span class="token punctuation">,</span> <span class="token keyword">int</span> cmd<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">msqid_ds</span> <span class="token operator">*</span>buf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 控制消息队列的某些属性</span>
+<span class="token operator">-</span> msqid<span class="token operator">:</span> 由msgget调用返回的消息队列标识符
+<span class="token operator">-</span> cmd<span class="token operator">:</span> 指定要执行的命令
+    <span class="token operator">-</span> IPC_STAT<span class="token operator">:</span> 将消息队列关联的数据结构复制到buf中
+    <span class="token operator">-</span> IPC_SET<span class="token operator">:</span> 将buf中的部分成员复制到消息队列关联的数据结构中
+    <span class="token operator">-</span> IPC_RMID<span class="token operator">:</span> 立即移除消息队列，唤醒所有等待读消息和写消息的进程<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<hr>
+<h2 id="共享内存"><a href="#共享内存" class="headerlink" title="共享内存"></a>共享内存</h2><p>共享内存允许两个或者多个进程共享物理内存的同一块区域（段）。由于一个共享内存段会成为一个进程用户空间的一部分，因此这种IPC机制无须内核介入。一个进程将数据复制进共享内存中，这些数据就能被共享同一个段的进程使用</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/ipc.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/shm.h></span></span>
+<span class="token keyword">int</span> <span class="token function">shmget</span><span class="token punctuation">(</span>key_t key<span class="token punctuation">,</span> size_t size<span class="token punctuation">,</span> <span class="token keyword">int</span> shmflg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 创建一段新的共享内存，或者获取一个既有的共享内存段的标识，数据会初始化为0</span>
+<span class="token operator">-</span> key<span class="token operator">:</span> 通过这个参数找到或者创建一个共享内存，一般使用十六进制的非<span class="token number">0</span>值
+<span class="token operator">-</span> size<span class="token operator">:</span> 共享内存的大小，如果是获取已存在的共享内存，可以设置为<span class="token number">0</span>
+<span class="token operator">-</span> shmflg<span class="token operator">:</span> 共享内存的属性，与open的mode参数相同
+    访问权限
+    创建<span class="token operator">:</span> IPC_CREAT
+    判断是否存在<span class="token operator">:</span> IPC_EXCL，要和IPC_CREAT一起使用
+<span class="token comment">// 成功返回共享内存的引用ID，失败返回-1，设置错误号</span>
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
+
+<span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">shmat</span><span class="token punctuation">(</span><span class="token keyword">int</span> shmid<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">void</span> <span class="token operator">*</span>shmaddr<span class="token punctuation">,</span> <span class="token keyword">int</span> shmflg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 和当前进程关联</span>
+<span class="token operator">-</span> shmid<span class="token operator">:</span> 共享内存的标识，由shmget返回值获取
+<span class="token operator">-</span> shmaddr<span class="token operator">:</span> 申请的共享内存的起始地址，给<span class="token constant">NULL</span>，由操作系统选择
+<span class="token operator">-</span> shmflg<span class="token operator">:</span> 对共享内存的操作
+    SHM_RDONLY<span class="token operator">:</span> 读权限，必须有
+   	SHM_REMAP<span class="token operator">:</span> 如果shmaddr已经关联到一段共享内存上，则重新关联
+    <span class="token number">0</span><span class="token operator">:</span> 读写权限
+<span class="token comment">// 成功返回共享内存的起始地址，失败返回(void *)-1并设置errno</span>
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
+
+<span class="token keyword">int</span> <span class="token function">shmdt</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">void</span> <span class="token operator">*</span>shmaddr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 解除当前进程和共享内存的关联</span>
+<span class="token operator">-</span> shmid<span class="token operator">:</span> 共享内存的首地址
+<span class="token comment">// 成功返回0，失败返回-1并设置errno</span>
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
+
+<span class="token keyword">int</span> <span class="token function">shmctl</span><span class="token punctuation">(</span><span class="token keyword">int</span> shmid<span class="token punctuation">,</span> <span class="token keyword">int</span> cmd<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">shmid_ds</span> <span class="token operator">*</span>buf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 控制共享内存的某些属性</span>
+<span class="token operator">-</span> shmid<span class="token operator">:</span> 共享内存标识符
+<span class="token operator">-</span> cmd<span class="token operator">:</span> 要执行的命令
+    <span class="token operator">-</span> IPC_STAT<span class="token operator">:</span> 将共享内存相关的内核数据结构复制到buf
+    <span class="token operator">-</span> IPC_SET<span class="token operator">:</span> 将buf中的部分成员复制到共享内存相关的内核数据结构中
+    <span class="token operator">-</span> IPC_RMID<span class="token operator">:</span> 将共享内存打上删除的标记，这样当最后一个使用它的进程调用shmdt将它从进程中分离时，该共享内存就被删除了
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
+
+key_t <span class="token function">ftok</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>pathname<span class="token punctuation">,</span> <span class="token keyword">int</span> proj_id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 根据指定的路径和值生成一个共享内存的key</span>
+<span class="token operator">-</span> pathname<span class="token operator">:</span> 指定路径 
+<span class="token operator">-</span> proj_id<span class="token operator">:</span> 只需要<span class="token number">1</span>字节，一般给一个字符<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>写端</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/ipc.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/shm.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token comment">// 1. 创建共享内存</span>
+    <span class="token keyword">int</span> shmid <span class="token operator">=</span> <span class="token function">shmget</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">4096</span><span class="token punctuation">,</span> IPC_CREAT <span class="token operator">|</span> <span class="token number">0664</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"shmid: %d\n"</span><span class="token punctuation">,</span> shmid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 2. 和当前进程关联</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token function">shmat</span><span class="token punctuation">(</span>shmid<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 3. 写数据</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>str <span class="token operator">=</span> <span class="token string">"hello world"</span><span class="token punctuation">;</span>
+    <span class="token function">memcpy</span><span class="token punctuation">(</span>ptr<span class="token punctuation">,</span> str<span class="token punctuation">,</span> <span class="token function">strlen</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">// 带上结尾的'\0'</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"press any key to continue...\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 4. 解除关联</span>
+    <span class="token function">shmdt</span><span class="token punctuation">(</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 5. 删除共享内存</span>
+    <span class="token function">shmctl</span><span class="token punctuation">(</span>shmid<span class="token punctuation">,</span> IPC_RMID<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>读端</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/ipc.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/shm.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token comment">// 1. 创建共享内存</span>
+    <span class="token keyword">int</span> shmid <span class="token operator">=</span> <span class="token function">shmget</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> IPC_CREAT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"shmid: %d\n"</span><span class="token punctuation">,</span> shmid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token comment">// 2. 和当前进程关联</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token function">shmat</span><span class="token punctuation">(</span>shmid<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 3. 读数据</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%s\n"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"press any key to continue...\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 4. 解除关联</span>
+    <span class="token function">shmdt</span><span class="token punctuation">(</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 5. 删除共享内存</span>
+    <span class="token function">shmctl</span><span class="token punctuation">(</span>shmid<span class="token punctuation">,</span> IPC_RMID<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<ul>
+<li>共享内存不需要文件，共享一段内存</li>
+<li>内存映射需要文件，共享一个文件</li>
+</ul>
+</blockquote>
+<h2 id="IPC命令"><a href="#IPC命令" class="headerlink" title="IPC命令"></a>IPC命令</h2><p>3种System V IPC进程间通信方式都使用一个全局唯一的键值（key）来描述一个共享资源，当程序调用<code>semget/shmget/msgget</code>时，就创建了这些共享资源的一个实例</p>
+<p>Linux提供<code>ipcs</code>命令，以观察当前系统上拥有哪些共享资源实例</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ipcs <span class="token operator">-</span>m <span class="token comment">// 打印出使用共享内存进行进程间通信的信息</span>
+ipcrm <span class="token operator">-</span>M shmkey <span class="token comment">// 移除用shmkey创建的共享内存段</span>
+ipcrm <span class="token operator">-</span>m shmid  <span class="token comment">// 移除用shmid标识的共享内存段</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<hr>
 <h2 id="信号"><a href="#信号" class="headerlink" title="信号"></a>信号</h2><div class="table-container">
 <table>
 <thead>
@@ -641,7 +799,7 @@
 <tr>
 <td>9</td>
 <td>SIGKILL</td>
-<td>无条件终止进程，该信号不能被忽略、处理和阻塞。终止进程，可以杀死任何进程</td>
+<td><font color="Coral">无条件终止进程，该信号不能被忽略、处理和阻塞。可以杀死任何进程</font></td>
 </tr>
 <tr>
 <td>11</td>
@@ -666,7 +824,7 @@
 <tr>
 <td>19</td>
 <td>SIGSTOP</td>
-<td>暂停进程，此信号不能被忽略、处理和阻塞</td>
+<td><font color="Coral">暂停进程，此信号不能被忽略、处理和阻塞</font></td>
 </tr>
 </tbody>
 </table>
@@ -695,98 +853,24 @@
     <span class="token operator">=</span> <span class="token number">0</span><span class="token operator">:</span> 将信号发送给当前的进程组
     <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token operator">:</span> 将信号发送给每一个有权限接受这个信号的进程
     <span class="token operator">&lt;</span> <span class="token operator">-</span><span class="token number">1</span><span class="token operator">:</span> pid<span class="token operator">=</span>某个进程组id取反
-<span class="token operator">-</span> sig<span class="token operator">:</span> 信号的编号或宏值，<span class="token number">0</span>表示不发送信号<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">raise</span><span class="token punctuation">(</span><span class="token keyword">int</span> sig<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 给当前进程发送信号，成功返回0，失败返回非0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
-<span class="token keyword">void</span> <span class="token function">abort</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 发送SIGABRT信号给当前进程，杀死当前进程</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h3 id="alarm函数"><a href="#alarm函数" class="headerlink" title="alarm函数"></a>alarm函数</h3><blockquote>
-<p>实际的时间=内核时间+用户时间+消耗的时间</p>
-</blockquote>
-<p>非阻塞，无论进程处于何种状态，<code>alarm</code>都会计时</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
-<span class="token keyword">unsigned</span> <span class="token keyword">int</span> <span class="token function">alarm</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> seconds<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 设置定时器，定时到了会给当前进程发送SIGALARM信号</span>
-<span class="token operator">-</span> seconds<span class="token operator">:</span> 定时时间，<span class="token number">0</span>表示定时器无效
-<span class="token comment">// 返回值: 之前没有定时器，返回0，之前有定时器，返回剩余时间</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p>SIGALRM: 信号码14，默认终止当前进程，每个进程有且只有唯一一个定时器</p>
-</blockquote>
-<h3 id="setitimer函数"><a href="#setitimer函数" class="headerlink" title="setitimer函数"></a>setitimer函数</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/time.h></span></span>
-<span class="token keyword">int</span> <span class="token function">setitimer</span><span class="token punctuation">(</span><span class="token keyword">int</span> which<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">struct</span> <span class="token class-name">itimerval</span> <span class="token operator">*</span>new_value<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">itimerval</span> <span class="token operator">*</span>old_value<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token operator">-</span> 功能<span class="token operator">:</span> 设置定时器，精度us，可以周期性定时
-<span class="token operator">-</span> 返回值<span class="token operator">:</span> 成功返回<span class="token number">0</span>，失败返回<span class="token operator">-</span><span class="token number">1</span>
-<span class="token operator">-</span> which<span class="token operator">:</span> 定时器以什么时间计时
-    <span class="token operator">-</span> ITIMER_REAL<span class="token operator">:</span> 真实时间，计时到了发送SIGALRM信号
-    <span class="token operator">-</span> ITIMER_VIRTUAL<span class="token operator">:</span> 用户时间，计时到了发送SIGVTALRM信号
-    <span class="token operator">-</span> ITIMER_PROF<span class="token operator">:</span> 以该进程在用户态和内核态下所消耗的时间来计算，计时到了发送SIGPROF信号
+<span class="token operator">-</span> sig<span class="token operator">:</span> 信号的编号或宏值，<span class="token number">0</span>表示不发送信号
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
 
-<span class="token operator">-</span> new_value<span class="token operator">:</span> 定时器的属性
-<span class="token keyword">struct</span> <span class="token class-name">itimerval</span> <span class="token punctuation">&#123;</span>  <span class="token comment">// 定时器的结构体</span>
-    <span class="token keyword">struct</span> <span class="token class-name">timeval</span> it_interval<span class="token punctuation">;</span> <span class="token comment">/* 时间间隔 */</span>
-    <span class="token keyword">struct</span> <span class="token class-name">timeval</span> it_value<span class="token punctuation">;</span>    <span class="token comment">/* 延长多长时间执行定时器 */</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">raise</span><span class="token punctuation">(</span><span class="token keyword">int</span> sig<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 给当前进程发送信号，成功返回0，失败返回非0</span>
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
 
-<span class="token keyword">struct</span> <span class="token class-name">timeval</span> <span class="token punctuation">&#123;</span>    <span class="token comment">// 时间的结构体</span>
-    time_t      tv_sec<span class="token punctuation">;</span>         <span class="token comment">/* 秒 */</span>
-    suseconds_t tv_usec<span class="token punctuation">;</span>        <span class="token comment">/* 微秒 */</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-<span class="token operator">-</span> old_value<span class="token operator">:</span> 记录上一次定时的时间参数，不用就指定<span class="token constant">NULL</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="信号处理函数"><a href="#信号处理函数" class="headerlink" title="信号处理函数"></a>信号处理函数</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;signal.h></span></span>
-<span class="token keyword">typedef</span> <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>sighandler_t<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-sighandler_t <span class="token function">signal</span><span class="token punctuation">(</span><span class="token keyword">int</span> signum<span class="token punctuation">,</span> sighandler_t handler<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 设置某个信号的捕捉行为</span>
-<span class="token operator">-</span> signum<span class="token operator">:</span> 要捕捉的信号
-<span class="token operator">-</span> handler<span class="token operator">:</span> 
-    <span class="token operator">-</span> SIG_IGN<span class="token operator">:</span> 忽略
-    <span class="token operator">-</span> SIG_DFL<span class="token operator">:</span> 使用默认行为
-    <span class="token operator">-</span> 自定义回调函数
-<span class="token operator">-</span> 返回值
-    <span class="token operator">-</span> 成功返回上一次注册的信号处理函数的地址，第一次调用返回<span class="token constant">NULL</span>
-    <span class="token operator">-</span> 失败返回SIG_ERR，设置错误号<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;signal.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/time.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
-
-<span class="token keyword">void</span> <span class="token function">myalarm</span><span class="token punctuation">(</span><span class="token keyword">int</span> num<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"catch signal: %d\n"</span><span class="token punctuation">,</span> num<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"-----\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">signal</span><span class="token punctuation">(</span>SIGALRM<span class="token punctuation">,</span> myalarm<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">// 过3秒后，每隔2秒定时一次</span>
-    <span class="token keyword">struct</span> <span class="token class-name">itimerval</span> new_value<span class="token punctuation">;</span>
-    new_value<span class="token punctuation">.</span>it_interval<span class="token punctuation">.</span>tv_sec <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>   <span class="token comment">// 时间间隔</span>
-    new_value<span class="token punctuation">.</span>it_interval<span class="token punctuation">.</span>tv_usec <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    new_value<span class="token punctuation">.</span>it_value<span class="token punctuation">.</span>tv_sec <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>  <span class="token comment">// 延迟时间</span>
-    new_value<span class="token punctuation">.</span>it_value<span class="token punctuation">.</span>tv_usec <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token function">setitimer</span><span class="token punctuation">(</span>ITIMER_REAL<span class="token punctuation">,</span> <span class="token operator">&amp;</span>new_value<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"setitimer"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"timer start\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-timer start
-<span class="token keyword">catch</span> signal<span class="token operator">:</span> <span class="token number">14</span>
-<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
-<span class="token keyword">catch</span> signal<span class="token operator">:</span> <span class="token number">14</span>    <span class="token comment">// 每隔2秒处理一次</span>
-<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">void</span> <span class="token function">abort</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 发送SIGABRT信号给当前进程，杀死当前进程</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="信号集"><a href="#信号集" class="headerlink" title="信号集"></a>信号集</h3><p>多个信号可使用一个信号集的数据结构<code>sigset_t</code>来表示</p>
 <font color="LightSeaGreen">未决信号集</font>和<font color="Coral">阻塞信号集</font>都是用64位的位图来表示
 某个信号产生，<font color="LightSeaGreen">未决信号集</font>中对应位置就置1，然后与<font color="Coral">阻塞信号集</font>中对应位置比较，如果<font color="Coral">阻塞信号集</font>中的位置是1，说明要阻塞该信号，则信号仍处于未决状态，直到阻塞解除；否则不阻塞，信号可以被处理。默认是不阻塞的，可以手动设置
 
 >只能操作<font color="Coral">阻塞信号集</font>
 
-<p>操作自定义的<font color="Coral">阻塞信号集</font><br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;signal.h></span></span>
+<p>操作自定义的<font color="Coral">阻塞信号集</font></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;signal.h></span></span>
 <span class="token keyword">int</span> <span class="token function">sigemptyset</span><span class="token punctuation">(</span>sigset_t <span class="token operator">*</span>set<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 清空数据集中数据，置为0</span>
 <span class="token comment">// 成功返回0，失败返回-1，设置错误号</span>
@@ -802,7 +886,7 @@ timer start
 
 <span class="token keyword">int</span> <span class="token function">sigismember</span><span class="token punctuation">(</span><span class="token keyword">const</span> sigset_t <span class="token operator">*</span>set<span class="token punctuation">,</span> <span class="token keyword">int</span> signum<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 判断某个信号是否阻塞</span>
-<span class="token comment">// 返回值: 返回1表示被阻塞，0表示不阻塞，-1表示调用失败</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<span class="token comment">// 返回值: 返回1表示被阻塞，0表示不阻塞，-1表示调用失败</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>操作内核中的<font color="Coral">阻塞信号集</font></p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">sigprocmask</span><span class="token punctuation">(</span><span class="token keyword">int</span> how<span class="token punctuation">,</span> <span class="token keyword">const</span> sigset_t <span class="token operator">*</span>set<span class="token punctuation">,</span> sigset_t <span class="token operator">*</span>oldset<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 将自定义信号集中的数据设置到内核中（设置阻塞，解除阻塞，替换）</span>
@@ -816,10 +900,12 @@ timer start
 <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
 
 <span class="token keyword">int</span> <span class="token function">sigpending</span><span class="token punctuation">(</span>sigset_t <span class="token operator">*</span>set<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 获取内核中的未决信号集</span>
-<span class="token operator">-</span> set<span class="token operator">:</span> 传出参数
+<span class="token comment">// 获取进程当前被挂起的信号集</span>
+<span class="token operator">-</span> set<span class="token operator">:</span> 传出参数，保存被挂起的信号集
 <span class="token operator">-</span> 返回值<span class="token operator">:</span> 成功返回<span class="token number">0</span>，失败返回<span class="token operator">-</span><span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;signal.h></span></span>
+<p>进程即使多次接收到同一个被挂起的信号，<code>sigpending</code>函数也只能反应一次。当该信号再次被使能时，该信号的处理函数也只被触发一次</p>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>设置进程信号掩码后，被屏蔽的信号将不能被进程接收。如果给进程发送一个被屏蔽的信号，则操作系统将该信号设置为进程的一个被挂起的信号，如果取消对被挂起信号的屏蔽，则它能立即被进程接收到</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;signal.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/time.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
@@ -874,18 +960,19 @@ timer start
 <span class="token number">01100000000000000000000000000000</span>
 <span class="token number">01100000000000000000000000000000</span>
 <span class="token comment">// 输出10次后解除阻塞，SIGINT信号被处理，程序结束</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="sigaction函数"><a href="#sigaction函数" class="headerlink" title="sigaction函数"></a>sigaction函数</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">sigaction</span><span class="token punctuation">(</span><span class="token keyword">int</span> signum<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">struct</span> <span class="token class-name">sigaction</span> <span class="token operator">*</span>act<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">sigaction</span> <span class="token operator">*</span>oldact<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token operator">-</span> signum<span class="token operator">:</span> 信号宏值
+<h3 id="sigaction函数"><a href="#sigaction函数" class="headerlink" title="sigaction函数"></a>sigaction函数</h3><p>可以设置信号处理函数的系统调用</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">sigaction</span><span class="token punctuation">(</span><span class="token keyword">int</span> signum<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">struct</span> <span class="token class-name">sigaction</span> <span class="token operator">*</span>act<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">sigaction</span> <span class="token operator">*</span>oldact<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">-</span> signum<span class="token operator">:</span> 要捕获的信号类型
 <span class="token operator">-</span> act<span class="token operator">:</span> 信号处理方法
 <span class="token operator">-</span> oldact<span class="token operator">:</span> <span class="token constant">NULL</span>
 <span class="token keyword">struct</span> <span class="token class-name">sigaction</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">void</span>     <span class="token punctuation">(</span><span class="token operator">*</span>sa_handler<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 处理函数</span>
+    <span class="token keyword">void</span>     <span class="token punctuation">(</span><span class="token operator">*</span>sa_handler<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 信号处理函数</span>
     <span class="token keyword">void</span>     <span class="token punctuation">(</span><span class="token operator">*</span>sa_sigaction<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">,</span> siginfo_t <span class="token operator">*</span><span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     sigset_t   sa_mask<span class="token punctuation">;</span> <span class="token comment">// 临时阻塞信号集，在信号捕捉函数执行过程中，临时阻塞某些信号</span>
     <span class="token keyword">int</span>        sa_flags<span class="token punctuation">;</span>    <span class="token comment">// 0表示使用sa_handler，SA_SIGINFO表示使用sa_sigaction</span>
     <span class="token keyword">void</span>     <span class="token punctuation">(</span><span class="token operator">*</span>sa_restorer<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 不需要NULL</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;signal.h></span></span>
+<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;signal.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/time.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
@@ -928,113 +1015,85 @@ timer start
 </blockquote>
 <p>父进程默认会忽略该信号</p>
 <p>解决僵尸进程问题</p>
-<hr>
-<h2 id="共享内存"><a href="#共享内存" class="headerlink" title="共享内存"></a>共享内存</h2><p>共享内存允许两个或者多个进程共享物理内存的同一块区域（段）。由于一个共享内存段会成为一个进程用户空间的一部分，因此这种IPC机制无须内核介入。一个进程将数据复制进共享内存中，这些数据就能被共享同一个段的进程使用</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/ipc.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/shm.h></span></span>
-<span class="token keyword">int</span> <span class="token function">shmget</span><span class="token punctuation">(</span>key_t key<span class="token punctuation">,</span> size_t size<span class="token punctuation">,</span> <span class="token keyword">int</span> shmflg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 创建一个新的共享内存段，或者获取一个既有的共享内存段的标识，数据会初始化为0</span>
-<span class="token operator">-</span> key<span class="token operator">:</span> 通过这个参数找到或者创建一个共享内存，一般使用十六进制的非<span class="token number">0</span>值
-<span class="token operator">-</span> size<span class="token operator">:</span> 共享内存的大小
-<span class="token operator">-</span> shmflg<span class="token operator">:</span> 共享内存的属性
-    访问权限
-    创建<span class="token operator">:</span> IPC_CREAT
-    判断是否存在<span class="token operator">:</span> IPC_EXCL，要和IPC_CREAT一起使用
-<span class="token comment">// 成功返回共享内存的引用ID，失败返回-1，设置错误号</span>
-<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
+<h3 id="alarm函数"><a href="#alarm函数" class="headerlink" title="alarm函数"></a>alarm函数</h3><blockquote>
+<p>实际的时间=内核时间+用户时间+消耗的时间</p>
+</blockquote>
+<p>非阻塞，无论进程处于何种状态，<code>alarm</code>都会计时</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
+<span class="token keyword">unsigned</span> <span class="token keyword">int</span> <span class="token function">alarm</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> seconds<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 设置定时器，定时到了会给当前进程发送SIGALARM信号</span>
+<span class="token operator">-</span> seconds<span class="token operator">:</span> 定时时间，<span class="token number">0</span>表示定时器无效
+<span class="token comment">// 返回值: 之前没有定时器，返回0，之前有定时器，返回剩余时间</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>SIGALRM: 信号码14，默认终止当前进程，每个进程有且只有唯一一个定时器</p>
+</blockquote>
+<h3 id="setitimer函数"><a href="#setitimer函数" class="headerlink" title="setitimer函数"></a>setitimer函数</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/time.h></span></span>
+<span class="token keyword">int</span> <span class="token function">setitimer</span><span class="token punctuation">(</span><span class="token keyword">int</span> which<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">struct</span> <span class="token class-name">itimerval</span> <span class="token operator">*</span>new_value<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">itimerval</span> <span class="token operator">*</span>old_value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">-</span> 功能<span class="token operator">:</span> 设置定时器，精度us，可以周期性定时
+<span class="token operator">-</span> 返回值<span class="token operator">:</span> 成功返回<span class="token number">0</span>，失败返回<span class="token operator">-</span><span class="token number">1</span>
+<span class="token operator">-</span> which<span class="token operator">:</span> 定时器以什么时间计时
+    <span class="token operator">-</span> ITIMER_REAL<span class="token operator">:</span> 真实时间，计时到了发送SIGALRM信号
+    <span class="token operator">-</span> ITIMER_VIRTUAL<span class="token operator">:</span> 用户时间，计时到了发送SIGVTALRM信号
+    <span class="token operator">-</span> ITIMER_PROF<span class="token operator">:</span> 以该进程在用户态和内核态下所消耗的时间来计算，计时到了发送SIGPROF信号
 
-<span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">shmat</span><span class="token punctuation">(</span><span class="token keyword">int</span> shmid<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">void</span> <span class="token operator">*</span>shmaddr<span class="token punctuation">,</span> <span class="token keyword">int</span> shmflg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 和当前进程关联</span>
-<span class="token operator">-</span> shmid<span class="token operator">:</span> 共享内存的标识，由shmget返回值获取
-<span class="token operator">-</span> shmaddr<span class="token operator">:</span> 申请的共享内存的起始地址，给<span class="token constant">NULL</span>
-<span class="token operator">-</span> shmflg<span class="token operator">:</span> 对共享内存的操作
-    SHM_RDONLY<span class="token operator">:</span> 读权限，必须有
-    <span class="token number">0</span><span class="token operator">:</span> 读写权限
-<span class="token comment">// 成功返回共享内存的起始地址，失败返回(void *) -1</span>
-<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
+<span class="token operator">-</span> new_value<span class="token operator">:</span> 定时器的属性
+<span class="token keyword">struct</span> <span class="token class-name">itimerval</span> <span class="token punctuation">&#123;</span>  <span class="token comment">// 定时器的结构体</span>
+    <span class="token keyword">struct</span> <span class="token class-name">timeval</span> it_interval<span class="token punctuation">;</span> <span class="token comment">/* 时间间隔 */</span>
+    <span class="token keyword">struct</span> <span class="token class-name">timeval</span> it_value<span class="token punctuation">;</span>    <span class="token comment">/* 延长多长时间执行定时器 */</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-<span class="token keyword">int</span> <span class="token function">shmdt</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">void</span> <span class="token operator">*</span>shmaddr<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 解除当前进程和共享内存的关联</span>
-<span class="token operator">-</span> shmid<span class="token operator">:</span> 共享内存的首地址
-<span class="token comment">// 成功返回0，失败返回-1</span>
-<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
+<span class="token keyword">struct</span> <span class="token class-name">timeval</span> <span class="token punctuation">&#123;</span>    <span class="token comment">// 时间的结构体</span>
+    time_t      tv_sec<span class="token punctuation">;</span>         <span class="token comment">/* 秒 */</span>
+    suseconds_t tv_usec<span class="token punctuation">;</span>        <span class="token comment">/* 微秒 */</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-<span class="token keyword">int</span> <span class="token function">shmctl</span><span class="token punctuation">(</span><span class="token keyword">int</span> shmid<span class="token punctuation">,</span> <span class="token keyword">int</span> cmd<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">shmid_ds</span> <span class="token operator">*</span>buf<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 对共享内存操作，主要是删除</span>
-<span class="token operator">-</span> shmid<span class="token operator">:</span> 共享内存id
-<span class="token operator">-</span> cmd<span class="token operator">:</span> 要做的操作
-    <span class="token operator">-</span> IPC_STAT<span class="token operator">:</span> 共享内存当前状态
-    <span class="token operator">-</span> IPC_SET<span class="token operator">:</span> 设置共享内存状态
-    <span class="token operator">-</span> IPC_RMID<span class="token operator">:</span> 标记共享内存需要被销毁
-<span class="token operator">-</span> buf<span class="token operator">:</span> 需要设置或者获取的共享内存的属性信息
-    <span class="token operator">-</span> IPC_STAT<span class="token operator">:</span> buf用来存储数据
-    <span class="token operator">-</span> IPC_SET<span class="token operator">:</span> buf中需要初始化数据，设置到内核中
-    <span class="token operator">-</span> IPC_RMID<span class="token operator">:</span> 没有用，传递<span class="token constant">NULL</span> 
-<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
-
-key_t <span class="token function">ftok</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>pathname<span class="token punctuation">,</span> <span class="token keyword">int</span> proj_id<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 根据指定的路径和值生成一个共享内存的key</span>
-<span class="token operator">-</span> pathname<span class="token operator">:</span> 指定路径 
-<span class="token operator">-</span> proj_id<span class="token operator">:</span> 只需要<span class="token number">1</span>字节，一般给一个字符<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="共享内存的操作指令"><a href="#共享内存的操作指令" class="headerlink" title="共享内存的操作指令"></a>共享内存的操作指令</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ipcs <span class="token operator">-</span>m <span class="token comment">// 打印出使用共享内存进行进程间通信的信息</span>
-ipcrm <span class="token operator">-</span>M shmkey <span class="token comment">// 移除用shmkey创建的共享内存段</span>
-ipcrm <span class="token operator">-</span>m shmid  <span class="token comment">// 移除用shmid标识的共享内存段</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>写端</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/ipc.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/shm.h></span></span>
+<span class="token operator">-</span> old_value<span class="token operator">:</span> 记录上一次定时的时间参数，不用就指定<span class="token constant">NULL</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="信号处理函数"><a href="#信号处理函数" class="headerlink" title="信号处理函数"></a>信号处理函数</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;signal.h></span></span>
+<span class="token keyword">typedef</span> <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span>sighandler_t<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+sighandler_t <span class="token function">signal</span><span class="token punctuation">(</span><span class="token keyword">int</span> signum<span class="token punctuation">,</span> sighandler_t handler<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 设置某个信号的捕捉行为</span>
+<span class="token operator">-</span> signum<span class="token operator">:</span> 要捕捉的信号
+<span class="token operator">-</span> handler<span class="token operator">:</span> 
+    <span class="token operator">-</span> SIG_IGN<span class="token operator">:</span> 忽略
+    <span class="token operator">-</span> SIG_DFL<span class="token operator">:</span> 使用默认行为
+    <span class="token operator">-</span> 自定义回调函数
+<span class="token operator">-</span> 返回值
+    <span class="token operator">-</span> 成功返回上一次注册的信号处理函数的地址，第一次调用返回<span class="token constant">NULL</span>
+    <span class="token operator">-</span> 失败返回SIG_ERR，设置错误号<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;signal.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/time.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
+
+<span class="token keyword">void</span> <span class="token function">myalarm</span><span class="token punctuation">(</span><span class="token keyword">int</span> num<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"catch signal: %d\n"</span><span class="token punctuation">,</span> num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"-----\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
 
 <span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">signal</span><span class="token punctuation">(</span>SIGALRM<span class="token punctuation">,</span> myalarm<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 过3秒后，每隔2秒定时一次</span>
+    <span class="token keyword">struct</span> <span class="token class-name">itimerval</span> new_value<span class="token punctuation">;</span>
+    new_value<span class="token punctuation">.</span>it_interval<span class="token punctuation">.</span>tv_sec <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>   <span class="token comment">// 时间间隔</span>
+    new_value<span class="token punctuation">.</span>it_interval<span class="token punctuation">.</span>tv_usec <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    new_value<span class="token punctuation">.</span>it_value<span class="token punctuation">.</span>tv_sec <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>  <span class="token comment">// 延迟时间</span>
+    new_value<span class="token punctuation">.</span>it_value<span class="token punctuation">.</span>tv_usec <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token function">setitimer</span><span class="token punctuation">(</span>ITIMER_REAL<span class="token punctuation">,</span> <span class="token operator">&amp;</span>new_value<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"setitimer"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"timer start\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    <span class="token comment">// 1. 创建共享内存</span>
-    <span class="token keyword">int</span> shmid <span class="token operator">=</span> <span class="token function">shmget</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">4096</span><span class="token punctuation">,</span> IPC_CREAT <span class="token operator">|</span> <span class="token number">0664</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"shmid: %d\n"</span><span class="token punctuation">,</span> shmid<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment">// 2. 和当前进程关联</span>
-    <span class="token keyword">void</span> <span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token function">shmat</span><span class="token punctuation">(</span>shmid<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment">// 3. 写数据</span>
-    <span class="token keyword">char</span> <span class="token operator">*</span>str <span class="token operator">=</span> <span class="token string">"hello world"</span><span class="token punctuation">;</span>
-    <span class="token function">memcpy</span><span class="token punctuation">(</span>ptr<span class="token punctuation">,</span> str<span class="token punctuation">,</span> <span class="token function">strlen</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"press any key to continue...\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    <span class="token comment">// 4. 解除关联</span>
-    <span class="token function">shmdt</span><span class="token punctuation">(</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment">// 5. 删除共享内存</span>
-    <span class="token function">shmctl</span><span class="token punctuation">(</span>shmid<span class="token punctuation">,</span> IPC_RMID<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>读端</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/ipc.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/shm.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h></span></span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-
-    <span class="token comment">// 1. 创建共享内存</span>
-    <span class="token keyword">int</span> shmid <span class="token operator">=</span> <span class="token function">shmget</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> IPC_CREAT<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"shmid: %d\n"</span><span class="token punctuation">,</span> shmid<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment">// 2. 和当前进程关联</span>
-    <span class="token keyword">void</span> <span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token function">shmat</span><span class="token punctuation">(</span>shmid<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment">// 3. 读数据</span>
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%s\n"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"press any key to continue...\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment">// 4. 解除关联</span>
-    <span class="token function">shmdt</span><span class="token punctuation">(</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment">// 5. 删除共享内存</span>
-    <span class="token function">shmctl</span><span class="token punctuation">(</span>shmid<span class="token punctuation">,</span> IPC_RMID<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span>
+timer start
+<span class="token keyword">catch</span> signal<span class="token operator">:</span> <span class="token number">14</span>
+<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+<span class="token keyword">catch</span> signal<span class="token operator">:</span> <span class="token number">14</span>    <span class="token comment">// 每隔2秒处理一次</span>
+<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>

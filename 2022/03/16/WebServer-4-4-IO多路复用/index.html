@@ -731,27 +731,36 @@
     epoll_data_t data<span class="token punctuation">;</span>        <span class="token comment">/* User data variable */</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-<span class="token keyword">typedef</span> <span class="token keyword">union</span> epoll_data <span class="token punctuation">&#123;</span>
-    <span class="token keyword">void</span>        <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
-    <span class="token keyword">int</span>          fd<span class="token punctuation">;</span>
-    <span class="token keyword">uint32_t</span>     u32<span class="token punctuation">;</span>
-    <span class="token keyword">uint64_t</span>     u64<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span> epoll_data_t<span class="token punctuation">;</span>
-
-<span class="token operator">-</span> 检测事件：
+<span class="token operator">-</span> events 检测事件：
     <span class="token operator">-</span> EPOLLIN
     <span class="token operator">-</span> EPOLLOUT
     <span class="token operator">-</span> EPOLLERR
     <span class="token operator">-</span> EPOLLET   边沿触发
+    <span class="token operator">-</span> EPOLLONESHOT
+
+<span class="token keyword">typedef</span> <span class="token keyword">union</span> epoll_data <span class="token punctuation">&#123;</span>
+    <span class="token keyword">void</span>        <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
+    <span class="token keyword">int</span>          fd<span class="token punctuation">;</span>    <span class="token comment">// 要检测的文件描述符</span>
+    <span class="token keyword">uint32_t</span>     u32<span class="token punctuation">;</span>
+    <span class="token keyword">uint64_t</span>     u64<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span> epoll_data_t<span class="token punctuation">;</span>
 <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
 
 <span class="token keyword">int</span> <span class="token function">epoll_wait</span><span class="token punctuation">(</span><span class="token keyword">int</span> epfd<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">epoll_event</span> <span class="token operator">*</span>events<span class="token punctuation">,</span> <span class="token keyword">int</span> maxevents<span class="token punctuation">,</span> <span class="token keyword">int</span> timeout<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 在一段超时时间内等待一组文件描述符上的事件</span>
 <span class="token operator">-</span> epfd<span class="token operator">:</span> epoll实例的文件描述符
 <span class="token operator">-</span> events<span class="token operator">:</span> 传出参数，保存发生变化的文件描述符信息
 <span class="token operator">-</span> maxevents<span class="token operator">:</span> 第二个参数结构体数组的大小
 <span class="token operator">-</span> timeout<span class="token operator">:</span> 阻塞时间，<span class="token number">0</span>表示不阻塞，<span class="token operator">-</span><span class="token number">1</span>表示永久阻塞，大于<span class="token number">0</span>表示阻塞的时长（毫秒）
-<span class="token comment">// 返回值：成功返回发生变化的文件描述符的个数，失败返回-1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">// 返回值：成功返回就绪的文件描述符的个数，失败返回-1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>因为<code>epoll</code>只返回就绪的文件描述符，所以我们只要遍历这些文件描述符就可以了</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token function">epoll_wait</span><span class="token punctuation">(</span>epollfd<span class="token punctuation">,</span> events<span class="token punctuation">,</span> MAX_EVENT_NUMBER<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> ret<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> sockfd <span class="token operator">=</span> events<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>data<span class="token punctuation">.</span>fd<span class="token punctuation">;</span> <span class="token comment">// 获得就绪的文件描述符</span>
+    <span class="token comment">// socket肯定就绪，直接处理</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>使用epoll编写服务器</strong></p>
+<p>默认是水平触发</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/time.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
@@ -797,11 +806,7 @@
                 epev<span class="token punctuation">.</span>events <span class="token operator">=</span> EPOLLIN<span class="token punctuation">;</span>
                 epev<span class="token punctuation">.</span>data<span class="token punctuation">.</span>fd <span class="token operator">=</span> cfd<span class="token punctuation">;</span>
                 <span class="token function">epoll_ctl</span><span class="token punctuation">(</span>epfd<span class="token punctuation">,</span> EPOLL_CTL_ADD<span class="token punctuation">,</span> cfd<span class="token punctuation">,</span> <span class="token operator">&amp;</span>epev<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span>
-            <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>  <span class="token comment">// 否则就是通信的socket</span>
-                <span class="token keyword">if</span> <span class="token punctuation">(</span>epevs<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>events <span class="token operator">&amp;</span> EPOLLOUT<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                    <span class="token keyword">continue</span><span class="token punctuation">;</span>   <span class="token comment">// 写事件不需要操作</span>
-                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>epevs<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>events <span class="token operator">&amp;</span> EPOLLIN<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>  <span class="token comment">// 否则就是通信的socket</span>
                 <span class="token keyword">char</span> buf<span class="token punctuation">[</span><span class="token number">1024</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token number">0</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span class="token comment">// 接收客户端数据</span>
                 <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token function">read</span><span class="token punctuation">(</span>curfd<span class="token punctuation">,</span> buf<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
                 <span class="token keyword">if</span> <span class="token punctuation">(</span>len <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -817,6 +822,8 @@
                     <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"read buf: %s\n"</span><span class="token punctuation">,</span> buf<span class="token punctuation">)</span><span class="token punctuation">;</span>
                     <span class="token function">write</span><span class="token punctuation">(</span>curfd<span class="token punctuation">,</span> buf<span class="token punctuation">,</span> <span class="token function">strlen</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
                 <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+                <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"something else happened\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
             <span class="token punctuation">&#125;</span>
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span>
@@ -825,7 +832,7 @@
     <span class="token function">close</span><span class="token punctuation">(</span>epfd<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="epoll的工作模式"><a href="#epoll的工作模式" class="headerlink" title="epoll的工作模式"></a>epoll的工作模式</h4><blockquote>
 <ul>
 <li>LT模式（水平触发，默认）</li>
@@ -840,7 +847,11 @@
 <p>非阻塞，当描述符从未就绪变为就绪时，内核会告知，并且不会再发送更多的就绪通知，直到文件描述符不再为就绪状态</p>
 <p>ET模式在很大程度上减少了<code>epoll</code>事件被重复触发的次数，效率要比LT模式高，<code>epoll</code>工作在ET模式时，必须使用非阻塞套接字，以避免由于一个文件描述符的阻塞读写操作把处理多个文件描述符的任务饿死</p>
 <p><strong>ET模式</strong></p>
-<p>区别在于每次读数据要循环读取全部数据，并且要把<code>read</code>设置为非阻塞以跳出循环</p>
+<p>对于采用ET工作模式的文件描述符，当epoll_wait检测到其上有事件发生并将此事件通知应用程序后，应用程序应该立即处理该事件，因为后续的epoll_wait调用将不再向应用程序通知这一事件</p>
+<p>所以每次读数据要循环读取全部数据，并且要把<code>read</code>设置为非阻塞以跳出循环</p>
+<blockquote>
+<p>每个使用ET模式的文件描述符都应该是非阻塞的</p>
+</blockquote>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;arpa/inet.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
@@ -889,10 +900,7 @@
                 epev<span class="token punctuation">.</span>events <span class="token operator">=</span> EPOLLIN <span class="token operator">|</span> EPOLLET<span class="token punctuation">;</span>    <span class="token comment">// 设置边沿触发</span>
                 epev<span class="token punctuation">.</span>data<span class="token punctuation">.</span>fd <span class="token operator">=</span> cfd<span class="token punctuation">;</span>
                 <span class="token function">epoll_ctl</span><span class="token punctuation">(</span>epfd<span class="token punctuation">,</span> EPOLL_CTL_ADD<span class="token punctuation">,</span> cfd<span class="token punctuation">,</span> <span class="token operator">&amp;</span>epev<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
-                <span class="token keyword">if</span><span class="token punctuation">(</span>epevs<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>events <span class="token operator">&amp;</span> EPOLLOUT<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-                    <span class="token keyword">continue</span><span class="token punctuation">;</span>
-                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>epevs<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>events <span class="token operator">&amp;</span> EPOLLIN<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
                 <span class="token keyword">char</span> buf<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
                 <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
                 <span class="token comment">// 循环读取出所有数据</span>
@@ -902,10 +910,10 @@
                 <span class="token punctuation">&#125;</span>
                 <span class="token keyword">if</span><span class="token punctuation">(</span>len <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
                     <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"client closed...."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token punctuation">&#125;</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>len <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>len <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
                     <span class="token keyword">if</span><span class="token punctuation">(</span>errno <span class="token operator">==</span> EAGAIN<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>   <span class="token comment">// 数据读完可能返回-1，这种情况不能退出</span>
                         <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"data over....."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                    <span class="token punctuation">&#125;</span><span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+                    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
                         <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"read"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
                         <span class="token function">exit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
                     <span class="token punctuation">&#125;</span>
@@ -917,7 +925,10 @@
     <span class="token function">close</span><span class="token punctuation">(</span>lfd<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">close</span><span class="token punctuation">(</span>epfd<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>EPOLLONESHOT事件</strong></p>
+<p>对于注册了<code>EPOLLONESHOT</code>事件的文件描述符，<font color="LightSeaGreen">操作系统最多触发其上注册的的一个可读、可写或者异常事件，且只触发一次</font>，除非我们使用<code>epoll_ctl</code>函数重置该文件描述符上注册的<code>EPOLLONESHOT</code>事件，这样，当一个线程在处理某个<code>socket</code>时，其他线程是不可能有机会操作该<code>socket</code>的。<br>但反过来，注册了<code>EPOLLONESHOT</code>事件的<code>socket</code>一旦被某个线程处理完毕，该线程就应该立即重置这个<code>socket</code>上的<code>EPOLLONESHOT</code>事件，以确保这个<code>socket</code>下一次可读时，其<code>EPOLLIN</code>事件能被触发，进而让其他工作线程有机会继续处理这个<code>socket</code></p>
+
                 
             </div>
             <hr/>

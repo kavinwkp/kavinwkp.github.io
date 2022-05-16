@@ -648,7 +648,9 @@ world<span aria-hidden="true" class="line-numbers-rows"><span></span><span></spa
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 hello<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="孤儿进程"><a href="#孤儿进程" class="headerlink" title="孤儿进程"></a>孤儿进程</h3><p>父进程运行结束，但子进程还在运行，称为孤儿进程(Orphan Process)</p>
+<h3 id="孤儿进程"><a href="#孤儿进程" class="headerlink" title="孤儿进程"></a>孤儿进程</h3><blockquote>
+<p>父进程运行结束，但子进程还在运行，称为孤儿进程(Orphan Process)</p>
+</blockquote>
 <p>出现孤儿进程时，内核会将其父进程设置为<code>init</code>，<code>init</code>进程会循环<code>wait()</code>，这样当孤儿进程结束后，由<code>init</code>进程进行内核区的资源回收</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h></span></span>
@@ -777,7 +779,7 @@ kavin    <span class="token number">26071</span>  <span class="token number">0.0
 kavin    <span class="token number">26072</span>  <span class="token number">0.0</span>  <span class="token number">0.0</span>      <span class="token number">0</span>     <span class="token number">0</span> pts<span class="token operator">/</span><span class="token number">1</span>    Z<span class="token operator">+</span>   <span class="token number">14</span><span class="token operator">:</span><span class="token number">53</span>   <span class="token number">0</span><span class="token operator">:</span><span class="token number">00</span> <span class="token punctuation">[</span>wait<span class="token punctuation">]</span> <span class="token operator">&lt;</span>defunct<span class="token operator">></span>
 kavin    <span class="token number">26073</span>  <span class="token number">0.0</span>  <span class="token number">0.0</span>      <span class="token number">0</span>     <span class="token number">0</span> pts<span class="token operator">/</span><span class="token number">1</span>    Z<span class="token operator">+</span>   <span class="token number">14</span><span class="token operator">:</span><span class="token number">53</span>   <span class="token number">0</span><span class="token operator">:</span><span class="token number">00</span> <span class="token punctuation">[</span>wait<span class="token punctuation">]</span> <span class="token operator">&lt;</span>defunct<span class="token operator">></span>
 kavin    <span class="token number">26074</span>  <span class="token number">0.0</span>  <span class="token number">0.0</span>      <span class="token number">0</span>     <span class="token number">0</span> pts<span class="token operator">/</span><span class="token number">1</span>    Z<span class="token operator">+</span>   <span class="token number">14</span><span class="token operator">:</span><span class="token number">53</span>   <span class="token number">0</span><span class="token operator">:</span><span class="token number">00</span> <span class="token punctuation">[</span>wait<span class="token punctuation">]</span> <span class="token operator">&lt;</span>defunct<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>父进程调用wait阻塞等待子进程结束，回收其资源</p>
+<p>父进程调用<code>wait</code>阻塞等待子进程结束，回收其资源</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/wait.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
@@ -830,11 +832,34 @@ child die<span class="token punctuation">,</span> pid<span class="token operator
 child die<span class="token punctuation">,</span> pid<span class="token operator">=</span><span class="token number">26871</span>
 child die<span class="token punctuation">,</span> pid<span class="token operator">=</span><span class="token number">26872</span>    <span class="token comment">// 直到子进程都退出后，父进程也退出</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="退出信息相关宏函数"><a href="#退出信息相关宏函数" class="headerlink" title="退出信息相关宏函数"></a>退出信息相关宏函数</h4><p>通过下面几个函数，可以得知子进程结束的状态</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">WIFEXITED</span><span class="token punctuation">(</span>status<span class="token punctuation">)</span><span class="token operator">:</span> 这个宏用来指出子进程是否为正常退出的，如果是，它会返回一个非零值
-<span class="token function">WEXITSTATUS</span><span class="token punctuation">(</span>staus<span class="token punctuation">)</span><span class="token operator">:</span> 当 WIFEXITED 返回非零值时，可以用这个宏来提取子进程的返回值，如果子进程调用<span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span>退出，<span class="token function">WEXITSTATUS</span><span class="token punctuation">(</span>status<span class="token punctuation">)</span> 就返回<span class="token number">5</span>
-如果进程不是正常退出的，也就是说， WIFEXITED 返回<span class="token number">0</span>，这个值就毫无意义
-<span class="token function">WIFSIGNALED</span><span class="token punctuation">(</span>staus<span class="token punctuation">)</span><span class="token operator">:</span> 非<span class="token number">0</span>，异常终止
-<span class="token function">WTERMSIG</span><span class="token punctuation">(</span>staus<span class="token punctuation">)</span><span class="token operator">:</span> 如果WIFSIGNALED返回非零值，可以获取使进程退出的信号编号<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>宏</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WIFEXITED(status)</td>
+<td>这个宏用来指出子进程是否为正常退出的，如果是，它会返回一个非零值</td>
+</tr>
+<tr>
+<td>WEXITSTATUS(staus)</td>
+<td>当 <code>WIFEXITED</code> 返回非零值时，可以用这个宏来提取子进程的返回值<br>+ 如果子进程调用<code>exit(5)</code>退出，<code>WEXITSTATUS(status)</code> 就返回5<br>+ 如果进程不是正常退出的，也就是说， <code>WIFEXITED</code> 返回0，这个值就毫无意义</td>
+</tr>
+<tr>
+<td>WIFSIGNALED(staus)</td>
+<td>非0，异常终止</td>
+</tr>
+<tr>
+<td>WTERMSIG(staus)</td>
+<td>如果<code>WIFSIGNALED</code>返回非零值，可以获取使进程退出的信号编号</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p>用<code>WEXITSTATUS</code>打印进程正常退出状态码</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/wait.h></span></span>
