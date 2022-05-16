@@ -560,7 +560,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="阻塞-非阻塞（网络IO）"><a href="#阻塞-非阻塞（网络IO）" class="headerlink" title="阻塞/非阻塞（网络IO）"></a>阻塞/非阻塞（网络IO）</h2><blockquote>
+                <blockquote>
 <ul>
 <li>一个典型的网络IO接口调用，分为两个阶段，分别是“数据就绪”和“数据读写”，数据就绪阶段分为阻塞和非阻塞，表现的结果就是，阻塞当前线程还是直接返回</li>
 <li>同步表示A向B请求调用一个网络IO接口时，数据的读写都是由请求方自己来完成的（不管是阻塞还是非阻塞）；</li>
@@ -572,36 +572,86 @@
 <li>数据就绪</li>
 <li>数据读写</li>
 </ol>
-<p><strong>数据就绪</strong></p>
 <ul>
 <li>阻塞：调用IO方法的线程会进入阻塞状态，会被挂起</li>
-<li>非阻塞：不会改变线程状态，通过返回值判断<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token function">recv</span><span class="token punctuation">(</span>sockfd<span class="token punctuation">,</span> buf<span class="token punctuation">,</span> <span class="token number">1024</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 通过recv的返回值来判断，非阻塞</span>
-len <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token operator">:</span> 出错（EINTR<span class="token operator">/</span>EAGAIN要特殊判断）
-len <span class="token operator">=</span> <span class="token number">0</span><span class="token operator">:</span> 读取到数据末尾，对方连接关闭
-len <span class="token operator">></span> <span class="token number">0</span><span class="token operator">:</span> 读取到的数据大小<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
+<li>非阻塞：不会改变线程状态，通过返回值判断</li>
 </ul>
-<h2 id="同步-异步（网络IO）"><a href="#同步-异步（网络IO）" class="headerlink" title="同步/异步（网络IO）"></a>同步/异步（网络IO）</h2><p><strong>数据读写</strong></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token function">recv</span><span class="token punctuation">(</span>sockfd<span class="token punctuation">,</span> buf<span class="token punctuation">,</span> <span class="token number">1024</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 通过recv的返回值来判断，非阻塞</span>
+<span class="token operator">-</span> len <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token operator">:</span> 出错（EINTR<span class="token operator">/</span>EAGAIN要特殊判断）
+<span class="token operator">-</span> len <span class="token operator">=</span> <span class="token number">0</span><span class="token operator">:</span> 读取到数据末尾，对方连接关闭
+<span class="token operator">-</span> len <span class="token operator">></span> <span class="token number">0</span><span class="token operator">:</span> 读取到的数据大小<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <ul>
 <li>同步</li>
 </ul>
-<p>数据放在TCP接收缓冲区，需要用户调用<code>recv</code>去读取<br>需要等<code>recv</code>数据接收完成，才能继续执行后面判断的代码</p>
+<p>数据放在TCP接收缓冲区，需要用户调用<code>recv</code>去读取<br>需要等<code>recv</code>数据接收完成，才能继续执行后面的代码</p>
 <ul>
 <li>异步</li>
 </ul>
-<p>需要有通知方式，调用异步接口后就可以继续执行后面的代码，内核把数据放到buf里面后会通知应用程序</p>
+<p>需要有通知方式，调用异步接口后就可以继续执行后面的代码，内核把数据拷贝到用户空间后会通知应用程序</p>
 <p>Linux中的异步接口：<code>aio_read/aio_write</code></p>
-<h2 id="5种IO模型"><a href="#5种IO模型" class="headerlink" title="5种IO模型"></a>5种IO模型</h2><p>1、阻塞blocking</p>
+<h3 id="5种IO模型"><a href="#5种IO模型" class="headerlink" title="5种IO模型"></a>5种IO模型</h3><blockquote>
+<p>1、阻塞blocking</p>
+</blockquote>
 <p>调用者调用了某个函数,等待这个函数返回,期间什么也不做,不停的去检查这个函数有没有返回,必<br>须等这个函数返回才能进行下一步动作</p>
+<blockquote>
 <p>2、非阻塞non-blocking</p>
+</blockquote>
 <p>非阻塞等待,每隔一段时间就去检测IO事件是否就绪。没有就绪就可以做其他事。非阻塞I/O执行系统调<br>用总是立即返回,不管事件是否已经发生,若事件没有发生,则返回-1,此时可以根据 errno 区分这两<br>种情况,对于<code>accept</code>,<code>recv</code> 和 <code>send</code>,事件未发生时,<code>errno</code> 通常被设置成 EAGAIN</p>
+<blockquote>
 <p>3、IO复用multiplexing</p>
+</blockquote>
 <p>Linux 用 <code>select/poll/epoll</code> 函数实现 IO 复用模型,这些函数也会使进程阻塞,但是和阻塞IO所不同的是<br>这些函数可以同时阻塞多个IO操作。而且可以同时对多个读操作、写操作的IO函数进行检测。直到有数<br>据可读或可写时,才真正调用IO操作函数</p>
+<blockquote>
 <p>4、信号驱动signal-driven</p>
+</blockquote>
 <p>Linux 用套接口进行信号驱动 IO,安装一个信号处理函数,进程继续运行并不阻塞<br>当IO事件就绪,进程收到SIGIO 信号,然后处理 IO 事件<br>内核在第一个阶段是异步,在第二个阶段是同步;与非阻塞IO的区别在于它提供了消息通知机制<br>不需要用户进程不断的轮询检查,减少了系统API的调用次数,提高了效率</p>
+<blockquote>
 <p>5、异步IO(asynchronous)</p>
+</blockquote>
 <p>Linux中,可以调用<code>aio_read</code>函数告诉内核描述字缓冲区指针和缓冲区的大小、文件偏移及通知的方式,然后立即返回,当内核将数据拷贝到缓冲区后,再通知应用程序</p>
+<h3 id="Reactor模式"><a href="#Reactor模式" class="headerlink" title="Reactor模式"></a>Reactor模式</h3><p>主线程（IO处理单元）只负责监听文件描述符是否发生有事件发生，有的话就将该事件通知工作线程（逻辑单元），将<code>socket</code>可读可写事件放入请求队列，交给工作线程处理，除此之外，不做其他工作。数据读写，接收新的连接，以及处理客户端请求都在工作线程中完成</p>
+<p>使用同步IO（以<code>epoll_wait</code>为例）实现的Reactor模式的工作流程</p>
+<ol>
+<li>主线程往<code>epoll</code>内核事件表中注册<code>socket</code>上的读就绪事件</li>
+<li>主线程调用<code>epoll_wait</code>等待<code>socket</code>上有数据可读</li>
+<li>当<code>socket</code>上有数据可读时，<code>epoll_wait</code>通知主线程，主线程将<code>socket</code>可读事件放入请求队列</li>
+<li>睡眠在请求队列上的某个工作线程被唤醒，它从<code>socket</code>读取数据，并处理客户请求，然后往<code>epoll</code>内核事件表中注册该<code>socket</code>的写就绪事件</li>
+<li>主线程调用<code>epoll_wait</code>等待<code>socket</code>可写</li>
+<li>当<code>socket</code>可写时，<code>epoll_wait</code>通知主线程，主线程将<code>socket</code>可写事件放入请求队列</li>
+<li>睡眠在请求队列上的某个工作线程被唤醒，它往<code>socket</code>上写入服务器处理客户请求的结果</li>
+</ol>
+<h3 id="Proactor模式"><a href="#Proactor模式" class="headerlink" title="Proactor模式"></a>Proactor模式</h3><p>Proactor模式将所有的IO操作都交给主线程和内核来处理，工作线程只负责业务逻辑</p>
+<p>使用异步IO模型（以<code>aio_read/aio_write</code>为例）实现的Proactor模式的工作流程</p>
+<ol>
+<li>主线程调用<code>aio_read</code>函数向内核注册<code>socket</code>上的读完成事件，并告诉内核用户读缓冲区的位置，以及读操作完成时如何通知应用进程（以信号为例）</li>
+<li>主线程继续处理其他逻辑</li>
+<li>当<code>socket</code>上的数据被读入用户缓冲区后，内核向应用程序发送一个信号，通知数据可用</li>
+<li>应用程序事先定义好的信号处理函数选择一个工作线程来处理客户请求。工作线程处理完客户请求后，调用<code>aio_write</code>函数向内核注册<code>socket</code>上的写完成事件，并告诉内核用户写缓冲区的位置，以及操作完成时如何通知应用程序</li>
+<li>主线程继续处理其他逻辑</li>
+<li>当用户缓冲区的数据被写入<code>socket</code>后，内核向应用程序发送一个信号，通知数据发送完毕</li>
+<li>应用程序事先定义好的信号处理函数选择一个工作线程来处理善后工作，比如决定是否关闭<code>socket</code></li>
+</ol>
+<h3 id="模拟Proactor模式"><a href="#模拟Proactor模式" class="headerlink" title="模拟Proactor模式"></a>模拟Proactor模式</h3><p>Proactor模式中，主线程只负责监听<code>socket</code>，数据读写是由内核通过异步方式完成的，工作线程只负责业务逻辑</p>
+<p>可以在主线程中用同步的方式进行数据读写，然后交给工作线程处理</p>
+<p>使用同步IO（以<code>epoll_wait</code>为例）模拟出的Proactor模式的工作流程</p>
+<ol>
+<li>主线程往<code>epoll</code>内核事件表中注册<code>socket</code>上的读就绪事件</li>
+<li>主线程调用<code>epoll_wait</code>等待<code>socket</code>上有数据可读</li>
+<li>当<code>socket</code>上有数据可读时，<code>epoll_wait</code>通知主线程，主线程从<code>socket</code>循环读取数据，直到没有更多数据可读，然后将数据封装成一个请求对象并插入请求队列</li>
+<li>睡眠在请求队列上的某个工作线程被唤醒，获得请求数据并进行处理，然后往<code>epoll</code>内核事件中注册<code>socket</code>上的写就绪事件</li>
+<li>主线程调用<code>epoll_wait</code>等待<code>socket</code>可写</li>
+<li>当<code>socket</code>可写时，<code>epoll_wait</code>通知主线程，主线程往<code>socket</code>上写入服务器处理客户请求的结果</li>
+</ol>
+<center>
+<img src="https://github.com/kavinwkp/blogimage/raw/main/img/WebServer/5/Proactor.png" width="90%">
+</center>
+
+<h3 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h3><ul>
+<li>空间换时间，浪费服务器的硬件资源，换取运行效率</li>
+<li>线程池是一组资源的集合，这组资源在服务器启动之初就被完全创建好并被初始化，称为静态资源</li>
+<li>服务器运行时，如果需要相关资源，可以直接从池中获取，无需动态分配</li>
+<li>当服务器处理完一个客户连接后，可以把相关的资源放回池中，无需执行系统调用释放资源</li>
+</ul>
 
                 
             </div>
