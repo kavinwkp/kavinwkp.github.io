@@ -620,7 +620,7 @@
 <hr>
 <blockquote>
 <ul>
-<li>POSIX(Portable Operating System Interface for Computing Systems)是由IEEE 和ISO/IEC 开发的一簇标准</li>
+<li>POSIX（Portable Operating System Interface for Computing Systems）是由IEEE 和ISO/IEC 开发的一簇标准</li>
 <li>System V，曾经也被称为AT&amp;T System V，是Unix操作系统众多版本中的一支</li>
 <li>System V 以及POSIX 对信号量、消息队列、共享内存等进程之间共享方式提供了自己的解决方案 </li>
 <li>3种System V进程间通信方式：<font color="LightSeaGreen">信号量、消息队列和共享内存</font>。它们都是由AT&amp;T System V2版本的UNIX引入的，所以统称为System V IPC</li>
@@ -653,7 +653,26 @@ pid_t sempid<span class="token punctuation">;</span>           <span class="toke
     <span class="token operator">+</span> semop大于<span class="token number">0</span>，则semop将被操作的信号量的值semval增加semop
     <span class="token operator">+</span> semop等于<span class="token number">0</span>，表示这是一个“等待<span class="token number">0</span>”操作，如果此时信号量的值是<span class="token number">0</span>，则成功返回。如果信号量的值不是<span class="token number">0</span>，则失败返回或者阻塞进程以等待信号量变为<span class="token number">0</span>
     <span class="token operator">+</span> semop小于<span class="token number">0</span>，表示对信号量值进行减操作
-<span class="token operator">-</span> num_sem_ops<span class="token operator">:</span> 指定要执行的操作个数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token operator">-</span> num_sem_ops<span class="token operator">:</span> 指定要执行的操作个数
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
+
+<span class="token keyword">int</span> <span class="token function">semctl</span><span class="token punctuation">(</span><span class="token keyword">int</span> sem_id<span class="token punctuation">,</span> <span class="token keyword">int</span> sem_num<span class="token punctuation">,</span> <span class="token keyword">int</span> command<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 对信号量进行直接控制</span>
+<span class="token operator">-</span> sem_id<span class="token operator">:</span> 由semget调用返回的信号量集标识符
+<span class="token operator">-</span> sem_num<span class="token operator">:</span> 指定被操作的信号量在信号集中的编号
+<span class="token operator">-</span> command<span class="token operator">:</span> 指定要执行的操作
+    <span class="token operator">+</span> IPC_STAT<span class="token operator">:</span> 将信号集关联的数据结构复制到semun<span class="token punctuation">.</span>buf中
+    <span class="token operator">+</span> IPC_SET<span class="token operator">:</span> 将semun<span class="token punctuation">.</span>buf中的部分成员复制到信号集关联的数据结构中
+    <span class="token operator">+</span> IPC_RMID<span class="token operator">:</span> 立即移除信号量集，唤醒所有等待该信号量集的进程
+<span class="token operator">-</span> 第四个参数由用户自定义，给出推荐格式
+
+<span class="token keyword">union</span> semun <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> val<span class="token punctuation">;</span>    <span class="token comment">// 用于SETVAL命令</span>
+    <span class="token keyword">struct</span> <span class="token class-name">semid_ds</span><span class="token operator">*</span> buf<span class="token punctuation">;</span>   <span class="token comment">// 用于IPC_STAT和IPC_SET命令</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">short</span><span class="token operator">*</span> array<span class="token punctuation">;</span>  <span class="token comment">// 用于GETALL和SETALL命令</span>
+    <span class="token keyword">struct</span> <span class="token class-name">seminfo</span><span class="token operator">*</span> __buf<span class="token punctuation">;</span>  <span class="token comment">// 用于IPC_INFO命令</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>semget</code>的调用者可以给其<code>key</code>参数传递一个特殊的键值<code>IPC_PRIVATE</code>（其值为0），这样无论该信号量是否已经存在，<code>semget</code>都将创建一个新的信号量，并不是进程私有的，子进程也可以访问</p>
 <hr>
 <h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><p>消息队列是在两个进程之间传递二进制块数据的一种简单有效的方法，每个数据块都有一个特定的类型，接收方可以根据类型有选择地接收数据，而不一定像匿名管道和有名管道那样必须以先进先出的方式接收数据</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/msg.h></span></span>
