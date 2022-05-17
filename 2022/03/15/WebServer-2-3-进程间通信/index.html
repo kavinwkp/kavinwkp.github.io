@@ -618,10 +618,44 @@
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <hr>
-<h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><blockquote>
-<p>3种System V进程间通信方式：<font color="LightSeaGreen">信号量、消息队列和共享内存</font>。它们都是由AT&amp;T System V2版本的UNIX引入的，所以统称为System V IPC</p>
+<blockquote>
+<ul>
+<li>POSIX(Portable Operating System Interface for Computing Systems)是由IEEE 和ISO/IEC 开发的一簇标准</li>
+<li>System V，曾经也被称为AT&amp;T System V，是Unix操作系统众多版本中的一支</li>
+<li>System V 以及POSIX 对信号量、消息队列、共享内存等进程之间共享方式提供了自己的解决方案 </li>
+<li>3种System V进程间通信方式：<font color="LightSeaGreen">信号量、消息队列和共享内存</font>。它们都是由AT&amp;T System V2版本的UNIX引入的，所以统称为System V IPC</li>
+</ul>
 </blockquote>
-<p>消息队列是在两个进程之间传递二进制块数据的一种简单有效的方法，每个数据块都有一个特定的类型，接收方可以根据类型有选择地接收数据，而不一定像匿名管道和有名管道那样必须以先进先出的方式接收数据</p>
+<p>下面列举的是System V的实现版本</p>
+<h2 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">semget</span><span class="token punctuation">(</span>key_t key<span class="token punctuation">,</span> <span class="token keyword">int</span> num_sems<span class="token punctuation">,</span> <span class="token keyword">int</span> sem_flags<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 创建一个新的信号量，或者获取一个已经存在的信号量</span>
+<span class="token operator">-</span> key<span class="token operator">:</span> 用来标识一个全局唯一的信号量集，要用信号量通信的进程需要使用相同的key来创建<span class="token operator">/</span>获取该信号量
+<span class="token operator">-</span> num_sems<span class="token operator">:</span> 要创建<span class="token operator">/</span>获取的信号量集中信号量的数目，创建时必须指定，获取可以设置为<span class="token number">0</span>
+<span class="token operator">-</span> sem_flags<span class="token operator">:</span> 指定一组标志，低端的<span class="token number">9</span>个比特是该信号量的权限，其格式和含义都与open的mode参数相同
+<span class="token comment">// 成功返回信号量集的标识符，失败返回-1，并设置errno</span>
+<span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span>
+
+<span class="token keyword">int</span> <span class="token function">semop</span><span class="token punctuation">(</span><span class="token keyword">int</span> sem_id<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">sembuf</span> <span class="token operator">*</span>sem_ops<span class="token punctuation">,</span> size_t num_sem_ops<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 执行PV操作</span>
+<span class="token comment">// 与每个信号量关联的一些重要的内核变量</span>
+<span class="token keyword">unsigned</span> <span class="token keyword">short</span> semval<span class="token punctuation">;</span>  <span class="token comment">// 信号量的值</span>
+<span class="token keyword">unsigned</span> <span class="token keyword">short</span> semzcnt<span class="token punctuation">;</span> <span class="token comment">// 等待信号量变为0的进程数量</span>
+<span class="token keyword">unsigned</span> <span class="token keyword">short</span> semncnt<span class="token punctuation">;</span> <span class="token comment">// 等待信号量值增加的进程数量</span>
+pid_t sempid<span class="token punctuation">;</span>           <span class="token comment">// 最后一次执行semop操作的进程ID</span>
+
+<span class="token operator">-</span> sem_id<span class="token operator">:</span> 由semget调用返回的信号量集标识符
+<span class="token operator">-</span> sem_ops<span class="token operator">:</span> 指向一个sembuf结构体类型的数组
+<span class="token keyword">struct</span> <span class="token class-name">sembuf</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">short</span> <span class="token keyword">int</span> sem_num<span class="token punctuation">;</span> <span class="token comment">// 信号集中信号量的编号</span>
+    <span class="token keyword">short</span> <span class="token keyword">int</span> sem_op<span class="token punctuation">;</span>   <span class="token comment">// 指定操作类型，正整数、0、负整数</span>
+    <span class="token keyword">short</span> <span class="token keyword">int</span> sem_flg<span class="token punctuation">;</span>  <span class="token comment">// IPC_NOWAIT非阻塞</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token operator">+</span> semop大于<span class="token number">0</span>，则semop将被操作的信号量的值semval增加semop
+    <span class="token operator">+</span> semop等于<span class="token number">0</span>，表示这是一个“等待<span class="token number">0</span>”操作，如果此时信号量的值是<span class="token number">0</span>，则成功返回。如果信号量的值不是<span class="token number">0</span>，则失败返回或者阻塞进程以等待信号量变为<span class="token number">0</span>
+    <span class="token operator">+</span> semop小于<span class="token number">0</span>，表示对信号量值进行减操作
+<span class="token operator">-</span> num_sem_ops<span class="token operator">:</span> 指定要执行的操作个数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<hr>
+<h2 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h2><p>消息队列是在两个进程之间传递二进制块数据的一种简单有效的方法，每个数据块都有一个特定的类型，接收方可以根据类型有选择地接收数据，而不一定像匿名管道和有名管道那样必须以先进先出的方式接收数据</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/msg.h></span></span>
 <span class="token keyword">int</span> <span class="token function">msgget</span><span class="token punctuation">(</span>key_t key<span class="token punctuation">,</span> <span class="token keyword">int</span> msgflg<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 创建一个消息队列，或者获取一个已有的消息队列</span>
