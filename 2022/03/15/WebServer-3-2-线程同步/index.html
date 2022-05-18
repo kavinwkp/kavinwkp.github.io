@@ -570,7 +570,8 @@
 <li>任何时刻只能有一个线程操作缓冲区，说明需要互斥</li>
 <li>缓冲区为空时，消费者需要等待生产者生成数据；缓冲区满时，生产者需要等到消费者取出数据，说明生产者和消费者需要同步</li>
 </ul>
-<h3 id="条件变量"><a href="#条件变量" class="headerlink" title="条件变量"></a>条件变量</h3><p>条件变量的类型：<code>pthread_cond_t</code></p>
+<h3 id="条件变量"><a href="#条件变量" class="headerlink" title="条件变量"></a>条件变量</h3><p>如果说互斥锁是用于同步线程对共享数据的访问的话，那么条件变量则是用于在线程之间同步共享数据的值。条件变量提供了一种线程间的通信机制：当某个共享数据达到某个值的时候，唤醒等待这个共享数据的线程</p>
+<p>条件变量的类型：<code>pthread_cond_t</code></p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">pthread_cond_init</span><span class="token punctuation">(</span>pthread_cond_t <span class="token operator">*</span>restrict cond<span class="token punctuation">,</span> <span class="token keyword">const</span> pthread_condattr_t <span class="token operator">*</span>restrict attr<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 创建条件变量</span>
 
@@ -584,10 +585,11 @@
 <span class="token comment">// 等待多长时间，线程阻塞</span>
 
 <span class="token keyword">int</span> <span class="token function">pthread_cond_signal</span><span class="token punctuation">(</span>pthread_cond_t <span class="token operator">*</span>cond<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 唤醒一个或多个等待的线程</span>
+<span class="token comment">// 唤醒一个等待目标条件变量的线程，至于哪个线程将被唤醒，则取决于线程的优先级和调度策略</span>
 
 <span class="token keyword">int</span> <span class="token function">pthread_cond_broadcast</span><span class="token punctuation">(</span>pthread_cond_t <span class="token operator">*</span>cond<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 唤醒所有等待的线程</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">// 以广播的方式唤醒所有等待目标条件变量的线程</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>pthread_cond_wait</code>用于等待目标条件变量。mutex参数是用于保护条件变量的互斥锁，以确保<code>pthread_cond_wait</code>操作的原子性。在调用<code>pthread_cond_wait</code>前，必须确保互斥锁<code>mutex</code>已经加锁，否则将导致不可预期的后果。<code>pthread_cond_wait</code>函数执行时，首先把调用线程放入条件变量的等待队列中，然后将互斥锁mutex解锁。可见，从<code>pthread_cond_wait</code>开始执行到其调用线程被放入条件变量的等待队列之间的这段时间内，<code>pthread_cond_signal</code>和<code>pthread_cond_broadcast</code>等函数不会修改条件变量。换言之，<code>pthread_cond_wait</code>函数不会错过目标条件变量的任何变化。当<code>pthread_cond_wait</code>函数成功返回时，互斥锁将再次被锁上</p>
 <p>条件变量一定要配合互斥锁来使用，目的就是弥补互斥锁功能的单一性。在条件不满足的时候阻塞进程/线程，在临界区资源满足访问要求时，激活一个或者全部进程/线程去访问资源。相较于互斥锁，不需要在临界区内使用<code>if</code>代码去判断，在满足访问要求后，直接使用<code>signal</code>函数激活一个进程/线程即可</p>
 <p><strong>使用条件变量解决生产者消费者问题</strong></p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
@@ -715,8 +717,11 @@ add Node<span class="token punctuation">,</span> num<span class="token operator"
 <span class="token keyword">int</span> <span class="token function">sem_wait</span><span class="token punctuation">(</span>sem_t <span class="token operator">*</span>sem<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// P操作，调用一次对信号量值-1，如果为0，就阻塞</span>
 
+<span class="token keyword">int</span> <span class="token function">sem_trywait</span><span class="token punctuation">(</span>sem_t <span class="token operator">*</span>sem<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// sem_wait的非阻塞版本，信号量非0时，执行减1操作；信号量为0时，返回-1并设置errno为EAGAIN</span>
+
 <span class="token keyword">int</span> <span class="token function">sem_post</span><span class="token punctuation">(</span>sem_t <span class="token operator">*</span>sem<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// V操作，调用一次对信号量+1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">// V操作，调用一次对信号量+1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>信号量其实就是一个计数器，也是一个整数。每一次调用<code>wait</code>操作将会使<code>semaphore</code>值减一，而如果<code>semaphore</code>值已经为0，则<code>wait</code>操作将会阻塞。每一次调用<code>post</code>操作将会使<code>semaphore</code>值加一</p>
 <p><strong>用信号量解决生产者消费者问题</strong></p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
