@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="Eigen_2, kunpeng">
+    <meta name="keywords" content="5-InnoDB数据页结构, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Eigen_2 | kunpeng</title>
+    <title>5-InnoDB数据页结构 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Eigen_2</h1>
+                    <h1 class="description center-align post-title">5-InnoDB数据页结构</h1>
                 </div>
             </div>
         </div>
@@ -511,14 +511,23 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Eigen/">
-                                <span class="chip bg-color">Eigen</span>
+                            <a href="/tags/MySQL/">
+                                <span class="chip bg-color">MySQL</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                数据库
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -527,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-21
+                    2022-06-11
                 </div>
                 
 
@@ -551,57 +560,246 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <!-- toc -->
-<h2 id="转置矩阵"><a href="#转置矩阵" class="headerlink" title="转置矩阵"></a>转置矩阵</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">matrix<span class="token punctuation">.</span><span class="token function">transpose</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h2 id="共轭矩阵"><a href="#共轭矩阵" class="headerlink" title="共轭矩阵"></a>共轭矩阵</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">matrix<span class="token punctuation">.</span><span class="token function">conjugate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h2 id="伴随矩阵-共轭转置"><a href="#伴随矩阵-共轭转置" class="headerlink" title="伴随矩阵(共轭转置)"></a>伴随矩阵(共轭转置)</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">matrix<span class="token punctuation">.</span><span class="token function">adjoint</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h2 id="逆矩阵"><a href="#逆矩阵" class="headerlink" title="逆矩阵"></a>逆矩阵</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">matrix<span class="token punctuation">.</span><span class="token function">inverse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h2 id="块操作"><a href="#块操作" class="headerlink" title="块操作"></a>块操作</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">matrix<span class="token punctuation">.</span><span class="token function">block</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span>j<span class="token punctuation">,</span>p<span class="token punctuation">,</span>q<span class="token punctuation">)</span>
-<span class="token comment">// 起始于(i,j),提取块大小为(p,q)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h2 id="行列式"><a href="#行列式" class="headerlink" title="行列式"></a>行列式</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">matrix<span class="token punctuation">.</span><span class="token function">determinant</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;Eigen/Dense></span></span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> Eigen<span class="token punctuation">;</span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+                <h3 id="5-2-数据页结构快览"><a href="#5-2-数据页结构快览" class="headerlink" title="5.2 数据页结构快览"></a>5.2 数据页结构快览</h3><p>一个InnoDB数据页的存储空间大致被划分为7个部分</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>中文名</th>
+<th style="text-align:center">大小（字节）</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>File Header</td>
+<td>文件头部</td>
+<td style="text-align:center">38</td>
+<td>页的一些通用信息</td>
+</tr>
+<tr>
+<td>Page Header</td>
+<td>页面头部</td>
+<td style="text-align:center">56</td>
+<td>数据页专有的一些信息</td>
+</tr>
+<tr>
+<td>Infimum+Supremum</td>
+<td>最小记录和最大记录</td>
+<td style="text-align:center">26</td>
+<td>两个虚拟记录</td>
+</tr>
+<tr>
+<td>User Records</td>
+<td>用户记录</td>
+<td style="text-align:center">不确定</td>
+<td>用户存储的记录内容</td>
+</tr>
+<tr>
+<td>Free Space</td>
+<td>空闲空间</td>
+<td style="text-align:center">不确定</td>
+<td>页中尚未使用的空间</td>
+</tr>
+<tr>
+<td>Page Directory</td>
+<td>页目录</td>
+<td style="text-align:center">不确定</td>
+<td>页中某些记录的相对位置</td>
+</tr>
+<tr>
+<td>File Trailer</td>
+<td>文件尾部</td>
+<td style="text-align:center">8</td>
+<td>校验页是否完整</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="5-3-记录在页中的存储"><a href="#5-3-记录在页中的存储" class="headerlink" title="5.3 记录在页中的存储"></a>5.3 记录在页中的存储</h3><p>记录头信息的含义</p>
+<ul>
+<li><code>deleted_flag</code>：标记当前记录是否被删除，值为0时表示记录没有被删除，值为1时表示记录被删除了。所有被删除的记录会形成一个垃圾链表，记录在这个链表中占用的空间称为可重用空间，之后若有新记录插入到表中，就可以覆盖可重用空间</li>
+<li><code>heap_no</code>：把记录一条一条排列的结构称为堆，把一条记录在堆中的相对位置称为<code>heap_no</code>。堆中记录的<code>heap_no</code>值在分配之后就不会发生变动了，即使之后删除了堆中的某条记录，这条被删除记录的<code>heap_no</code>值也保持不变</li>
+</ul>
+<blockquote>
+<p>页中自动加了两条记录：一条代表页面中的最小记录（Infimum），一条代表页面中的最大记录（Supremum），它们在页面中的位置最靠前</p>
+</blockquote>
+<ul>
+<li>next_record：表示从当前记录的<font color="LightSeaGreen">真实数据</font>到下一条记录的<font color="LightSeaGreen">真实数据</font>的距离。如果是正数，说明下一条记录在后面，负数则表示下一条记录在前面，是按照主键值从小到大串联的</li>
+</ul>
+<blockquote>
+<p>指针指向真实数据的用意：向左读取就是记录头信息，向右读取就是真实数据，头信息中变长字段长度列表，NULL值列表是逆序存放的，这样可以使记录中位置靠前的字段和它们对应的字段长度信息在内存中的距离更近，可能会提高缓存命中率</p>
+</blockquote>
+<h3 id="5-4-Page-Directory（页目录）"><a href="#5-4-Page-Directory（页目录）" class="headerlink" title="5.4 Page Directory（页目录）"></a>5.4 Page Directory（页目录）</h3><p>在页中快速检索一条记录是通过页目录实现的</p>
+<ol>
+<li>将所有未删除的记录（包括<code>Infimum</code>和<code>Supremum</code>记录）划分为几个组</li>
+<li>每个组的最后一条记录的头信息中<code>n_owned</code>属性表示该组内有几条记录</li>
+<li>将每个组的最后一条记录在页面中的地址偏移量（就是该记录的真实数据与页面中第0字节之间的距离）单独提取出来，按顺序存储到<code>Page Directory</code>，这些地址偏移量称为槽（slot），每个槽占用2字节</li>
+</ol>
+<blockquote>
+<ul>
+<li>Infimum记录所在的分组只能有1条记录</li>
+<li>Supremum记录所在的分组可以有1~8条记录</li>
+<li>其他的分组的记录条数在4~8之间</li>
+</ul>
+</blockquote>
+<p>在一个数据页中查找指定主键值的记录时，分为两步</p>
+<ul>
+<li>通过二分法确定该记录所在分组对应的槽，然后找到该槽所在分组中主键值最小的那条记录</li>
+<li>通过记录的next_record属性遍历该槽所在的分组的各个记录</li>
+</ul>
+<h3 id="5-5-Page-Header（页面头部）"><a href="#5-5-Page-Header（页面头部）" class="headerlink" title="5.5 Page Header（页面头部）"></a>5.5 Page Header（页面头部）</h3><p>描述存储在数据页中的记录的状态信息，占用56字节</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>名称（PAGE_）</th>
+<th style="text-align:center">大小（字节）</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>N_DIR_SLOTS</td>
+<td style="text-align:center">2</td>
+<td>在页目录中的槽数量</td>
+</tr>
+<tr>
+<td>HEAP_TOP</td>
+<td style="text-align:center">2</td>
+<td>还未使用的空间的最小地址，该地址之后就是Free Space</td>
+</tr>
+<tr>
+<td>N_HEAP</td>
+<td style="text-align:center">2</td>
+<td>第1位表示是否为紧凑型记录，剩余15位表示堆中记录的数量（包括Infimum、Supremum以及标记为删除的记录）</td>
+</tr>
+<tr>
+<td>FREE</td>
+<td style="text-align:center">2</td>
+<td>以删除的记录会形成一条单向链表，用来表示该链表头结点对应记录在页面中的偏移量</td>
+</tr>
+<tr>
+<td>GARAGE</td>
+<td style="text-align:center">2</td>
+<td>已删除记录占用的字节数</td>
+</tr>
+<tr>
+<td>LAST_INSERT</td>
+<td style="text-align:center">2</td>
+<td>最后插入记录的位置</td>
+</tr>
+<tr>
+<td>DIRECTION</td>
+<td style="text-align:center">2</td>
+<td>记录插入的方向</td>
+</tr>
+<tr>
+<td>N_DIRECTION</td>
+<td style="text-align:center">2</td>
+<td>一个方向连续插入的记录数量</td>
+</tr>
+<tr>
+<td>N_RECS</td>
+<td style="text-align:center">2</td>
+<td>该页中用户记录的数量（不包括Infimum、Supremum以及标记为删除的记录）</td>
+</tr>
+<tr>
+<td>MAX_TRX_ID</td>
+<td style="text-align:center">8</td>
+<td>修改当前页的最大事务id，该值仅在二级索引页面中定义</td>
+</tr>
+<tr>
+<td>LEVEL</td>
+<td style="text-align:center">2</td>
+<td>当前页在B+树中所处的层级</td>
+</tr>
+<tr>
+<td>INDEX_ID</td>
+<td style="text-align:center">8</td>
+<td>索引id，表示当前页属于哪个索引</td>
+</tr>
+<tr>
+<td>BTR_SEG_LEAF</td>
+<td style="text-align:center">10</td>
+<td>B+树叶子节点段的头部信息，仅在B+树根页面中定义</td>
+</tr>
+<tr>
+<td>BTR_SEG_TOP</td>
+<td style="text-align:center">10</td>
+<td>B+树非叶子节点段的头部信息，仅在B+树根页面中定义</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><code>Page_DIRECTION</code>：加入新插入的一条记录的主键值比上一条记录的主键值大，我们说这条记录的插入方向是右边，反之则是左边</li>
+<li><code>Page_N_DIRECTION</code>：假设连续几次插入新记录的方向都是一致的，InnoDB会把沿着同一个方向插入记录的条数记下来</li>
+</ul>
+<h3 id="5-6-File-Header（文件头部）"><a href="#5-6-File-Header（文件头部）" class="headerlink" title="5.6 File Header（文件头部）"></a>5.6 File Header（文件头部）</h3><p>各种类型的页都会以File Header作为第一个组成部分，描述了一些通用于各种页的信息，固定38字节</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>名称（FIL_PAGE_）</th>
+<th style="text-align:center">大小（字节）</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SPACE_OR_CHECKSUM</td>
+<td style="text-align:center">4</td>
+<td>页的校验和</td>
+</tr>
+<tr>
+<td>OFFSET</td>
+<td style="text-align:center">4</td>
+<td>页号</td>
+</tr>
+<tr>
+<td>PREV</td>
+<td style="text-align:center">4</td>
+<td>上一个页的页号</td>
+</tr>
+<tr>
+<td>NEXT</td>
+<td style="text-align:center">4</td>
+<td>下一个页的页号</td>
+</tr>
+<tr>
+<td>LSN</td>
+<td style="text-align:center">8</td>
+<td>页面最后修改时对应的LSN（Log Sequence Number，日志序列号）值</td>
+</tr>
+<tr>
+<td>TYPE</td>
+<td style="text-align:center">2</td>
+<td>该页的类型</td>
+</tr>
+<tr>
+<td>FILE_FLUSH_LSN</td>
+<td style="text-align:center">8</td>
+<td>仅在系统表空间的第一个页中定义，代表文件至少被刷新到了对应的LSN值</td>
+</tr>
+<tr>
+<td>ARCH_LOG_NO_OR_SPACE_ID</td>
+<td style="text-align:center">4</td>
+<td>页属于哪个表空间</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>存储记录的数据页可以组成一个双向链表</p>
+</blockquote>
+<h3 id="5-7-File-Trailer（文件尾部）"><a href="#5-7-File-Trailer（文件尾部）" class="headerlink" title="5.7 File Trailer（文件尾部）"></a>5.7 File Trailer（文件尾部）</h3><p>该部分由8字节组成，分为2部分</p>
+<ul>
+<li>前4字节代表页的校验和，和文件头部的校验和相对应，如果页面成功刷新到磁盘，则页首和页尾的校验和应该是一致的</li>
+<li>后4字节是页面最后被修改时的<code>LSN</code>的后4字节，正常应该跟页面头部的<code>FIL_PAGE_LSN</code>的后4字节相同</li>
+</ul>
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-
-    MatrixXd <span class="token function">p</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    p <span class="token operator">&lt;&lt;</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span>
-         <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span>
-         <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">;</span>
-
-    cout <span class="token operator">&lt;&lt;</span> p<span class="token punctuation">.</span><span class="token function">transpose</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token comment">// 1 4 7</span>
-    <span class="token comment">// 2 1 8</span>
-    <span class="token comment">// 3 6 1</span>
-
-    cout <span class="token operator">&lt;&lt;</span> p<span class="token punctuation">.</span><span class="token function">inverse</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token comment">// -0.451923   0.211538  0.0865385</span>
-    <span class="token comment">// 0.365385  -0.192308  0.0576923</span>
-    <span class="token comment">// 0.240385  0.0576923 -0.0673077</span>
-
-    cout <span class="token operator">&lt;&lt;</span> p<span class="token punctuation">.</span><span class="token function">conjugate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token comment">// 1 2 3    共轭矩阵，实数的共轭就是本身</span>
-    <span class="token comment">// 4 1 6</span>
-    <span class="token comment">// 7 8 1</span>
-
-    cout <span class="token operator">&lt;&lt;</span> p<span class="token punctuation">.</span><span class="token function">adjoint</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token comment">// 1 4 7    伴随矩阵，转置+共轭</span>
-    <span class="token comment">// 2 1 8</span>
-    <span class="token comment">// 3 6 1</span>
-
-    cout <span class="token operator">&lt;&lt;</span> p<span class="token punctuation">.</span><span class="token function">block</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> p<span class="token punctuation">.</span>block<span class="token operator">&lt;</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token comment">// 4</span>
-    <span class="token comment">// 7</span>
-
-    cout <span class="token operator">&lt;&lt;</span> p<span class="token punctuation">.</span><span class="token function">determinant</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token comment">// 104</span>
-
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -627,7 +825,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/03/21/Eigen-Eigen-2/">http://example.com/2021/03/21/Eigen-Eigen-2/</a>
+                    <a href="http://example.com/2022/06/11/MySQL-5-InnoDB%E6%95%B0%E6%8D%AE%E9%A1%B5%E7%BB%93%E6%9E%84/">http://example.com/2022/06/11/MySQL-5-InnoDB%E6%95%B0%E6%8D%AE%E9%A1%B5%E7%BB%93%E6%9E%84/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -665,8 +863,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Eigen/">
-                                    <span class="chip bg-color">Eigen</span>
+                                <a href="/tags/MySQL/">
+                                    <span class="chip bg-color">MySQL</span>
                                 </a>
                             
                         </div>
@@ -842,13 +1040,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/21/Eigen-Eigen-%E6%B1%82%E7%A7%A9/">
+                <a href="/2022/06/12/C-STL-3-%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A6%82%E5%BF%B5%E4%B8%8Etraits%E7%BC%96%E7%A8%8B%E6%8A%80%E6%B3%95/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Eigen_求秩">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="3-迭代器概念与traits编程技法">
                         
-                        <span class="card-title">Eigen_求秩</span>
+                        <span class="card-title">3-迭代器概念与traits编程技法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -859,12 +1057,16 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-03-21
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-06-12
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kunpeng
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/C/" class="post-category">
+                                    C++
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -872,8 +1074,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Eigen/">
-                        <span class="chip bg-color">Eigen</span>
+                    <a href="/tags/STL/">
+                        <span class="chip bg-color">STL</span>
                     </a>
                     
                 </div>
@@ -887,13 +1089,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/21/Eigen-Eigen-%E7%9F%A9%E9%98%B5%E5%B1%9E%E6%80%A7/">
+                <a href="/2022/06/11/MySQL-4-InnoDB%E8%AE%B0%E5%BD%95%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Eigen_矩阵属性">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="4-InnoDB记录存储结构">
                         
-                        <span class="card-title">Eigen_矩阵属性</span>
+                        <span class="card-title">4-InnoDB记录存储结构</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -904,12 +1106,16 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-11
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kunpeng
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -917,8 +1123,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Eigen/">
-                        <span class="chip bg-color">Eigen</span>
+                    <a href="/tags/MySQL/">
+                        <span class="chip bg-color">MySQL</span>
                     </a>
                     
                 </div>
