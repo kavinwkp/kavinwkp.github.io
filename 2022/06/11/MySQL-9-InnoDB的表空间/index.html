@@ -713,6 +713,9 @@
 <li><code>Magic Number</code>（4字节）：标记这个INODE Entry是否已经被初始化</li>
 <li><code>Fragment Array Entry</code>（4X32字节）：对应段的32个零散的页面</li>
 </ul>
+<blockquote>
+<p>段是一些零散的页面和一些完整的区的集合</p>
+</blockquote>
 <h4 id="9-2-5-各类型页面的详细情况"><a href="#9-2-5-各类型页面的详细情况" class="headerlink" title="9.2.5 各类型页面的详细情况"></a>9.2.5 各类型页面的详细情况</h4><p>1、<code>FSP_HDR</code>类型</p>
 <p>第一个组的第一个区的第一个页面</p>
 <div class="table-container">
@@ -821,7 +824,7 @@
 <li>先看看<code>SEG_INODES_FREE</code>链表是否为空。如果不为空,直接从该链表中获取一个节点，也就相当于获取到一个仍有空闲空间的<code>INODE</code>类型的页面，然后把该<code>INODE Entry</code>结构放到该页面中。当该页面中无剩余空间时，就把该页放到<code>SEG_INODES_FULL</code>链表中</li>
 <li>如果<code>SEG_INODES_FREE</code>链表为空,则需要从表空间的<code>FREE_FRAG</code>链表中申请一个页面，并将该页面的类型修改为<code>INODE</code>，把该页面放到<code>SEG_INODES_FRFE</code>链表中；与此同时把该<code>INODE Entry</code>结构放入该页面</li>
 </ul>
-<h4 id="9-2-6-各类型页面的详细情况"><a href="#9-2-6-各类型页面的详细情况" class="headerlink" title="9.2.6 各类型页面的详细情况"></a>9.2.6 各类型页面的详细情况</h4><p>每个索引的两个段的INODE Entry结构保存在根节点中，在根节点的页面中定义了两个字段</p>
+<h4 id="9-2-6-Segment-Header结构的运用"><a href="#9-2-6-Segment-Header结构的运用" class="headerlink" title="9.2.6 Segment Header结构的运用"></a>9.2.6 Segment Header结构的运用</h4><p>每个索引的两个段的INODE Entry结构保存在根节点中，在根节点的页面中定义了两个字段</p>
 <div class="table-container">
 <table>
 <thead>
@@ -1116,13 +1119,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/06/12/C-STL-3-%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A6%82%E5%BF%B5%E4%B8%8Etraits%E7%BC%96%E7%A8%8B%E6%8A%80%E6%B3%95/">
+                <a href="/2022/06/11/MySQL-10-%E5%8D%95%E8%A1%A8%E8%AE%BF%E9%97%AE%E6%96%B9%E6%B3%95/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="3-迭代器概念与traits编程技法">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="10-单表访问方法">
                         
-                        <span class="card-title">3-迭代器概念与traits编程技法</span>
+                        <span class="card-title">10-单表访问方法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1133,14 +1136,14 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-06-12
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-06-11
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/C/" class="post-category">
-                                    C++
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
                                 </a>
                             
                             
@@ -1150,8 +1153,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/STL/">
-                        <span class="chip bg-color">STL</span>
+                    <a href="/tags/MySQL/">
+                        <span class="chip bg-color">MySQL</span>
                     </a>
                     
                 </div>

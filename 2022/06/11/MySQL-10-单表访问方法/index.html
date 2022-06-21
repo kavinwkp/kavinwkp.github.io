@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="3-迭代器概念与traits编程技法, kunpeng">
+    <meta name="keywords" content="10-单表访问方法, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>3-迭代器概念与traits编程技法 | kunpeng</title>
+    <title>10-单表访问方法 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">3-迭代器概念与traits编程技法</h1>
+                    <h1 class="description center-align post-title">10-单表访问方法</h1>
                 </div>
             </div>
         </div>
@@ -511,8 +511,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/STL/">
-                                <span class="chip bg-color">STL</span>
+                            <a href="/tags/MySQL/">
+                                <span class="chip bg-color">MySQL</span>
                             </a>
                         
                     </div>
@@ -523,8 +523,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/C/" class="post-category">
-                                C++
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                数据库
                             </a>
                         
                     </div>
@@ -536,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-06-12
+                    2022-06-11
                 </div>
                 
 
@@ -560,81 +560,48 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="3-4-5-迭代器相应型别之五：iterator-category"><a href="#3-4-5-迭代器相应型别之五：iterator-category" class="headerlink" title="3.4.5 迭代器相应型别之五：iterator_category"></a>3.4.5 迭代器相应型别之五：iterator_category</h3><p>迭代器的分类</p>
+                <h3 id="10-2-const"><a href="#10-2-const" class="headerlink" title="10.2 const"></a>10.2 const</h3><p>通过主键或者唯一二级索引来定位一条记录的访问方法定义为<code>const</code></p>
+<h3 id="10-3-ref"><a href="#10-3-ref" class="headerlink" title="10.3 ref"></a>10.3 ref</h3><p>搜索条件为二级索引与常数进行等值比较，形成的扫描区间为单点扫描区间，采用二级索引来执行查询的访问方法称为<code>ref</code></p>
+<p>对于普通的二级索引来说，通过索引列进行等值比较后可能会匹配到多条连续的二级索引记录，而不是像主键索引或者唯一二级索引那样最多只能匹配一条记录，所以这种<code>ref</code>访问方法比<code>const</code>差一些</p>
 <ul>
-<li><code>Input Iterator</code>：迭代器所指对象，不允许外界改变（read only）</li>
-<li><code>Output Iterator</code>：唯写（write only）</li>
-<li><code>Forward Iterator</code>：可以向前移动</li>
-<li><code>Bidirectional Iterator</code>：可以双向移动</li>
-<li><code>Random Access Iterator</code>：可以随机访问</li>
+<li>在二级索引列允许存储<code>NULL</code>值时，无论是普通的二级索引，还是唯一二级索引，它们的索引列并不限制<code>NULL</code>值的数量，所以在执行包含<code>key IS NULL</code>形式的搜索条件的查询时，最多只能使用<code>ref</code>访问方法，而不能使用<code>const</code>访问方法</li>
+<li>对于索引列中包含多个列的二级索引来说，只要最左边连续的列是与常数进行等值比较，就可以采用<code>ref</code>访问方法</li>
 </ul>
-<p>函数<code>advance()</code>让迭代器移动<code>n</code>步，根据不同的迭代器类型，应该调用不同的函数</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">InputIterator</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Distance</span><span class="token operator">></span>
-<span class="token keyword">void</span> <span class="token function">advance</span><span class="token punctuation">(</span>InputIterator i<span class="token punctuation">,</span> Distance n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">is_random_access_iterator</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token function">advance_RAI</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">is_bidirectional_iterator</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token function">advance_BI</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">else</span> 
-        <span class="token function">advance_II</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这样到运行时才知道调用哪个版本，会影响程序效率，最好能够在编译期就选择正确的版本。重载函数机制可以达到这个目标</p>
-<p>可以让三个<code>advance_xx</code>同名，形成函数重载，然后加上一个标识类型的参数</p>
-<p>这个标识迭代器类型的参数可以通过<code>traits</code>来获取，这个相应型别必须是一个<code>class type</code>，不能只是数值号码类的东西，因为编译器需依赖它来进行重载决议</p>
-<p>可以这样定义迭代器类型</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">input_iterator_tag</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-<span class="token keyword">struct</span> <span class="token class-name">output_iterator_tag</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-<span class="token keyword">struct</span> <span class="token class-name">forward_iterator_tag</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">input_iterator_tag</span></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-<span class="token keyword">struct</span> <span class="token class-name">bidirectional_iterator_tag</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">forward_iterator_tag</span></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-<span class="token keyword">struct</span> <span class="token class-name">random_access_iterator_tag</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">bidirectional_iterator_tag</span></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这样<code>advance()</code>就可以写成</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">InputIterator</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Distance</span><span class="token operator">></span>
-<span class="token keyword">inline</span> <span class="token keyword">void</span> <span class="token function">advance</span><span class="token punctuation">(</span>InputIterator<span class="token punctuation">,</span> Distance n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token function">__advance</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> n<span class="token punctuation">,</span> <span class="token class-name">iterator_traits</span><span class="token operator">&lt;</span>InputIterator<span class="token operator">></span><span class="token operator">::</span><span class="token function">iterator_category</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这里<code>iterator_traits&lt;InputIterator&gt;::iterator_category()</code>将产生一个临时对象，根据临时对象类型调用不同重载版本的<code>__advance</code></p>
-<p>同时，<code>iterator_traits</code>里面也需要有这个相应型别</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">I</span><span class="token operator">></span>
-<span class="token keyword">struct</span> <span class="token class-name">iterator_traits</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">typedef</span> <span class="token keyword">typename</span> <span class="token class-name">I</span><span class="token operator">::</span>iterator_category iterator_category<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>针对原生指针和指向常量的指针制定偏特化版本</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token operator">></span>
-<span class="token keyword">struct</span> <span class="token class-name">iterator_traits</span><span class="token operator">&lt;</span>T<span class="token operator">*</span><span class="token operator">></span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">// 原生指针可以随机访问</span>
-    <span class="token keyword">typedef</span> random_access_iterator_tag iterator_category<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<blockquote>
+<p>如果索引列中最左边连续的列不全是等值比较的话，就不能称为<code>ref</code>了</p>
+</blockquote>
+<h3 id="10-4-ref-or-null"><a href="#10-4-ref-or-null" class="headerlink" title="10.4 ref_or_null"></a>10.4 ref_or_null</h3><blockquote>
+<p>值为NULL的记录会被放在索引的最左边</p>
+</blockquote>
+<p>如果不仅要找出某个二级索引列的值等于某个常数的记录，而且还要把该列中值为<code>NULL</code>的记录也找出来，这种访问方法称为<code>ref_or_null</code></p>
+<h3 id="10-5-range"><a href="#10-5-range" class="headerlink" title="10.5 range"></a>10.5 range</h3><p>使用索引执行查询时，对应的扫描区间为若干个单点扫描区间或者范围扫描区间的访问方法称为<code>range</code></p>
+<h3 id="10-6-index"><a href="#10-6-index" class="headerlink" title="10.6 index"></a>10.6 index</h3><p>扫描全不二级索引记录且不需要回表的访问方法称为<code>index</code>，如果添加了“ORDER BY 主键”的语句，也会被认定为<code>index</code>访问方法</p>
+<h3 id="10-7-all"><a href="#10-7-all" class="headerlink" title="10.7 all"></a>10.7 all</h3><p>全表扫描称为<code>all</code>访问方法</p>
+<h3 id="10-8-注意事项"><a href="#10-8-注意事项" class="headerlink" title="10.8 注意事项"></a>10.8 注意事项</h3><p>如果有多个索引可以使用，优化器会通过访问表中的少量数据或者直接根据事先生成的统计数据，来计算扫描区间包含多少条记录，选择成本更小的那个扫描区间对应的索引执行查询</p>
+<h4 id="10-8-2-索引合并"><a href="#10-8-2-索引合并" class="headerlink" title="10.8.2 索引合并"></a>10.8.2 索引合并</h4><p>1、<code>Intersection</code>索引合并</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> single_table <span class="token keyword">WHERE</span> key1<span class="token operator">=</span><span class="token string">'a'</span> <span class="token operator">AND</span> key3<span class="token operator">=</span><span class="token string">'b'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这里可以使用idx_key1或者idx_key3，还有一种方案是索引合并：同时使用idx_key1和idx_key3执行查询</p>
+<p>分别在两个索引中查找满足条件的二级索引记录，然后从两者的操作结果中找出id列值相同的记录，然后再根据这些公有的id值执行回表操作，这样可能省下很多回表操作带来的开销，注意这里从两个索引获取到的记录都是按照id排序的</p>
+<p>如果在使用某个二级索引执行查询时，从对应的扫描区间中读取出的二级索引记录不是按照主键值排序的，则不可以使用<code>Intersection</code>索引合并来执行查询</p>
+<blockquote>
+<p>Intersection索引合并指的就是对从不同索引中扫描到的记录的id值取交集，只为这些id值执行回表操作，要求按照主键值排序是因为</p>
+</blockquote>
+<ol>
+<li>从两个有序集合中取交集比从两个无序集合中取交集要容易得多</li>
+<li>这样取交集后的id值也是有序的，执行回表操作时不是随机IO，从而提高效率</li>
+</ol>
+<p>2、<code>Union</code>索引合并</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> single_table <span class="token keyword">WHERE</span> key1<span class="token operator">=</span><span class="token string">'a'</span> <span class="token operator">OR</span> key3<span class="token operator">=</span><span class="token string">'b'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>对于这种情况也可以使用索引合并，先分别从两个索引中读取满足条件的二级索引记录，然后根据二级索引记录的id值在两者的结果中进行去重，再根据去重后的id值执行回表操作，这样重复的id值只需回表一次</p>
+<blockquote>
+<p>Union索引合并指的就是对从不同索引中扫描到的记录的id值取并集，为这些id值执行回表操作</p>
+</blockquote>
+<p>同样，如果取得的二级索引记录不是有序的，也不能使用Union索引合并</p>
+<p>3、<code>Sort-Union</code>索引合并</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> single_table <span class="token keyword">WHERE</span> key1<span class="token operator">&lt;</span><span class="token string">'a'</span> <span class="token operator">OR</span> key3<span class="token operator">></span><span class="token string">'z'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这里从两个索引中获取到的记录不是按主键值排序的，也就不能用<code>Union</code>索引合并，但可以取出二级索引记录后先按主键值排序，再索引合并</p>
+<p>先对从各个索引中扫描到的记录按主键值排序，再按照执行<code>Union</code>索引合并的方式执行查询，这种访问方式称为<code>Sort-Union</code>索引合并</p>
 
-<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token operator">></span>
-<span class="token keyword">struct</span> <span class="token class-name">iterator_traits</span><span class="token operator">&lt;</span><span class="token keyword">const</span> T<span class="token operator">*</span><span class="token operator">></span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">// 也是随机访问</span>
-    <span class="token keyword">typedef</span> random_access_iterator_tag iterator_category<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>注意到迭代器类型之间有继承关系，这样对于接受不同参数但逻辑相同的函数，就不需要在重复写这个重载函数了，比如<code>__advance</code>的<code>input_iterator_tag</code>版本的逻辑和<code>forward_iterator_tag</code>版本的逻辑是完全一样的，因为后者继承于前者，所以如果没有<code>forward_iterator_tag</code>版本的函数，会调用<code>input_iterator_tag</code>版本的，因为子类可以向上转型为父类</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
-
-<span class="token keyword">struct</span> <span class="token class-name">B</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>    <span class="token comment">// 模拟 InputIterator</span>
-<span class="token keyword">struct</span> <span class="token class-name">D1</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">B</span></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>    <span class="token comment">// 模拟 ForwardIterator</span>
-<span class="token keyword">struct</span> <span class="token class-name">D2</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">D1</span></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>   <span class="token comment">// 模拟 BidirectionalIterator</span>
-
-<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">I</span><span class="token operator">></span>
-<span class="token keyword">void</span> <span class="token function">func</span><span class="token punctuation">(</span>I<span class="token operator">&amp;</span> p<span class="token punctuation">,</span> B<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"B version"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">I</span><span class="token operator">></span>
-<span class="token keyword">void</span> <span class="token function">func</span><span class="token punctuation">(</span>I<span class="token operator">&amp;</span> p<span class="token punctuation">,</span> D2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"D2 version"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span><span class="token operator">*</span> p<span class="token punctuation">;</span>
-    <span class="token function">func</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> <span class="token function">B</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// B version</span>
-    <span class="token function">func</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> <span class="token function">D1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// B version，调用了父类版本的函数</span>
-    <span class="token function">func</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> <span class="token function">D2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// D2 version</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -660,7 +627,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2022/06/12/C-STL-3-%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A6%82%E5%BF%B5%E4%B8%8Etraits%E7%BC%96%E7%A8%8B%E6%8A%80%E6%B3%95/">http://example.com/2022/06/12/C-STL-3-%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A6%82%E5%BF%B5%E4%B8%8Etraits%E7%BC%96%E7%A8%8B%E6%8A%80%E6%B3%95/</a>
+                    <a href="http://example.com/2022/06/11/MySQL-10-%E5%8D%95%E8%A1%A8%E8%AE%BF%E9%97%AE%E6%96%B9%E6%B3%95/">http://example.com/2022/06/11/MySQL-10-%E5%8D%95%E8%A1%A8%E8%AE%BF%E9%97%AE%E6%96%B9%E6%B3%95/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -698,8 +665,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/STL/">
-                                    <span class="chip bg-color">STL</span>
+                                <a href="/tags/MySQL/">
+                                    <span class="chip bg-color">MySQL</span>
                                 </a>
                             
                         </div>
@@ -875,13 +842,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/06/13/LeetCode-1262-%E5%8F%AF%E8%A2%AB%E4%B8%89%E6%95%B4%E9%99%A4%E7%9A%84%E6%9C%80%E5%A4%A7%E5%92%8C/">
+                <a href="/2022/06/12/C-STL-3-%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A6%82%E5%BF%B5%E4%B8%8Etraits%E7%BC%96%E7%A8%8B%E6%8A%80%E6%B3%95/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="1262-可被三整除的最大和">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="3-迭代器概念与traits编程技法">
                         
-                        <span class="card-title">1262-可被三整除的最大和</span>
+                        <span class="card-title">3-迭代器概念与traits编程技法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -892,14 +859,14 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-06-13
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-06-12
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/LeetCode/" class="post-category">
-                                    LeetCode
+                            <a href="/categories/C/" class="post-category">
+                                    C++
                                 </a>
                             
                             
@@ -909,8 +876,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
-                        <span class="chip bg-color">动态规划</span>
+                    <a href="/tags/STL/">
+                        <span class="chip bg-color">STL</span>
                     </a>
                     
                 </div>
@@ -924,13 +891,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/06/11/MySQL-10-%E5%8D%95%E8%A1%A8%E8%AE%BF%E9%97%AE%E6%96%B9%E6%B3%95/">
+                <a href="/2022/06/11/MySQL-9-InnoDB%E7%9A%84%E8%A1%A8%E7%A9%BA%E9%97%B4/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="10-单表访问方法">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="9-InnoDB的表空间">
                         
-                        <span class="card-title">10-单表访问方法</span>
+                        <span class="card-title">9-InnoDB的表空间</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
