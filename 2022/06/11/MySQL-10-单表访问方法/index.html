@@ -580,19 +580,19 @@
 <h3 id="10-8-注意事项"><a href="#10-8-注意事项" class="headerlink" title="10.8 注意事项"></a>10.8 注意事项</h3><p>如果有多个索引可以使用，优化器会通过访问表中的少量数据或者直接根据事先生成的统计数据，来计算扫描区间包含多少条记录，选择成本更小的那个扫描区间对应的索引执行查询</p>
 <h4 id="10-8-2-索引合并"><a href="#10-8-2-索引合并" class="headerlink" title="10.8.2 索引合并"></a>10.8.2 索引合并</h4><p>1、<code>Intersection</code>索引合并</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> single_table <span class="token keyword">WHERE</span> key1<span class="token operator">=</span><span class="token string">'a'</span> <span class="token operator">AND</span> key3<span class="token operator">=</span><span class="token string">'b'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>这里可以使用idx_key1或者idx_key3，还有一种方案是索引合并：同时使用idx_key1和idx_key3执行查询</p>
-<p>分别在两个索引中查找满足条件的二级索引记录，然后从两者的操作结果中找出id列值相同的记录，然后再根据这些公有的id值执行回表操作，这样可能省下很多回表操作带来的开销，注意这里从两个索引获取到的记录都是按照id排序的</p>
+<p>这里可以使用<code>idx_key1</code>或者<code>idx_key3</code>，还有一种方案是索引合并：同时使用<code>idx_key1</code>和<code>idx_key3</code>执行查询</p>
+<p>分别在两个索引中查找满足条件的二级索引记录，然后从两者的操作结果中找出<code>id</code>列值相同的记录，然后再根据这些公有的<code>id</code>值执行回表操作，这样可能省下很多回表操作带来的开销，注意这里从两个索引获取到的记录都是按照<code>id</code>排序的</p>
 <p>如果在使用某个二级索引执行查询时，从对应的扫描区间中读取出的二级索引记录不是按照主键值排序的，则不可以使用<code>Intersection</code>索引合并来执行查询</p>
 <blockquote>
 <p>Intersection索引合并指的就是对从不同索引中扫描到的记录的id值取交集，只为这些id值执行回表操作，要求按照主键值排序是因为</p>
 </blockquote>
 <ol>
 <li>从两个有序集合中取交集比从两个无序集合中取交集要容易得多</li>
-<li>这样取交集后的id值也是有序的，执行回表操作时不是随机IO，从而提高效率</li>
+<li>这样取交集后的<code>id</code>值也是有序的，执行回表操作时不是随机IO，从而提高效率</li>
 </ol>
 <p>2、<code>Union</code>索引合并</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> single_table <span class="token keyword">WHERE</span> key1<span class="token operator">=</span><span class="token string">'a'</span> <span class="token operator">OR</span> key3<span class="token operator">=</span><span class="token string">'b'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>对于这种情况也可以使用索引合并，先分别从两个索引中读取满足条件的二级索引记录，然后根据二级索引记录的id值在两者的结果中进行去重，再根据去重后的id值执行回表操作，这样重复的id值只需回表一次</p>
+<p>对于这种情况也可以使用索引合并，先分别从两个索引中读取满足条件的二级索引记录，然后根据二级索引记录的<code>id</code>值在两者的结果中进行去重，再根据去重后的id值执行回表操作，这样重复的<code>id</code>值只需回表一次</p>
 <blockquote>
 <p>Union索引合并指的就是对从不同索引中扫描到的记录的id值取并集，为这些id值执行回表操作</p>
 </blockquote>
