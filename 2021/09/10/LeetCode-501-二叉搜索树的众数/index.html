@@ -592,7 +592,6 @@ TreeNode <span class="token operator">*</span>pre <span class="token operator">=
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>pre<span class="token punctuation">)</span> count <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>    <span class="token comment">// 没有前节点，计数器初始化为1</span>
     <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>pre<span class="token operator">-></span>val <span class="token operator">==</span> cur<span class="token operator">-></span>val<span class="token punctuation">)</span> count<span class="token operator">++</span><span class="token punctuation">;</span> <span class="token comment">// 跟前节点一样，计数器递增</span>
     <span class="token keyword">else</span> count <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">// 跟前节点不同，计数器重置</span>
-    pre <span class="token operator">=</span> cur<span class="token punctuation">;</span>  <span class="token comment">// 注意当前节点处理完就变成了前节点</span>
     
     <span class="token keyword">if</span> <span class="token punctuation">(</span>count <span class="token operator">==</span> maxCount<span class="token punctuation">)</span> res<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>count <span class="token operator">></span> maxCount<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -601,6 +600,7 @@ TreeNode <span class="token operator">*</span>pre <span class="token operator">=
         res<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
     
+    pre <span class="token operator">=</span> cur<span class="token punctuation">;</span>  <span class="token comment">// 注意当前节点处理完就变成了前节点</span>
     <span class="token function">traversal</span><span class="token punctuation">(</span>cur<span class="token operator">-></span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">findMode</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
