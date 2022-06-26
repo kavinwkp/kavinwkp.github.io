@@ -566,7 +566,7 @@
 <p><img src="https://github.com/kavinwkp/blogimage/raw/main/img/LeetCode/230/kthtree1.jpg" alt></p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> root <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span>null<span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">1</span>
 Output<span class="token operator">:</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h3 id="method"><a href="#method" class="headerlink" title="method"></a>method</h3><p>算当前节点的左节点有<code>leftNum</code>个，当前节点是第<code>leftNum+1</code>小节点，如果</p>
+<h3 id="method-1"><a href="#method-1" class="headerlink" title="method 1"></a>method 1</h3><p>算当前节点的左节点有<code>leftNum</code>个，当前节点是第<code>leftNum+1</code>小节点，如果</p>
 <ul>
 <li>如果<code>leftNum+1==k</code>，当前节点就是第<code>k</code>小节点，直接返回</li>
 <li>如果<code>leftNum+1&gt;k</code>，说明第<code>k</code>小的节点还在左边，继续往左边找</li>
@@ -588,6 +588,23 @@ Output<span class="token operator">:</span> <span class="token number">1</span><
 <li>如果<code>leftNum=5</code>，说明第4小的节点还在左边，往左边找第4小的节点</li>
 <li>如果<code>leftNum=2</code>，说明该节点是第3小的节点，第4小的节点在它的右边第一个，如果应该往右边找第1小的节点，这个1是通过<code>4-leftNum-1</code>算出来的</li>
 </ul>
+<p>时间复杂度：$\mathcal{O}(h \cdot 2^h)$，最差情况下是找第1小的数，并且是满二叉树，高度为$h$，所以要找$h$次，每次找左子树节点都要遍历一次左子树，分别是$2^{h-1},2^{h-2},\ldots,2^0$，加起来是$2^h-1$，所以时间复杂度是$\mathcal{O}(h \cdot 2^h)$<br>空间复杂度：$\mathcal{O}(h^2)$，递归的栈空间，分别是$h-1,h-2,\ldots,0$，加起来是$\frac{h(h-1)}{2}$</p>
+<h3 id="method-2"><a href="#method-2" class="headerlink" title="method 2"></a>method 2</h3><p>按照中序遍历从最左边的元素开始找</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">kthSmallest</span><span class="token punctuation">(</span>TreeNode<span class="token operator">*</span> root<span class="token punctuation">,</span> <span class="token keyword">int</span> k<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    stack<span class="token operator">&lt;</span>TreeNode<span class="token operator">*</span><span class="token operator">></span> st<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>root <span class="token operator">||</span> <span class="token operator">!</span>st<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>root<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            st<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            root <span class="token operator">=</span> root<span class="token operator">-></span>left<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        root <span class="token operator">=</span> st<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        st<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">--</span>k <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
+        root <span class="token operator">=</span> root<span class="token operator">-></span>right<span class="token punctuation">;</span> 
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> root<span class="token operator">-></span>val<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>时间复杂度：$\mathcal{O}(h+k)$<br>空间复杂度：$\mathcal{O}(h)$</p>
 
                 
             </div>
@@ -1044,6 +1061,13 @@ Output<span class="token operator">:</span> <span class="token number">1</span><
 
 </main>
 
+
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
 
 
 
