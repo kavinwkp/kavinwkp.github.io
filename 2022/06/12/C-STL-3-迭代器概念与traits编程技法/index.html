@@ -560,7 +560,75 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="3-4-5-迭代器相应型别之五：iterator-category"><a href="#3-4-5-迭代器相应型别之五：iterator-category" class="headerlink" title="3.4.5 迭代器相应型别之五：iterator_category"></a>3.4.5 迭代器相应型别之五：iterator_category</h3><p>迭代器的分类</p>
+                <h2 id="3-4-Traits编程技法"><a href="#3-4-Traits编程技法" class="headerlink" title="3.4 Traits编程技法"></a>3.4 Traits编程技法</h2><p>比如想要获取迭代器指向的元素的类型作为返回值类型，可以这样写</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token operator">></span>
+<span class="token keyword">struct</span> <span class="token class-name">MyIter</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">typedef</span> T value_type<span class="token punctuation">;</span>	<span class="token comment">// 声明内嵌型别</span>
+    T<span class="token operator">*</span> ptr<span class="token punctuation">;</span>
+    <span class="token function">MyIter</span><span class="token punctuation">(</span>T <span class="token operator">*</span>p <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">ptr</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    T<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token operator">*</span>ptr<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">I</span><span class="token operator">></span>
+<span class="token keyword">typename</span> <span class="token class-name">I</span><span class="token operator">::</span>value_type <span class="token function">func</span><span class="token punctuation">(</span>I ite<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token operator">*</span>ite<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    MyIter<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">ite1</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token function">func</span><span class="token punctuation">(</span>ite1<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>	<span class="token comment">// 8</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这样函数<code>func</code>就可以通过<code>I::value_type</code>获取到迭代器指向的元素的类型，并作为返回值的类型</p>
+<p>关键字<code>typename</code>的用意在于告知编译器这是一个型别</p>
+<p>如果迭代器是一个原生指针，那我们希望获取到指针所指对象的类型，这里就不能直接用了，需要使用<code>traits</code>机制</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">I</span><span class="token operator">></span>
+<span class="token keyword">struct</span> <span class="token class-name">iterator_traits</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">typedef</span> <span class="token keyword">typename</span> <span class="token class-name">I</span><span class="token operator">::</span>value_type value_type<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 使用iterator_traits获取迭代器的value_type</span>
+<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">I</span><span class="token operator">></span>
+<span class="token keyword">typename</span> <span class="token class-name">iterator_traits</span><span class="token operator">&lt;</span>I<span class="token operator">></span><span class="token operator">::</span>value_type <span class="token function">func</span><span class="token punctuation">(</span>I ite<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">iterator_traits</span><span class="token operator">&lt;</span>I<span class="token operator">></span><span class="token operator">::</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token operator">*</span>ite<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这样中间加了一层<code>iterator_traits</code>，好处就是可以针对原生指针定义偏特化版本</p>
+<p>如果迭代器是一个<code>pointer-to-const</code>，应该令其<code>value_type</code>为一个<code>non_const</code>型别</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 原生指针版本</span>
+<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">I</span><span class="token operator">></span>
+<span class="token keyword">struct</span> <span class="token class-name">iterator_traits</span><span class="token operator">&lt;</span>I<span class="token operator">*</span><span class="token operator">></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">typedef</span> I value_type<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token comment">// pointer-to-const指针版本</span>
+<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">I</span><span class="token operator">></span>
+<span class="token keyword">struct</span> <span class="token class-name">iterator_traits</span><span class="token operator">&lt;</span><span class="token keyword">const</span> I<span class="token operator">*</span><span class="token operator">></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">typedef</span> I value_type<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    MyIter<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">ite1</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token function">func</span><span class="token punctuation">(</span>ite1<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>	<span class="token comment">// 8</span>
+
+    <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token function">func</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>a<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>	<span class="token comment">// 10</span>
+
+    <span class="token keyword">const</span> <span class="token keyword">int</span> b <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token function">func</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>b<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>	<span class="token comment">// 10</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这样不论面对的迭代器<code>MyIter</code>，或是原生指针<code>int*</code>或<code>const int*</code>，都可以通过<code>traits</code>取出正确的<code>value_type</code></p>
+<p>这样也要求要使用<code>traits</code>的迭代器需要定义内嵌型别<code>value_type</code>，不然就用不了了</p>
+<p>常见的迭代器相应型别有五种：</p>
+<ul>
+<li><code>value_type</code>：表示迭代器所指对象的型别</li>
+<li><code>difference_type</code>：表示两个迭代器之间的距离</li>
+<li><code>pointer</code></li>
+<li><code>reference</code></li>
+<li><code>iterator_category</code>：迭代器的种类</li>
+</ul>
+<h3 id="3-4-5-迭代器相应型别之五：iterator-category"><a href="#3-4-5-迭代器相应型别之五：iterator-category" class="headerlink" title="3.4.5 迭代器相应型别之五：iterator_category"></a>3.4.5 迭代器相应型别之五：iterator_category</h3><p>迭代器的分类</p>
 <ul>
 <li><code>Input Iterator</code>：迭代器所指对象，不允许外界改变（read only）</li>
 <li><code>Output Iterator</code>：唯写（write only）</li>
@@ -568,7 +636,61 @@
 <li><code>Bidirectional Iterator</code>：可以双向移动</li>
 <li><code>Random Access Iterator</code>：可以随机访问</li>
 </ul>
-<p>函数<code>advance()</code>让迭代器移动<code>n</code>步，根据不同的迭代器类型，应该调用不同的函数</p>
+<p>可以这样定义迭代器类型</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">input_iterator_tag</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">struct</span> <span class="token class-name">output_iterator_tag</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">struct</span> <span class="token class-name">forward_iterator_tag</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">input_iterator_tag</span></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">struct</span> <span class="token class-name">bidirectional_iterator_tag</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">forward_iterator_tag</span></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">struct</span> <span class="token class-name">random_access_iterator_tag</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">bidirectional_iterator_tag</span></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Distance</span><span class="token operator">></span> <span class="token keyword">struct</span> <span class="token class-name">input_iterator</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">typedef</span> input_iterator_tag  iterator_category<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> T                   value_type<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> Distance            difference_type<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> T<span class="token operator">*</span>                  pointer<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> T<span class="token operator">&amp;</span>                  reference<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">struct</span> <span class="token class-name">output_iterator</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">typedef</span> output_iterator_tag iterator_category<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> <span class="token keyword">void</span>                value_type<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> <span class="token keyword">void</span>                difference_type<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> <span class="token keyword">void</span>                pointer<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> <span class="token keyword">void</span>                reference<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Distance</span><span class="token operator">></span> <span class="token keyword">struct</span> <span class="token class-name">forward_iterator</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">typedef</span> forward_iterator_tag    iterator_category<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> T                       value_type<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> Distance                difference_type<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> T<span class="token operator">*</span>                      pointer<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> T<span class="token operator">&amp;</span>                      reference<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Distance</span><span class="token operator">></span> <span class="token keyword">struct</span> <span class="token class-name">bidirectional_iterator</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">typedef</span> bidirectional_iterator_tag  iterator_category<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> T                           value_type<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> Distance                    difference_type<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> T<span class="token operator">*</span>                          pointer<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> T<span class="token operator">&amp;</span>                          reference<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Distance</span><span class="token operator">></span> <span class="token keyword">struct</span> <span class="token class-name">random_access_iterator</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">typedef</span> random_access_iterator_tag  iterator_category<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> T                           value_type<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> Distance                    difference_type<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> T<span class="token operator">*</span>                          pointer<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> T<span class="token operator">&amp;</span>                          reference<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>下面这个可以被自定义的迭代器继承，提供了默认参数</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">Category</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Distance</span> <span class="token operator">=</span> ptrdiff_t<span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Pointer</span> <span class="token operator">=</span> T<span class="token operator">*</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Reference</span> <span class="token operator">=</span> T<span class="token operator">&amp;</span><span class="token operator">></span>
+<span class="token keyword">struct</span> <span class="token class-name">iterator</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">typedef</span> Category    iterator_category<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> T           value_type<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> Distance    difference_type<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> Pointer     pointer<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> Reference   reference<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>可以这样写</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">Item</span><span class="token operator">></span>
+<span class="token keyword">struct</span> <span class="token class-name">ListIter</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> std<span class="token operator">::</span><span class="token class-name">iterator</span><span class="token operator">&lt;</span>std<span class="token operator">::</span><span class="token class-name">forward_iterator_tag</span><span class="token punctuation">,</span> <span class="token class-name">Item</span><span class="token operator">></span></span> <span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h4><p>函数<code>advance()</code>让迭代器移动<code>n</code>步，根据不同的迭代器类型，应该调用不同的函数</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">InputIterator</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Distance</span><span class="token operator">></span>
 <span class="token keyword">void</span> <span class="token function">advance</span><span class="token punctuation">(</span>InputIterator i<span class="token punctuation">,</span> Distance n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">is_random_access_iterator</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span>
@@ -581,12 +703,6 @@
 <p>这样到运行时才知道调用哪个版本，会影响程序效率，最好能够在编译期就选择正确的版本。重载函数机制可以达到这个目标</p>
 <p>可以让三个<code>advance_xx</code>同名，形成函数重载，然后加上一个标识类型的参数</p>
 <p>这个标识迭代器类型的参数可以通过<code>traits</code>来获取，这个相应型别必须是一个<code>class type</code>，不能只是数值号码类的东西，因为编译器需依赖它来进行重载决议</p>
-<p>可以这样定义迭代器类型</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">struct</span> <span class="token class-name">input_iterator_tag</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-<span class="token keyword">struct</span> <span class="token class-name">output_iterator_tag</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-<span class="token keyword">struct</span> <span class="token class-name">forward_iterator_tag</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">input_iterator_tag</span></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-<span class="token keyword">struct</span> <span class="token class-name">bidirectional_iterator_tag</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">forward_iterator_tag</span></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-<span class="token keyword">struct</span> <span class="token class-name">random_access_iterator_tag</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">bidirectional_iterator_tag</span></span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这样<code>advance()</code>就可以写成</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">InputIterator</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Distance</span><span class="token operator">></span>
 <span class="token keyword">inline</span> <span class="token keyword">void</span> <span class="token function">advance</span><span class="token punctuation">(</span>InputIterator<span class="token punctuation">,</span> Distance n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -634,6 +750,68 @@
     <span class="token function">func</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> <span class="token function">D1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// B version，调用了父类版本的函数</span>
     <span class="token function">func</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span> <span class="token function">D2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// D2 version</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>三个版本的<code>_advance</code>函数</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">InputIterator</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Distance</span><span class="token operator">></span>
+<span class="token keyword">void</span> <span class="token function">_advance</span><span class="token punctuation">(</span>InputIterator<span class="token operator">&amp;</span> it<span class="token punctuation">,</span> Distance n<span class="token punctuation">,</span> input_iterator_tag<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>n<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token operator">++</span>it<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 双向移动版本</span>
+<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">BidirectionIterator</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Distance</span><span class="token operator">></span>
+<span class="token keyword">void</span> <span class="token function">_advance</span><span class="token punctuation">(</span>BidirectionIterator<span class="token operator">&amp;</span> it<span class="token punctuation">,</span> Distance n<span class="token punctuation">,</span> bidirectional_iterator_tag<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>n<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token operator">--</span>it<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>n<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token operator">++</span>it<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 随机访问版本</span>
+<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">RandomIterator</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Distance</span><span class="token operator">></span>
+<span class="token keyword">void</span> <span class="token function">_advance</span><span class="token punctuation">(</span>RandomIterator<span class="token operator">&amp;</span> it<span class="token punctuation">,</span> Distance n<span class="token punctuation">,</span> random_access_iterator_tag<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        it <span class="token operator">-=</span> <span class="token punctuation">(</span><span class="token operator">-</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        it <span class="token operator">+=</span> n<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">InputIterator</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Distance</span><span class="token operator">></span> 
+<span class="token keyword">void</span> <span class="token function">advance</span><span class="token punctuation">(</span>InputIterator<span class="token operator">&amp;</span> it<span class="token punctuation">,</span> Distance n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">typedef</span> <span class="token keyword">typename</span> <span class="token class-name">iterator_traits</span><span class="token operator">&lt;</span>InputIterator<span class="token operator">></span><span class="token operator">::</span>iterator_category iterator_category<span class="token punctuation">;</span>
+    <span class="token function">_advance</span><span class="token punctuation">(</span>it<span class="token punctuation">,</span> n<span class="token punctuation">,</span> <span class="token function">iterator_category</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>distance</code>也是同理</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">InputIterator</span><span class="token operator">></span>
+<span class="token keyword">typename</span> <span class="token class-name">iterator_traits</span><span class="token operator">&lt;</span>InputIterator<span class="token operator">></span><span class="token operator">::</span>difference_type
+    <span class="token function">_distance</span><span class="token punctuation">(</span>InputIterator first<span class="token punctuation">,</span> InputIterator last<span class="token punctuation">,</span> input_iterator_tag<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">typename</span> <span class="token class-name">iterator_traits</span><span class="token operator">&lt;</span>InputIterator<span class="token operator">></span><span class="token operator">::</span>difference_type dist <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>first<span class="token operator">++</span> <span class="token operator">!=</span> last<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token operator">++</span>dist<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> dist<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 随机访问版本</span>
+<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">RandomIterator</span><span class="token operator">></span>
+<span class="token keyword">typename</span> <span class="token class-name">iterator_traits</span><span class="token operator">&lt;</span>RandomIterator<span class="token operator">></span><span class="token operator">::</span>difference_type
+    <span class="token function">_distance</span><span class="token punctuation">(</span>RandomIterator first<span class="token punctuation">,</span> RandomIterator last<span class="token punctuation">,</span> random_access_iterator_tag<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">auto</span> dist <span class="token operator">=</span> last <span class="token operator">-</span> first<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> dist<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">Iterator</span><span class="token operator">></span>
+<span class="token keyword">typename</span> <span class="token class-name">iterator_traits</span><span class="token operator">&lt;</span>Iterator<span class="token operator">></span><span class="token operator">::</span>difference_type
+    <span class="token function">distance</span><span class="token punctuation">(</span>Iterator first<span class="token punctuation">,</span> Iterator last<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">typedef</span> <span class="token keyword">typename</span> <span class="token class-name">iterator_traits</span><span class="token operator">&lt;</span>Iterator<span class="token operator">></span><span class="token operator">::</span>iterator_category iterator_category<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token function">_distance</span><span class="token punctuation">(</span>first<span class="token punctuation">,</span> last<span class="token punctuation">,</span> <span class="token function">iterator_category</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
