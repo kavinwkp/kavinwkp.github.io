@@ -566,7 +566,7 @@
 <li>读取以及检测一条记录是否符合搜索条件的成本默认是 0.2 </li>
 </ul>
 </blockquote>
-<h4 id="12-2-2-基于成本的优化步骤"><a href="#12-2-2-基于成本的优化步骤" class="headerlink" title="12.2.2 基于成本的优化步骤"></a>12.2.2 基于成本的优化步骤</h4><p>MySQL 的查询优化器会找出执行该语句所有可能使用的方案，对比之后找出<font color="LightSeaGreen">成本最低</font>的方案，这个成本最低的方案就是所谓的<font color="LightSeaGreen">执行计划</font>，之后才会调用存储引擎提供的接口真正的执行查 询，这个过程总结一下就是这样:</p>
+<h3 id="12-2-2-基于成本的优化步骤"><a href="#12-2-2-基于成本的优化步骤" class="headerlink" title="12.2.2 基于成本的优化步骤"></a>12.2.2 基于成本的优化步骤</h3><p>MySQL 的查询优化器会找出执行该语句所有可能使用的方案，对比之后找出<font color="LightSeaGreen">成本最低</font>的方案，这个成本最低的方案就是所谓的<font color="LightSeaGreen">执行计划</font>，之后才会调用存储引擎提供的接口真正的执行查 询，这个过程总结一下就是这样:</p>
 <ol>
 <li>根据搜索条件，找出所有可能使用的索引</li>
 <li>计算全表扫描的代价</li>
@@ -679,7 +679,7 @@ Data_length: <span class="token number">1589248</span><span aria-hidden="true" c
 <li>使用<code>idx_key1</code>的成本：168.21</li>
 </ul>
 <p>很显然，使用<code>idx_key2</code>的成本最低，所以选择<code>idx_key2</code>来执行查询</p>
-<h4 id="12-2-3-基于索引统计数据的成本计算"><a href="#12-2-3-基于索引统计数据的成本计算" class="headerlink" title="12.2.3 基于索引统计数据的成本计算"></a>12.2.3 基于索引统计数据的成本计算</h4><p>通过直接访问索引对应的 B+ 树来计算某个范围区间对应的索引记录条数的方式称之为<code>index dive</code></p>
+<h3 id="12-2-3-基于索引统计数据的成本计算"><a href="#12-2-3-基于索引统计数据的成本计算" class="headerlink" title="12.2.3 基于索引统计数据的成本计算"></a>12.2.3 基于索引统计数据的成本计算</h3><p>通过直接访问索引对应的 B+ 树来计算某个范围区间对应的索引记录条数的方式称之为<code>index dive</code></p>
 <p>如果单点扫描区间很多，<code>index dive</code>次数很多，也会有性能损耗</p>
 <p>可以查看系统变量<code>eq_range_index_dive_limit</code></p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">SHOW</span> VARIABLES <span class="token operator">LIKE</span> <span class="token string">'%dive%'</span><span class="token punctuation">;</span> 
@@ -711,7 +711,7 @@ Data_length: <span class="token number">1589248</span><span aria-hidden="true" c
 <p>比如<code>Rows</code>值是 9693 ，它对应索引列<code>key1</code>的<code>Cardinality</code>值是 968 ，所以我们可以计算<code>key1</code>列平均单个值的重复次数就是：9693 ÷ 968 ≈ 10（条）</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> single_table <span class="token keyword">WHERE</span> key1 <span class="token operator">IN</span> <span class="token punctuation">(</span><span class="token string">'aa1'</span><span class="token punctuation">,</span> <span class="token string">'aa2'</span><span class="token punctuation">,</span> <span class="token string">'aa3'</span><span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">,</span> <span class="token string">'zzz'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>假设<code>IN</code>语句中有 20000 个参数的话，就直接使用统计数据来估算这些参数需要单点区间对应的记录条数了，每个参数大约对应 10 条记录，所以总共需要回表的记录数就是：20000 x 10 = 200000</p>
-<h3 id="12-3-连接查询的成本"><a href="#12-3-连接查询的成本" class="headerlink" title="12.3  连接查询的成本"></a>12.3  连接查询的成本</h3><h4 id="12-3-2-条件过滤（Condition-Filtering）"><a href="#12-3-2-条件过滤（Condition-Filtering）" class="headerlink" title="12.3.2 条件过滤（Condition Filtering）"></a>12.3.2 条件过滤（Condition Filtering）</h4><p>对于两表连接查询来说，它的查询成本由下边两个部分构成：</p>
+<h2 id="12-3-连接查询的成本"><a href="#12-3-连接查询的成本" class="headerlink" title="12.3  连接查询的成本"></a>12.3  连接查询的成本</h2><h3 id="12-3-2-条件过滤（Condition-Filtering）"><a href="#12-3-2-条件过滤（Condition-Filtering）" class="headerlink" title="12.3.2 条件过滤（Condition Filtering）"></a>12.3.2 条件过滤（Condition Filtering）</h3><p>对于两表连接查询来说，它的查询成本由下边两个部分构成：</p>
 <ul>
 <li>单次查询驱动表的成本</li>
 <li>多次查询被驱动表的成本（具体查询多少次取决于对驱动表查询的结果集中有多少条记录）</li>
@@ -724,7 +724,7 @@ Data_length: <span class="token number">1589248</span><span aria-hidden="true" c
 <li>如果使用的是全表扫描的方式执行的单表查询，那么计算驱动表扇出时需要猜满足搜索条件的记录到底有多少条</li>
 <li>如果使用的是索引执行的单表扫描，那么计算驱动表扇出的时候需要猜满足除使用到对应索引的搜索条件外的其他搜索条件的记录有多少条</li>
 </ul>
-<h4 id="12-3-3-两表连接的成本分析"><a href="#12-3-3-两表连接的成本分析" class="headerlink" title="12.3.3 两表连接的成本分析"></a>12.3.3 两表连接的成本分析</h4><blockquote>
+<h3 id="12-3-3-两表连接的成本分析"><a href="#12-3-3-两表连接的成本分析" class="headerlink" title="12.3.3 两表连接的成本分析"></a>12.3.3 两表连接的成本分析</h3><blockquote>
 <p>连接查询总成本 = 单次访问驱动表的成本 + 驱动表扇出数 x 单次访问被驱动表的成本</p>
 </blockquote>
 <p>优化重点其实是下边这两个部分：</p>
@@ -738,7 +738,7 @@ Data_length: <span class="token number">1589248</span><span aria-hidden="true" c
 <li>如果可以，被驱动表的连接列最好是该表的主键或者唯一二级索引列，这样就可以把访问被驱动表的成本降到更低了</li>
 </ul>
 </blockquote>
-<h4 id="12-3-4-多表连接的成本分析"><a href="#12-3-4-多表连接的成本分析" class="headerlink" title="12.3.4 多表连接的成本分析"></a>12.3.4 多表连接的成本分析</h4><p>在计算各种链接顺序的成本之前，会维护一个全局的变量，这个变量表示当前最小的连接查询成本。如果在分析某个连接顺序的成本时，该成本已经超过当前最小的连接查询成本，那就不对该连接顺序继续往下分析了</p>
+<h3 id="12-3-4-多表连接的成本分析"><a href="#12-3-4-多表连接的成本分析" class="headerlink" title="12.3.4 多表连接的成本分析"></a>12.3.4 多表连接的成本分析</h3><p>在计算各种链接顺序的成本之前，会维护一个全局的变量，这个变量表示当前最小的连接查询成本。如果在分析某个连接顺序的成本时，该成本已经超过当前最小的连接查询成本，那就不对该连接顺序继续往下分析了</p>
 
                 
             </div>

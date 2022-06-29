@@ -560,8 +560,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="10-2-const"><a href="#10-2-const" class="headerlink" title="10.2 const"></a>10.2 const</h3><p>通过<font color="LightSeaGreen">主键</font>或者<font color="LightSeaGreen">唯一二级索引</font>来定位一条记录的访问方法定义为<code>const</code></p>
-<h3 id="10-3-ref"><a href="#10-3-ref" class="headerlink" title="10.3 ref"></a>10.3 ref</h3><p>搜索条件为二级索引列与常数进行等值比较，形成的扫描区间为<font color="LightSeaGreen">单点扫描区间</font>，采用二级索引来执行查询的访问方法称为<code>ref</code></p>
+                <h2 id="10-2-const"><a href="#10-2-const" class="headerlink" title="10.2 const"></a>10.2 const</h2><p>通过<font color="LightSeaGreen">主键</font>或者<font color="LightSeaGreen">唯一二级索引</font>来定位一条记录的访问方法定义为<code>const</code></p>
+<h2 id="10-3-ref"><a href="#10-3-ref" class="headerlink" title="10.3 ref"></a>10.3 ref</h2><p>搜索条件为二级索引列与常数进行等值比较，形成的扫描区间为<font color="LightSeaGreen">单点扫描区间</font>，采用二级索引来执行查询的访问方法称为<code>ref</code></p>
 <p>对于普通的二级索引来说，通过索引列进行等值比较后可能会匹配到多条连续的二级索引记录，而不是像主键索引或者唯一二级索引那样最多只能匹配一条记录，所以这种<code>ref</code>访问方法比<code>const</code>差一些</p>
 <ul>
 <li>在二级索引列允许存储<code>NULL</code>值时，无论是普通的二级索引，还是唯一二级索引，它们的索引列并不限制<code>NULL</code>值的数量，所以在执行包含<code>key IS NULL</code>形式的搜索条件的查询时，最多只能使用<code>ref</code>访问方法，而不能使用<code>const</code>访问方法</li>
@@ -570,15 +570,15 @@
 <blockquote>
 <p>如果索引列中最左边连续的列不全是等值比较的话，就不能称为<code>ref</code>了</p>
 </blockquote>
-<h3 id="10-4-ref-or-null"><a href="#10-4-ref-or-null" class="headerlink" title="10.4 ref_or_null"></a>10.4 ref_or_null</h3><blockquote>
+<h2 id="10-4-ref-or-null"><a href="#10-4-ref-or-null" class="headerlink" title="10.4 ref_or_null"></a>10.4 ref_or_null</h2><blockquote>
 <p>值为NULL的记录会被放在索引的最左边</p>
 </blockquote>
 <p>如果不仅要找出某个二级索引列的值等于某个常数的记录，而且还要把该列中值为<code>NULL</code>的记录也找出来，这种访问方法称为<code>ref_or_null</code></p>
-<h3 id="10-5-range"><a href="#10-5-range" class="headerlink" title="10.5 range"></a>10.5 range</h3><p>使用索引执行查询时，对应的扫描区间为若干个单点扫描区间或者范围扫描区间的访问方法称为<code>range</code></p>
-<h3 id="10-6-index"><a href="#10-6-index" class="headerlink" title="10.6 index"></a>10.6 index</h3><p>扫描全不二级索引记录且不需要回表的访问方法称为<code>index</code>，如果添加了“ORDER BY 主键”的语句，也会被认定为<code>index</code>访问方法</p>
-<h3 id="10-7-all"><a href="#10-7-all" class="headerlink" title="10.7 all"></a>10.7 all</h3><p>全表扫描称为<code>all</code>访问方法</p>
-<h3 id="10-8-注意事项"><a href="#10-8-注意事项" class="headerlink" title="10.8 注意事项"></a>10.8 注意事项</h3><p>如果有多个索引可以使用，优化器会通过访问表中的少量数据或者直接根据事先生成的统计数据，来计算扫描区间包含多少条记录，选择成本更小的那个扫描区间对应的索引执行查询</p>
-<h4 id="10-8-2-索引合并"><a href="#10-8-2-索引合并" class="headerlink" title="10.8.2 索引合并"></a>10.8.2 索引合并</h4><p>1、<code>Intersection</code>索引合并</p>
+<h2 id="10-5-range"><a href="#10-5-range" class="headerlink" title="10.5 range"></a>10.5 range</h2><p>使用索引执行查询时，对应的扫描区间为若干个单点扫描区间或者范围扫描区间的访问方法称为<code>range</code></p>
+<h2 id="10-6-index"><a href="#10-6-index" class="headerlink" title="10.6 index"></a>10.6 index</h2><p>扫描全不二级索引记录且不需要回表的访问方法称为<code>index</code>，如果添加了“ORDER BY 主键”的语句，也会被认定为<code>index</code>访问方法</p>
+<h2 id="10-7-all"><a href="#10-7-all" class="headerlink" title="10.7 all"></a>10.7 all</h2><p>全表扫描称为<code>all</code>访问方法</p>
+<h2 id="10-8-注意事项"><a href="#10-8-注意事项" class="headerlink" title="10.8 注意事项"></a>10.8 注意事项</h2><p>如果有多个索引可以使用，优化器会通过访问表中的少量数据或者直接根据事先生成的统计数据，来计算扫描区间包含多少条记录，选择成本更小的那个扫描区间对应的索引执行查询</p>
+<h3 id="10-8-2-索引合并"><a href="#10-8-2-索引合并" class="headerlink" title="10.8.2 索引合并"></a>10.8.2 索引合并</h3><p>1、<code>Intersection</code>索引合并</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> single_table <span class="token keyword">WHERE</span> key1<span class="token operator">=</span><span class="token string">'a'</span> <span class="token operator">AND</span> key3<span class="token operator">=</span><span class="token string">'b'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>这里可以使用<code>idx_key1</code>或者<code>idx_key3</code>，还有一种方案是索引合并：同时使用<code>idx_key1</code>和<code>idx_key3</code>执行查询</p>
 <p>分别在两个索引中查找满足条件的二级索引记录，然后从两者的操作结果中找出<code>id</code>列值相同的记录，然后再根据这些公有的<code>id</code>值执行回表操作，这样可能省下很多回表操作带来的开销，注意这里从两个索引获取到的记录都是按照<code>id</code>排序的</p>

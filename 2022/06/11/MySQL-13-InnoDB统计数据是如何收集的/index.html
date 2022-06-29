@@ -560,11 +560,11 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="13-1-统计数据的存储方式"><a href="#13-1-统计数据的存储方式" class="headerlink" title="13.1 统计数据的存储方式"></a>13.1 统计数据的存储方式</h3><ul>
+                <h2 id="13-1-统计数据的存储方式"><a href="#13-1-统计数据的存储方式" class="headerlink" title="13.1 统计数据的存储方式"></a>13.1 统计数据的存储方式</h2><ul>
 <li>永久性的统计数据：这种统计数据存储在磁盘上，也就是服务器重启之后这些统计数据还在</li>
 <li>非永久性的统计数据：这种统计数据存储在内存中，当服务器关闭时这些这些统计数据就都被清除掉了，等到服务器重启之后，在某些适当的场景下才会重新收集这些统计数据</li>
 </ul>
-<h3 id="13-2-基于磁盘的永久性统计数据"><a href="#13-2-基于磁盘的永久性统计数据" class="headerlink" title="13.2  基于磁盘的永久性统计数据"></a>13.2  基于磁盘的永久性统计数据</h3><p>当我们选择把某个表以及该表索引的统计数据存放到磁盘上时，实际上是把这些统计数据存储到了两个表里</p>
+<h2 id="13-2-基于磁盘的永久性统计数据"><a href="#13-2-基于磁盘的永久性统计数据" class="headerlink" title="13.2  基于磁盘的永久性统计数据"></a>13.2  基于磁盘的永久性统计数据</h2><p>当我们选择把某个表以及该表索引的统计数据存放到磁盘上时，实际上是把这些统计数据存储到了两个表里</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">show</span> <span class="token keyword">tables</span> <span class="token keyword">from</span> mysql <span class="token operator">like</span> <span class="token string">'innodb%stats'</span><span class="token punctuation">;</span>
 <span class="token operator">+</span><span class="token comment">--------------------------------+</span>
 <span class="token operator">|</span> Tables_in_mysql <span class="token punctuation">(</span><span class="token keyword">innodb</span><span class="token operator">%</span>stats<span class="token punctuation">)</span> <span class="token operator">|</span>
@@ -576,7 +576,7 @@
 <li><code>innodb_table_stats</code>存储了关于表的统计数据，每一条记录对应着一个表的统计数据</li>
 <li><code>innodb_index_stats</code>存储了关于索引的统计数据，每一条记录对应着一个索引的一个统计项的统计数据</li>
 </ul>
-<h4 id="13-2-1-innodb-table-stats"><a href="#13-2-1-innodb-table-stats" class="headerlink" title="13.2.1 innodb_table_stats"></a>13.2.1 innodb_table_stats</h4><div class="table-container">
+<h3 id="13-2-1-innodb-table-stats"><a href="#13-2-1-innodb-table-stats" class="headerlink" title="13.2.1 innodb_table_stats"></a>13.2.1 innodb_table_stats</h3><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -618,7 +618,7 @@
 <p><code>n_rows</code>值精确与否取决于统计时采样的页面数量</p>
 </blockquote>
 <p>系统变量<code>innodb_stats_persistent_sample_pages</code>用来控制使用永久性的统计数据时，计算统计数据时采样的页面数量，默认值是 20 </p>
-<h4 id="13-2-2-innodb-index-stats"><a href="#13-2-2-innodb-index-stats" class="headerlink" title="13.2.2 innodb_index_stats"></a>13.2.2 innodb_index_stats</h4><div class="table-container">
+<h3 id="13-2-2-innodb-index-stats"><a href="#13-2-2-innodb-index-stats" class="headerlink" title="13.2.2 innodb_index_stats"></a>13.2.2 innodb_index_stats</h3><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -703,7 +703,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="13-3-3-定期更新统计数据"><a href="#13-3-3-定期更新统计数据" class="headerlink" title="13.3.3 定期更新统计数据"></a>13.3.3 定期更新统计数据</h4><p>系统变量<code>innodb_stats_auto_recalc</code>决定着服务器是否自动重新计算统计数据，它的默认值是<code>ON</code>，也就是该功能默认是开启的。</p>
+<h3 id="13-3-3-定期更新统计数据"><a href="#13-3-3-定期更新统计数据" class="headerlink" title="13.3.3 定期更新统计数据"></a>13.3.3 定期更新统计数据</h3><p>系统变量<code>innodb_stats_auto_recalc</code>决定着服务器是否自动重新计算统计数据，它的默认值是<code>ON</code>，也就是该功能默认是开启的。</p>
 <p>每个表都维护了一个变量，该变量记录着对该表进行增删改的记录条数，如果发生变动的记录数量超过了表大小的 10% ，并且自动重新计算统计数据的功能是打开的，那么服务器会重新进行一次统计数据的计算，并且更新<code>innodb_table_stats</code>和<code>innodb_index_stats</code>表</p>
 <p>不过自动重新计算统计数据的过程是异步发生的，也就是即使表中变动的记录数超过了 10% ，自动重新计算统计数据也不会立即发生，可能会延迟几秒才会进行计算</p>
 <ul>
@@ -711,7 +711,7 @@
 </ul>
 <p>如果<code>innodb_stats_auto_recalc</code>系统变量的值为<code>OFF</code>的话，我们也可以手动调用<code>ANALYZE TABLE</code>语句来重新计算统计数据</p>
 <p><code>ANALYZE TABLE</code>语句会立即重新计算统计数据，也就是这个过程是同步的</p>
-<h3 id="13-4-innodb-stats-method的使用"><a href="#13-4-innodb-stats-method的使用" class="headerlink" title="13.4 innodb_stats_method的使用"></a>13.4 innodb_stats_method的使用</h3><p>索引列不重复的值的数量这个统计数据对于 MySQL 查询优化器十分重要，因为通过它可以计算出在索引列中平均一个值重复多少行，它的应用场景主要有两个</p>
+<h2 id="13-4-innodb-stats-method的使用"><a href="#13-4-innodb-stats-method的使用" class="headerlink" title="13.4 innodb_stats_method的使用"></a>13.4 innodb_stats_method的使用</h2><p>索引列不重复的值的数量这个统计数据对于 MySQL 查询优化器十分重要，因为通过它可以计算出在索引列中平均一个值重复多少行，它的应用场景主要有两个</p>
 <ul>
 <li>单表查询中单点区间太多</li>
 </ul>
@@ -963,13 +963,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/06/12/C-STL-3-%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A6%82%E5%BF%B5%E4%B8%8Etraits%E7%BC%96%E7%A8%8B%E6%8A%80%E6%B3%95/">
+                <a href="/2022/06/11/MySQL-17-InnoDB%E7%9A%84BufferPool/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="3-迭代器概念与traits编程技法">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="17-InnoDB的BufferPool">
                         
-                        <span class="card-title">3-迭代器概念与traits编程技法</span>
+                        <span class="card-title">17-InnoDB的BufferPool</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -980,14 +980,14 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-06-12
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-06-11
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/C/" class="post-category">
-                                    C++
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
                                 </a>
                             
                             
@@ -997,8 +997,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/STL/">
-                        <span class="chip bg-color">STL</span>
+                    <a href="/tags/MySQL/">
+                        <span class="chip bg-color">MySQL</span>
                     </a>
                     
                 </div>

@@ -560,13 +560,13 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="11-1-2-连接过程简介"><a href="#11-1-2-连接过程简介" class="headerlink" title="11.1.2 连接过程简介"></a>11.1.2 连接过程简介</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> t1<span class="token punctuation">,</span> t2 <span class="token keyword">WHERE</span> t1<span class="token punctuation">.</span>m1 <span class="token operator">></span> <span class="token number">1</span> <span class="token operator">AND</span> t1<span class="token punctuation">.</span>m1 <span class="token operator">=</span> t2<span class="token punctuation">.</span>m2 <span class="token operator">AND</span> t2<span class="token punctuation">.</span>n2 <span class="token operator">&lt;</span> <span class="token string">'d'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+                <h3 id="11-1-2-连接过程简介"><a href="#11-1-2-连接过程简介" class="headerlink" title="11.1.2 连接过程简介"></a>11.1.2 连接过程简介</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> t1<span class="token punctuation">,</span> t2 <span class="token keyword">WHERE</span> t1<span class="token punctuation">.</span>m1 <span class="token operator">></span> <span class="token number">1</span> <span class="token operator">AND</span> t1<span class="token punctuation">.</span>m1 <span class="token operator">=</span> t2<span class="token punctuation">.</span>m2 <span class="token operator">AND</span> t2<span class="token punctuation">.</span>n2 <span class="token operator">&lt;</span> <span class="token string">'d'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>连接查询的执行过程大致如下：</p>
 <ul>
 <li>首先确定第一个需要查询的表，称为驱动表</li>
 <li>从驱动表中每获取到一条记录，都需要到t2表中查找匹配的记录，t2表称为被驱动表</li>
 </ul>
-<h4 id="11-1-3-内连接和外连接"><a href="#11-1-3-内连接和外连接" class="headerlink" title="11.1.3 内连接和外连接"></a>11.1.3 内连接和外连接</h4><p>针对驱动表中的某条记录，即使在被驱动表中没有匹配的记录，也仍然需要加入到结果集。为了解决这个问题，就有了<font color="LightSeaGreen">内连接</font>和<font color="Coral">外连接</font>的概念</p>
+<h3 id="11-1-3-内连接和外连接"><a href="#11-1-3-内连接和外连接" class="headerlink" title="11.1.3 内连接和外连接"></a>11.1.3 内连接和外连接</h3><p>针对驱动表中的某条记录，即使在被驱动表中没有匹配的记录，也仍然需要加入到结果集。为了解决这个问题，就有了<font color="LightSeaGreen">内连接</font>和<font color="Coral">外连接</font>的概念</p>
 <ul>
 <li>对于<font color="LightSeaGreen">内连接</font>的两个表，驱动表中的记录在被驱动表中找不到匹配的记录，该记录不会加入到最后的结果集</li>
 <li>对于<font color="Coral">外连接</font>的两个表，驱动表中的记录即使在被驱动表中没有匹配的记录，<font color="Coral">也仍然需要加入到结果集</font></li>
@@ -601,8 +601,8 @@
 <p>由于在内连接中<code>ON</code>子句和<code>WHERE</code>子句是等价的，所以内连接中不要求强制写明<code>ON</code>子句</p>
 </blockquote>
 <p>对于内连接来说，驱动表和被驱动表是可以互换的，并不会影响最后的查询结果</p>
-<h3 id="11-2-连接的原理"><a href="#11-2-连接的原理" class="headerlink" title="11.2 连接的原理"></a>11.2 连接的原理</h3><h4 id="11-2-1-嵌套循环连接"><a href="#11-2-1-嵌套循环连接" class="headerlink" title="11.2.1 嵌套循环连接"></a>11.2.1 嵌套循环连接</h4><p>驱动表只访问一次，但被驱动表却可能被多次访问，访问次数取决于对驱动表执行单表查询后的结果集中的记录条数的连接执行方式称之为<font color="LightSeaGreen">嵌套循环连接</font></p>
-<h4 id="11-2-2-使用索引加快连接速度"><a href="#11-2-2-使用索引加快连接速度" class="headerlink" title="11.2.2 使用索引加快连接速度"></a>11.2.2 使用索引加快连接速度</h4><p>如果访问被驱动表的方式都是全表扫描，就需要扫描很多次，所以可以给连接查询加上索引</p>
+<h2 id="11-2-连接的原理"><a href="#11-2-连接的原理" class="headerlink" title="11.2 连接的原理"></a>11.2 连接的原理</h2><h3 id="11-2-1-嵌套循环连接"><a href="#11-2-1-嵌套循环连接" class="headerlink" title="11.2.1 嵌套循环连接"></a>11.2.1 嵌套循环连接</h3><p>驱动表只访问一次，但被驱动表却可能被多次访问，访问次数取决于对驱动表执行单表查询后的结果集中的记录条数的连接执行方式称之为<font color="LightSeaGreen">嵌套循环连接</font></p>
+<h3 id="11-2-2-使用索引加快连接速度"><a href="#11-2-2-使用索引加快连接速度" class="headerlink" title="11.2.2 使用索引加快连接速度"></a>11.2.2 使用索引加快连接速度</h3><p>如果访问被驱动表的方式都是全表扫描，就需要扫描很多次，所以可以给连接查询加上索引</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> t1<span class="token punctuation">,</span> t2 <span class="token keyword">WHERE</span> t1<span class="token punctuation">.</span>m1 <span class="token operator">></span> <span class="token number">1</span> <span class="token operator">AND</span> t1<span class="token punctuation">.</span>m1 <span class="token operator">=</span> t2<span class="token punctuation">.</span>m2 <span class="token operator">AND</span> t2<span class="token punctuation">.</span>n2 <span class="token operator">&lt;</span> <span class="token string">'d'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>这里可以考虑在<code>t2</code>表的<code>m2</code>列或者<code>n2</code>列上加索引</p>
 <ul>
@@ -617,7 +617,7 @@
 <ul>
 <li>在<code>n2</code>列上建立索引，涉及到的条件是<code>t2.n2 &lt; &#39;d&#39;</code>，可能用到<code>range</code>的访问方法</li>
 </ul>
-<h4 id="11-2-3-基于块的嵌套循环连接"><a href="#11-2-3-基于块的嵌套循环连接" class="headerlink" title="11.2.3 基于块的嵌套循环连接"></a>11.2.3 基于块的嵌套循环连接</h4><p><code>Join Buffer</code>就是执行连接查询前申请的一块固定大小的内存，先把若干条驱动表结果集中的记录装在这个<code>Join Buffer</code>中，然后开始扫描被驱动表，每一条被驱动表的记录一次性和<code>Join Buffer</code>中的多条驱动表记录做匹配，因为匹配的过程都是在内存中完成的，所以这样可以显著减少被驱动表的I/O代价</p>
+<h3 id="11-2-3-基于块的嵌套循环连接"><a href="#11-2-3-基于块的嵌套循环连接" class="headerlink" title="11.2.3 基于块的嵌套循环连接"></a>11.2.3 基于块的嵌套循环连接</h3><p><code>Join Buffer</code>就是执行连接查询前申请的一块固定大小的内存，先把若干条驱动表结果集中的记录装在这个<code>Join Buffer</code>中，然后开始扫描被驱动表，每一条被驱动表的记录一次性和<code>Join Buffer</code>中的多条驱动表记录做匹配，因为匹配的过程都是在内存中完成的，所以这样可以显著减少被驱动表的I/O代价</p>
 <p>最好的情况是<code>Join Buffer</code>足够大，能容纳驱动表结果集中的所有记录，这样只需要访问一次被驱动表就可以完成连接操作了</p>
 <p>这种加入了<code>Join Buffer</code>的嵌套循环连接算法称之为<font color="LightSeaGreen">基于块的嵌套连接</font></p>
 <p>对于优化被驱动表的查询来说，最好是为被驱动表加上效率高的索引，如果实在不能使用索引，并且自己的机器的内存也比较大可以尝试调大<code>join_buffer_size</code>的值来对连接查询进行优化</p>
