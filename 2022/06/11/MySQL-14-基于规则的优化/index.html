@@ -1,0 +1,1474 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="keywords" content="14-基于规则的优化, kunpeng">
+    <meta name="description" content="个人技术博客">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>14-基于规则的优化 | kunpeng</title>
+    <link rel="icon" type="image/png" href="/rocket.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<style type="text/css" lang="css">
+    #loading-container{
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-height: 100vh;
+        width: 100vw;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #FFF;
+        text-align: center;
+        /* loader页面消失采用渐隐的方式*/
+        -webkit-transition: opacity 1s ease;
+        -moz-transition: opacity 1s ease;
+        -o-transition: opacity 1s ease;
+        transition: opacity 1s ease;
+    }
+    .loading-image{
+        width: 120px;
+        height: 50px;
+        transform: translate(-50%);
+    }
+    
+    .loading-image div:nth-child(2) {
+        -webkit-animation: pacman-balls 1s linear 0s infinite;
+        animation: pacman-balls 1s linear 0s infinite
+    }
+
+    .loading-image div:nth-child(3) {
+        -webkit-animation: pacman-balls 1s linear .33s infinite;
+        animation: pacman-balls 1s linear .33s infinite
+    }
+
+    .loading-image div:nth-child(4) {
+        -webkit-animation: pacman-balls 1s linear .66s infinite;
+        animation: pacman-balls 1s linear .66s infinite
+    }
+
+    .loading-image div:nth-child(5) {
+        -webkit-animation: pacman-balls 1s linear .99s infinite;
+        animation: pacman-balls 1s linear .99s infinite
+    }
+    
+   .loading-image div:first-of-type {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_up .5s 0s infinite;
+        animation: rotate_pacman_half_up .5s 0s infinite;
+    }
+    .loading-image div:nth-child(2) {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_down .5s 0s infinite;
+        animation: rotate_pacman_half_down .5s 0s infinite;
+        margin-top: -50px;
+    }
+    @-webkit-keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @-webkit-keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+
+    @keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+    
+    @-webkit-keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+
+    @keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+    
+   
+    .loading-image div:nth-child(3),
+    .loading-image div:nth-child(4),
+    .loading-image div:nth-child(5),
+    .loading-image div:nth-child(6){
+        background-color: #49b1f5;
+        width: 15px;
+        height: 15px;
+        border-radius: 100%;
+        margin: 2px;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        transform: translateY(-6.25px);
+        top: 25px;
+        left: 100px;
+    }
+    .loading-text{
+        margin-bottom: 20vh;
+        text-align: center;
+        color: #2c3e50;
+        font-size: 2rem;
+        box-sizing: border-box;
+        padding: 0 10px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    @media only screen and (max-width: 500px) {
+         .loading-text{
+            font-size: 1.5rem;
+         }
+    }
+    .fadeout {
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+    /* logo出现动画 */
+    @-webkit-keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}100%{opacity:1;-webkit-transform:none;transform:none}}
+    @keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);}}
+ </style>
+ <script>
+(function () {
+    const loaded = function(){
+       setTimeout(function(){
+            const loader = document.getElementById("loading-container");
+            loader.className="fadeout" ;//使用渐隐的方法淡出loading page
+            // document.getElementById("body-wrap").style.display="flex";
+            setTimeout(function(){
+                loader.style.display="none";
+            },1000); 
+        },1000);//强制显示loading page 1s  
+    };
+    loaded();
+})()
+ </script><meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+
+
+
+
+ <div id="loading-container">
+     <p class="loading-text">玩命加载中 . . . </p> 
+     <div class="loading-image">
+         <div></div>
+         <div></div>
+         <div></div>
+         <div></div> 
+         <div></div>
+     </div>
+ </div><body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/kavin.jpg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">kunpeng</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/kavin.jpg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">kunpeng</div>
+        <div class="logo-desc">
+            
+            个人技术博客
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">14-基于规则的优化</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+        background-color: rgb(255, 255, 255,0.7);
+        border-radius: 10px;
+        box-shadow: 0 10px 35px 2px rgba(0, 0, 0, .15), 0 5px 15px rgba(0, 0, 0, .07), 0 2px 5px -5px rgba(0, 0, 0, .1) !important;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/MySQL/">
+                                <span class="chip bg-color">MySQL</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                数据库
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-06-11
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="14-2-外连接消除"><a href="#14-2-外连接消除" class="headerlink" title="14.2 外连接消除"></a>14.2 外连接消除</h2><blockquote>
+<p>外连接和内连接的本质区别就是：对于外连接的驱动表的记录来说，如果无法在被驱动表中找到匹配<code>ON</code>子句中的过滤条件的记录，那么该记录仍然会被加入到结果集中，对应的被驱动表记录的各个字段使用<code>NULL</code>值填充；而内连接的驱动表的记录如果无法在被驱动表中找到匹配<code>ON</code>子句中的过滤条件的记录，那么该记录会被舍弃</p>
+</blockquote>
+<p>比如下面两个表<code>t1</code>、<code>t2</code></p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> t1<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------+------+</span>
+<span class="token operator">|</span> m1   <span class="token operator">|</span> n1   <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+------+</span>
+<span class="token operator">|</span>    <span class="token number">1</span> <span class="token operator">|</span> a    <span class="token operator">|</span>
+<span class="token operator">|</span>    <span class="token number">2</span> <span class="token operator">|</span> b    <span class="token operator">|</span>
+<span class="token operator">|</span>    <span class="token number">3</span> <span class="token operator">|</span> c    <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+------+</span>
+    
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> t2<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------+------+</span>
+<span class="token operator">|</span> m2   <span class="token operator">|</span> n2   <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+------+</span>
+<span class="token operator">|</span>    <span class="token number">2</span> <span class="token operator">|</span> b    <span class="token operator">|</span>
+<span class="token operator">|</span>    <span class="token number">3</span> <span class="token operator">|</span> c    <span class="token operator">|</span>
+<span class="token operator">|</span>    <span class="token number">4</span> <span class="token operator">|</span> d    <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+------+</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>使用外连接，没匹配上的会填充<code>NULl</code></p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> t1 <span class="token keyword">left</span> <span class="token keyword">join</span> t2 <span class="token keyword">on</span> t1<span class="token punctuation">.</span>m1 <span class="token operator">=</span> t2<span class="token punctuation">.</span>m2<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------+------+------+------+</span>
+<span class="token operator">|</span> m1   <span class="token operator">|</span> n1   <span class="token operator">|</span> m2   <span class="token operator">|</span> n2   <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+------+------+------+</span>
+<span class="token operator">|</span>    <span class="token number">1</span> <span class="token operator">|</span> a    <span class="token operator">|</span> <span class="token boolean">NULL</span> <span class="token operator">|</span> <span class="token boolean">NULL</span> <span class="token operator">|</span>
+<span class="token operator">|</span>    <span class="token number">2</span> <span class="token operator">|</span> b    <span class="token operator">|</span>    <span class="token number">2</span> <span class="token operator">|</span> b    <span class="token operator">|</span>
+<span class="token operator">|</span>    <span class="token number">3</span> <span class="token operator">|</span> c    <span class="token operator">|</span>    <span class="token number">3</span> <span class="token operator">|</span> c    <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+------+------+------+</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>使用内连接，没匹配上的就舍弃</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> t1 <span class="token keyword">inner</span> <span class="token keyword">join</span> t2 <span class="token keyword">on</span> t1<span class="token punctuation">.</span>m1 <span class="token operator">=</span> t2<span class="token punctuation">.</span>m2<span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------+------+------+------+</span>
+<span class="token operator">|</span> m1   <span class="token operator">|</span> n1   <span class="token operator">|</span> m2   <span class="token operator">|</span> n2   <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+------+------+------+</span>
+<span class="token operator">|</span>    <span class="token number">2</span> <span class="token operator">|</span> b    <span class="token operator">|</span>    <span class="token number">2</span> <span class="token operator">|</span> b    <span class="token operator">|</span>
+<span class="token operator">|</span>    <span class="token number">3</span> <span class="token operator">|</span> c    <span class="token operator">|</span>    <span class="token number">3</span> <span class="token operator">|</span> c    <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+------+------+------+</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>只要我们在搜索条件中指定关于被驱动表相关列的值不为<code>NULL</code>，那么外连接中在被驱动表中找不到符合<code>ON</code>子句条件的驱动表记录也就被排除出最后的结果集了，在这种情况下，外连接和内连接也就没有什么区别了</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> t1 <span class="token keyword">left</span> <span class="token keyword">join</span> t2 <span class="token keyword">on</span> t1<span class="token punctuation">.</span>m1 <span class="token operator">=</span> t2<span class="token punctuation">.</span>m2 <span class="token keyword">where</span> t2<span class="token punctuation">.</span>n2 <span class="token operator">is</span> <span class="token operator">not</span> <span class="token boolean">null</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------+------+------+------+</span>
+<span class="token operator">|</span> m1   <span class="token operator">|</span> n1   <span class="token operator">|</span> m2   <span class="token operator">|</span> n2   <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+------+------+------+</span>
+<span class="token operator">|</span>    <span class="token number">2</span> <span class="token operator">|</span> b    <span class="token operator">|</span>    <span class="token number">2</span> <span class="token operator">|</span> b    <span class="token operator">|</span>
+<span class="token operator">|</span>    <span class="token number">3</span> <span class="token operator">|</span> c    <span class="token operator">|</span>    <span class="token number">3</span> <span class="token operator">|</span> c    <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+------+------+------+</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>或者这样</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> t1 <span class="token keyword">left</span> <span class="token keyword">join</span> t2 <span class="token keyword">on</span> t1<span class="token punctuation">.</span>m1 <span class="token operator">=</span> t2<span class="token punctuation">.</span>m2 <span class="token keyword">where</span> t2<span class="token punctuation">.</span>m2 <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">------+------+------+------+</span>
+<span class="token operator">|</span> m1   <span class="token operator">|</span> n1   <span class="token operator">|</span> m2   <span class="token operator">|</span> n2   <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+------+------+------+</span>
+<span class="token operator">|</span>    <span class="token number">2</span> <span class="token operator">|</span> b    <span class="token operator">|</span>    <span class="token number">2</span> <span class="token operator">|</span> b    <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">------+------+------+------+</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这种在外连接查询中，指定的<code>WHERE</code>子句中包含被驱动表中的列不为<code>NULL</code>值的条件称之为空值拒绝</p>
+<p>在被驱动表的<code>WHERE</code>子句符合空值拒绝的条件后，<font color="LightSeaGreen">外连接和内连接可以相互转换</font>。这种转换带来的好处就是<font color="LightSeaGreen">查询优化器可以通过评估表的不同连接顺序的成本，选出成本最低的那种连接顺序来执行查询</font></p>
+<h2 id="14-3-子查询优化"><a href="#14-3-子查询优化" class="headerlink" title="14.3 子查询优化"></a>14.3 子查询优化</h2><p>放在<code>FROM</code>子句后面的子查询称为<font color="LightSeaGreen">派生表</font></p>
+<p>1、按返回的结果集区分子查询</p>
+<ul>
+<li>标量子查询：只返回一个单一值的子查询</li>
+</ul>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token punctuation">(</span><span class="token keyword">SELECT</span> m1 <span class="token keyword">FROM</span> t1 <span class="token keyword">LIMIT</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> t1 <span class="token keyword">WHERE</span> m1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">SELECT</span> <span class="token function">MIN</span><span class="token punctuation">(</span>m2<span class="token punctuation">)</span> <span class="token keyword">FROM</span> t2<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<ul>
+<li>行子查询：返回一条记录的子查询，包含多个列</li>
+</ul>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> t1 <span class="token keyword">WHERE</span> <span class="token punctuation">(</span>m1<span class="token punctuation">,</span> n1<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">SELECT</span> m2<span class="token punctuation">,</span> n2 <span class="token keyword">FROM</span> t2 <span class="token keyword">LIMIT</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li>列子查询：查询出一个列的数据</li>
+</ul>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> t1 <span class="token keyword">WHERE</span> m1 <span class="token operator">IN</span> <span class="token punctuation">(</span><span class="token keyword">SELECT</span> m2 <span class="token keyword">FROM</span> t2<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li>表子查询：子查询的结果既包含很多条记录，又包含很多个列</li>
+</ul>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> t1 <span class="token keyword">WHERE</span> <span class="token punctuation">(</span>m1<span class="token punctuation">,</span> n1<span class="token punctuation">)</span> <span class="token operator">IN</span> <span class="token punctuation">(</span><span class="token keyword">SELECT</span> m2<span class="token punctuation">,</span> n2 <span class="token keyword">FROM</span> t2<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>2、按与外层查询关系来区分子查询</p>
+<ul>
+<li><p>不相关子查询：如果子查询可以单独运行出结果，而不依赖于外层查询的值</p>
+</li>
+<li><p>相关子查询：子查询的执行需要依赖于外层查询的值</p>
+</li>
+</ul>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> t1 <span class="token keyword">WHERE</span> m1 <span class="token operator">IN</span> <span class="token punctuation">(</span><span class="token keyword">SELECT</span> m2 <span class="token keyword">FROM</span> t2 <span class="token keyword">WHERE</span> n1 <span class="token operator">=</span> n2<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>3、子查询在布尔表达式中的使用</p>
+<ul>
+<li>使用<code>=</code>、<code>&gt;</code>、<code>&lt;</code>、<code>&gt;=</code>、<code>&lt;=</code>、<code>&lt;&gt;</code>、<code>!=</code>、<code>&lt;=&gt;</code>作为布尔表达式的操作符</li>
+</ul>
+<p>这里的子查询只能是标量子查询或者行子查询，例如</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 操作数 comparison_operator (子查询)</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> t1 <span class="token keyword">WHERE</span> m1 <span class="token operator">&lt;</span> <span class="token punctuation">(</span><span class="token keyword">SELECT</span> <span class="token function">MIN</span><span class="token punctuation">(</span>m2<span class="token punctuation">)</span> <span class="token keyword">FROM</span> t2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> t1 <span class="token keyword">WHERE</span> <span class="token punctuation">(</span>m1<span class="token punctuation">,</span> n1<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">SELECT</span> m2<span class="token punctuation">,</span> n2 <span class="token keyword">FROM</span> t2 <span class="token keyword">LIMIT</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li><code>[NOT] IN/ANY/SOME/ALL</code>子查询</li>
+</ul>
+<p>（1）<code>IN</code>或者<code>NOT IN</code></p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 操作数 [NOT] IN (子查询)</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> t1 <span class="token keyword">WHERE</span> <span class="token punctuation">(</span>m1<span class="token punctuation">,</span> n2<span class="token punctuation">)</span> <span class="token operator">IN</span> <span class="token punctuation">(</span><span class="token keyword">SELECT</span> m2<span class="token punctuation">,</span> n2 <span class="token keyword">FROM</span> t2<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>（2）<code>ANY/SOME</code></p>
+<p>只要子查询结果集中存在某个值和给定的操作数做<code>comparison_operator</code>比较结果为<code>TRUE</code>，那么整个表达式的结果就为<code>TRUE</code></p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 操作数 comparison_operator ANY/SOME(子查询)</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> t1 <span class="token keyword">WHERE</span> m1 <span class="token operator">></span> <span class="token keyword">ANY</span><span class="token punctuation">(</span><span class="token keyword">SELECT</span> m2 <span class="token keyword">FROM</span> t2<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p><code>=ANY</code>相当于判断子查询结果集中是否存在某个值和给定的操作数相等，它的含义和<code>IN</code>是相同的</p>
+<p>（3）<code>ALL</code></p>
+<p>子查询结果集中所有的值和给定的操作数做<code>comparison_operator</code>比较结果为<code>TRUE</code>，那么整个表达式的结果就为<code>TRUE</code></p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 操作数 comparison_operator ALL(子查询)</span>
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> t1 <span class="token keyword">WHERE</span> m1 <span class="token operator">></span> <span class="token keyword">ALL</span><span class="token punctuation">(</span><span class="token keyword">SELECT</span> m2 <span class="token keyword">FROM</span> t2<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<ul>
+<li><code>EXISTS</code>子查询</li>
+</ul>
+<p>有时候我们仅仅需要判断子查询的结果集中是否有记录，而不在乎记录具体是什么</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> t1 <span class="token keyword">WHERE</span> <span class="token keyword">EXISTS</span> <span class="token punctuation">(</span><span class="token keyword">SELECT</span> <span class="token number">1</span> <span class="token keyword">FROM</span> t2<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>对于子查询<code>(SELECT 1 FROM t2)</code>来说，我们并不关心这个子查询最后到底查询出的结果是什么，所以查询列表里填<code>*</code>、某个列名都无所谓，我们真正关心的是子查询的结果集中是否存在记录。也就是说只要<code>(SELECT 1 FROM t2)</code>这个查询中有记录，那么整个<code>EXISTS</code>表达式的结果就为 <code>TRUE</code></p>
+<h3 id="14-3-2-子查询在MySQL中是怎么执行的"><a href="#14-3-2-子查询在MySQL中是怎么执行的" class="headerlink" title="14.3.2 子查询在MySQL中是怎么执行的"></a>14.3.2 子查询在MySQL中是怎么执行的</h3><p>2、标量子查询、行子查询的执行方式</p>
+<blockquote>
+<p>对于包含不相关的标量子查询或者行子查询的查询语句来说，MySQL会分别独立的执行外层查询和子查询，就当作两个单表查询就好了</p>
+</blockquote>
+<p>3、<code>IN</code>子查询优化</p>
+<p>（1）物化表的提出</p>
+<p>对于不相关的<code>IN</code>子查询，如果单独执行子查询后的结果集太多，可能内存中放不下</p>
+<p>所以，MySQL不直接将不相关子查询的结果集当作外层查询的参数，而是将该结果集写入一个临时表里，并建立索引</p>
+<ul>
+<li><p>该临时表的列就是子查询结果集中的列</p>
+</li>
+<li><p>写入临时表的记录会被去重</p>
+</li>
+</ul>
+<blockquote>
+<ul>
+<li>将子查询结果集中的记录保存到临时表的过程称之为物化</li>
+<li>存储子查询结果集的临时表称之为物化表</li>
+</ul>
+</blockquote>
+<p>正因为物化表中的记录都建立了索引（基于内存的物化表有哈希索引，基于磁盘的有B+树索引），通过索引执行<code>IN</code>语句判断某个操作数在不在子查询结果集中变得非常快，从而提升了子查询语句的性能</p>
+<p>（2）物化表转连接</p>
+<p>将<code>s1</code>表和<code>s2</code>表进行<font color="LightSeaGreen">半连接</font>的意思就是：对于<code>s1</code>表的某条记录来说，我们只关心在<code>s2</code>表中是否存在与之匹配的记录是否存在，而不关心具体有多少条记录与之匹配，最终的结果集中只保留<code>s1</code>表的记录</p>
+<p>半连接的方法</p>
+<ul>
+<li>Table pullout（子查询中的表上拉）</li>
+</ul>
+<p>当子查询的查询列表处只有<font color="LightSeaGreen">主键或者唯一索引列</font>时，可以直接把子查询中的表上拉到外层查询的<code>FROM 子句</code>中，并把子查询中的搜索条件合并到外层查询的搜索条件中</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> s1
+    <span class="token keyword">WHERE</span> key2 <span class="token operator">IN</span> <span class="token punctuation">(</span><span class="token keyword">SELECT</span> key2 <span class="token keyword">FROM</span> s2 <span class="token keyword">WHERE</span> key3 <span class="token operator">=</span> <span class="token string">'a'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>由于<code>key2</code>列是<code>s2</code>表的唯一二级索引列，所以我们可以直接把<code>s2</code>表上拉到外层查询的<code>FROM</code>子句中，并且把子查询中的搜索条件合并到外层查询的搜索条件中<br><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> s1<span class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">FROM</span> s1 <span class="token keyword">INNER</span> <span class="token keyword">JOIN</span> s2      
+    <span class="token keyword">ON</span> s1<span class="token punctuation">.</span>key2 <span class="token operator">=</span> s2<span class="token punctuation">.</span>key2
+    <span class="token keyword">WHERE</span> s2<span class="token punctuation">.</span>key3 <span class="token operator">=</span> <span class="token string">'a'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
+<ul>
+<li>Duplicate Weedout （重复值消除）</li>
+</ul>
+<p>对于这个查询来说：</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> s1
+    <span class="token keyword">WHERE</span> key1 <span class="token operator">IN</span> <span class="token punctuation">(</span><span class="token keyword">SELECT</span> common_field <span class="token keyword">FROM</span> s2 <span class="token keyword">WHERE</span> key3 <span class="token operator">=</span> <span class="token string">'a'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>转换为半连接查询后，<code>s1</code>表中的某条记录可能在<code>s2</code>表中有多条匹配的记录，所以该条记录可能多次被添加到最后的结果集中，为了消除重复，我们可以建立一个临时表</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> tmp <span class="token punctuation">(</span>
+    id <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span>  
+<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>这样在执行连接查询的过程中，每当某条<code>s1</code>表中的记录要加入结果集时，就首先把这条记录的<code>id</code>值加入到这个临时表里，如果添加成功，说明之前这条<code>s1</code>表中的记录并没有加入最终的结果集，现在把该记录添加到最终的结果集；如果添加失败，说明这条之前这条<code>s1</code>表中的记录已经加入过最终的结果集，这里直接把它丢弃就好了</p>
+<ul>
+<li>LooseScan（松散扫描）</li>
+</ul>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> s1
+    <span class="token keyword">WHERE</span> key3 <span class="token operator">IN</span> <span class="token punctuation">(</span><span class="token keyword">SELECT</span> key1 <span class="token keyword">FROM</span> s2 <span class="token keyword">WHERE</span> key1 <span class="token operator">></span> <span class="token string">'a'</span> <span class="token operator">AND</span> key1 <span class="token operator">&lt;</span> <span class="token string">'b'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>在子查询中，对于<code>s2</code>表的访问可以使用到<code>key1</code>列的索引，而恰好子查询的查询列表处就是<code>key1</code>列，这样在将该查询转换为半连接查询后，如果将<code>s2</code>作为驱动表执行查询的话,在<code>s2</code>表的<code>idx_key1</code>索引中，值为<code>&#39;aa&#39;</code>的二级索引记录一共有3条，那么只需要取第一条的值到<code>s1</code>表中查找 <code>s1.key3 = &#39;aa&#39;</code>的记录，如果能在<code>s1</code>表中找到对应的记录，那么就把对应的记录加入到结果集。依此类推，其他值相同的二级索引记录，也只需要取第一条记录的值到<code>s1</code>表中找匹配的记录，这种虽然是扫描索引，但只取值相同的第一条记录去执行匹配的方式称之为LooseScan </p>
+<ul>
+<li>Semi-join Materialization（半连接物化）</li>
+</ul>
+<p>之前介绍的先把外层查询的<code>IN</code>子句中的不相关子查询进行物化，然后再进行外层查询的表和物化表的连接本质上也算是一种<code>semi-join</code>，只不过由于物化表中没有重复的记录，所以可以直接将子查询转为连接查询</p>
+<ul>
+<li>FirstMatch（首次匹配）</li>
+</ul>
+<p>FirstMatch是一种最原始的半连接执行方式，就是先取一条外层查询的中的记录，然后到子查询的表中寻找符合匹配条件的记录，如果能找到一条，则将该外层查询的记录放入最终的结果集并且停止查找更多匹配的记录，如果找不到则把该外层查询的记录丢弃掉；然后再开始取下一条外层查询中的记录</p>
+<blockquote>
+<p>由于相关子查询并不是一个独立的查询，所以不能转换为物化表来执行查询</p>
+</blockquote>
+<p>如果不能转为半连接，可以有两种方法</p>
+<ul>
+<li>对于不相关子查询，可以尝试把它们物化之后再参与查询</li>
+</ul>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> s1
+    <span class="token keyword">WHERE</span> key1 <span class="token operator">NOT</span> <span class="token operator">IN</span> <span class="token punctuation">(</span><span class="token keyword">SELECT</span> common_field <span class="token keyword">FROM</span> s2 <span class="token keyword">WHERE</span> key3 <span class="token operator">=</span> <span class="token string">'a'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>先将子查询物化，然后再判断<code>key1</code>是否在物化表的结果集中可以加快查询执行的速度</p>
+<ul>
+<li>不管子查询是相关的还是不相关的，都可以把<code>IN</code>子查询尝试专为<code>EXISTS</code>子查询</li>
+</ul>
+<p>6、对于派生表的优化</p>
+<ul>
+<li>派生表物化</li>
+</ul>
+<p>我们可以将派生表的结果集写到一个内部的临时表中，然后就把这个物化表当作普通表一样参与查询</p>
+<p>延迟物化：在查询中真正使用到派生表时才回去尝试物化派生表，而不是还没开始执行查询呢就把派生表物化掉</p>
+<ul>
+<li>将派生表与外层查询合并</li>
+</ul>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> <span class="token punctuation">(</span>
+        <span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> s1 <span class="token keyword">WHERE</span> key1 <span class="token operator">=</span> <span class="token string">'a'</span>      
+    <span class="token punctuation">)</span> <span class="token keyword">AS</span> derived_s1 <span class="token keyword">INNER</span> <span class="token keyword">JOIN</span> s2
+    <span class="token keyword">ON</span> derived_s1<span class="token punctuation">.</span>key1 <span class="token operator">=</span> s2<span class="token punctuation">.</span>key1
+    <span class="token keyword">WHERE</span> s2<span class="token punctuation">.</span>key2 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>合并为</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> s1 <span class="token keyword">INNER</span> <span class="token keyword">JOIN</span> s2
+    <span class="token keyword">ON</span> s1<span class="token punctuation">.</span>key1 <span class="token operator">=</span> s2<span class="token punctuation">.</span>key1
+    <span class="token keyword">WHERE</span> s1<span class="token punctuation">.</span>key1 <span class="token operator">=</span> <span class="token string">'a'</span> <span class="token operator">AND</span> s2<span class="token punctuation">.</span>key2 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>当派生表中有这些函数或语句时，就不可以和外层查询合并</p>
+<ul>
+<li>聚集函数，比如MAX()、MIN()、SUM()</li>
+<li>DISTINCT</li>
+<li>GROUP BY </li>
+<li>HAVING </li>
+<li>LIMIT</li>
+<li>UNION 或者 UNION ALL</li>
+<li>派生表对应的子查询的<code>SELECT</code>子句中含有另一个子查询</li>
+</ul>
+<blockquote>
+<p> MySQL在执行带有派生表的时候，优先尝试把派生表和外层查询合并掉，如果不行的话，再把派生表物化掉执行查询</p>
+</blockquote>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">kunpeng</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://example.com/2022/06/11/MySQL-14-%E5%9F%BA%E4%BA%8E%E8%A7%84%E5%88%99%E7%9A%84%E4%BC%98%E5%8C%96/">http://example.com/2022/06/11/MySQL-14-%E5%9F%BA%E4%BA%8E%E8%A7%84%E5%88%99%E7%9A%84%E4%BC%98%E5%8C%96/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">kunpeng</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/MySQL/">
+                                    <span class="chip bg-color">MySQL</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/06/11/MySQL-17-InnoDB%E7%9A%84BufferPool/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="17-InnoDB的BufferPool">
+                        
+                        <span class="card-title">17-InnoDB的BufferPool</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-06-11
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/MySQL/">
+                        <span class="chip bg-color">MySQL</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/06/11/MySQL-13-InnoDB%E7%BB%9F%E8%AE%A1%E6%95%B0%E6%8D%AE%E6%98%AF%E5%A6%82%E4%BD%95%E6%94%B6%E9%9B%86%E7%9A%84/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="13-InnoDB统计数据是如何收集的">
+                        
+                        <span class="card-title">13-InnoDB统计数据是如何收集的</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-11
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/MySQL/">
+                        <span class="chip bg-color">MySQL</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2022</span>
+            
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">kunpeng</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/kavinwkp" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1817136760@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1817136760" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1817136760" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</body>
+
+</html>
