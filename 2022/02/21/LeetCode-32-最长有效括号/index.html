@@ -571,7 +571,20 @@ Output<span class="token operator">:</span> <span class="token number">2</span>
 Explanation<span class="token operator">:</span> The longest valid parentheses substring is <span class="token string">"()"</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><br>Example 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> s <span class="token operator">=</span> <span class="token string">")()())"</span>
 Output<span class="token operator">:</span> <span class="token number">4</span>
 Explanation<span class="token operator">:</span> The longest valid parentheses substring is <span class="token string">"()()"</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
-<h3 id="method-1-动态规划"><a href="#method-1-动态规划" class="headerlink" title="method 1: 动态规划"></a>method 1: 动态规划</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">longestValidParentheses</span><span class="token punctuation">(</span>string s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<h3 id="method-1-动态规划"><a href="#method-1-动态规划" class="headerlink" title="method 1: 动态规划"></a>method 1: 动态规划</h3><p><code>dp[i]</code>：表示以<code>i</code>结尾的最长有效括号长度</p>
+<ul>
+<li><code>s[i]==&#39;(&#39;</code>：则无法与之前的匹配，所以<code>dp[i]=0</code></li>
+<li><code>s[i]==&#39;)&#39;</code>：有可以分为两种情况<ul>
+<li>如果<code>s[i-1]==&#39;(&#39;</code>，则<code>s[i-1],s[i]</code>就可以组成一对匹配的括号，所以括号的长度应该在<code>dp[i-2]</code>的基础上增加2，也就是<code>dp[i]=dp[i-2]+2</code></li>
+<li>如果<code>s[i-1]==&#39;)&#39;</code>，还要看下是否存在嵌套的情况，<code>((...))</code>，因为<code>dp[i-1]</code>表示的就是以i-1结尾的最长匹配括号长度，所以我们可以找到与<code>s[i]</code>匹配的位置，也就是<code>i-dp[i-1]-1</code>，如果这个位置上是<code>(</code>，那就可以匹配了，所以<code>dp[i]=dp[i-1]+2</code>，同时这个匹配的位置前面可能还有很多的匹配的括号，<code>()...()((...))</code>，并且其最大长度就保存在<code>dp[i-dp[i-1]-2]</code>，所以也应该加上，所以应该是<code>dp[i]=dp[i-1]+dp[i-dp[i-1]-2]+2</code></li>
+</ul>
+</li>
+</ul>
+<center>
+<img src="https://github.com/kavinwkp/blogimage/raw/main/img/LeetCode/32/32.png" width="90%">
+</center>
+
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">longestValidParentheses</span><span class="token punctuation">(</span>string s<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">int</span> n <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">dp</span><span class="token punctuation">(</span>n<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">int</span> res <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
