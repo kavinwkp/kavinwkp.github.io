@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="20-undo日志, kunpeng">
+    <meta name="keywords" content="21-事务隔离级别和MVCC, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>20-undo日志 | kunpeng</title>
+    <title>21-事务隔离级别和MVCC | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">20-undo日志</h1>
+                    <h1 class="description center-align post-title">21-事务隔离级别和MVCC</h1>
                 </div>
             </div>
         </div>
@@ -509,12 +509,25 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/MySQL/">
+                                <span class="chip bg-color">MySQL</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                数据库
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -523,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-07-07
+                    2022-06-11
                 </div>
                 
 
@@ -547,54 +560,84 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="20-2-事务id"><a href="#20-2-事务id" class="headerlink" title="20.2 事务id"></a>20.2 事务id</h2><ul>
-<li><p>对于只读事务来说，只有在它第一次对某个用户创建的临时表执行增、删、改操作时才会为这个事务分配一个事务id，否则的话是不分配事务id的</p>
+                <p>MySQL 是一个客户端／服务器架构的软件，对于同一个服务器来说，可以有若干个客户端与之连接，每个客户端与服务器连接上之后，就称之为一个会话（Session）。每个客户端都可以在自己的会话中向服务器发出请求语句，一个请求语句可能是某个事务的一部分，也就是对于服务器来说可能同时处理多个事务</p>
+<h3 id="21-2-1-事务并发执行时遇到的一致性问题"><a href="#21-2-1-事务并发执行时遇到的一致性问题" class="headerlink" title="21.2.1 事务并发执行时遇到的一致性问题"></a>21.2.1 事务并发执行时遇到的一致性问题</h3><ul>
+<li><p>脏写：一个事务修改了另一个未提交事务修改过的数据</p>
 </li>
-<li><p>对于读写事务来说，只有在它第一次对某个表（包括用户创建的临时表）执行增、删、改操作时才会为这个事务分配一个事务id，否则也是不分配事务id的</p>
+<li><p>脏读：一个事务读到了另一个未提交事务修改过的数据</p>
+</li>
+<li><p>不可重复读：一个事务只能读到另一个已经提交的事务修改过的数据，并且其他事务每对该数据进行一次修改并提交后，该事务都能查询得到最新值</p>
+</li>
+<li><p>幻读：一个事务先根据某些条件查询出一些记录，之后另一个事务又向表中插入了符合这些条件的记录，原先的事务再次按照该条件查询时，能把另一个事务插入的记录也读出来</p>
 </li>
 </ul>
-<p>聚簇索引的记录除了会保存完整的用户数据以外，而且还会自动添加名为<code>trx_id</code>、<code>roll_pointer</code>的隐藏列，如果用户没有在表中定义主键以及<code>UNIQUE</code>键，还会自动添加一个名为<code>row_id</code>的隐藏列</p>
-<h2 id="20-3-undo日志的格式"><a href="#20-3-undo日志的格式" class="headerlink" title="20.3 undo日志的格式"></a>20.3 undo日志的格式</h2><p>undo日志被记录到类型为<code>FIL_PAGE_UNDO_LOG</code>的页面中</p>
-<h3 id="20-3-1-INSERT操作对应的undo日志"><a href="#20-3-1-INSERT操作对应的undo日志" class="headerlink" title="20.3.1 INSERT操作对应的undo日志"></a>20.3.1 INSERT操作对应的undo日志</h3><p><code>roll_pointer</code>本质上就是一个指向记录对应的 undo 日志的一个指针</p>
-<p>聚簇索引记录被存储到了类型为<code>FIL_PAGE_INDEX</code>的页面中，undo 日志被记录到类型为<code>FIL_PAGE_UNDO_LOG</code>的页面中</p>
-<h3 id="20-3-2-DELETE操作对应的undo日志"><a href="#20-3-2-DELETE操作对应的undo日志" class="headerlink" title="20.3.2 DELETE操作对应的undo日志"></a>20.3.2 DELETE操作对应的undo日志</h3><p>插入到页面中的记录会根据记录头信息中的<code>next_record</code>属性组成一个单向链表，称为<font color="LightSeaGreen">正常记录链表</font></p>
-<p>被删除的记录也会根据记录头信息中的<code>next_record</code>属性组成一个链表，只不过这个链表中的记录占用的存储空间可以被重新利用，称这个链表 为<font color="LightSeaGreen">垃圾链表</font></p>
-<p><code>Page Header</code>部分有一个称之为<code>PAGE_FREE</code>的属性，它指向由被删除记录组成的垃圾链表中的头节点</p>
-<p>假设现在我们准备使用<code>DELETE</code>语句把正常记录链表中的最后一条记录给删除掉，删除的过程需要经历两个阶段</p>
-<ol>
-<li><p>仅仅将记录的<code>delete_mask</code>标识位设置为1，把这个阶段称之为<code>delete mark</code></p>
-</li>
-<li><p>当该删除语句所在的事务提交之后，会有专门的线程后来真正的把记录删除掉。所谓真正的删除就是把该记录从<font color="LightSeaGreen">正常记录链表</font>中移除，并且加入到<font color="LightSeaGreen">垃圾链表</font>中，然后还要调整一些页面的其他信息，这个阶段称之为<code>purge</code></p>
-</li>
-</ol>
-<p>将被删除记录加入到垃圾链表时，实际上加入到链表的头节点处，会跟着修改<code>PAGE_FREE</code>属性的值</p>
-<h3 id="20-3-3-UPDATE操作对应的undo日志"><a href="#20-3-3-UPDATE操作对应的undo日志" class="headerlink" title="20.3.3 UPDATE操作对应的undo日志"></a>20.3.3 UPDATE操作对应的undo日志</h3><p>1、不更新主键</p>
-<p>在不更新主键的情况下，又可以细分为被更新的列占用的存储空间不发生变化和发生变化的情况</p>
+<h3 id="21-2-2-SQL标准中的4种隔离级别"><a href="#21-2-2-SQL标准中的4种隔离级别" class="headerlink" title="21.2.2 SQL标准中的4种隔离级别"></a>21.2.2 SQL标准中的4种隔离级别</h3><ul>
+<li><code>READ UNCOMMITTED</code>：未提交读</li>
+<li><code>READ COMMITTED</code>：已提交读</li>
+<li><code>REPEATABLE READ</code>：可重复读</li>
+<li><code>SERIALIZABLE</code>：可串行化</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>隔离级别</th>
+<th style="text-align:center">脏读</th>
+<th style="text-align:center">不可重复读</th>
+<th style="text-align:center">幻读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>READ UNCOMMITTED</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+</tr>
+<tr>
+<td>READ COMMITTED</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+</tr>
+<tr>
+<td>REPEATABLE READ</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">√</td>
+</tr>
+<tr>
+<td>SERIALIZABLE</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">×</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="21-3-MVCC原理"><a href="#21-3-MVCC原理" class="headerlink" title="21.3 MVCC原理"></a>21.3 MVCC原理</h2><p>每次对记录进行改动，都会记录一条 undo 日志，每条 undo 日志也都有一个<code>roll_pointer</code>属性（INSERT 操作对应的 undo 日志没有该属性，因为该记录并没有更早的版本），可以将这些 undo 日志都连起来，串成一个链表，称为版本链。版本链的头节点就是当前记录最新的值。另外，每个版本中还包含生成该版本时对应的<font color="LightSeaGreen">事务id</font></p>
+<h3 id="21-3-2-ReadView"><a href="#21-3-2-ReadView" class="headerlink" title="21.3.2 ReadView"></a>21.3.2 ReadView</h3><p>需要判断一下版本链中的哪个版本是当前事务可见的</p>
+<p>ReadView 中主要包含4个比较重要的内容</p>
 <ul>
-<li>就地更新</li>
+<li><code>m_ids</code>：表示在生成 ReadView 时当前系统中活跃的读写事务的事务id列表</li>
+<li><code>min_trx_id</code>：表示在生成 ReadView 时当前系统中活跃的读写事务中<font color="LightSeaGreen">最小的事务id</font>，也就是<code>m_ids</code>中的最小值</li>
+<li><code>max_trx_id</code>：表示生成 ReadView 时系统中应该分配给下一个事务的id值</li>
+<li><code>creator_trx_id</code>：表示生成该 ReadView 的事务的事务id</li>
 </ul>
-<p>对于被更新的每个列来说，如果更新后的列和更新前的列占用的存储空间都一样大，那么就可以进行就地更新，也就是直接在原记录的基础上修改对应列的值。</p>
+<p>访问某条记录时，需要判断记录的某个版本是否可见</p>
+<ul>
+<li>如果被访问版本的<code>trx_id</code>属性值与 ReadView 中的<code>creator_trx_id</code>值相同，意味着当前事务在访问它自己修改过的记录，所以该版本可以被当前事务访问</li>
+<li>如果被访问版本的<code>trx_id</code>属性值小于<code>ReadView</code>中的<code>min_trx_id</code>值，表明生成该版本的事务在当前事务生成 ReadView 前已经提交，所以该版本可以被当前事务访问</li>
+<li>如果被访问版本的<code>trx_id</code>属性值大于 ReadView 中的<code>max_trx_id</code>值，表明生成该版本的事务在当前事务生成 ReadView 后才开启，所以该版本不可以被当前事务访问</li>
+<li>如果被访问版本的<code>trx_id</code>属性值在 ReadView 的<code>min_trx_id</code>和<code>max_trx_id</code>之间，那就需要判断一下是不是在<code>m_ids</code>列表中，如果在，说明创建 ReadView 时生成该版本的事务还是活跃的，该版本不可以被访问；如果不在，说明创建 ReadView 时生成该版本的事务已经被提交，该版本可以被访问</li>
+</ul>
+<p>如果某个版本的数据对当前事务不可见的话，那就顺着版本链找到下一个版本的数据，继续按照上边的步骤判断可见性，依此类推，直到版本链中的最后一个版本。如果最后一个版本也不可见的话，那么就意味着该条记录对该事务完全不可见，查询结果就不包含该记录</p>
 <blockquote>
-<p>要求每个列在更新前后占用的存储空间一样大，有任何一个被更新的列更新前比更新后占用的存储空间大，或者更新前比更新后占用的存储空间小都不能进行就地更新</p>
-</blockquote>
 <ul>
-<li>先删除掉旧记录，再插入新记录</li>
+<li>使用<code>READ COMMITTED</code>隔离级别的事务在每次查询开始时都会生成一个独立的 ReadView</li>
+<li>对于使用<code>REPEATABLE READ</code>隔离级别的事务来说，只会在第一次执行查询语句时生成一个 ReadView，之后的查询就不会重复生成了</li>
 </ul>
-<p>在不更新主键的情况下，如果有任何一个被更新的列更新前和更新后占用的存储空间大小不一致，那么就需要先把这条旧的记录从聚簇索引页面中删除掉，然后再根据更新后列的值创建一条新的记录插入到页面中</p>
-<p>这里所说的删除并不是<code>delete mark</code>操作，而是真正的删除掉，也就是把这条记录从正常记录链表中移除并加入到垃圾链表中，并且修改页面中相应的统计信息。真正删除之后紧接着就要根据各个列更新后的值创建的新记录插入</p>
-<p>2、更新主键</p>
-<p>在聚簇索引中，记录是按照主键值的大小连成了一个单向链表的，如果我们更新了某条记录的主键值，意味着这条记录在聚簇索引中的位置将会发生改变</p>
-<p>针对<code>UPDATE</code>语句中更新了记录主键值的这种情况，InnoDB 在聚簇索引中分了两步处理</p>
-<ol>
-<li><p>将旧记录进行<code>delete mark</code>操作</p>
-</li>
-<li><p>根据更新后各列的值创建一条新记录，并将其插入到聚簇索引中</p>
-</li>
-</ol>
-<h3 id="20-3-4-增删改操作对二级索引的影响"><a href="#20-3-4-增删改操作对二级索引的影响" class="headerlink" title="20.3.4 增删改操作对二级索引的影响"></a>20.3.4 增删改操作对二级索引的影响</h3><ul>
-<li>对旧的二级索引记录执行<code>delete mark</code>操作</li>
-<li>根据更新后的值创建一条新的二级索引记录，然后在二级索引对应的B+树中重新定位到它的位置并插入</li>
-</ul>
+</blockquote>
 
                 
             </div>
@@ -621,7 +664,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2022/07/07/MySQL-20-undo%E6%97%A5%E5%BF%97/">http://example.com/2022/07/07/MySQL-20-undo%E6%97%A5%E5%BF%97/</a>
+                    <a href="http://example.com/2022/06/11/MySQL-21-%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E5%92%8CMVCC/">http://example.com/2022/06/11/MySQL-21-%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E5%92%8CMVCC/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -658,7 +701,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/MySQL/">
+                                    <span class="chip bg-color">MySQL</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -832,13 +879,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/07/09/LeetCode-285-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%9A%84%E4%B8%AD%E5%BA%8F%E5%90%8E%E7%BB%A7/">
+                <a href="/2022/06/11/MySQL-22-%E9%94%81/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="285-二叉搜索树中的中序后继">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="22-锁">
                         
-                        <span class="card-title">285-二叉搜索树中的中序后继</span>
+                        <span class="card-title">22-锁</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -849,14 +896,14 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-07-09
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-06-11
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/LeetCode/" class="post-category">
-                                    LeetCode
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
                                 </a>
                             
                             
@@ -866,8 +913,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
-                        <span class="chip bg-color">动态规划</span>
+                    <a href="/tags/MySQL/">
+                        <span class="chip bg-color">MySQL</span>
                     </a>
                     
                 </div>
@@ -881,13 +928,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/07/06/LeetCode-173-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E8%BF%AD%E4%BB%A3%E5%99%A8/">
+                <a href="/2022/06/11/MySQL-20-undo%E6%97%A5%E5%BF%97/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="173-二叉搜索树迭代器">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="20-undo日志">
                         
-                        <span class="card-title">173-二叉搜索树迭代器</span>
+                        <span class="card-title">20-undo日志</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -898,14 +945,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-06
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-11
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/LeetCode/" class="post-category">
-                                    LeetCode
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
                                 </a>
                             
                             
@@ -915,8 +962,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">
-                        <span class="chip bg-color">二叉树</span>
+                    <a href="/tags/MySQL/">
+                        <span class="chip bg-color">MySQL</span>
                     </a>
                     
                 </div>
