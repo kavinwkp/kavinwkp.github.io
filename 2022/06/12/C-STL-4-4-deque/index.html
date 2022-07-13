@@ -1,0 +1,1670 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="keywords" content="4.4-deque, kunpeng">
+    <meta name="description" content="个人技术博客">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>4.4-deque | kunpeng</title>
+    <link rel="icon" type="image/png" href="/rocket.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<style type="text/css" lang="css">
+    #loading-container{
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-height: 100vh;
+        width: 100vw;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #FFF;
+        text-align: center;
+        /* loader页面消失采用渐隐的方式*/
+        -webkit-transition: opacity 1s ease;
+        -moz-transition: opacity 1s ease;
+        -o-transition: opacity 1s ease;
+        transition: opacity 1s ease;
+    }
+    .loading-image{
+        width: 120px;
+        height: 50px;
+        transform: translate(-50%);
+    }
+    
+    .loading-image div:nth-child(2) {
+        -webkit-animation: pacman-balls 1s linear 0s infinite;
+        animation: pacman-balls 1s linear 0s infinite
+    }
+
+    .loading-image div:nth-child(3) {
+        -webkit-animation: pacman-balls 1s linear .33s infinite;
+        animation: pacman-balls 1s linear .33s infinite
+    }
+
+    .loading-image div:nth-child(4) {
+        -webkit-animation: pacman-balls 1s linear .66s infinite;
+        animation: pacman-balls 1s linear .66s infinite
+    }
+
+    .loading-image div:nth-child(5) {
+        -webkit-animation: pacman-balls 1s linear .99s infinite;
+        animation: pacman-balls 1s linear .99s infinite
+    }
+    
+   .loading-image div:first-of-type {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_up .5s 0s infinite;
+        animation: rotate_pacman_half_up .5s 0s infinite;
+    }
+    .loading-image div:nth-child(2) {
+        width: 0;
+        height: 0;
+        border: 25px solid #49b1f5;
+        border-right-color: transparent;
+        border-radius: 25px;
+        -webkit-animation: rotate_pacman_half_down .5s 0s infinite;
+        animation: rotate_pacman_half_down .5s 0s infinite;
+        margin-top: -50px;
+    }
+    @-webkit-keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @keyframes rotate_pacman_half_up {0% {transform: rotate(270deg)}50% {transform: rotate(1turn)}to {transform: rotate(270deg)}}
+
+    @-webkit-keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+
+    @keyframes rotate_pacman_half_down {0% {transform: rotate(90deg)}50% {transform: rotate(0deg)}to {transform: rotate(90deg)}}
+    
+    @-webkit-keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+
+    @keyframes pacman-balls {75% {opacity: .7}to {transform: translate(-100px, -6.25px)}}
+    
+   
+    .loading-image div:nth-child(3),
+    .loading-image div:nth-child(4),
+    .loading-image div:nth-child(5),
+    .loading-image div:nth-child(6){
+        background-color: #49b1f5;
+        width: 15px;
+        height: 15px;
+        border-radius: 100%;
+        margin: 2px;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        transform: translateY(-6.25px);
+        top: 25px;
+        left: 100px;
+    }
+    .loading-text{
+        margin-bottom: 20vh;
+        text-align: center;
+        color: #2c3e50;
+        font-size: 2rem;
+        box-sizing: border-box;
+        padding: 0 10px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    @media only screen and (max-width: 500px) {
+         .loading-text{
+            font-size: 1.5rem;
+         }
+    }
+    .fadeout {
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+    /* logo出现动画 */
+    @-webkit-keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}100%{opacity:1;-webkit-transform:none;transform:none}}
+    @keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);}}
+ </style>
+ <script>
+(function () {
+    const loaded = function(){
+       setTimeout(function(){
+            const loader = document.getElementById("loading-container");
+            loader.className="fadeout" ;//使用渐隐的方法淡出loading page
+            // document.getElementById("body-wrap").style.display="flex";
+            setTimeout(function(){
+                loader.style.display="none";
+            },1000); 
+        },1000);//强制显示loading page 1s  
+    };
+    loaded();
+})()
+ </script><meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+
+
+
+
+ <div id="loading-container">
+     <p class="loading-text">玩命加载中 . . . </p> 
+     <div class="loading-image">
+         <div></div>
+         <div></div>
+         <div></div>
+         <div></div> 
+         <div></div>
+     </div>
+ </div><body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/kavin.jpg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">kunpeng</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/kavin.jpg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">kunpeng</div>
+        <div class="logo-desc">
+            
+            个人技术博客
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">4.4-deque</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+        background-color: rgb(255, 255, 255,0.7);
+        border-radius: 10px;
+        box-shadow: 0 10px 35px 2px rgba(0, 0, 0, .15), 0 5px 15px rgba(0, 0, 0, .07), 0 2px 5px -5px rgba(0, 0, 0, .1) !important;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/STL/">
+                                <span class="chip bg-color">STL</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/C/" class="post-category">
+                                C++
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-06-12
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>deque 允许在常数时间内对头尾两端进行元素的插入或删除操作，deque 没有容量的概念，因为它是动态地以分段连续空间组合而成，随时可以增加一段新的空间并链接起来</p>
+<p>deque 系由一段一段的定量连续空间构成。一旦有必要在 deque 的前端或尾端增加新空间，便配置一段定量连续空间，串接在整个 deque 的头端或尾端。deque 的最大任务，便是在这些分段的定量连续空间上，维护其整体连续的假象，并提供随机存取的接口。避开了“重新配置、复制、释放”的轮回，代价则是复杂的迭代器架构</p>
+<p>deque 采用一块所谓的 map 作为主控。这里所谓 map 是一小块连续空间，其中每个元素（node）都是指针，指向另一段（较大的）连续线性空间，称为缓冲区。缓冲区才是 deque 的储存空间主体。SGI STL允许我们指定缓冲区大小，默认值0表示将使用 512bytes 缓冲区</p>
+<h3 id="4-4-3-deque的迭代器"><a href="#4-4-3-deque的迭代器" class="headerlink" title="4.4.3 deque的迭代器"></a>4.4.3 deque的迭代器</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Ref</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Ptr</span><span class="token punctuation">,</span> size_t BufSiz<span class="token operator">></span>
+<span class="token keyword">struct</span> <span class="token class-name">__deque_iterator</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">typedef</span> __deque_iterator<span class="token operator">&lt;</span>T<span class="token punctuation">,</span> T<span class="token operator">&amp;</span><span class="token punctuation">,</span> T<span class="token operator">*</span><span class="token punctuation">,</span> BufSiz<span class="token operator">></span>             iterator<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> __deque_iterator<span class="token operator">&lt;</span>T<span class="token punctuation">,</span> <span class="token keyword">const</span> T<span class="token operator">&amp;</span><span class="token punctuation">,</span> <span class="token keyword">const</span> T<span class="token operator">*</span><span class="token punctuation">,</span> BufSiz<span class="token operator">></span> const_iterator<span class="token punctuation">;</span>
+    <span class="token keyword">static</span> size_t <span class="token function">buffer_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token keyword">return</span> <span class="token function">__deque_buf_size</span><span class="token punctuation">(</span>BufSiz<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>T<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">typedef</span> random_access_iterator_tag iterator_category<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> T           value_type<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> Ptr         pointer<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> Ref         reference<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> size_t      size_type<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> ptrdiff_t   difference_type<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> T<span class="token operator">*</span><span class="token operator">*</span>         map_pointer<span class="token punctuation">;</span>
+
+    <span class="token keyword">typedef</span> __deque_iterator self<span class="token punctuation">;</span>
+
+    T<span class="token operator">*</span> cur<span class="token punctuation">;</span>     <span class="token comment">// 缓冲区现行元素</span>
+    T<span class="token operator">*</span> first<span class="token punctuation">;</span>   <span class="token comment">// 缓冲区的头</span>
+    T<span class="token operator">*</span> last<span class="token punctuation">;</span>    <span class="token comment">// 缓冲区的尾（含备用空间）</span>
+    map_pointer node<span class="token punctuation">;</span>   <span class="token comment">// 指向map里面的节点</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>buffer_size</code>决定缓冲区大小，调用全局函数<code>__deque_buf_size</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">inline</span> size_t <span class="token function">__deque_buf_size</span><span class="token punctuation">(</span>size_t n<span class="token punctuation">,</span> size_t sz<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> n <span class="token operator">!=</span> <span class="token number">0</span> <span class="token operator">?</span> n <span class="token operator">:</span> <span class="token punctuation">(</span>sz <span class="token operator">&lt;</span> <span class="token number">512</span> <span class="token operator">?</span> <span class="token function">size_t</span><span class="token punctuation">(</span><span class="token number">512</span> <span class="token operator">/</span> sz<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">size_t</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>如果<code>n</code>不为0，传回<code>n</code>，表示<code>buffer size</code>由用户自定义</li>
+<li>如果<code>n</code>为0，表示<code>buffer size</code>使用默认值，那么<ul>
+<li>如果<code>sz</code>（元素大小，<code>sizeof (value_type)</code>)小于512，传回 <code>512/sz</code>，如果<code>sz</code>不小于512，传回1</li>
+</ul>
+</li>
+</ul>
+<p>如果一个缓冲区遍历完了，就要跳到下一个缓冲区</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">set_node</span><span class="token punctuation">(</span>map_pointer new_node<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    node <span class="token operator">=</span> new_node<span class="token punctuation">;</span>
+    first <span class="token operator">=</span> <span class="token operator">*</span>new_node<span class="token punctuation">;</span>
+    last <span class="token operator">=</span> first <span class="token operator">+</span> <span class="token function">difference_type</span><span class="token punctuation">(</span><span class="token function">buffer_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>迭代器的运算符重载</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">reference <span class="token keyword">operator</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token operator">*</span>cur<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+pointer <span class="token keyword">operator</span><span class="token operator">-></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token operator">&amp;</span><span class="token punctuation">(</span><span class="token keyword">operator</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+difference_type <span class="token keyword">operator</span><span class="token operator">-</span><span class="token punctuation">(</span><span class="token keyword">const</span> self<span class="token operator">&amp;</span> x<span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token function">difference_type</span><span class="token punctuation">(</span><span class="token function">buffer_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>node <span class="token operator">-</span> x<span class="token punctuation">.</span>node <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+    <span class="token punctuation">(</span>cur <span class="token operator">-</span> first<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token punctuation">(</span>x<span class="token punctuation">.</span>last <span class="token operator">-</span> x<span class="token punctuation">.</span>cur<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+self<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">++</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token operator">++</span>cur<span class="token punctuation">;</span>                  <span class="token comment">// 切换到下一个元素</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>cur <span class="token operator">==</span> last<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>      <span class="token comment">// 如果到了缓冲区的尾端</span>
+        <span class="token function">set_node</span><span class="token punctuation">(</span>node <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 就跳到下一个缓冲区</span>
+        cur <span class="token operator">=</span> first<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span> 
+<span class="token punctuation">&#125;</span>
+self <span class="token keyword">operator</span><span class="token operator">++</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    self tmp <span class="token operator">=</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token operator">++</span><span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> tmp<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+self<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">--</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>cur <span class="token operator">==</span> first<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>     <span class="token comment">// 如果已经是缓冲区的头部</span>
+        <span class="token function">set_node</span><span class="token punctuation">(</span>node <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 就跳到前一个缓冲区</span>
+        cur <span class="token operator">=</span> last<span class="token punctuation">;</span>         <span class="token comment">// 的最后一个元素的下一个位置</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token operator">--</span>cur<span class="token punctuation">;</span>                  <span class="token comment">// 然后再往前移一个就指向最后一个元素</span>
+    <span class="token keyword">return</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+self <span class="token keyword">operator</span><span class="token operator">--</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    self tmp <span class="token operator">=</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token operator">--</span><span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> tmp<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+self<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">+=</span><span class="token punctuation">(</span>difference_type n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    difference_type offset <span class="token operator">=</span> n <span class="token operator">+</span> <span class="token punctuation">(</span>cur <span class="token operator">-</span> first<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>offset <span class="token operator">>=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> offset <span class="token operator">&lt;</span> <span class="token function">difference_type</span><span class="token punctuation">(</span><span class="token function">buffer_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        cur <span class="token operator">+=</span> n<span class="token punctuation">;</span>   <span class="token comment">// 在同一个缓冲区中就直接跳</span>
+    <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>  <span class="token comment">// 不在同一个缓冲区就要先跳到对应的缓冲区</span>
+        difference_type node_offset <span class="token operator">=</span>
+            offset <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">?</span> offset <span class="token operator">/</span> <span class="token function">difference_type</span><span class="token punctuation">(</span><span class="token function">buffer_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                    <span class="token operator">:</span> <span class="token operator">-</span><span class="token function">difference_type</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">-</span>offset <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token function">buffer_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token function">set_node</span><span class="token punctuation">(</span>node <span class="token operator">+</span> node_offset<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 跳到对应的节点</span>
+        cur <span class="token operator">=</span> first <span class="token operator">+</span> <span class="token punctuation">(</span>offset <span class="token operator">-</span> node_offset <span class="token operator">*</span> <span class="token function">difference_type</span><span class="token punctuation">(</span><span class="token function">buffer_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+self <span class="token keyword">operator</span><span class="token operator">+</span><span class="token punctuation">(</span>difference_type n<span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span>
+    self tmp <span class="token operator">=</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> tmp <span class="token operator">+=</span> n<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+self<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">-=</span><span class="token punctuation">(</span>difference_type n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token operator">*</span><span class="token keyword">this</span> <span class="token operator">+=</span> <span class="token operator">-</span>n<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+
+self <span class="token keyword">operator</span><span class="token operator">-</span><span class="token punctuation">(</span>difference_type n<span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span>
+    self tmp <span class="token operator">=</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> tmp <span class="token operator">-=</span> n<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+reference <span class="token keyword">operator</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">(</span>difference_type n<span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token keyword">this</span> <span class="token operator">+</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+
+<span class="token keyword">bool</span> <span class="token keyword">operator</span><span class="token operator">==</span><span class="token punctuation">(</span><span class="token keyword">const</span> self<span class="token operator">&amp;</span> x<span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> cur <span class="token operator">==</span> x<span class="token punctuation">.</span>cur<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token keyword">bool</span> <span class="token keyword">operator</span><span class="token operator">!=</span><span class="token punctuation">(</span><span class="token keyword">const</span> self<span class="token operator">&amp;</span> x<span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token operator">!</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token keyword">this</span> <span class="token operator">==</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token keyword">bool</span> <span class="token keyword">operator</span><span class="token operator">&lt;</span><span class="token punctuation">(</span><span class="token keyword">const</span> self<span class="token operator">&amp;</span> x<span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>node <span class="token operator">==</span> x<span class="token punctuation">.</span>node<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token punctuation">(</span>cur <span class="token operator">&lt;</span> x<span class="token punctuation">.</span>cur<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token punctuation">(</span>node <span class="token operator">&lt;</span> x<span class="token punctuation">.</span>node<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="4-4-4-deque的数据结构"><a href="#4-4-4-deque的数据结构" class="headerlink" title="4.4.4 deque的数据结构"></a>4.4.4 deque的数据结构</h3><p>deque 除了维护一个先前说过的指向 map 的指针外，也维护<code>start</code>和<code>finish</code>两个迭代器，分别指向第一缓冲区的第一个元素和最后缓冲区的最后一个元素（的下一位置）。此外，它当然也必须记住目前的 map 大小。因为一旦 map 所提供的节点不足，就必须重新配置更大的一块 map</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Alloc</span> <span class="token operator">=</span> alloc<span class="token punctuation">,</span> size_t BufSiz <span class="token operator">=</span> <span class="token number">0</span><span class="token operator">></span> 
+<span class="token keyword">class</span> <span class="token class-name">deque</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>                         <span class="token comment">// Basic types</span>
+    <span class="token keyword">typedef</span> T           value_type<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> value_type<span class="token operator">*</span> pointer<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> value_type<span class="token operator">&amp;</span> reference<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> size_t      size_type<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> ptrdiff_t   difference_type<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span><span class="token operator">:</span>                         <span class="token comment">// Iterators</span>
+    <span class="token keyword">typedef</span> __deque_iterator<span class="token operator">&lt;</span>T<span class="token punctuation">,</span> T<span class="token operator">&amp;</span><span class="token punctuation">,</span> T<span class="token operator">*</span><span class="token punctuation">,</span> BufSiz<span class="token operator">></span> iterator<span class="token punctuation">;</span>
+
+<span class="token keyword">protected</span><span class="token operator">:</span>                      <span class="token comment">// Internal typedefs</span>
+    <span class="token keyword">typedef</span> pointer<span class="token operator">*</span> map_pointer<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> simple_alloc<span class="token operator">&lt;</span>value_type<span class="token punctuation">,</span> Alloc<span class="token operator">></span> data_allocator<span class="token punctuation">;</span>
+    <span class="token keyword">typedef</span> simple_alloc<span class="token operator">&lt;</span>pointer<span class="token punctuation">,</span> Alloc<span class="token operator">></span> map_allocator<span class="token punctuation">;</span>
+
+<span class="token keyword">protected</span><span class="token operator">:</span>                      <span class="token comment">// Data members</span>
+    iterator start<span class="token punctuation">;</span>     <span class="token comment">// 表现第一个节点</span>
+    iterator finish<span class="token punctuation">;</span>    <span class="token comment">// 表现最后一个节点</span>
+
+    map_pointer map<span class="token punctuation">;</span>    <span class="token comment">// 指向map</span>
+    size_type map_size<span class="token punctuation">;</span> <span class="token comment">// map内有多少个指针</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>简单的成员函数</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">iterator <span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> start<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+iterator <span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> finish<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+reference <span class="token keyword">operator</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">(</span>size_type n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> start<span class="token punctuation">[</span><span class="token function">difference_type</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+reference <span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token operator">*</span>start<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+reference <span class="token function">back</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    iterator tmp <span class="token operator">=</span> finish<span class="token punctuation">;</span>
+    <span class="token operator">--</span>tmp<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token operator">*</span>tmp<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+size_type <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> finish <span class="token operator">-</span> start<span class="token punctuation">;</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+size_type <span class="token function">max_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token function">size_type</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token keyword">bool</span> <span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> finish <span class="token operator">==</span> start<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="4-4-5-deque的构造与内存管理"><a href="#4-4-5-deque的构造与内存管理" class="headerlink" title="4.4.5 deque的构造与内存管理"></a>4.4.5 deque的构造与内存管理</h3><p>deque 自行定义了两个专属的空间配置器</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">typedef</span> simple_alloc<span class="token operator">&lt;</span>value_type<span class="token punctuation">,</span> Alloc<span class="token operator">></span> data_allocator<span class="token punctuation">;</span> <span class="token comment">// 每次配置一个元素</span>
+<span class="token keyword">typedef</span> simple_alloc<span class="token operator">&lt;</span>pointer<span class="token punctuation">,</span> Alloc<span class="token operator">></span> map_allocator<span class="token punctuation">;</span>     <span class="token comment">// 每次配置一个指针</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>构造函数</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">deque</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">,</span> <span class="token keyword">const</span> value_type<span class="token operator">&amp;</span> value<span class="token punctuation">)</span><span class="token operator">:</span> 
+    <span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">finish</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">map</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">map_size</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">fill_initialize</span><span class="token punctuation">(</span>n<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>内部调用<code>fill_initialize</code>负责产生并安排 deque 的结构，并设置初值</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Alloc</span><span class="token punctuation">,</span> size_t BufSize<span class="token operator">></span>
+<span class="token keyword">void</span> <span class="token class-name">deque</span><span class="token operator">&lt;</span>T<span class="token punctuation">,</span> Alloc<span class="token punctuation">,</span> BufSize<span class="token operator">></span><span class="token operator">::</span><span class="token function">fill_initialize</span><span class="token punctuation">(</span>size_type n<span class="token punctuation">,</span>
+                                               <span class="token keyword">const</span> value_type<span class="token operator">&amp;</span> value<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">create_map_and_nodes</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    map_pointer cur<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>cur <span class="token operator">=</span> start<span class="token punctuation">.</span>node<span class="token punctuation">;</span> cur <span class="token operator">&lt;</span> finish<span class="token punctuation">.</span>node<span class="token punctuation">;</span> <span class="token operator">++</span>cur<span class="token punctuation">)</span>
+        <span class="token function">uninitialized_fill</span><span class="token punctuation">(</span><span class="token operator">*</span>cur<span class="token punctuation">,</span> <span class="token operator">*</span>cur <span class="token operator">+</span> <span class="token function">buffer_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">uninitialized_fill</span><span class="token punctuation">(</span>finish<span class="token punctuation">.</span>first<span class="token punctuation">,</span> finish<span class="token punctuation">.</span>cur<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>create_map_and_nodes</code>负责安排 deque 的结构</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Alloc</span><span class="token punctuation">,</span> size_t BufSize<span class="token operator">></span>
+<span class="token keyword">void</span> <span class="token class-name">deque</span><span class="token operator">&lt;</span>T<span class="token punctuation">,</span> Alloc<span class="token punctuation">,</span> BufSize<span class="token operator">></span><span class="token operator">::</span><span class="token function">create_map_and_nodes</span><span class="token punctuation">(</span>size_type num_elements<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 需要的节点数=(元素个数/每个缓冲区可容纳个数)+1</span>
+    size_type num_nodes <span class="token operator">=</span> num_elements <span class="token operator">/</span> <span class="token function">buffer_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+    map_size <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span><span class="token function">initial_map_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> num_nodes <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// (8, num_nodes + 2)</span>
+    map <span class="token operator">=</span> map_allocator<span class="token operator">::</span><span class="token function">allocate</span><span class="token punctuation">(</span>map_size<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 配置map_size个节点</span>
+
+    map_pointer nstart <span class="token operator">=</span> map <span class="token operator">+</span> <span class="token punctuation">(</span>map_size <span class="token operator">-</span> num_nodes<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span>  <span class="token comment">// 从中间开始 </span>
+    map_pointer nfinish <span class="token operator">=</span> nstart <span class="token operator">+</span> num_nodes <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+    map_pointer cur<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>cur <span class="token operator">=</span> nstart<span class="token punctuation">;</span> cur <span class="token operator">&lt;=</span> nfinish<span class="token punctuation">;</span> <span class="token operator">++</span>cur<span class="token punctuation">)</span>
+        <span class="token operator">*</span>cur <span class="token operator">=</span> <span class="token function">allocate_node</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 给每个节点配置缓冲区</span>
+
+    start<span class="token punctuation">.</span><span class="token function">set_node</span><span class="token punctuation">(</span>nstart<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 设置迭代器初值</span>
+    finish<span class="token punctuation">.</span><span class="token function">set_node</span><span class="token punctuation">(</span>nfinish<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    start<span class="token punctuation">.</span>cur <span class="token operator">=</span> start<span class="token punctuation">.</span>first<span class="token punctuation">;</span>
+    finish<span class="token punctuation">.</span>cur <span class="token operator">=</span> finish<span class="token punctuation">.</span>first <span class="token operator">+</span> num_elements <span class="token operator">%</span> <span class="token function">buffer_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>push_back</code>如果还有两个以上的备用空间，直接在备用空间上构造，否则调用<code>push_back_aux</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">push_back</span><span class="token punctuation">(</span><span class="token keyword">const</span> value_type<span class="token operator">&amp;</span> t<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>finish<span class="token punctuation">.</span>cur <span class="token operator">!=</span> finish<span class="token punctuation">.</span>last <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">construct</span><span class="token punctuation">(</span>finish<span class="token punctuation">.</span>cur<span class="token punctuation">,</span> t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">++</span>finish<span class="token punctuation">.</span>cur<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">else</span>
+        <span class="token function">push_back_aux</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>push_back_aux</code>会配置新的 map 节点</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Alloc</span><span class="token punctuation">,</span> size_t BufSize<span class="token operator">></span>
+<span class="token keyword">void</span> <span class="token class-name">deque</span><span class="token operator">&lt;</span>T<span class="token punctuation">,</span> Alloc<span class="token punctuation">,</span> BufSize<span class="token operator">></span><span class="token operator">::</span><span class="token function">push_back_aux</span><span class="token punctuation">(</span><span class="token keyword">const</span> value_type<span class="token operator">&amp;</span> t<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    value_type t_copy <span class="token operator">=</span> t<span class="token punctuation">;</span>
+    <span class="token function">reserve_map_at_back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 符合某些条件时必须重换一个map</span>
+    <span class="token operator">*</span><span class="token punctuation">(</span>finish<span class="token punctuation">.</span>node <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">allocate_node</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 配置一个新节点</span>
+    <span class="token function">construct</span><span class="token punctuation">(</span>finish<span class="token punctuation">.</span>cur<span class="token punctuation">,</span> t_copy<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">// 对缓冲区的最后一个元素设置</span>
+    finish<span class="token punctuation">.</span><span class="token function">set_node</span><span class="token punctuation">(</span>finish<span class="token punctuation">.</span>node <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 然后移动到新的缓冲区</span>
+    finish<span class="token punctuation">.</span>cur <span class="token operator">=</span> finish<span class="token punctuation">.</span>first<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>push_front</code>在头部插入元素，没有空间会调用<code>push_front_aux</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">push_front</span><span class="token punctuation">(</span><span class="token keyword">const</span> value_type<span class="token operator">&amp;</span> t<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>start<span class="token punctuation">.</span>cur <span class="token operator">!=</span> start<span class="token punctuation">.</span>first<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>     <span class="token comment">// 第一个缓冲区还有备用空间</span>
+        <span class="token function">construct</span><span class="token punctuation">(</span>start<span class="token punctuation">.</span>cur <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> t<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 就直接构造</span>
+        <span class="token operator">--</span>start<span class="token punctuation">.</span>cur<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">else</span>
+        <span class="token function">push_front_aux</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>类似地，配置新节点，迭代器移动到新的节点上</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Alloc</span><span class="token punctuation">,</span> size_t BufSize<span class="token operator">></span>
+<span class="token keyword">void</span> <span class="token class-name">deque</span><span class="token operator">&lt;</span>T<span class="token punctuation">,</span> Alloc<span class="token punctuation">,</span> BufSize<span class="token operator">></span><span class="token operator">::</span><span class="token function">push_front_aux</span><span class="token punctuation">(</span><span class="token keyword">const</span> value_type<span class="token operator">&amp;</span> t<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    value_type t_copy <span class="token operator">=</span> t<span class="token punctuation">;</span>
+    <span class="token function">reserve_map_at_front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">*</span><span class="token punctuation">(</span>start<span class="token punctuation">.</span>node <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">allocate_node</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    start<span class="token punctuation">.</span><span class="token function">set_node</span><span class="token punctuation">(</span>start<span class="token punctuation">.</span>node <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    start<span class="token punctuation">.</span>cur <span class="token operator">=</span> start<span class="token punctuation">.</span>last <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token function">construct</span><span class="token punctuation">(</span>start<span class="token punctuation">.</span>cur<span class="token punctuation">,</span> t_copy<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在一定条件下需要重新分配 map 空间</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">reserve_map_at_back</span> <span class="token punctuation">(</span>size_type nodes_to_add <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 尾部备用节点不足</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>nodes_to_add <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">></span> map_size <span class="token operator">-</span> <span class="token punctuation">(</span>finish<span class="token punctuation">.</span>node <span class="token operator">-</span> map<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token function">reallocate_map</span><span class="token punctuation">(</span>nodes_to_add<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token function">reserve_map_at_front</span> <span class="token punctuation">(</span>size_type nodes_to_add <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 前端的备用节点不足</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>nodes_to_add <span class="token operator">></span> start<span class="token punctuation">.</span>node <span class="token operator">-</span> map<span class="token punctuation">)</span>
+        <span class="token function">reallocate_map</span><span class="token punctuation">(</span>nodes_to_add<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Alloc</span><span class="token punctuation">,</span> size_t BufSize<span class="token operator">></span>
+<span class="token keyword">void</span> <span class="token class-name">deque</span><span class="token operator">&lt;</span>T<span class="token punctuation">,</span> Alloc<span class="token punctuation">,</span> BufSize<span class="token operator">></span><span class="token operator">::</span><span class="token function">reallocate_map</span><span class="token punctuation">(</span>size_type nodes_to_add<span class="token punctuation">,</span>
+                                              <span class="token keyword">bool</span> add_at_front<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    size_type old_num_nodes <span class="token operator">=</span> finish<span class="token punctuation">.</span>node <span class="token operator">-</span> start<span class="token punctuation">.</span>node <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    size_type new_num_nodes <span class="token operator">=</span> old_num_nodes <span class="token operator">+</span> nodes_to_add<span class="token punctuation">;</span>
+
+    map_pointer new_nstart<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>map_size <span class="token operator">></span> <span class="token number">2</span> <span class="token operator">*</span> new_num_nodes<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        new_nstart <span class="token operator">=</span> map <span class="token operator">+</span> <span class="token punctuation">(</span>map_size <span class="token operator">-</span> new_num_nodes<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span> 
+                            <span class="token operator">+</span> <span class="token punctuation">(</span>add_at_front <span class="token operator">?</span> nodes_to_add <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>new_nstart <span class="token operator">&lt;</span> start<span class="token punctuation">.</span>node<span class="token punctuation">)</span>
+            <span class="token function">copy</span><span class="token punctuation">(</span>start<span class="token punctuation">.</span>node<span class="token punctuation">,</span> finish<span class="token punctuation">.</span>node <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> new_nstart<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span>
+            <span class="token function">copy_backward</span><span class="token punctuation">(</span>start<span class="token punctuation">.</span>node<span class="token punctuation">,</span> finish<span class="token punctuation">.</span>node <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> new_nstart <span class="token operator">+</span> old_num_nodes<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        size_type new_map_size <span class="token operator">=</span> map_size <span class="token operator">+</span> <span class="token function">max</span><span class="token punctuation">(</span>map_size<span class="token punctuation">,</span> nodes_to_add<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">;</span>
+        <span class="token comment">// 配置一块新的空间</span>
+        map_pointer new_map <span class="token operator">=</span> map_allocator<span class="token operator">::</span><span class="token function">allocate</span><span class="token punctuation">(</span>new_map_size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        new_nstart <span class="token operator">=</span> new_map <span class="token operator">+</span> <span class="token punctuation">(</span>new_map_size <span class="token operator">-</span> new_num_nodes<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span>
+                                <span class="token operator">+</span> <span class="token punctuation">(</span>add_at_front <span class="token operator">?</span> nodes_to_add <span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">copy</span><span class="token punctuation">(</span>start<span class="token punctuation">.</span>node<span class="token punctuation">,</span> finish<span class="token punctuation">.</span>node <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> new_nstart<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 把原map拷贝过来</span>
+        map_allocator<span class="token operator">::</span><span class="token function">deallocate</span><span class="token punctuation">(</span>map<span class="token punctuation">,</span> map_size<span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment">// 释放原map</span>
+
+        map <span class="token operator">=</span> new_map<span class="token punctuation">;</span>
+        map_size <span class="token operator">=</span> new_map_size<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    start<span class="token punctuation">.</span><span class="token function">set_node</span><span class="token punctuation">(</span>new_nstart<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    finish<span class="token punctuation">.</span><span class="token function">set_node</span><span class="token punctuation">(</span>new_nstart <span class="token operator">+</span> old_num_nodes <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="4-4-6-deque的元素操作"><a href="#4-4-6-deque的元素操作" class="headerlink" title="4.4.6 deque的元素操作"></a>4.4.6 deque的元素操作</h3><p><code>pop_back</code>和<code>pop_front</code>删除尾部和头部的元素，如果删掉后缓冲区没有元素了，就要释放该缓冲区</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">pop_back</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>finish<span class="token punctuation">.</span>cur <span class="token operator">!=</span> finish<span class="token punctuation">.</span>first<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>   <span class="token comment">// 缓冲区还有元素</span>
+        <span class="token operator">--</span>finish<span class="token punctuation">.</span>cur<span class="token punctuation">;</span>
+        <span class="token function">destroy</span><span class="token punctuation">(</span>finish<span class="token punctuation">.</span>cur<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">else</span>
+        <span class="token function">pop_back_aux</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 只有当finish.cur==finish.first时才会调用</span>
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Alloc</span><span class="token punctuation">,</span> size_t BufSize<span class="token operator">></span>
+<span class="token keyword">void</span> <span class="token class-name">deque</span><span class="token operator">&lt;</span>T<span class="token punctuation">,</span> Alloc<span class="token punctuation">,</span> BufSize<span class="token operator">></span><span class="token operator">::</span> <span class="token function">pop_back_aux</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">deallocate_node</span><span class="token punctuation">(</span>finish<span class="token punctuation">.</span>first<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">// 释放最后一个缓冲区</span>
+    finish<span class="token punctuation">.</span><span class="token function">set_node</span><span class="token punctuation">(</span>finish<span class="token punctuation">.</span>node <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 移动到上一个缓冲区</span>
+    finish<span class="token punctuation">.</span>cur <span class="token operator">=</span> finish<span class="token punctuation">.</span>last <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>       <span class="token comment">// 指向最后一个元素</span>
+    <span class="token function">destroy</span><span class="token punctuation">(</span>finish<span class="token punctuation">.</span>cur<span class="token punctuation">)</span><span class="token punctuation">;</span>                <span class="token comment">// 将其析构掉</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token function">pop_front</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>start<span class="token punctuation">.</span>cur <span class="token operator">!=</span> start<span class="token punctuation">.</span>last <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">destroy</span><span class="token punctuation">(</span>start<span class="token punctuation">.</span>cur<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">++</span>start<span class="token punctuation">.</span>cur<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">else</span> 
+        <span class="token function">pop_front_aux</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Alloc</span><span class="token punctuation">,</span> size_t BufSize<span class="token operator">></span>
+<span class="token keyword">void</span> <span class="token class-name">deque</span><span class="token operator">&lt;</span>T<span class="token punctuation">,</span> Alloc<span class="token punctuation">,</span> BufSize<span class="token operator">></span><span class="token operator">::</span><span class="token function">pop_front_aux</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">destroy</span><span class="token punctuation">(</span>start<span class="token punctuation">.</span>cur<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">deallocate_node</span><span class="token punctuation">(</span>start<span class="token punctuation">.</span>first<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    start<span class="token punctuation">.</span><span class="token function">set_node</span><span class="token punctuation">(</span>start<span class="token punctuation">.</span>node <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    start<span class="token punctuation">.</span>cur <span class="token operator">=</span> start<span class="token punctuation">.</span>first<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>clear</code>清除到只剩一个缓冲区</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Alloc</span><span class="token punctuation">,</span> size_t BufSize<span class="token operator">></span>
+<span class="token keyword">void</span> <span class="token class-name">deque</span><span class="token operator">&lt;</span>T<span class="token punctuation">,</span> Alloc<span class="token punctuation">,</span> BufSize<span class="token operator">></span><span class="token operator">::</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 先清除填满元素的缓冲区</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>map_pointer node <span class="token operator">=</span> start<span class="token punctuation">.</span>node <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> node <span class="token operator">&lt;</span> finish<span class="token punctuation">.</span>node<span class="token punctuation">;</span> <span class="token operator">++</span>node<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">destroy</span><span class="token punctuation">(</span><span class="token operator">*</span>node<span class="token punctuation">,</span> <span class="token operator">*</span>node <span class="token operator">+</span> <span class="token function">buffer_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        data_allocator<span class="token operator">::</span><span class="token function">deallocate</span><span class="token punctuation">(</span><span class="token operator">*</span>node<span class="token punctuation">,</span> <span class="token function">buffer_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>start<span class="token punctuation">.</span>node <span class="token operator">!=</span> finish<span class="token punctuation">.</span>node<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>    <span class="token comment">// 再清除头尾两个缓冲区</span>
+        <span class="token function">destroy</span><span class="token punctuation">(</span>start<span class="token punctuation">.</span>cur<span class="token punctuation">,</span> start<span class="token punctuation">.</span>last<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">destroy</span><span class="token punctuation">(</span>finish<span class="token punctuation">.</span>first<span class="token punctuation">,</span> finish<span class="token punctuation">.</span>cur<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        data_allocator<span class="token operator">::</span><span class="token function">deallocate</span><span class="token punctuation">(</span>finish<span class="token punctuation">.</span>first<span class="token punctuation">,</span> <span class="token function">buffer_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 清除尾缓冲区，保留头缓冲区</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">else</span>
+        <span class="token function">destroy</span><span class="token punctuation">(</span>start<span class="token punctuation">.</span>cur<span class="token punctuation">,</span> finish<span class="token punctuation">.</span>cur<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    finish <span class="token operator">=</span> start<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>erase</code>清除某个元素</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">iterator <span class="token function">erase</span><span class="token punctuation">(</span>iterator pos<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    iterator next <span class="token operator">=</span> pos<span class="token punctuation">;</span>
+    <span class="token operator">++</span>next<span class="token punctuation">;</span>
+    difference_type index <span class="token operator">=</span> pos <span class="token operator">-</span> start<span class="token punctuation">;</span>    <span class="token comment">// 清除点之前的元素个数</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">&lt;</span> <span class="token punctuation">(</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>            <span class="token comment">// 如果前面的元素比较少</span>
+        <span class="token function">copy_backward</span><span class="token punctuation">(</span>start<span class="token punctuation">,</span> pos<span class="token punctuation">,</span> next<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 就将[start,pos)往后移一格</span>
+        <span class="token function">pop_front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 然后将最前面的元素弹出</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">copy</span><span class="token punctuation">(</span>next<span class="token punctuation">,</span> finish<span class="token punctuation">,</span> pos<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">pop_back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> start <span class="token operator">+</span> index<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>erase</code>清除区间<code>[first, end)</code>内的所有元素</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Alloc</span><span class="token punctuation">,</span> size_t BufSize<span class="token operator">></span>
+deque<span class="token operator">&lt;</span>T<span class="token punctuation">,</span> Alloc<span class="token punctuation">,</span> BufSize<span class="token operator">></span><span class="token operator">::</span>iterator 
+<span class="token class-name">deque</span><span class="token operator">&lt;</span>T<span class="token punctuation">,</span> Alloc<span class="token punctuation">,</span> BufSize<span class="token operator">></span><span class="token operator">::</span><span class="token function">erase</span><span class="token punctuation">(</span>iterator first<span class="token punctuation">,</span> iterator last<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>first <span class="token operator">==</span> start <span class="token operator">&amp;&amp;</span> last <span class="token operator">==</span> finish<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> finish<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        difference_type n <span class="token operator">=</span> last <span class="token operator">-</span> first<span class="token punctuation">;</span>   <span class="token comment">// 区间长度</span>
+        difference_type elems_before <span class="token operator">=</span> first <span class="token operator">-</span> start<span class="token punctuation">;</span>   <span class="token comment">// 清除区间前方的元素个数</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>elems_before <span class="token operator">&lt;</span> <span class="token punctuation">(</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> n<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">copy_backward</span><span class="token punctuation">(</span>start<span class="token punctuation">,</span> first<span class="token punctuation">,</span> last<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 向后移动前方元素</span>
+            iterator new_start <span class="token operator">=</span> start <span class="token operator">+</span> n<span class="token punctuation">;</span>     <span class="token comment">// 计算新起点</span>
+            <span class="token function">destroy</span><span class="token punctuation">(</span>start<span class="token punctuation">,</span> new_start<span class="token punctuation">)</span><span class="token punctuation">;</span>          <span class="token comment">// 冗余元素析构</span>
+            <span class="token comment">// 如果有冗余的缓冲区也释放掉</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span>map_pointer cur <span class="token operator">=</span> start<span class="token punctuation">.</span>node<span class="token punctuation">;</span> cur <span class="token operator">&lt;</span> new_start<span class="token punctuation">.</span>node<span class="token punctuation">;</span> <span class="token operator">++</span>cur<span class="token punctuation">)</span>
+                data_allocator<span class="token operator">::</span><span class="token function">deallocate</span><span class="token punctuation">(</span><span class="token operator">*</span>cur<span class="token punctuation">,</span> <span class="token function">buffer_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            start <span class="token operator">=</span> new_start<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            <span class="token function">copy</span><span class="token punctuation">(</span>last<span class="token punctuation">,</span> finish<span class="token punctuation">,</span> first<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 否则就将后面的元素往前移</span>
+            iterator new_finish <span class="token operator">=</span> finish <span class="token operator">-</span> n<span class="token punctuation">;</span>
+            <span class="token function">destroy</span><span class="token punctuation">(</span>new_finish<span class="token punctuation">,</span> finish<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span>map_pointer cur <span class="token operator">=</span> new_finish<span class="token punctuation">.</span>node <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> cur <span class="token operator">&lt;=</span> finish<span class="token punctuation">.</span>node<span class="token punctuation">;</span> <span class="token operator">++</span>cur<span class="token punctuation">)</span>
+                data_allocator<span class="token operator">::</span><span class="token function">deallocate</span><span class="token punctuation">(</span><span class="token operator">*</span>cur<span class="token punctuation">,</span> <span class="token function">buffer_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            finish <span class="token operator">=</span> new_finish<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> start <span class="token operator">+</span> elems_before<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>insert</code>在某个迭代器之前插入一个元素，并设定其值，如果是在中间位置插入就调用<code>insert_aux</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">iterator <span class="token function">insert</span><span class="token punctuation">(</span>iterator position<span class="token punctuation">,</span> <span class="token keyword">const</span> value_type<span class="token operator">&amp;</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>position<span class="token punctuation">.</span>cur <span class="token operator">==</span> start<span class="token punctuation">.</span>cur<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">push_front</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> start<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>position<span class="token punctuation">.</span>cur <span class="token operator">==</span> finish<span class="token punctuation">.</span>cur<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">push_back</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        iterator tmp <span class="token operator">=</span> finish<span class="token punctuation">;</span>
+        <span class="token operator">--</span>tmp<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> tmp<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token function">insert_aux</span><span class="token punctuation">(</span>position<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">class</span> <span class="token class-name">Alloc</span><span class="token punctuation">,</span> size_t BufSize<span class="token operator">></span>
+<span class="token keyword">typename</span> <span class="token class-name">deque</span><span class="token operator">&lt;</span>T<span class="token punctuation">,</span> Alloc<span class="token punctuation">,</span> BufSize<span class="token operator">></span><span class="token operator">::</span>iterator
+<span class="token class-name">deque</span><span class="token operator">&lt;</span>T<span class="token punctuation">,</span> Alloc<span class="token punctuation">,</span> BufSize<span class="token operator">></span><span class="token operator">::</span><span class="token function">insert_aux</span><span class="token punctuation">(</span>iterator pos<span class="token punctuation">,</span> <span class="token keyword">const</span> value_type<span class="token operator">&amp;</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    difference_type index <span class="token operator">=</span> pos <span class="token operator">-</span> start<span class="token punctuation">;</span>    <span class="token comment">// 插入点之前的元素个数</span>
+    value_type x_copy <span class="token operator">=</span> x<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">&lt;</span> <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>   <span class="token comment">// 插入点之前的元素比较少</span>
+        <span class="token function">push_front</span><span class="token punctuation">(</span><span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// 先在前端插入一个相同元素</span>
+        iterator front1 <span class="token operator">=</span> start<span class="token punctuation">;</span>    
+        <span class="token operator">++</span>front1<span class="token punctuation">;</span>
+        iterator front2 <span class="token operator">=</span> front1<span class="token punctuation">;</span>
+        <span class="token operator">++</span>front2<span class="token punctuation">;</span>
+        pos <span class="token operator">=</span> start <span class="token operator">+</span> index<span class="token punctuation">;</span>
+        iterator pos1 <span class="token operator">=</span> pos<span class="token punctuation">;</span>
+        <span class="token operator">++</span>pos1<span class="token punctuation">;</span>
+        <span class="token function">copy</span><span class="token punctuation">(</span>front2<span class="token punctuation">,</span> pos1<span class="token punctuation">,</span> front1<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 再把插入点前面的元素往前移一格，空出插入的位置</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">push_back</span><span class="token punctuation">(</span><span class="token function">back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        iterator back1 <span class="token operator">=</span> finish<span class="token punctuation">;</span>
+        <span class="token operator">--</span>back1<span class="token punctuation">;</span>
+        iterator back2 <span class="token operator">=</span> back1<span class="token punctuation">;</span>
+        <span class="token operator">--</span>back2<span class="token punctuation">;</span>
+        pos <span class="token operator">=</span> start <span class="token operator">+</span> index<span class="token punctuation">;</span>
+        <span class="token function">copy_backward</span><span class="token punctuation">(</span>pos<span class="token punctuation">,</span> back2<span class="token punctuation">,</span> back1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token operator">*</span>pos <span class="token operator">=</span> x_copy<span class="token punctuation">;</span>  <span class="token comment">// 在插入点上设定新值</span>
+    <span class="token keyword">return</span> pos<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">kunpeng</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://example.com/2022/06/12/C-STL-4-4-deque/">http://example.com/2022/06/12/C-STL-4-4-deque/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">kunpeng</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/STL/">
+                                    <span class="chip bg-color">STL</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/06/13/LeetCode-1262-%E5%8F%AF%E8%A2%AB%E4%B8%89%E6%95%B4%E9%99%A4%E7%9A%84%E6%9C%80%E5%A4%A7%E5%92%8C/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="1262-可被三整除的最大和">
+                        
+                        <span class="card-title">1262-可被三整除的最大和</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-06-13
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                        <span class="chip bg-color">动态规划</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/06/12/C-STL-4-3-list/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="4.3-list">
+                        
+                        <span class="card-title">4.3-list</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/C/" class="post-category">
+                                    C++
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/STL/">
+                        <span class="chip bg-color">STL</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2022</span>
+            
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">kunpeng</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/kavinwkp" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1817136760@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1817136760" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1817136760" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</body>
+
+</html>
