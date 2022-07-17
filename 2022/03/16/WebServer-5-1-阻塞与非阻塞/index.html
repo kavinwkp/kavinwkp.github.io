@@ -610,7 +610,7 @@
 </blockquote>
 <p>Linux中,可以调用<code>aio_read</code>函数告诉内核描述字缓冲区指针和缓冲区的大小、文件偏移及通知的方式,然后立即返回,当内核将数据拷贝到缓冲区后,再通知应用程序</p>
 <h3 id="Reactor模式"><a href="#Reactor模式" class="headerlink" title="Reactor模式"></a>Reactor模式</h3><p>主线程（IO处理单元）只负责监听文件描述符是否发生有事件发生，有的话就将该事件通知工作线程（逻辑单元），将<code>socket</code>可读可写事件放入请求队列，交给工作线程处理，除此之外，不做其他工作。数据读写，接收新的连接，以及处理客户端请求都在工作线程中完成</p>
-<p>使用同步IO（以<code>epoll_wait</code>为例）实现的Reactor模式的工作流程</p>
+<p>使用同步IO（以<code>epoll_wait</code>为例）实现的 Reactor 模式的工作流程</p>
 <ol>
 <li>主线程往<code>epoll</code>内核事件表中注册<code>socket</code>上的读就绪事件</li>
 <li>主线程调用<code>epoll_wait</code>等待<code>socket</code>上有数据可读</li>
@@ -620,7 +620,12 @@
 <li>当<code>socket</code>可写时，<code>epoll_wait</code>通知主线程，主线程将<code>socket</code>可写事件放入请求队列</li>
 <li>睡眠在请求队列上的某个工作线程被唤醒，它往<code>socket</code>上写入服务器处理客户请求的结果</li>
 </ol>
-<h3 id="Proactor模式"><a href="#Proactor模式" class="headerlink" title="Proactor模式"></a>Proactor模式</h3><p>Proactor模式将所有的IO操作都交给主线程和内核来处理，工作线程只负责业务逻辑</p>
+<center>
+<img src="https://github.com/kavinwkp/blogimage/raw/main/img/WebServer/5/Reactor.png" width="90%">
+</center>
+
+<h3 id="Proactor模式"><a href="#Proactor模式" class="headerlink" title="Proactor模式"></a>Proactor模式</h3><font color="LightSeaGreen">Proactor模式将所有的IO操作都交给主线程和内核来处理，工作线程只负责业务逻辑</font>
+
 <p>使用异步IO模型（以<code>aio_read/aio_write</code>为例）实现的Proactor模式的工作流程</p>
 <ol>
 <li>主线程调用<code>aio_read</code>函数向内核注册<code>socket</code>上的读完成事件，并告诉内核用户读缓冲区的位置，以及读操作完成时如何通知应用进程（以信号为例）</li>
@@ -631,9 +636,13 @@
 <li>当用户缓冲区的数据被写入<code>socket</code>后，内核向应用程序发送一个信号，通知数据发送完毕</li>
 <li>应用程序事先定义好的信号处理函数选择一个工作线程来处理善后工作，比如决定是否关闭<code>socket</code></li>
 </ol>
-<h3 id="模拟Proactor模式"><a href="#模拟Proactor模式" class="headerlink" title="模拟Proactor模式"></a>模拟Proactor模式</h3><p>Proactor模式中，主线程只负责监听<code>socket</code>，数据读写是由内核通过异步方式完成的，工作线程只负责业务逻辑</p>
-<p>可以在主线程中用同步的方式进行数据读写，然后交给工作线程处理</p>
-<p>使用同步IO（以<code>epoll_wait</code>为例）模拟出的Proactor模式的工作流程</p>
+<center>
+<img src="https://github.com/kavinwkp/blogimage/raw/main/img/WebServer/5/Proactor_1.png" width="90%">
+</center>
+
+<h3 id="模拟Proactor模式"><a href="#模拟Proactor模式" class="headerlink" title="模拟Proactor模式"></a>模拟Proactor模式</h3><p>Proactor 模式中，主线程只负责监听<code>socket</code>，数据读写是由内核通过<font color="LightSeaGreen">异步</font>方式完成的，工作线程只负责业务逻辑</p>
+<p>可以在主线程中用<font color="Coral">同步</font>的方式进行数据读写，然后交给工作线程处理</p>
+<p>使用同步IO（以<code>epoll_wait</code>为例）模拟出的 Proactor 模式的工作流程</p>
 <ol>
 <li>主线程往<code>epoll</code>内核事件表中注册<code>socket</code>上的读就绪事件</li>
 <li>主线程调用<code>epoll_wait</code>等待<code>socket</code>上有数据可读</li>

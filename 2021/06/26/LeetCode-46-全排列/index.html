@@ -640,7 +640,7 @@ vector<span class="token operator">&lt;</span>vector<span class="token operator"
 <blockquote>
 <p>可以只用一个<code>used</code></p>
 </blockquote>
-<p>不过要先<strong>排序</strong>，让相同的元素在一起<br>在上面的全排列问题中，<code>used</code>数组用于同一子树的去重，但是在同一树层，如果两个元素相同，并且前一个元素的<code>used[i-1]=false</code>，说明前一个元素肯定会在另一个分支上被用，当前元素就不能再用了，所以也起到了同一树杈去重的功能</p>
+<p>不过要先<strong>排序</strong>，让相同的元素在一起<br>在上面的全排列问题中，<code>used</code>数组用于同一子树的去重，但是在同一树层，如果两个元素相同，并且前一个元素的<code>used[i-1]=false</code>，说明前一个元素跟当前元素处在同一层，当前元素就不能再用了，所以也起到了同一树杈去重的功能；如果<code>used[i-1]=true</code>，说明前面那个元素是在之前层被用的，跟当前元素不在同一层，所以当前元素可以用</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">vector<span class="token operator">&lt;</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">>></span> ret<span class="token punctuation">;</span>
 vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> path<span class="token punctuation">;</span>
 <span class="token keyword">void</span> <span class="token function">dfs</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">,</span> vector<span class="token operator">&lt;</span><span class="token keyword">bool</span><span class="token operator">></span><span class="token operator">&amp;</span> used<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>

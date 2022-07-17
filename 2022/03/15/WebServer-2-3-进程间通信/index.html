@@ -918,9 +918,10 @@ ipcrm <span class="token operator">-</span>m shmid  <span class="token comment">
 <span class="token comment">// 发送SIGABRT信号给当前进程，杀死当前进程</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="信号集"><a href="#信号集" class="headerlink" title="信号集"></a>信号集</h3><p>多个信号可使用一个信号集的数据结构<code>sigset_t</code>来表示</p>
 <font color="LightSeaGreen">未决信号集</font>和<font color="Coral">阻塞信号集</font>都是用64位的位图来表示
+
 某个信号产生，<font color="LightSeaGreen">未决信号集</font>中对应位置就置1，然后与<font color="Coral">阻塞信号集</font>中对应位置比较，如果<font color="Coral">阻塞信号集</font>中的位置是1，说明要阻塞该信号，则信号仍处于未决状态，直到阻塞解除；否则不阻塞，信号可以被处理。默认是不阻塞的，可以手动设置
 
->只能操作<font color="Coral">阻塞信号集</font>
+> 只能操作<font color="Coral">阻塞信号集</font>
 
 <p>操作自定义的<font color="Coral">阻塞信号集</font></p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;signal.h></span></span>
