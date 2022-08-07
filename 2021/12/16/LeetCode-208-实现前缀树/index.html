@@ -668,6 +668,112 @@ trie<span class="token punctuation">.</span><span class="token function">search<
         <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<hr>
+<h2 id="NC124-字典树的实现"><a href="#NC124-字典树的实现" class="headerlink" title="NC124 字典树的实现"></a>NC124 字典树的实现</h2><p>字典树又称为前缀树或者Trie树，是处理字符串常用的数据结构。</p>
+<p>假设组成所有单词的字符仅是‘a’～‘z’，请实现字典树的结构，并包含以下四个主要的功能。</p>
+<ul>
+<li><ol>
+<li><code>void insert(String word)</code>：添加word，可重复添加；</li>
+</ol>
+</li>
+<li><ol>
+<li><code>void delete(String word)</code>：删除word，如果word添加过多次，仅删除一次；</li>
+</ol>
+</li>
+<li><ol>
+<li><code>boolean search(String word)</code>：查询word是否在字典树中出现过(完整的出现过，前缀式不算)；</li>
+</ol>
+</li>
+<li><ol>
+<li><code>int prefixNumber(String pre)</code>：返回以字符串pre作为前缀的单词数量。</li>
+</ol>
+</li>
+</ul>
+<p>现在给定一个m，表示有m次操作，每次操作都为以上四种操作之一。每次操作会给定一个整数op和一个字符串word，op代表一个操作码，</p>
+<ul>
+<li>如果op为1，则代表添加word</li>
+<li>op为2则代表删除word</li>
+<li>op为3则代表查询word是否在字典树中</li>
+<li>op为4代表返回以word为前缀的单词数量（数据保证不会删除不存在的word）。</li>
+</ul>
+<p>对于每次操作，</p>
+<ul>
+<li>如果op为3时，如果word在字典树中，请输出“YES”，否则输出“NO”</li>
+<li>如果op为4时，请输出返回以word为前缀的单词数量，其它情况不输出。</li>
+</ul>
+<p>数据范围：操作数满足$0 \le m \le 10^5$，字符串长度都满足$0 \le n \le 200$</p>
+<p>进阶：所有操作的时间复杂度都满足 $O(n)$</p>
+<p><strong>示例1</strong></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入：<span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token string">"1"</span><span class="token punctuation">,</span><span class="token string">"qwer"</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token string">"1"</span><span class="token punctuation">,</span><span class="token string">"qwe"</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token string">"3"</span><span class="token punctuation">,</span><span class="token string">"qwer"</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token string">"4"</span><span class="token punctuation">,</span><span class="token string">"q"</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token string">"2"</span><span class="token punctuation">,</span><span class="token string">"qwer"</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token string">"3"</span><span class="token punctuation">,</span><span class="token string">"qwer"</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token string">"4"</span><span class="token punctuation">,</span><span class="token string">"q"</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+输出：<span class="token punctuation">[</span><span class="token string">"YES"</span><span class="token punctuation">,</span><span class="token string">"2"</span><span class="token punctuation">,</span><span class="token string">"NO"</span><span class="token punctuation">,</span><span class="token string">"1"</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="method-1"><a href="#method-1" class="headerlink" title="method"></a>method</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Trie</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    vector<span class="token operator">&lt;</span>Trie<span class="token operator">*</span><span class="token operator">></span> next<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> num<span class="token punctuation">;</span>    <span class="token comment">// 表示每个前缀的数量</span>
+    <span class="token keyword">bool</span> isEnd<span class="token punctuation">;</span>
+    <span class="token function">Trie</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token number">26</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">num</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">isEnd</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">void</span> <span class="token function">insert</span><span class="token punctuation">(</span>string word<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        Trie <span class="token operator">*</span>root <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> c <span class="token operator">:</span> word<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">int</span> n <span class="token operator">=</span> c <span class="token operator">-</span> <span class="token string">'a'</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token operator">-></span>next<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                root<span class="token operator">-></span>next<span class="token punctuation">[</span>n<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">Trie</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            root <span class="token operator">=</span> root<span class="token operator">-></span>next<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            root<span class="token operator">-></span>num<span class="token operator">++</span><span class="token punctuation">;</span>    <span class="token comment">// 说明有这个前缀，所以加一</span>
+        <span class="token punctuation">&#125;</span>
+        root<span class="token operator">-></span>isEnd <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">void</span> <span class="token function">deleteWord</span><span class="token punctuation">(</span>string word<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        Trie <span class="token operator">*</span>root <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> c <span class="token operator">:</span> word<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">int</span> n <span class="token operator">=</span> c <span class="token operator">-</span> <span class="token string">'a'</span><span class="token punctuation">;</span>
+            root <span class="token operator">=</span> root<span class="token operator">-></span>next<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            root<span class="token operator">-></span>num<span class="token operator">--</span><span class="token punctuation">;</span>    <span class="token comment">// 删除了就减一</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span>num <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> root<span class="token operator">-></span>isEnd <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">bool</span> <span class="token function">search</span><span class="token punctuation">(</span>string word<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        Trie <span class="token operator">*</span>root <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> c <span class="token operator">:</span> word<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">int</span> n <span class="token operator">=</span> c <span class="token operator">-</span> <span class="token string">'a'</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token operator">-></span>next<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+            root <span class="token operator">=</span> root<span class="token operator">-></span>next<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> root<span class="token operator">-></span>isEnd<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token keyword">int</span> <span class="token function">prefixNumber</span><span class="token punctuation">(</span>string pre<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        Trie <span class="token operator">*</span>root <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> c <span class="token operator">:</span> pre<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">int</span> n <span class="token operator">=</span> c <span class="token operator">-</span> <span class="token string">'a'</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>root<span class="token operator">-></span>next<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+            root <span class="token operator">=</span> root<span class="token operator">-></span>next<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> root<span class="token operator">-></span>num<span class="token punctuation">;</span>    <span class="token comment">// 直接返回该前缀数量</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    vector<span class="token operator">&lt;</span>string<span class="token operator">></span> <span class="token function">trieU</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span>vector<span class="token operator">&lt;</span>string<span class="token operator">></span> <span class="token operator">></span><span class="token operator">&amp;</span> operators<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        vector<span class="token operator">&lt;</span>string<span class="token operator">></span> res<span class="token punctuation">;</span>
+        Trie <span class="token operator">*</span>root <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">Trie</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> op <span class="token operator">:</span> operators<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>op<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">"1"</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                root<span class="token operator">-></span><span class="token function">insert</span><span class="token punctuation">(</span>op<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>op<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">"2"</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                root<span class="token operator">-></span><span class="token function">deleteWord</span><span class="token punctuation">(</span>op<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>op<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">"3"</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>root<span class="token operator">-></span><span class="token function">search</span><span class="token punctuation">(</span>op<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> res<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token string">"YES"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">else</span> res<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token string">"NO"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+                res<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token function">to_string</span><span class="token punctuation">(</span>root<span class="token operator">-></span><span class="token function">prefixNumber</span><span class="token punctuation">(</span>op<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
                 
             </div>
             <hr/>
@@ -942,12 +1048,12 @@ trie<span class="token punctuation">.</span><span class="token function">search<
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E8%B4%AA%E5%BF%83/">
-                        <span class="chip bg-color">贪心</span>
-                    </a>
-                    
                     <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
                         <span class="chip bg-color">动态规划</span>
+                    </a>
+                    
+                    <a href="/tags/%E8%B4%AA%E5%BF%83/">
+                        <span class="chip bg-color">贪心</span>
                     </a>
                     
                 </div>
@@ -1127,6 +1233,13 @@ trie<span class="token punctuation">.</span><span class="token function">search<
 
 </main>
 
+
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
 
 
 

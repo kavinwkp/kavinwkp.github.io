@@ -642,6 +642,33 @@ ctor<span class="token punctuation">,</span> <span class="token keyword">this</s
 dtor<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token operator">=</span><span class="token number">0x565188649e80</span> id<span class="token operator">=</span><span class="token number">2</span>
 dtor<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token operator">=</span><span class="token number">0x565188649e7c</span> id<span class="token operator">=</span><span class="token number">1</span>
 dtor<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token operator">=</span><span class="token number">0x565188649e78</span> id<span class="token operator">=</span><span class="token number">0</span>  <span class="token comment">// 析构和构造的顺序是相反的</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>定位<code>new</code>使得我们可以使用栈或静态存储区的内存空间</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;new></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> <span class="token keyword">int</span> N <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">char</span> buffer<span class="token punctuation">[</span><span class="token number">512</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span>buffer <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+
+    <span class="token keyword">double</span> <span class="token operator">*</span>pd <span class="token operator">=</span> <span class="token keyword">new</span><span class="token punctuation">(</span>buffer<span class="token punctuation">)</span><span class="token keyword">double</span><span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> N<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        pd<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> N<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        cout <span class="token operator">&lt;&lt;</span> pd<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> <span class="token string">": "</span> <span class="token operator">&lt;&lt;</span> <span class="token operator">&amp;</span>pd<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token number">0x7ffd8418fa90</span>
+<span class="token number">0</span><span class="token operator">:</span> <span class="token number">0x7ffd8418fa90</span>
+<span class="token number">1</span><span class="token operator">:</span> <span class="token number">0x7ffd8418fa98</span>
+<span class="token number">2</span><span class="token operator">:</span> <span class="token number">0x7ffd8418faa0</span>
+<span class="token number">3</span><span class="token operator">:</span> <span class="token number">0x7ffd8418faa8</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里的空间是在栈上分配的，只是使用定位<code>new</code>对空间进行赋值</p>
 
                 
             </div>

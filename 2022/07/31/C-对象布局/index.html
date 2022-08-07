@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="OpenCV_RGB&amp;GRAY, kunpeng">
+    <meta name="keywords" content="对象布局, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>OpenCV_RGB&amp;GRAY | kunpeng</title>
+    <title>对象布局 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">OpenCV_RGB&amp;GRAY</h1>
+                    <h1 class="description center-align post-title">对象布局</h1>
                 </div>
             </div>
         </div>
@@ -511,8 +511,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/OpenCV/">
-                                <span class="chip bg-color">OpenCV</span>
+                            <a href="/tags/C/">
+                                <span class="chip bg-color">C++</span>
                             </a>
                         
                     </div>
@@ -523,8 +523,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/OpenCV/" class="post-category">
-                                OpenCV
+                            <a href="/categories/C/" class="post-category">
+                                C++
                             </a>
                         
                     </div>
@@ -536,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-04-01
+                    2022-07-31
                 </div>
                 
 
@@ -560,85 +560,141 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <!-- toc -->
-<h2 id="读取图像"><a href="#读取图像" class="headerlink" title="读取图像"></a>读取图像</h2><h3 id="C-版本"><a href="#C-版本" class="headerlink" title="C++版本"></a>C++版本</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">imread</span><span class="token punctuation">(</span> <span class="token keyword">const</span> String<span class="token operator">&amp;</span> filename<span class="token punctuation">,</span> <span class="token keyword">int</span> flags <span class="token operator">=</span> IMREAD_COLOR <span class="token punctuation">)</span>
-filename	<span class="token comment">// 图片路径</span>
-flags		<span class="token comment">// 以彩色图或灰度图的方式进行读取</span>
-    IMREAD_GRAYSCALE <span class="token operator">=</span> <span class="token number">0</span>    <span class="token comment">// 灰度图</span>
-    IMREAD_COLOR     <span class="token operator">=</span> <span class="token number">1</span>    <span class="token comment">// 彩色图(默认)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">namedWindow</span><span class="token punctuation">(</span><span class="token keyword">const</span> String<span class="token operator">&amp;</span> winname<span class="token punctuation">,</span> <span class="token keyword">int</span> flags <span class="token operator">=</span> WINDOW_AUTOSIZE<span class="token punctuation">)</span>
-winname	<span class="token comment">// 窗口名称</span>
-flags	<span class="token comment">// 窗口属性</span>
-	WINDOW_NORMAL		<span class="token comment">// 可拖动改变大小</span>
-	WINDOW_AUTOSIZE		<span class="token comment">// 自动调整适应图片大小</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">imwrite</span><span class="token punctuation">(</span><span class="token keyword">const</span> String<span class="token operator">&amp;</span> filename<span class="token punctuation">,</span> InputArray img<span class="token punctuation">,</span> <span class="token keyword">const</span> std<span class="token operator">::</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> params <span class="token operator">=</span> std<span class="token operator">::</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-filename	<span class="token comment">// 文件名</span>
-img		<span class="token comment">// 对象名</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Mat src <span class="token operator">=</span> <span class="token function">imread</span><span class="token punctuation">(</span><span class="token string">"./test.png"</span><span class="token punctuation">,</span> IMREAD_GRAYSCALE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token function">namedWindow</span><span class="token punctuation">(</span><span class="token string">"input"</span><span class="token punctuation">,</span> WINDOW_AUTOSIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"input"</span><span class="token punctuation">,</span> src<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token function">waitKey</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="Python版本"><a href="#Python版本" class="headerlink" title="Python版本"></a>Python版本</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">cv<span class="token punctuation">.</span><span class="token function">imread</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">imshow</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">import cv2 as cv
-
-src <span class="token operator">=</span> cv<span class="token punctuation">.</span><span class="token function">imread</span><span class="token punctuation">(</span><span class="token string">"./test.png"</span><span class="token punctuation">)</span>
-<span class="token function">print</span><span class="token punctuation">(</span><span class="token function">type</span><span class="token punctuation">(</span>src<span class="token punctuation">)</span><span class="token punctuation">)</span>	<span class="token comment">// &lt;class 'numpy.ndarray'></span>
-<span class="token function">print</span><span class="token punctuation">(</span>src<span class="token punctuation">.</span>dtype<span class="token punctuation">)</span>	<span class="token comment">// uint8</span>
-<span class="token function">print</span><span class="token punctuation">(</span>src<span class="token punctuation">.</span>shape<span class="token punctuation">)</span>	<span class="token comment">// (610, 570, 3)</span>
-cv<span class="token punctuation">.</span><span class="token function">namedWindow</span><span class="token punctuation">(</span><span class="token string">"input"</span><span class="token punctuation">,</span> cv<span class="token punctuation">.</span>WINDOW_AUTOSIZE<span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"input"</span><span class="token punctuation">,</span> src<span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">waitKey</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">destroyAllWindows</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<center>
-<img src="/2021/04/01/OpenCV-OpenCV-RGB-GRAY/test.png#pic_center" width="50%" height="50%" alt="test">
-</center>
-
-
-<h2 id="转化为灰度图"><a href="#转化为灰度图" class="headerlink" title="转化为灰度图"></a>转化为灰度图</h2><h3 id="C-版本-1"><a href="#C-版本-1" class="headerlink" title="C++版本"></a>C++版本</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">cvtColor</span><span class="token punctuation">(</span>src<span class="token punctuation">,</span> gray<span class="token punctuation">,</span> COLOR_BGR2GRAY<span class="token punctuation">)</span>
-src	<span class="token comment">// input</span>
-gray	<span class="token comment">// output</span>
-COLOR_BGR2GRAY	<span class="token comment">//RGB图转为GRAY灰度图</span>
-默认三个通道顺序是<span class="token operator">:</span> B<span class="token punctuation">,</span> G<span class="token punctuation">,</span> R<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;opencv2/opencv.hpp></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> cv<span class="token punctuation">;</span>
+                <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
 <span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> artc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    Mat src <span class="token operator">=</span> <span class="token function">imread</span><span class="token punctuation">(</span><span class="token string">"./test.png"</span><span class="token punctuation">,</span> IMREAD_COLOR<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>src<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"could not load image...\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">Point2D</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">Point2D</span><span class="token punctuation">(</span><span class="token keyword">int</span> _x<span class="token punctuation">,</span> <span class="token keyword">int</span> _y<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">x</span><span class="token punctuation">(</span>_x<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">y</span><span class="token punctuation">(</span>_y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span>
+        cout <span class="token operator">&lt;&lt;</span> x <span class="token operator">&lt;&lt;</span> <span class="token string">","</span> <span class="token operator">&lt;&lt;</span> y <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-    <span class="token function">namedWindow</span><span class="token punctuation">(</span><span class="token string">"input"</span><span class="token punctuation">,</span> WINDOW_AUTOSIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"input"</span><span class="token punctuation">,</span> src<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">virtual</span> <span class="token operator">~</span><span class="token function">Point2D</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token keyword">protected</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> x<span class="token punctuation">,</span> y<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-    Mat gray<span class="token punctuation">;</span>
-    <span class="token function">cvtColor</span><span class="token punctuation">(</span>src<span class="token punctuation">,</span> gray<span class="token punctuation">,</span> COLOR_BGR2GRAY<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">imwrite</span><span class="token punctuation">(</span><span class="token string">"./gray.png"</span><span class="token punctuation">,</span> gray<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">namedWindow</span><span class="token punctuation">(</span><span class="token string">"gray"</span><span class="token punctuation">,</span> WINDOW_AUTOSIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"gray"</span><span class="token punctuation">,</span> gray<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">waitKey</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">Point3D</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Point2D</span></span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">Point3D</span><span class="token punctuation">(</span><span class="token keyword">int</span> _x<span class="token punctuation">,</span> <span class="token keyword">int</span> _y<span class="token punctuation">,</span> <span class="token keyword">int</span> _z<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">Point2D</span><span class="token punctuation">(</span>_x<span class="token punctuation">,</span> _y<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">z</span><span class="token punctuation">(</span>_z<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span>
+        cout <span class="token operator">&lt;&lt;</span> x <span class="token operator">&lt;&lt;</span> <span class="token string">","</span> <span class="token operator">&lt;&lt;</span> y <span class="token operator">&lt;&lt;</span> <span class="token string">","</span> <span class="token operator">&lt;&lt;</span> z <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> z<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    Point2D <span class="token operator">*</span>p2d <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">Point3D</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    p2d<span class="token operator">-></span><span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Point2D <span class="token operator">*</span>p2d2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">Point2D</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    p2d2<span class="token operator">-></span><span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="Python版本-1"><a href="#Python版本-1" class="headerlink" title="Python版本"></a>Python版本</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">src <span class="token operator">=</span> cv<span class="token punctuation">.</span><span class="token function">imread</span><span class="token punctuation">(</span><span class="token string">"./test.png"</span><span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">namedWindow</span><span class="token punctuation">(</span><span class="token string">"input"</span><span class="token punctuation">,</span> cv<span class="token punctuation">.</span>WINDOW_AUTOSIZE<span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"input"</span><span class="token punctuation">,</span> src<span class="token punctuation">)</span>
-gray <span class="token operator">=</span> cv<span class="token punctuation">.</span><span class="token function">cvtColor</span><span class="token punctuation">(</span>src<span class="token punctuation">,</span> cv<span class="token punctuation">.</span>COLOR_BGR2GRAY<span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">imwrite</span><span class="token punctuation">(</span><span class="token string">'gray.png'</span><span class="token punctuation">,</span> gray<span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"gray"</span><span class="token punctuation">,</span> gray<span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">waitKey</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
-cv<span class="token punctuation">.</span><span class="token function">destroyAllWindows</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>基类<code>Point2D</code>中有虚函数<code>print</code>和需析构函数</p>
+<p>基类指针<code>p2d</code>指向了派生类对象，用gdb调试</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> print p2d
+<span class="token variable">$1</span> <span class="token operator">=</span> <span class="token punctuation">(</span>Point2D *<span class="token punctuation">)</span> 0x555555768e70
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> x/20x 0x555555768e70
+0x555555768e70:	0x55755d10	0x00005555	0x00000001	0x00000002
+0x555555768e80:	0x00000003	0x00000000	0x0000f181	0x00000000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>查看基类指针，前8个字节是虚表指针，然后是4字节的<code>x</code>，4字节的<code>y</code>，4字节的<code>z</code></p>
+<p>查看虚函数表指针</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> x/20x 0x555555755d10
+0x555555755d10 <span class="token operator">&lt;</span>_ZTV7Point3D+1<span class="token operator"><span class="token file-descriptor important">6</span>></span>:	0x55554d88	0x00005555	0x55554e08	0x00005555
+0x555555755d20 <span class="token operator">&lt;</span>_ZTV7Point3D+3<span class="token operator"><span class="token file-descriptor important">2</span>></span>:	0x55554e32	0x00005555	0x00000000	0x00000000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>对应3个虚函数地址，分别查看对应哪个虚函数</p>
+<p>第一个是<code>Point3D</code>的<code>print</code>虚函数</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> x/20x 0x555555554d88
+0x555555554d88 <span class="token operator">&lt;</span>Point3D::print<span class="token punctuation">(</span><span class="token punctuation">)</span> const<span class="token operator">></span>:	0xe5894855	0x10ec8348	0xf87d8948	0xf8458b48
+0x555555554d98 <span class="token operator">&lt;</span>Point3D::print<span class="token punctuation">(</span><span class="token punctuation">)</span> const+1<span class="token operator"><span class="token file-descriptor important">6</span>></span>:	0x8908408b	0x3d8d48c6	0x0020127c	0xfffcb7e8
+0x555555554da8 <span class="token operator">&lt;</span>Point3D::print<span class="token punctuation">(</span><span class="token punctuation">)</span> const+3<span class="token operator"><span class="token file-descriptor important">2</span>></span>:	0x358d48ff	0x00000135	0xe8c78948	0xfffffc58
+0x555555554db8 <span class="token operator">&lt;</span>Point3D::print<span class="token punctuation">(</span><span class="token punctuation">)</span> const+4<span class="token operator"><span class="token file-descriptor important">8</span>></span>:	0x48c28948	0x8bf8458b	0xc6890c40	0xe8d78948
+0x555555554dc8 <span class="token operator">&lt;</span>Point3D::print<span class="token punctuation">(</span><span class="token punctuation">)</span> const+6<span class="token operator"><span class="token file-descriptor important">4</span>></span>:	0xfffffc94	0x12358d48	0x48000001	0x35e8c789<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>第二个是<code>Point3D</code>的虚析构函数</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> x/20x 0x555555554e08
+0x555555554e08 <span class="token operator">&lt;</span>Point3D::~Point3D<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">></span>:	    0xe5894855	0x10ec8348	0xf87d8948	0xf5158d48
+0x555555554e18 <span class="token operator">&lt;</span>Point3D::~Point3D<span class="token punctuation">(</span><span class="token punctuation">)</span>+1<span class="token operator"><span class="token file-descriptor important">6</span>></span>:	0x4800200e	0x48f8458b	0x8b481089	0x8948f845
+0x555555554e28 <span class="token operator">&lt;</span>Point3D::~Point3D<span class="token punctuation">(</span><span class="token punctuation">)</span>+3<span class="token operator"><span class="token file-descriptor important">2</span>></span>:	0xfed0e8c7	0xc990ffff	0x485590c3	0x8348e589<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>第三个是合成的<code>Point3D</code>的析构函数</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> x/20x 0x555555554e32
+0x555555554e32 <span class="token operator">&lt;</span>Point3D::~Point3D<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">></span>:	    0xe5894855	0x10ec8348	0xf87d8948	0xf8458b48
+0x555555554e42 <span class="token operator">&lt;</span>Point3D::~Point3D<span class="token punctuation">(</span><span class="token punctuation">)</span>+1<span class="token operator"><span class="token file-descriptor important">6</span>></span>:	0xe8c78948	0xffffffbe	0xf8458b48	0x000018be
+0x555555554e52 <span class="token operator">&lt;</span>Point3D::~Point3D<span class="token punctuation">(</span><span class="token punctuation">)</span>+3<span class="token operator"><span class="token file-descriptor important">2</span>></span>:	0xc7894800	0xfffbd5e8	0x0fc3c9ff	0x5741001f<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>可以反汇编看看这个析构函数</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> disassemble 0x555555554e32
+Dump of assembler code <span class="token keyword">for</span> <span class="token keyword">function</span> Point3D::~Point3D<span class="token punctuation">(</span><span class="token punctuation">)</span>:
+   0x0000555555554e32 <span class="token operator">&lt;</span>+<span class="token operator"><span class="token file-descriptor important">0</span>></span>:		push   %rbp
+   0x0000555555554e33 <span class="token operator">&lt;</span>+<span class="token operator"><span class="token file-descriptor important">1</span>></span>:		mov    %rsp,%rbp
+   0x0000555555554e36 <span class="token operator">&lt;</span>+<span class="token operator"><span class="token file-descriptor important">4</span>></span>:		sub    <span class="token variable">$0x10</span>,%rsp
+   0x0000555555554e3a <span class="token operator">&lt;</span>+<span class="token operator"><span class="token file-descriptor important">8</span>></span>:		mov    %rdi,-0x8<span class="token punctuation">(</span>%rbp<span class="token punctuation">)</span>
+   0x0000555555554e3e <span class="token operator">&lt;</span>+1<span class="token operator"><span class="token file-descriptor important">2</span>></span>:	mov    -0x8<span class="token punctuation">(</span>%rbp<span class="token punctuation">)</span>,%rax
+   0x0000555555554e42 <span class="token operator">&lt;</span>+1<span class="token operator"><span class="token file-descriptor important">6</span>></span>:	mov    %rax,%rdi
+   0x0000555555554e45 <span class="token operator">&lt;</span>+1<span class="token operator"><span class="token file-descriptor important">9</span>></span>:	callq  0x555555554e08 <span class="token operator">&lt;</span>Point3D::~Point3D<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">></span>
+   0x0000555555554e4a <span class="token operator">&lt;</span>+2<span class="token operator"><span class="token file-descriptor important">4</span>></span>:	mov    -0x8<span class="token punctuation">(</span>%rbp<span class="token punctuation">)</span>,%rax
+   0x0000555555554e4e <span class="token operator">&lt;</span>+2<span class="token operator"><span class="token file-descriptor important">8</span>></span>:	mov    <span class="token variable">$0x18</span>,%esi
+   0x0000555555554e53 <span class="token operator">&lt;</span>+3<span class="token operator"><span class="token file-descriptor important">3</span>></span>:	mov    %rax,%rdi
+   0x0000555555554e56 <span class="token operator">&lt;</span>+3<span class="token operator"><span class="token file-descriptor important">6</span>></span>:	callq  0x555555554a30 <span class="token operator">&lt;</span>_ZdlPvm@plt<span class="token operator">></span>
+   0x0000555555554e5b <span class="token operator">&lt;</span>+4<span class="token operator"><span class="token file-descriptor important">1</span>></span>:	leaveq 
+   0x0000555555554e5c <span class="token operator">&lt;</span>+4<span class="token operator"><span class="token file-descriptor important">2</span>></span>:	retq   
+End of assembler dump.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>可以看到调用了地址为<code>0x555555554e08</code>的第二个析构函数</p>
+<p>再看看基类指针<code>p2d2</code>，指向了<code>Point2D</code>对象</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> n
+<span class="token number">1,2</span>,3
+<span class="token number">28</span>	    Point2D *p2d2 <span class="token operator">=</span> new Point2D<span class="token punctuation">(</span><span class="token number">1</span>, <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> n
+<span class="token number">29</span>	    p2d2-<span class="token operator">></span>print<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> print p2d2
+<span class="token variable">$2</span> <span class="token operator">=</span> <span class="token punctuation">(</span>Point2D *<span class="token punctuation">)</span> 0x5555557692a0
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> x/20x 0x5555557692a0
+0x5555557692a0:	0x55755d38	0x00005555	0x00000001	0x00000002
+0x5555557692b0:	0x00000000	0x00000000	0x0000ed51	0x00000000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>前面8个字节是虚函数表指针，然后是4字节的<code>x</code>和4字节的<code>y</code></p>
+<p>查看虚函数表指针</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> x/20x 0x555555755d38
+0x555555755d38 <span class="token operator">&lt;</span>_ZTV7Point2D+1<span class="token operator"><span class="token file-descriptor important">6</span>></span>:	0x55554ca2	0x00005555	0x55554cfe	0x00005555
+0x555555755d48 <span class="token operator">&lt;</span>_ZTV7Point2D+3<span class="token operator"><span class="token file-descriptor important">2</span>></span>:	0x55554d18	0x00005555	0xf7dc5438	0x00007fff<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>同样是3个指针</p>
+<p>第一个是<code>print</code>虚函数</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> x/20x 0x555555554ca2
+0x555555554ca2 <span class="token operator">&lt;</span>Point2D::print<span class="token punctuation">(</span><span class="token punctuation">)</span> const<span class="token operator">></span>:	0xe5894855	0x10ec8348	0xf87d8948	0xf8458b48
+0x555555554cb2 <span class="token operator">&lt;</span>Point2D::print<span class="token punctuation">(</span><span class="token punctuation">)</span> const+1<span class="token operator"><span class="token file-descriptor important">6</span>></span>:	0x8908408b	0x3d8d48c6	0x00201362	0xfffd9de8
+0x555555554cc2 <span class="token operator">&lt;</span>Point2D::print<span class="token punctuation">(</span><span class="token punctuation">)</span> const+3<span class="token operator"><span class="token file-descriptor important">2</span>></span>:	0x358d48ff	0x0000021b	0xe8c78948	0xfffffd3e
+0x555555554cd2 <span class="token operator">&lt;</span>Point2D::print<span class="token punctuation">(</span><span class="token punctuation">)</span> const+4<span class="token operator"><span class="token file-descriptor important">8</span>></span>:	0x48c28948	0x8bf8458b	0xc6890c40	0xe8d78948
+0x555555554ce2 <span class="token operator">&lt;</span>Point2D::print<span class="token punctuation">(</span><span class="token punctuation">)</span> const+6<span class="token operator"><span class="token file-descriptor important">4</span>></span>:	0xfffffd7a	0x48c28948	0x12e0058b	0x89480020<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>第二个是<code>Point2D</code>的虚析构函数</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> x/20x 0x555555554cfe
+0x555555554cfe <span class="token operator">&lt;</span>Point2D::~Point2D<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">></span>:	    0xe5894855	0xf87d8948	0x2b158d48	0x48002010
+0x555555554d0e <span class="token operator">&lt;</span>Point2D::~Point2D<span class="token punctuation">(</span><span class="token punctuation">)</span>+1<span class="token operator"><span class="token file-descriptor important">6</span>></span>:	0x48f8458b	0x5d901089	0x485590c3	0x8348e589<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>第三个也是<code>Point2D</code>的虚析构函数</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> x/20x 0x555555554d18
+0x555555554d18 <span class="token operator">&lt;</span>Point2D::~Point2D<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">></span>:	    0xe5894855	0x10ec8348	0xf87d8948	0xf8458b48
+0x555555554d28 <span class="token operator">&lt;</span>Point2D::~Point2D<span class="token punctuation">(</span><span class="token punctuation">)</span>+1<span class="token operator"><span class="token file-descriptor important">6</span>></span>:	0xe8c78948	0xffffffce	0xf8458b48	0x000010be
+0x555555554d38 <span class="token operator">&lt;</span>Point2D::~Point2D<span class="token punctuation">(</span><span class="token punctuation">)</span>+3<span class="token operator"><span class="token file-descriptor important">2</span>></span>:	0xc7894800	0xfffcefe8	0x90c3c9ff	0xe5894855<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>反汇编看看</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> disassemble 0x555555554d18
+Dump of assembler code <span class="token keyword">for</span> <span class="token keyword">function</span> Point2D::~Point2D<span class="token punctuation">(</span><span class="token punctuation">)</span>:
+   0x0000555555554d18 <span class="token operator">&lt;</span>+<span class="token operator"><span class="token file-descriptor important">0</span>></span>:		push   %rbp
+   0x0000555555554d19 <span class="token operator">&lt;</span>+<span class="token operator"><span class="token file-descriptor important">1</span>></span>:		mov    %rsp,%rbp
+   0x0000555555554d1c <span class="token operator">&lt;</span>+<span class="token operator"><span class="token file-descriptor important">4</span>></span>:		sub    <span class="token variable">$0x10</span>,%rsp
+   0x0000555555554d20 <span class="token operator">&lt;</span>+<span class="token operator"><span class="token file-descriptor important">8</span>></span>:	    mov    %rdi,-0x8<span class="token punctuation">(</span>%rbp<span class="token punctuation">)</span>
+   0x0000555555554d24 <span class="token operator">&lt;</span>+1<span class="token operator"><span class="token file-descriptor important">2</span>></span>:	mov    -0x8<span class="token punctuation">(</span>%rbp<span class="token punctuation">)</span>,%rax
+   0x0000555555554d28 <span class="token operator">&lt;</span>+1<span class="token operator"><span class="token file-descriptor important">6</span>></span>:	mov    %rax,%rdi
+   0x0000555555554d2b <span class="token operator">&lt;</span>+1<span class="token operator"><span class="token file-descriptor important">9</span>></span>:	callq  0x555555554cfe <span class="token operator">&lt;</span>Point2D::~Point2D<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">></span>
+   0x0000555555554d30 <span class="token operator">&lt;</span>+2<span class="token operator"><span class="token file-descriptor important">4</span>></span>:	mov    -0x8<span class="token punctuation">(</span>%rbp<span class="token punctuation">)</span>,%rax
+   0x0000555555554d34 <span class="token operator">&lt;</span>+2<span class="token operator"><span class="token file-descriptor important">8</span>></span>:	mov    <span class="token variable">$0x10</span>,%esi
+   0x0000555555554d39 <span class="token operator">&lt;</span>+3<span class="token operator"><span class="token file-descriptor important">3</span>></span>:	mov    %rax,%rdi
+   0x0000555555554d3c <span class="token operator">&lt;</span>+3<span class="token operator"><span class="token file-descriptor important">6</span>></span>:	callq  0x555555554a30 <span class="token operator">&lt;</span>_ZdlPvm@plt<span class="token operator">></span>
+   0x0000555555554d41 <span class="token operator">&lt;</span>+4<span class="token operator"><span class="token file-descriptor important">1</span>></span>:	leaveq 
+   0x0000555555554d42 <span class="token operator">&lt;</span>+4<span class="token operator"><span class="token file-descriptor important">2</span>></span>:	retq   
+End of assembler dump.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>也是调用了<code>0x555555554cfe</code>的第二个析构函数</p>
 <center>
-<img src="/2021/04/01/OpenCV-OpenCV-RGB-GRAY/gray.png#pic_center" width="50%" height="50%" alt="test">
-<br>
-<div style="color:orange; border-bottom: 1px solid #d9d9d9;
-display: inline-block;
-color: #999;
-padding: 2px;">灰度图</div>
+<img src="https://github.com/kavinwkp/blogimage/raw/main/img/CPP/Object.png" width="80%">
 </center>
+
+
                 
             </div>
             <hr/>
@@ -664,7 +720,7 @@ padding: 2px;">灰度图</div>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/04/01/OpenCV-OpenCV-RGB-GRAY/">http://example.com/2021/04/01/OpenCV-OpenCV-RGB-GRAY/</a>
+                    <a href="http://example.com/2022/07/31/C-%E5%AF%B9%E8%B1%A1%E5%B8%83%E5%B1%80/">http://example.com/2022/07/31/C-%E5%AF%B9%E8%B1%A1%E5%B8%83%E5%B1%80/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -702,8 +758,8 @@ padding: 2px;">灰度图</div>
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/OpenCV/">
-                                    <span class="chip bg-color">OpenCV</span>
+                                <a href="/tags/C/">
+                                    <span class="chip bg-color">C++</span>
                                 </a>
                             
                         </div>
@@ -875,17 +931,18 @@ padding: 2px;">灰度图</div>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/04/12/OpenCV-OpenCV-Panel/">
+                <a href="/2022/07/31/C-%E5%AF%B9%E8%B1%A1%E5%B8%83%E5%B1%80/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="OpenCV_Panel">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="对象布局">
                         
-                        <span class="card-title">OpenCV_Panel</span>
+                        <span class="card-title">对象布局</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -895,26 +952,27 @@ padding: 2px;">灰度图</div>
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-31
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/OpenCV/" class="post-category">
-                                    OpenCV
+                            <a href="/categories/C/" class="post-category">
+                                    C++
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/OpenCV/">
-                        <span class="chip bg-color">OpenCV</span>
+                    <a href="/tags/C/">
+                        <span class="chip bg-color">C++</span>
                     </a>
                     
                 </div>
@@ -928,13 +986,13 @@ padding: 2px;">灰度图</div>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/04/01/OpenCV-OpenCV-Pix/">
+                <a href="/2022/07/30/LeetCode-243-%E6%9C%80%E7%9F%AD%E5%8D%95%E8%AF%8D%E8%B7%9D%E7%A6%BB/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="OpenCV_Pix">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="243-最短单词距离">
                         
-                        <span class="card-title">OpenCV_Pix</span>
+                        <span class="card-title">243-最短单词距离</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -945,14 +1003,14 @@ padding: 2px;">灰度图</div>
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-01
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-30
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/OpenCV/" class="post-category">
-                                    OpenCV
+                            <a href="/categories/LeetCode/" class="post-category">
+                                    LeetCode
                                 </a>
                             
                             
@@ -962,8 +1020,8 @@ padding: 2px;">灰度图</div>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/OpenCV/">
-                        <span class="chip bg-color">OpenCV</span>
+                    <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+                        <span class="chip bg-color">字符串</span>
                     </a>
                     
                 </div>

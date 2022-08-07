@@ -565,9 +565,9 @@
 <ul>
 <li>直接初始化和拷贝初始化</li>
 </ul>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Person <span class="token function">p1</span><span class="token punctuation">(</span><span class="token string">"kavin"</span><span class="token punctuation">,</span> <span class="token number">23</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 直接初始化</span>
-Person <span class="token function">p2</span><span class="token punctuation">(</span>p1<span class="token punctuation">)</span><span class="token punctuation">;</span>              <span class="token comment">// 直接初始化</span>
-Person p3 <span class="token operator">=</span> p1<span class="token punctuation">;</span>             <span class="token comment">// 拷贝初始化</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Person <span class="token function">p1</span><span class="token punctuation">(</span><span class="token string">"kavin"</span><span class="token punctuation">,</span> <span class="token number">23</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 直接初始化，调用自定义的构造函数</span>
+Person <span class="token function">p2</span><span class="token punctuation">(</span>p1<span class="token punctuation">)</span><span class="token punctuation">;</span>              <span class="token comment">// 直接初始化，调用拷贝构造函数</span>
+Person p3 <span class="token operator">=</span> p1<span class="token punctuation">;</span>             <span class="token comment">// 拷贝初始化，调用拷贝构造函数</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>使用拷贝初始化时，我们要求编译器将右侧运算对象拷贝到正在创建的对象中，如果需要的话还要进行类型转换</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Person</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">private</span><span class="token operator">:</span>
@@ -611,7 +611,7 @@ Person p3 <span class="token operator">=</span> p1<span class="token punctuation
 <span class="token comment">// constructor</span>
 <span class="token comment">// copy constructor 调用了拷贝构造函数</span>
 <span class="token comment">// Entering func</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>也说明了拷贝构造函数必须是<code>const</code>，如果不是<code>const</code>，实参传递给形参时就得再调用拷贝构造函数，就会陷入循环</p>
+<p>也说明了拷贝构造函数必须是引用类型，否则，实参传递给拷贝构造函数的形参时就得再调用拷贝构造函数，就会陷入循环</p>
 <p>2、 从一个返回类型为<font color="LightSeaGreen">非引用类型</font>的函数返回一个对象</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Person <span class="token function">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     Person <span class="token operator">*</span>p <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token string">"lisa"</span><span class="token punctuation">,</span> <span class="token number">34</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
