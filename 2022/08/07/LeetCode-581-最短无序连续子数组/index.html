@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="5-观察者模式, kunpeng">
+    <meta name="keywords" content="581-最短无序连续子数组, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>5-观察者模式 | kunpeng</title>
+    <title>581-最短无序连续子数组 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -392,7 +392,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">5-观察者模式</h1>
+                    <h1 class="description center-align post-title">581-最短无序连续子数组</h1>
                 </div>
             </div>
         </div>
@@ -511,8 +511,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Design/">
-                                <span class="chip bg-color">Design</span>
+                            <a href="/tags/%E6%A8%A1%E6%8B%9F/">
+                                <span class="chip bg-color">模拟</span>
                             </a>
                         
                     </div>
@@ -523,8 +523,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/C/" class="post-category">
-                                C++
+                            <a href="/categories/LeetCode/" class="post-category">
+                                LeetCode
                             </a>
                         
                     </div>
@@ -560,149 +560,37 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="Observer"><a href="#Observer" class="headerlink" title="Observer"></a>Observer</h3><p>有时候需要为某些对象建立“通知依赖关系”，一个对象（目标对象）的状态发生变化，所有的依赖对象（观察者对象）都将得到通知</p>
-<p>实现一个文件分割器</p>
-<p><code>MainForm.cpp</code></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">MainForm</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Form</span></span> <span class="token punctuation">&#123;</span>
-    TextBox<span class="token operator">*</span> txtFilePath<span class="token punctuation">;</span>
-    TextBox<span class="token operator">*</span> txtFileNumber<span class="token punctuation">;</span>
-    ProgressBar<span class="token operator">*</span> progressBar<span class="token punctuation">;</span>
+                <h2 id="LeetCode-581-最短无序连续子数组"><a href="#LeetCode-581-最短无序连续子数组" class="headerlink" title="LeetCode 581. 最短无序连续子数组"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/shortest-unsorted-continuous-subarray/">LeetCode 581. 最短无序连续子数组</a></h2><p>给你一个整数数组 <code>nums</code> ，你需要找出一个 <strong>连续子数组</strong> ，如果对这个子数组进行升序排序，那么整个数组都会变为升序排序。</p>
+<p>请你找出符合题意的 <strong>最短</strong> 子数组，并输出它的长度。</p>
+<p><strong>示例 1：</strong></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">输入：nums <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">15</span><span class="token punctuation">]</span>
+输出：<span class="token number">5</span>
+解释：你只需要对 <span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">]</span> 进行升序排序，那么整个表都会变为升序排序。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3 id="method"><a href="#method" class="headerlink" title="method"></a>method</h3><center>
+<img src="https://github.com/kavinwkp/blogimage/raw/main/img/LeetCode/581/581.png" width="80%">
+</center>
 
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">void</span> <span class="token function">Button1_Click</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-
-        string filePath <span class="token operator">=</span> txtFilePath<span class="token operator">-></span><span class="token function">getText</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">int</span> number <span class="token operator">=</span> <span class="token function">atoi</span><span class="token punctuation">(</span>txtFileNumber<span class="token operator">-></span><span class="token function">getText</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">c_str</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        FileSplitter <span class="token function">splitter</span><span class="token punctuation">(</span>filePath<span class="token punctuation">,</span> number<span class="token punctuation">,</span> progressBar<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        splitter<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>FileSplitter.cpp</code></p>
-<p>如果想要显示文件分割的进度条，就需要在文件分割的过程中更新进度条的数据，调用相应方法</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">FileSplitter</span> <span class="token punctuation">&#123;</span>
-    string m_filePath<span class="token punctuation">;</span>
-    <span class="token keyword">int</span> m_fileNumber<span class="token punctuation">;</span>
-    ProgressBar<span class="token operator">*</span> m_progressBar<span class="token punctuation">;</span>
-
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token function">FileSplitter</span><span class="token punctuation">(</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span> filePath<span class="token punctuation">,</span> <span class="token keyword">int</span> fileNumber<span class="token punctuation">,</span> ProgressBar<span class="token operator">*</span> progressBar<span class="token punctuation">)</span> <span class="token operator">:</span>
-        <span class="token function">m_filePath</span><span class="token punctuation">(</span>filePath<span class="token punctuation">)</span><span class="token punctuation">,</span> 
-        <span class="token function">m_fileNumber</span><span class="token punctuation">(</span>fileNumber<span class="token punctuation">)</span><span class="token punctuation">,</span>
-        <span class="token function">m_progressBar</span><span class="token punctuation">(</span>progressBar<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">void</span> <span class="token function">split</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-
-        <span class="token comment">//1.读取大文件</span>
-
-        <span class="token comment">//2.分批次向小文件中写入</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> m_fileNumber<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            <span class="token comment">//...</span>
-            <span class="token keyword">float</span> progressValue <span class="token operator">=</span> m_fileNumber<span class="token punctuation">;</span>
-            progressValue <span class="token operator">=</span> <span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">/</span> progressValue<span class="token punctuation">;</span>
-            m_progressBar<span class="token operator">-></span><span class="token function">setValue</span><span class="token punctuation">(</span>progressValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<p>B段中的元素肯定大于A段中的任意元素，且小于C段中的任意元素</p>
+<p>可以从左到右维护一个<code>max</code>，在A段和C段，每个元素都会大于前一个元素，所以<code>max</code>会被不断更新，在B段中，会出现某个元素<code>nums[i]&lt;max</code>，则说明这个元素值可能是B段的右边界同理。可以从右到左维护一个<code>min</code>，在A段和C段，每个元素都会小于后一个元素，所以<code>min</code>会被不断更新，在B段中，会出现某个元素<code>nums[i]&gt;min</code>，则说明这个元素可能是B段的左边界</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">findUnsortedSubarray</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token operator">&amp;</span> nums<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> maxn <span class="token operator">=</span> INT_MIN<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> minn <span class="token operator">=</span> INT_MAX<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> left <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> right <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> n <span class="token operator">=</span> nums<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;</span> maxn<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            right <span class="token operator">=</span> i<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            maxn <span class="token operator">=</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span>
-
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>改进</strong></p>
-<p>可能需要不同类型的进度条，所以声明一个抽象类，定义了进度显示的接口</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">IProgress</span><span class="token punctuation">&#123;</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">DoProgress</span><span class="token punctuation">(</span><span class="token keyword">float</span> value<span class="token punctuation">)</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>	<span class="token comment">// 抽象类的接口</span>
-    <span class="token keyword">virtual</span> <span class="token operator">~</span><span class="token function">IProgress</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>然后让<code>MainForm</code>继承这个抽象类</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">MainForm</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Form</span><span class="token punctuation">,</span> <span class="token keyword">public</span> <span class="token class-name">IProgress</span></span> <span class="token punctuation">&#123;</span>
-    TextBox<span class="token operator">*</span> txtFilePath<span class="token punctuation">;</span>
-    TextBox<span class="token operator">*</span> txtFileNumber<span class="token punctuation">;</span>
-
-    ProgressBar<span class="token operator">*</span> progressBar<span class="token punctuation">;</span>
-
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">void</span> <span class="token function">Button1_Click</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-
-        string filePath <span class="token operator">=</span> txtFilePath<span class="token operator">-></span><span class="token function">getText</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">int</span> number <span class="token operator">=</span> <span class="token function">atoi</span><span class="token punctuation">(</span>txtFileNumber<span class="token operator">-></span><span class="token function">getText</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">c_str</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        ConsoleNotifier cn<span class="token punctuation">;</span>
-
-        FileSplitter <span class="token function">splitter</span><span class="token punctuation">(</span>filePath<span class="token punctuation">,</span> number<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        splitter<span class="token punctuation">.</span><span class="token function">addIProgress</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">// 订阅通知，进度条的显示</span>
-        splitter<span class="token punctuation">.</span><span class="token function">addIProgress</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>cn<span class="token punctuation">)</span><span class="token punctuation">;</span>		<span class="token comment">// 订阅通知，终端的显示 </span>
-
-        splitter<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        splitter<span class="token punctuation">.</span><span class="token function">removeIProgress</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">DoProgress</span><span class="token punctuation">(</span><span class="token keyword">float</span> value<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        progressBar<span class="token operator">-></span><span class="token function">setValue</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>也可以定义不同的进度显示，只要实现抽象类的接口就行</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">ConsoleNotifier</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">IProgress</span></span> <span class="token punctuation">&#123;</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">DoProgress</span><span class="token punctuation">(</span><span class="token keyword">float</span> value<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"."</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>FileSplitter</code>里面可以添加多个进度显示对象（观察者），进度发生变化就通知这些观察者，也就是调用观察者对应的接口实现函数</p>
-<p><code>list</code>里面放的是抽象类的指针，这样就可以利用多态调用不同子类的虚函数，这样就可以支持多种进度显示，而不是和特定的<code>ProgressBar</code>绑定</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">FileSplitter</span> <span class="token punctuation">&#123;</span>
-    string m_filePath<span class="token punctuation">;</span>
-    <span class="token keyword">int</span> m_fileNumber<span class="token punctuation">;</span>
-
-    List<span class="token operator">&lt;</span>IProgress<span class="token operator">*</span><span class="token operator">></span>  m_iprogressList<span class="token punctuation">;</span> <span class="token comment">// 抽象通知机制，支持多个观察者</span>
-
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token function">FileSplitter</span><span class="token punctuation">(</span><span class="token keyword">const</span> string<span class="token operator">&amp;</span> filePath<span class="token punctuation">,</span> <span class="token keyword">int</span> fileNumber<span class="token punctuation">)</span> <span class="token operator">:</span>
-        <span class="token function">m_filePath</span><span class="token punctuation">(</span>filePath<span class="token punctuation">)</span><span class="token punctuation">,</span> 
-        <span class="token function">m_fileNumber</span><span class="token punctuation">(</span>fileNumber<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">void</span> <span class="token function">split</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">//1.读取大文件</span>
-        <span class="token comment">//2.分批次向小文件中写入</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> m_fileNumber<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            <span class="token comment">//...</span>
-            <span class="token keyword">float</span> progressValue <span class="token operator">=</span> m_fileNumber<span class="token punctuation">;</span>
-            progressValue <span class="token operator">=</span> <span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">/</span> progressValue<span class="token punctuation">;</span>
-            <span class="token function">onProgress</span><span class="token punctuation">(</span>progressValue<span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//发送通知</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>nums<span class="token punctuation">[</span>n <span class="token operator">-</span> i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">></span> minn<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            left <span class="token operator">=</span> n <span class="token operator">-</span> i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            minn <span class="token operator">=</span> nums<span class="token punctuation">[</span>n <span class="token operator">-</span> i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">void</span> <span class="token function">addIProgress</span><span class="token punctuation">(</span>IProgress<span class="token operator">*</span> iprogress<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        m_iprogressList<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>iprogress<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">void</span> <span class="token function">removeIProgress</span><span class="token punctuation">(</span>IProgress<span class="token operator">*</span> iprogress<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        m_iprogressList<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>iprogress<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-
-<span class="token keyword">protected</span><span class="token operator">:</span>
-    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">onProgress</span><span class="token punctuation">(</span><span class="token keyword">float</span> value<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        
-        List<span class="token operator">&lt;</span>IProgress<span class="token operator">*</span><span class="token operator">></span><span class="token operator">::</span>iterator itor <span class="token operator">=</span> m_iprogressList<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token keyword">while</span> <span class="token punctuation">(</span>itor <span class="token operator">!=</span> m_iprogressList<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">)</span>
-            <span class="token punctuation">(</span><span class="token operator">*</span>itor<span class="token punctuation">)</span><span class="token operator">-></span><span class="token function">DoProgress</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//更新进度条</span>
-            itor<span class="token operator">++</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>模式定义</strong></p>
-<blockquote>
-<p>定义对象间的一种一对多的依赖关系，以便当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并自动更新</p>
-</blockquote>
-<ul>
-<li>使用面向对象的抽象，Observer 模式使得我们可以独立地改变目标与观察者，从而使二者之间的依赖关系保持松耦合</li>
-<li>目标发送通知时，无需指定观察者，通知会自动传播</li>
-<li>观察者自己决定是否需要订阅通知，目标对象对此一无所知</li>
-<li>Observer 模式是基于事件的 UI 框架中非常常用的设计模式</li>
-</ul>
+    <span class="token keyword">return</span> left <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">?</span> <span class="token number">0</span> <span class="token operator">:</span> right <span class="token operator">-</span> left <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
@@ -729,7 +617,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2022/08/07/C-Design-5-%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/">http://example.com/2022/08/07/C-Design-5-%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/</a>
+                    <a href="http://example.com/2022/08/07/LeetCode-581-%E6%9C%80%E7%9F%AD%E6%97%A0%E5%BA%8F%E8%BF%9E%E7%BB%AD%E5%AD%90%E6%95%B0%E7%BB%84/">http://example.com/2022/08/07/LeetCode-581-%E6%9C%80%E7%9F%AD%E6%97%A0%E5%BA%8F%E8%BF%9E%E7%BB%AD%E5%AD%90%E6%95%B0%E7%BB%84/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -767,8 +655,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Design/">
-                                    <span class="chip bg-color">Design</span>
+                                <a href="/tags/%E6%A8%A1%E6%8B%9F/">
+                                    <span class="chip bg-color">模拟</span>
                                 </a>
                             
                         </div>
@@ -940,9 +828,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2022/08/07/LeetCode-581-%E6%9C%80%E7%9F%AD%E6%97%A0%E5%BA%8F%E8%BF%9E%E7%BB%AD%E5%AD%90%E6%95%B0%E7%BB%84/">
                     <div class="card-image">
@@ -960,9 +849,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-08-07
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-07
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -975,6 +864,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -993,13 +883,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/08/07/C-Design-4-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/">
+                <a href="/2022/08/07/C-Design-5-%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="策略模式">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="5-观察者模式">
                         
-                        <span class="card-title">策略模式</span>
+                        <span class="card-title">5-观察者模式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
