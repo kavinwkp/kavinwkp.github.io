@@ -608,7 +608,7 @@
 </center>
 
 <p>TCP客户进程会发送连接释放报文段，并进入<font color="LightSeaGreen">终止等待1</font><code>FIN_WAIT_1</code>状态，该报文段首部中的终止位<code>FIN</code>和确认位<code>ACK</code>被设置为1，表明这是一个TCP连接释放报文段，同时也对之前收到的报文段进行确认，序号<code>seq</code>字段设置为u，等于客户进程之前已发送过的数据的最后一个字节的序号加1，确认号<code>ack</code>设置为v</p>
-<p>TCP服务器进程收到连接释放报文段后，会发送一个普通的确认报文段，并进入<font color="LightSeaGreen">关闭等待状态</font><code>CLOSE_WAIT</code>，<code>ACK</code>设置为1，序号<code>seq</code>设置为v，确认号<code>ack</code>设置为u+1，这是对客户端发送的连接释放报文段的确认。此时，客户端到服务端的方向的连接就释放了，这时的TCP连接处于半关闭状态，也就是客户端没有数据要发送了，但服务器如果还有数据要发送，客户端依然要接收</p>
+<p>TCP服务器进程收到连接释放报文段后，会发送一个普通的确认报文段，并进入<font color="LightSeaGreen">关闭等待状态</font><code>CLOSE_WAIT</code>，<code>ACK</code>设置为1，序号<code>seq</code>设置为v，确认号<code>ack</code>设置为u+1，这是对客户端发送的连接释放报文段的确认。此时，客户端到服务端的方向的连接就释放了，这时的TCP连接处于<font color="Coral">半关闭状态</font>，也就是客户端没有数据要发送了，但服务器如果还有数据要发送，客户端依然要接收</p>
 <p>客户端收到确认报文段就进入<font color="LightSeaGreen">终止等待2</font><code>FIN_WAIT_2</code>状态</p>
 <p>如果服务器也没有数据要发送了，就发送连接释放报文段并进入<font color="LightSeaGreen">最后确认状态</font><code>LAST_ACK</code>，该报文段首部中的终止位<code>FIN</code>和确认位<code>ACK</code>都设置为1，假定序号<code>seq</code>字段的值为w，确认号<code>ack</code>的值为u+1，这是对之前收到的连接释放报文段的重复确认</p>
 <p>客户端收到连接释放报文段后，发送普通的确认报文段，然后进入<font color="LightSeaGreen">时间等待状态</font><code>TIME_WAIT</code>，该报文段首部中的确认位<code>ACK</code>设置为1，序号<code>seq</code>的值为u+1，确认号<code>ack</code>的值为w+1</p>
