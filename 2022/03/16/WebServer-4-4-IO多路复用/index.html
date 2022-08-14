@@ -602,7 +602,7 @@
 <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
 
 <span class="token keyword">void</span> <span class="token function">FD_CLR</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span> fd_set <span class="token operator">*</span>set<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 将文件描述符对应的标志位置1</span>
+<span class="token comment">// 将文件描述符对应的标志位置0</span>
 <span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">==</span><span class="token operator">=</span>
 
 <span class="token keyword">int</span>  <span class="token function">FD_ISSET</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span> fd_set <span class="token operator">*</span>set<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -847,7 +847,7 @@
 <p>非阻塞，当描述符从未就绪变为就绪时，内核会告知，并且不会再发送更多的就绪通知，直到文件描述符不再为就绪状态</p>
 <p>ET模式在很大程度上减少了<code>epoll</code>事件被重复触发的次数，效率要比LT模式高，<code>epoll</code>工作在ET模式时，必须使用非阻塞套接字，以避免由于一个文件描述符的阻塞读写操作把处理多个文件描述符的任务饿死</p>
 <p><strong>ET模式</strong></p>
-<p>对于采用ET工作模式的文件描述符，当epoll_wait检测到其上有事件发生并将此事件通知应用程序后，应用程序应该立即处理该事件，因为后续的epoll_wait调用将不再向应用程序通知这一事件</p>
+<p>对于采用ET工作模式的文件描述符，当<code>epoll_wait</code>检测到其上有事件发生并将此事件通知应用程序后，应用程序应该立即处理该事件，因为后续的<code>epoll_wait</code>调用将不再向应用程序通知这一事件</p>
 <p>所以每次读数据要循环读取全部数据，并且要把<code>read</code>设置为非阻塞以跳出循环</p>
 <blockquote>
 <p>每个使用ET模式的文件描述符都应该是非阻塞的</p>
