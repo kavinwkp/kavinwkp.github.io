@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="04_初始化, kunpeng">
+    <meta name="keywords" content="04-初始化, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>04_初始化 | kunpeng</title>
+    <title>04-初始化 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">04_初始化</h1>
+                    <h1 class="description center-align post-title">04-初始化</h1>
                 </div>
             </div>
         </div>
@@ -511,14 +511,23 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Effective-C/">
-                                <span class="chip bg-color">Effective_C++</span>
+                            <a href="/tags/Effective/">
+                                <span class="chip bg-color">Effective</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/C/" class="post-category">
+                                C++
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -527,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-05-01
+                    2022-08-27
                 </div>
                 
 
@@ -551,7 +560,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="确定对象被使用前已经初始化"><a href="#确定对象被使用前已经初始化" class="headerlink" title="确定对象被使用前已经初始化"></a>确定对象被使用前已经初始化</h2><p>不同编译单元内定之<code>non-local static</code>对象的初始化次序是不确定的</p>
+                <h3 id="确定对象被使用前已经初始化"><a href="#确定对象被使用前已经初始化" class="headerlink" title="确定对象被使用前已经初始化"></a>确定对象被使用前已经初始化</h3><p>不同编译单元内定之<code>non-local static</code>对象的初始化次序是不确定的</p>
 <p>广义的<code>static</code>对象包括：</p>
 <ul>
 <li><code>global</code>对象</li>
@@ -560,27 +569,21 @@
 </ul>
 <p><code>local static</code>：定义在函数内的<code>static</code>对象</p>
 <p>比如我有两个类<code>FileSystem</code>和<code>Directory</code></p>
-<ol>
-<li><code>FileSystem</code>的声明和定义</li>
-</ol>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-<span class="token keyword">class</span> <span class="token class-name">FileSystem</span>
-<span class="token punctuation">&#123;</span>
+<p><code>FileSystem</code>的声明和定义</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">FileSystem</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token function">FileSystem</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">num</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
     std<span class="token operator">::</span>size_t <span class="token function">getNum</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span><span class="token punctuation">;</span>
 
 <span class="token keyword">private</span><span class="token operator">:</span>
     <span class="token keyword">int</span> num<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"FileSystem.h"</span></span>
 
 std<span class="token operator">::</span>size_t <span class="token class-name">FileSystem</span><span class="token operator">::</span><span class="token function">getNum</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">return</span> num<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<ol>
-<li><code>Directory</code>的声明和定义</li>
-</ol>
+<p><code>Directory</code>的声明和定义</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"FileSystem.h"</span></span>
 <span class="token keyword">class</span> <span class="token class-name">Directory</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
@@ -604,14 +607,10 @@ std<span class="token operator">::</span>size_t <span class="token class-name">F
 <span class="token punctuation">&#125;</span>
 
 Directory tempDir<span class="token punctuation">;</span>  <span class="token comment">// 定义一个Directory对象</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<ol>
-<li><code>tfs</code>的定义</li>
-</ol>
+<p><code>tfs</code>的定义</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"FileSystem.h"</span></span>
 FileSystem <span class="token function">tfs</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<ol>
-<li><code>main</code>函数</li>
-</ol>
+<p><code>main</code>函数</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Directory.h"</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
 <span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
@@ -625,7 +624,8 @@ FileSystem <span class="token function">tfs</span><span class="token punctuation
 <span class="token punctuation">&#125;</span>
 <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>发现输出不是我们预期的<code>10</code>，原因在于定义<code>dir</code>时调用了<code>Directory</code>的构造函数，用到了<code>FileSystem</code>的对象<code>tfs</code>，但这个<code>tfs</code>此时未必已经初始化了，因为编译器对文件的编译顺序没有严格的要求，所以会出现问题</p>
-<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>不要把<code>tfs</code>声明为全局变量，即<code>non-local static</code>变量，而要声明为<code>local static</code>，就是函数里面的<code>static</code>变量<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Directory.h"</span></span>
+<h3 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h3><p>不要把<code>tfs</code>声明为全局变量，即<code>non-local static</code>变量，而要声明为<code>local static</code>，就是函数里面的<code>static</code>变量</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Directory.h"</span></span>
 
 <span class="token keyword">extern</span> FileSystem<span class="token operator">&amp;</span> <span class="token function">tfs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
@@ -642,7 +642,7 @@ FileSystem <span class="token function">tfs</span><span class="token punctuation
 Directory<span class="token operator">&amp;</span> <span class="token function">dir</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">static</span> Directory tempDir<span class="token punctuation">;</span>
     <span class="token keyword">return</span> tempDir<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"FileSystem.h"</span></span>
 
 <span class="token comment">// FileSystem tfs(10);</span>
@@ -689,7 +689,7 @@ FileSystem<span class="token operator">&amp;</span> <span class="token function"
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/05/01/C-Effective-04-%E5%88%9D%E5%A7%8B%E5%8C%96/">http://example.com/2021/05/01/C-Effective-04-%E5%88%9D%E5%A7%8B%E5%8C%96/</a>
+                    <a href="http://example.com/2022/08/27/C-Effective-04-%E5%88%9D%E5%A7%8B%E5%8C%96/">http://example.com/2022/08/27/C-Effective-04-%E5%88%9D%E5%A7%8B%E5%8C%96/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -727,8 +727,8 @@ FileSystem<span class="token operator">&amp;</span> <span class="token function"
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Effective-C/">
-                                    <span class="chip bg-color">Effective_C++</span>
+                                <a href="/tags/Effective/">
+                                    <span class="chip bg-color">Effective</span>
                                 </a>
                             
                         </div>
@@ -904,13 +904,13 @@ FileSystem<span class="token operator">&amp;</span> <span class="token function"
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/05/12/Python-%E7%94%BB%E5%9B%BE-%E4%B8%89%E7%BB%B4%E5%9B%BE/">
+                <a href="/2022/08/27/C-Effective-43-%E6%A8%A1%E6%9D%BF%E5%8C%96%E5%9F%BA%E7%B1%BB/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="三维图">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="43-模板化基类">
                         
-                        <span class="card-title">三维图</span>
+                        <span class="card-title">43-模板化基类</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -921,14 +921,14 @@ FileSystem<span class="token operator">&amp;</span> <span class="token function"
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-05-12
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-08-27
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Python/" class="post-category">
-                                    Python
+                            <a href="/categories/C/" class="post-category">
+                                    C++
                                 </a>
                             
                             
@@ -938,8 +938,8 @@ FileSystem<span class="token operator">&amp;</span> <span class="token function"
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Python/">
-                        <span class="chip bg-color">Python</span>
+                    <a href="/tags/Effective/">
+                        <span class="chip bg-color">Effective</span>
                     </a>
                     
                 </div>
@@ -953,13 +953,13 @@ FileSystem<span class="token operator">&amp;</span> <span class="token function"
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/04/30/C-inline%E5%85%B3%E9%94%AE%E5%AD%97/">
+                <a href="/2022/08/27/C-Effective-03-const/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="inline关键字">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="03-const代替#define">
                         
-                        <span class="card-title">inline关键字</span>
+                        <span class="card-title">03-const代替#define</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -970,7 +970,7 @@ FileSystem<span class="token operator">&amp;</span> <span class="token function"
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-30
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-27
                             </span>
                         <span class="publish-author">
                             
@@ -987,8 +987,8 @@ FileSystem<span class="token operator">&amp;</span> <span class="token function"
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/C/">
-                        <span class="chip bg-color">C++</span>
+                    <a href="/tags/Effective/">
+                        <span class="chip bg-color">Effective</span>
                     </a>
                     
                 </div>
