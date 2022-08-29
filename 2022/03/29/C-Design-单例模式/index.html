@@ -562,8 +562,24 @@
             <div id="articleContent">
                 <p>单例分为两种实现方法：</p>
 <ul>
+<li>饿汉：单例类定义的时候就进行了实例化，是线程安全的</li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 饿汉</span>
+<span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">static</span> Singleton <span class="token operator">*</span>p<span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">static</span> Singleton<span class="token operator">*</span> <span class="token function">instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+Singleton<span class="token operator">*</span> Singleton<span class="token operator">::</span>p <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 定义的时候就实例化</span>
+
+Singleton<span class="token operator">*</span> <span class="token class-name">Singleton</span><span class="token operator">::</span><span class="token function">instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> p<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
 <li>懒汉：第一次用到类实例的时候才会去实例化</li>
-<li>饿汉：单例类定义的时候就进行了实例化</li>
 </ul>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 懒汉</span>
 <span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">&#123;</span>
@@ -584,21 +600,6 @@ Singleton<span class="token operator">*</span> <span class="token class-name">Si
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>将构造函数声明为<code>private</code>或<code>protected</code>防止被外部函数实例化，内部有一个<font color="LightSeaGreen"><b>『静态的类指针保存唯一的实例』</b></font>，实例的实现由一个<code>public</code>方法来实现，该方法返回该类的唯一实例。</p>
 <p>当然这个代码只适合在单线程下，当多线程时，是不安全的。考虑两个线程同时首次调用<code>instance</code>方法且同时检测到<code>p==nullptr</code>，则两个线程会同时构造一个实例给<code>p</code>，这将违反了单例的准则。</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 饿汉</span>
-<span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">&#123;</span>
-<span class="token keyword">private</span><span class="token operator">:</span>
-    <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-    <span class="token keyword">static</span> Singleton <span class="token operator">*</span>p<span class="token punctuation">;</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">static</span> Singleton<span class="token operator">*</span> <span class="token function">instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-Singleton<span class="token operator">*</span> Singleton<span class="token operator">::</span>p <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 定义的时候就实例化</span>
-
-Singleton<span class="token operator">*</span> <span class="token class-name">Singleton</span><span class="token operator">::</span><span class="token function">instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">return</span> p<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>饿汉方法是线程安全的，对于我们通常阐述的线程不安全，为懒汉模式，下面会阐述懒汉模式的线程安全代码优化</p>
 <h3 id="多线程加锁"><a href="#多线程加锁" class="headerlink" title="多线程加锁"></a>多线程加锁</h3><p>在C++中加锁有个类实现原理采用RAII，不用手动管理<code>unlock</code>，那就是<code>lock_guard</code>，这里采用其进行加锁</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">private</span><span class="token operator">:</span>
@@ -621,7 +622,7 @@ Singleton<span class="token operator">*</span> <span class="token class-name">Si
 <p>这种写法不会出现上面两个线程都执行到<code>p==nullptr</code>里面的情况，当线程A在执行<code>p = new Singleton()</code>的时候，线程B如果调用了<code>instance()</code>，一定会被阻塞在加锁处，等待线程A执行结束后释放这个锁。从而是线程安全的</p>
 <p>但是这种写法性能非常低下，因为每次调用<code>instance()</code>都会加锁释放锁，而这个步骤只有在第一次<code>new Singleton()</code>才是有必要的，只要p被创建出来了，不管多少线程同时访问，使用<code>if (p == nullptr)</code>进行判断都是足够的（只是读操作，不需要加锁），没有线程安全问题，加了锁之后反而存在性能问题</p>
 <h3 id="双重检查锁模式"><a href="#双重检查锁模式" class="headerlink" title="双重检查锁模式"></a>双重检查锁模式</h3><p>对于读操作是不存在线程安全的，故只需要在第一次实例创建的时候加锁，以后不需要</p>
-<p>双重检查锁+自动回收</p>
+<p>双重检查锁</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">private</span><span class="token operator">:</span>
     <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
@@ -629,40 +630,30 @@ Singleton<span class="token operator">*</span> <span class="token class-name">Si
     <span class="token keyword">static</span> mutex lock_<span class="token punctuation">;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     Singleton <span class="token operator">*</span><span class="token function">instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment">// 实现一个内嵌垃圾回收类</span>
-    <span class="token keyword">class</span> <span class="token class-name">CGarbo</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span><span class="token operator">:</span>
-        <span class="token operator">~</span><span class="token function">CGarbo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-            <span class="token keyword">if</span><span class="token punctuation">(</span>Singleton<span class="token operator">::</span>p<span class="token punctuation">)</span>
-                <span class="token keyword">delete</span> Singleton<span class="token operator">::</span>p<span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-    <span class="token keyword">static</span> CGarbo Garbo<span class="token punctuation">;</span> <span class="token comment">// 定义一个静态成员变量，程序结束时，系统会自动调用它的析构函数从而释放单例对象</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
 Singleton <span class="token operator">*</span>Singleton<span class="token operator">::</span>p <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
-Singleton<span class="token operator">::</span>CGarbo Garbo<span class="token punctuation">;</span>
 
 Singleton<span class="token operator">*</span> <span class="token class-name">Singleton</span><span class="token operator">::</span><span class="token function">instance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>p <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         lock_guard<span class="token operator">&lt;</span>mutex<span class="token operator">></span> <span class="token function">guard</span><span class="token punctuation">(</span>lock_<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>p <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>p <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
             p <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> p<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>DCLP</code>的关键在于，大多数对<code>instance</code>的调用会看到<code>p</code>是非空的，因此甚至不用尝试去初始化它。因此，<code>DCLP</code>在尝试获取锁之前检查<code>p</code>是否为空。只有当检查成功（也就是<code>p</code>还没有被初始化）时才会去获得锁，然后再次检查<code>p</code>是否仍然为空（因此命名为<strong>双重检查锁</strong>）</p>
 <p>第二次检查是必要，因为可能线程A判断p为空，还没拿到锁，线程B快一步判断p为空，拿到锁实例化并释放锁，此时如果线程A没有判断，就会直接实例化，从而违反单例准则，所以第二次的检查是必要的</p>
 <p>看起来上述代码非常美好，可是过了相当一段时间后，才发现这个漏洞，原因是：<strong>内存读写的乱序执行（编译器问题）</strong></p>
 <p>再次考虑初始化p的那一行：<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">p <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br>这条语句会导致三个事情的发生：</p>
 <ol>
-<li>分配能够存储Singleton对象的内存</li>
-<li>在被分配的内存中构造一个Singleton对象</li>
-<li>让p指向这块被分配的内存</li>
+<li>分配能够存储<code>Singleton</code>对象的内存</li>
+<li>在被分配的内存中构造一个<code>Singleton</code>对象</li>
+<li>让<code>p</code>指向这块被分配的内存</li>
 </ol>
-<p>可能会认为这三个步骤是按顺序执行的，但实际上只能确定步骤1是最先执行的，步骤2，3却不一定。问题就出现在这。</p>
-<p>线程A调用<code>instance</code>，执行第一次<code>p</code>的检查，获得锁，按照1,3执行，然后被挂起。此时<code>p</code>是非空的，但是<code>p</code>指向的内存中还没有<code>Singleton</code>对象被构造。<br>线程B调用<code>instance</code>，判定p非空， 将其返回给<code>instance</code>的调用者。调用者对指针解引用以获得<code>Singleton</code>，但指针所指的是一个还没有被构造出的对象。bug就出现了。<br>DCLP能够良好的工作仅当步骤一和二在步骤三之前被执行，但是并没有方法在C或C++中表达这种限制。我们需要在相对指令顺序上定义限制，但是我们的语言没有给出表达这种限制的方法。</p>
+<p>可能会认为这三个步骤是按顺序执行的，但实际上只能确定步骤1是最先执行的，步骤2，3却不一定。问题就出现在这</p>
+<p>线程A调用<code>instance</code>，执行第一次<code>p</code>的检查，获得锁，按照1,3执行，然后被挂起。此时<code>p</code>是非空的，但是<code>p</code>指向的内存中还没有<code>Singleton</code>对象被构造<br>线程B调用<code>instance</code>，判定<code>p</code>非空， 将其返回给<code>instance</code>的调用者。调用者对指针解引用以获得<code>Singleton</code>，但指针所指的是一个还没有被构造出的对象。bug就出现了<br>DCLP能够良好的工作仅当步骤一和二在步骤三之前被执行，但是并没有方法在C或C++中表达这种限制。我们需要在相对指令顺序上定义限制，但是我们的语言没有给出表达这种限制的方法</p>
 <h3 id="memory-barrier指令"><a href="#memory-barrier指令" class="headerlink" title="memory barrier指令"></a>memory barrier指令</h3><p>DCLP问题在C++11中，这个问题得到了解决。</p>
 <p>在C++11之前，解决方法是<code>barrier</code>指令。要使其正确执行的话，就得在步骤2、3直接加上一道<code>memory barrier</code>。强迫CPU执行的时候按照1、2、3的步骤来运行。</p>
 <p>第一种实现：基于<code>operator new+placement new</code>，遵循1、2、3执行顺序依次编写代码</p>
@@ -721,54 +712,7 @@ Singleton<span class="token operator">*</span> <span class="token class-name">Si
 <li>C++11之前的多线程下，不一定正确</li>
 </ul>
 <p>原因在于在C++11之前的标准中并没有规定<code>local static</code>变量的内存模型。所以就不是线程安全的了。但是在C++11却是线程安全的，这是因为新的C++标准规定了<font color="LightSeaGreen">当一个线程正在初始化一个变量的时候，其他线程必须得等到该初始化完成以后才能访问它</font></p>
-<h2 id="饿汉模式"><a href="#饿汉模式" class="headerlink" title="饿汉模式"></a>饿汉模式</h2><p>饿汉模式本身就是线程安全的不用加锁</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Singleton</span><span class="token punctuation">&#123;</span>
-<span class="token keyword">private</span><span class="token operator">:</span>
-    <span class="token keyword">static</span> Singleton<span class="token operator">*</span> instance<span class="token punctuation">;</span>
-    <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token keyword">const</span> Singleton<span class="token operator">&amp;</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-    Singleton<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> Singleton<span class="token operator">&amp;</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-<span class="token keyword">protected</span><span class="token operator">:</span>
-    <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span> 
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">static</span> Singleton<span class="token operator">*</span> <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> instance<span class="token punctuation">;</span>    
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-Singleton<span class="token operator">*</span> Singleton<span class="token operator">::</span>instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="懒汉模式"><a href="#懒汉模式" class="headerlink" title="懒汉模式"></a>懒汉模式</h2><p>第一种：加锁</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">&#123;</span>
-<span class="token keyword">private</span><span class="token operator">:</span>
-    <span class="token keyword">static</span> pthread_mutex_t mutex<span class="token punctuation">;</span>
-    <span class="token keyword">static</span> Singleton <span class="token operator">*</span> instance<span class="token punctuation">;</span>
-    <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token function">pthread_mutex_init</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-    <span class="token punctuation">&#125;</span>
-    <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token keyword">const</span> Singleton<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-    Singleton<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> Singleton<span class="token operator">&amp;</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">static</span> Singleton<span class="token operator">*</span> <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token function">pthread_mutex_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>instance <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>         
-            instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            
-        <span class="token punctuation">&#125;</span>
-        <span class="token function">pthread_mutex_unlock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> instance<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-Singleton<span class="token operator">*</span> Singleton<span class="token operator">::</span>instance <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
-pthread_mutex_t Singleton<span class="token operator">::</span>mutex<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>第二种：静态局部变量</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Singleton</span> <span class="token punctuation">&#123;</span>
-<span class="token keyword">private</span><span class="token operator">:</span>
-    <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-    <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token keyword">const</span> Singleton<span class="token operator">&amp;</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-    Singleton<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> Singleton<span class="token operator">&amp;</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">static</span> Singleton<span class="token operator">*</span> <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">static</span> Singleton instance<span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token operator">&amp;</span>instance<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
                 
             </div>
             <hr/>
