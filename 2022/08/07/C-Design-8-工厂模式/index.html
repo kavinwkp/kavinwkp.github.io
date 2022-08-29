@@ -560,14 +560,16 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="“对象创建”模式"><a href="#“对象创建”模式" class="headerlink" title="“对象创建”模式"></a>“对象创建”模式</h2><p>通过“对象创建”模式绕开new，来避免对象创建过程中所导致的紧耦合（依赖具体类），从而支持对象创建的稳定</p>
+                <h2 id="“对象创建”模式"><a href="#“对象创建”模式" class="headerlink" title="“对象创建”模式"></a>“对象创建”模式</h2><p>通过“对象创建”模式绕开<code>new</code>，来避免对象创建过程中所导致的紧耦合（依赖具体类），从而支持对象创建的稳定</p>
 <ul>
 <li>Factory Method</li>
 <li>Abstract Factory</li>
 <li>Prototype</li>
 <li>Builder</li>
 </ul>
-<h3 id="工厂方法"><a href="#工厂方法" class="headerlink" title="工厂方法"></a>工厂方法</h3><p>抽象类定义接口，具体类实现各自的接口</p>
+<h3 id="工厂方法"><a href="#工厂方法" class="headerlink" title="工厂方法"></a>工厂方法</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">BinarySplitter <span class="token operator">*</span> splitter <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">BinarySplitter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这里要创建一个文件分割器，可能现在的文件分割器只支持二进制文件的分割，以后可能会支持文本文件、图片文件等，所以创建对象的时候不应该依赖于具体的类<code>BinarySplitter</code>，因为后面可能会被扩展，而应该依赖于抽象类，比如<code>ISplitter</code></p>
+<p>抽象类定义接口，具体类实现各自的接口</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">ISplitter</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">split</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
@@ -580,28 +582,21 @@
 
 <span class="token keyword">class</span> <span class="token class-name">TxtSplitter</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">ISplitter</span></span> <span class="token punctuation">&#123;</span>
     
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-<span class="token keyword">class</span> <span class="token class-name">PictureSplitter</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">ISplitter</span></span> <span class="token punctuation">&#123;</span>
-    
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-<span class="token keyword">class</span> <span class="token class-name">VideoSplitter</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">ISplitter</span></span> <span class="token punctuation">&#123;</span>
-    
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这样在对象创建的时候就要用基类指针指向派生类对象</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">MainForm</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Form</span></span> <span class="token punctuation">&#123;</span>
-	TextBox<span class="token operator">*</span> txtFilePath<span class="token punctuation">;</span>
-	TextBox<span class="token operator">*</span> txtFileNumber<span class="token punctuation">;</span>
-	ProgressBar<span class="token operator">*</span> progressBar<span class="token punctuation">;</span>
+    TextBox<span class="token operator">*</span> txtFilePath<span class="token punctuation">;</span>
+    TextBox<span class="token operator">*</span> txtFileNumber<span class="token punctuation">;</span>
+    ProgressBar<span class="token operator">*</span> progressBar<span class="token punctuation">;</span>
 
 <span class="token keyword">public</span><span class="token operator">:</span>
-	<span class="token keyword">void</span> <span class="token function">Button1_Click</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">void</span> <span class="token function">Button1_Click</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
         
-		ISplitter <span class="token operator">*</span> splitter <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">BinarySplitter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//依赖具体类</span>
+        ISplitter <span class="token operator">*</span> splitter <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">BinarySplitter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//依赖具体类</span>
         splitter<span class="token operator">-></span><span class="token function">split</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>但这里还是有问题，<code>new</code>的时候还是依赖于具体类</p>
 <p>我们的目标就是要绕开<code>new</code>，避免依赖具体类，都要依赖接口</p>
 <p>可以让子类都有一个工厂用来创建对象，然后<code>MainForm</code>里面组合一个工厂基类的指针就行</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">//抽象类</span>
@@ -628,14 +623,6 @@
     
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-<span class="token keyword">class</span> <span class="token class-name">PictureSplitter</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">ISplitter</span></span><span class="token punctuation">&#123;</span>
-    
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-<span class="token keyword">class</span> <span class="token class-name">VideoSplitter</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">ISplitter</span></span><span class="token punctuation">&#123;</span>
-    
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
 <span class="token comment">//具体工厂</span>
 <span class="token keyword">class</span> <span class="token class-name">BinarySplitterFactory</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">SplitterFactory</span></span><span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
@@ -649,41 +636,23 @@
     <span class="token keyword">virtual</span> ISplitter<span class="token operator">*</span> <span class="token function">CreateSplitter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
         <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token function">TxtSplitter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-<span class="token keyword">class</span> <span class="token class-name">PictureSplitterFactory</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">SplitterFactory</span></span><span class="token punctuation">&#123;</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">virtual</span> ISplitter<span class="token operator">*</span> <span class="token function">CreateSplitter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token function">PictureSplitter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-<span class="token keyword">class</span> <span class="token class-name">VideoSplitterFactory</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">SplitterFactory</span></span><span class="token punctuation">&#123;</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">virtual</span> ISplitter<span class="token operator">*</span> <span class="token function">CreateSplitter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token function">VideoSplitter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>MainForm</code>里面有一个工厂基类的指针，可以从外界传一个具体工厂指针进来，比如传的是<code>BinarySplitterFactory*</code>，这样<code>factory-&gt;CreateSplitter()</code>就会调用<code>BinarySplitterFactory</code>的<code>CreateSplitter</code>具体实现，创建<code>BinarySplitter</code>对象</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">MainForm</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Form</span></span>
 <span class="token punctuation">&#123;</span>
-    SplitterFactory<span class="token operator">*</span>  factory<span class="token punctuation">;</span><span class="token comment">//工厂</span>
+    SplitterFactory<span class="token operator">*</span> factory<span class="token punctuation">;</span><span class="token comment">//工厂</span>
 
 <span class="token keyword">public</span><span class="token operator">:</span>
     
-    <span class="token function">MainForm</span><span class="token punctuation">(</span>SplitterFactory<span class="token operator">*</span>  factory<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token keyword">this</span><span class="token operator">-></span>factory<span class="token operator">=</span>factory<span class="token punctuation">;</span>
+    <span class="token function">MainForm</span><span class="token punctuation">(</span>SplitterFactory<span class="token operator">*</span> factory<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token operator">-></span>factory <span class="token operator">=</span> factory<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
     
 	<span class="token keyword">void</span> <span class="token function">Button1_Click</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-
-        
-		ISplitter <span class="token operator">*</span> splitter<span class="token operator">=</span>
-            factory<span class="token operator">-></span><span class="token function">CreateSplitter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//多态new</span>
-        
+		ISplitter <span class="token operator">*</span> splitter <span class="token operator">=</span> factory<span class="token operator">-></span><span class="token function">CreateSplitter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//多态new</span>
         splitter<span class="token operator">-></span><span class="token function">split</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
 	<span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>模式定义</strong></p>
 <blockquote>
 <p>定义一个用于创建对象的接口，让子类决定实例化哪一个类。Factory Method 使得一个类的实例化延迟到子类（目的：解耦，手段：虚函数）</p>
