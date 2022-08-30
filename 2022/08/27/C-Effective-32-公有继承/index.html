@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="ROS图像处理, kunpeng">
+    <meta name="keywords" content="32-公有继承, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>ROS图像处理 | kunpeng</title>
+    <title>32-公有继承 | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">ROS图像处理</h1>
+                    <h1 class="description center-align post-title">32-公有继承</h1>
                 </div>
             </div>
         </div>
@@ -511,18 +511,23 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/OpenCV/">
-                                <span class="chip bg-color">OpenCV</span>
-                            </a>
-                        
-                            <a href="/tags/ROS/">
-                                <span class="chip bg-color">ROS</span>
+                            <a href="/tags/Effective/">
+                                <span class="chip bg-color">Effective</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/C/" class="post-category">
+                                C++
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -531,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-26
+                    2022-08-27
                 </div>
                 
 
@@ -555,143 +560,97 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <!-- toc -->
-<h2 id="OpenCV-3-3-1"><a href="#OpenCV-3-3-1" class="headerlink" title="OpenCV 3.3.1"></a>OpenCV 3.3.1</h2><h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> build <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> build
-<span class="token function">mkdir</span> installed
-cmake -DCMAKE_BUILD_TYPE<span class="token operator">=</span>RELEASE -DCMAKE_INSTALL_PREFIX<span class="token operator">=</span>~/Library/opencv-3.3.1/build/installed -DWITH_CUDA<span class="token operator">=</span>OFF -DBUILD_DOCS<span class="token operator">=</span>OFF -DBUILD_EXAMPLES<span class="token operator">=</span>OFF -DBUILD_TESTS<span class="token operator">=</span>OFF -DBUILD_PERF_TESTS<span class="token operator">=</span>OFF -DOPENCV_EXTRA_MODULES_PATH<span class="token operator">=</span><span class="token punctuation">..</span>/opencv_contrib/modules <span class="token punctuation">..</span>
-<span class="token function">make</span> -j4
-<span class="token function">sudo</span> <span class="token function">make</span> <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="修改系统默认版本"><a href="#修改系统默认版本" class="headerlink" title="修改系统默认版本"></a>修改系统默认版本</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> ~/.bashrc
-<span class="token builtin class-name">export</span> <span class="token assign-left variable">PKG_CONFIG_PATH</span><span class="token operator">=</span>~/Library/opencv-3.3.1/build/installed/lib/pkgconfig
-<span class="token builtin class-name">export</span> <span class="token assign-left variable">LD_LIBRARY_PATH</span><span class="token operator">=</span>~/Library/opencv-3.3.1/build/installed/lib
-<span class="token builtin class-name">source</span> ~/.bashrc<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="版本确认"><a href="#版本确认" class="headerlink" title="版本确认"></a>版本确认</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pkg-config --modversion opencv
-<span class="token number">3.3</span>.1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>查看头文件位置<br><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pkg-config --cflags opencv
--I/home/kavin/Library/opencv-3.3.1/build/installed/include/opencv
--I/home/kavin/Library/opencv-3.3.1/build/installed/include<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></p>
-<p>查看库文件<br><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pkg-config --libs opencv
--L/home/kavin/Library/opencv-3.3.1/build/installed/lib -lopencv_stitching -lopencv_superres -lopencv_videostab -lopencv_photo -lopencv_aruco 
--lopencv_bgsegm -lopencv_bioinspired -lopencv_ccalib -lopencv_dpm -lopencv_face -lopencv_freetype -lopencv_fuzzy -lopencv_hdf -lopencv_img_hash 
--lopencv_line_descriptor -lopencv_optflow -lopencv_reg -lopencv_rgbd -lopencv_saliency -lopencv_sfm -lopencv_stereo -lopencv_structured_light -lopencv_viz -lopencv_phase_unwrapping 
--lopencv_surface_matching -lopencv_tracking -lopencv_datasets -lopencv_text -lopencv_dnn -lopencv_plot -lopencv_xfeatures2d -lopencv_shape -lopencv_video -lopencv_ml -lopencv_ximgproc 
--lopencv_calib3d -lopencv_features2d -lopencv_highgui -lopencv_videoio -lopencv_flann -lopencv_xobjdetect -lopencv_imgcodecs -lopencv_objdetect 
--lopencv_xphoto -lopencv_imgproc -lopencv_core<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
-<h3 id="CMakeLists指定版本"><a href="#CMakeLists指定版本" class="headerlink" title="CMakeLists指定版本"></a>CMakeLists指定版本</h3><p>不修改默认是在<code>/usr</code>查找</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">set<span class="token punctuation">(</span>OpenCV_DIR <span class="token string">"~/Library/opencv-3.3.1/build/installed/OpenCV"</span><span class="token punctuation">)</span>
-find_package<span class="token punctuation">(</span>OpenCV REQUIRED<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h2 id="发布图像"><a href="#发布图像" class="headerlink" title="发布图像"></a>发布图像</h2><p>使用<code>image_transport</code>进行图像话题发布订阅</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">image_transport<span class="token operator">::</span>ImageTransport <span class="token function">it</span><span class="token punctuation">(</span>nh<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">//用句柄初始化image_transport</span>
-image_transport<span class="token operator">::</span>Publisher image_pub <span class="token operator">=</span> it<span class="token punctuation">.</span><span class="token function">advertise</span><span class="token punctuation">(</span><span class="token string">"image_topic"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">//cv::Mat通过cv_bridge::CvImage转换为sensor_msgs::ImagePtr</span>
-sensor_msgs<span class="token operator">::</span>ImagePtr msg <span class="token operator">=</span> cv_bridge<span class="token operator">::</span><span class="token function">CvImage</span><span class="token punctuation">(</span>std_msgs<span class="token operator">::</span><span class="token function">Header</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"bgr8"</span><span class="token punctuation">,</span> image<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toImageMsg</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;image_transport/image_transport.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;opencv2/highgui/highgui.hpp></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;opencv2/core/core.hpp></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;cv_bridge/cv_bridge.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span> <span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+                <h2 id="确定public继承塑模出is-a关系"><a href="#确定public继承塑模出is-a关系" class="headerlink" title="确定public继承塑模出is-a关系"></a>确定public继承塑模出is-a关系</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Person</span> <span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">Student</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Person</span></span> <span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> cv<span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">eat</span><span class="token punctuation">(</span><span class="token keyword">const</span> Person<span class="token operator">&amp;</span> p<span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment">// 任何人都会吃</span>
+<span class="token keyword">void</span> <span class="token function">study</span><span class="token punctuation">(</span><span class="token keyword">const</span> Student<span class="token operator">&amp;</span> s<span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token comment">// 只有学生才到校学习</span>
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+Person p<span class="token punctuation">;</span>                             <span class="token comment">// p是人</span>
+Student s<span class="token punctuation">;</span>                            <span class="token comment">// s是学生</span>
+
+<span class="token function">eat</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>                               <span class="token comment">// 没问题，p是人</span>
+<span class="token function">eat</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>                               <span class="token comment">// 没问题，s是学生，而学生is a人</span>
+
+<span class="token function">study</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>                             <span class="token comment">// 没问题</span>
+<span class="token function">study</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>                             <span class="token comment">// 错误，p不是学生</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>public 继承意味着 is-a。适用于 base class 身上的每一件事情一定也适用于 derived class 身上，因为每一个 derived class 对象也都是一个 base class 对象</p>
+</blockquote>
+<h2 id="避免遮掩继承而来的名称"><a href="#避免遮掩继承而来的名称" class="headerlink" title="避免遮掩继承而来的名称"></a>避免遮掩继承而来的名称</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Base</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> x<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">mf1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">mf1</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Base::mf1(int)"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">mf2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Base::mf2"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">void</span> <span class="token function">mf3</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Base::mf3"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token keyword">void</span> <span class="token function">mf3</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Base::mf3(double)"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Derived</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Base</span></span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">mf1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Derived::mf1"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token keyword">void</span> <span class="token function">mf3</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Derived::mf3"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token keyword">void</span> <span class="token function">mf4</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Derived::mf4"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
 <span class="token punctuation">&#123;</span>
-    ros<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"image_pub_node"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>NodeHandle nh<span class="token punctuation">;</span>
-    image_transport<span class="token operator">::</span>ImageTransport <span class="token function">it</span><span class="token punctuation">(</span>nh<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    image_transport<span class="token operator">::</span>Publisher image_pub <span class="token operator">=</span> it<span class="token punctuation">.</span><span class="token function">advertise</span><span class="token punctuation">(</span><span class="token string">"image_topic"</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    Mat image <span class="token operator">=</span> <span class="token function">imread</span><span class="token punctuation">(</span><span class="token string">"/home/kavin/Pictures/test.png"</span><span class="token punctuation">,</span> IMREAD_COLOR<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>image<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
-        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"can't find picture"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    sensor_msgs<span class="token operator">::</span>ImagePtr msg <span class="token operator">=</span> cv_bridge<span class="token operator">::</span><span class="token function">CvImage</span><span class="token punctuation">(</span>std_msgs<span class="token operator">::</span><span class="token function">Header</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"bgr8"</span><span class="token punctuation">,</span> image<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toImageMsg</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>Rate <span class="token function">loop_rate</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span><span class="token punctuation">(</span>nh<span class="token punctuation">.</span><span class="token function">ok</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
-        image_pub<span class="token punctuation">.</span><span class="token function">publish</span><span class="token punctuation">(</span>msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"publish an image"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        loop_rate<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    Derived d<span class="token punctuation">;</span>
+    d<span class="token punctuation">.</span><span class="token function">mf1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// Derived::mf1</span>
+    d<span class="token punctuation">.</span><span class="token function">mf2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// Base::mf2</span>
+    d<span class="token punctuation">.</span><span class="token function">mf3</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// Derived::mf3</span>
+    d<span class="token punctuation">.</span><span class="token function">mf4</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// Derived::mf4</span>
+    <span class="token comment">// d.mf1(1);    错误，基类中的方法被覆盖</span>
+    <span class="token comment">// d.mf3(3);    错误，基类中的方法被覆盖</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="接收图像"><a href="#接收图像" class="headerlink" title="接收图像"></a>接收图像</h2><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">image_transport<span class="token operator">::</span>Subscriber image_sub <span class="token operator">=</span> it<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token string">"/simple_camera/image_raw"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> image_topic_cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">//sensor_msgs话题通过cv_bridge::toCvCopy转换为cv::Mat指针</span>
-cv_bridge<span class="token operator">::</span>CvImagePtr cv_ptr <span class="token operator">=</span> cv_bridge<span class="token operator">::</span><span class="token function">toCvCopy</span><span class="token punctuation">(</span>msg<span class="token punctuation">,</span> sensor_msgs<span class="token operator">::</span>image_encodings<span class="token operator">::</span>BGR8<span class="token punctuation">)</span><span class="token punctuation">;</span>
-Mat colorImg <span class="token operator">=</span> cv_ptr<span class="token operator">-></span>image<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="源代码-1"><a href="#源代码-1" class="headerlink" title="源代码"></a>源代码</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;ros/ros.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sensor_msgs/image_encodings.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;image_transport/image_transport.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;opencv2/opencv.hpp></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cv_bridge/cv_bridge.h></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> cv<span class="token punctuation">;</span>
-Mat colorImg<span class="token punctuation">;</span>
+<p>base class 中的所有名为 mf1 和 mf3 的函数被 derived class 中的名为 mf1 和 mf3 的函数覆盖。从名字搜索的观点看，Base::mf1 和 Base::mf3 不再被 Derived 继承</p>
+<p>可以使用<code>using</code>声明式</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Derived</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">Base</span></span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">using</span> Base<span class="token operator">::</span>mf1<span class="token punctuation">;</span>    <span class="token comment">// 让Base内的mf1和mf3的所有东西</span>
+    <span class="token keyword">using</span> Base<span class="token operator">::</span>mf3<span class="token punctuation">;</span>    <span class="token comment">// 在Derived作用域内可见</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">mf1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">mf3</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">mf4</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这意味着如果你从一个带有重载函数的 base class 继承，而且你只想重定义或替换它们中的一部分，你需要为每一个你不想覆盖的名字使用 using declaration。如果你不这样做，一些你希望继承下来的名字会被覆盖</p>
+<p>如果是 private 继承，可能会只想继承函数的某个版本，这时就不能用 using 了，可以使用转交函数</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Base</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> x<span class="token punctuation">;</span>
 
-<span class="token keyword">void</span> <span class="token function">image_topic_cb</span><span class="token punctuation">(</span><span class="token keyword">const</span> sensor_msgs<span class="token operator">::</span>ImageConstPtr<span class="token operator">&amp;</span> msg<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    <span class="token keyword">try</span>
-    <span class="token punctuation">&#123;</span>
-        <span class="token function">ROS_INFO</span><span class="token punctuation">(</span><span class="token string">"Receive an image successfully"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        cv_bridge<span class="token operator">::</span>CvImagePtr cv_ptr <span class="token operator">=</span> cv_bridge<span class="token operator">::</span><span class="token function">toCvCopy</span><span class="token punctuation">(</span>msg<span class="token punctuation">,</span> sensor_msgs<span class="token operator">::</span>image_encodings<span class="token operator">::</span>BGR8<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        colorImg <span class="token operator">=</span> cv_ptr<span class="token operator">-></span>image<span class="token punctuation">;</span>
-        <span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"image"</span><span class="token punctuation">,</span> colorImg<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        Mat grayImg<span class="token punctuation">;</span>
-        <span class="token function">cvtColor</span><span class="token punctuation">(</span>colorImg<span class="token punctuation">,</span> grayImg<span class="token punctuation">,</span> COLOR_BGR2GRAY<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">imshow</span><span class="token punctuation">(</span><span class="token string">"gray"</span><span class="token punctuation">,</span> grayImg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">mf1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Base::mf1"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">mf1</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Base::mf1(int)"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-        <span class="token comment">// cv::imshow("image", cv_bridge::toCvShare(msg, "bgr8")->image);</span>
-        <span class="token comment">// cv::waitKey(10);</span>
-    <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span><span class="token punctuation">(</span>cv_bridge<span class="token operator">::</span>Exception<span class="token operator">&amp;</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        std<span class="token operator">::</span>cerr <span class="token operator">&lt;&lt;</span> e<span class="token punctuation">.</span><span class="token function">what</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">Derived</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">private</span> <span class="token class-name">Base</span></span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">mf1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>    <span class="token comment">// 转交函数，forwarding function</span>
+        <span class="token class-name">Base</span><span class="token operator">::</span><span class="token function">mf1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token operator">*</span> argv<span class="token punctuation">)</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
 <span class="token punctuation">&#123;</span>
-    ros<span class="token operator">::</span><span class="token function">init</span><span class="token punctuation">(</span>argc<span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token string">"image_sub"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span>NodeHandle nh<span class="token punctuation">;</span>
-    image_transport<span class="token operator">::</span>ImageTransport <span class="token function">it</span><span class="token punctuation">(</span>nh<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token function">namedWindow</span><span class="token punctuation">(</span><span class="token string">"image"</span><span class="token punctuation">,</span> CV_WINDOW_AUTOSIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">namedWindow</span><span class="token punctuation">(</span><span class="token string">"gray"</span><span class="token punctuation">,</span> CV_WINDOW_AUTOSIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">startWindowThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    image_transport<span class="token operator">::</span>Subscriber image_sub <span class="token operator">=</span> it<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token string">"/simple_camera/image_raw"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> image_topic_cb<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ros<span class="token operator">::</span><span class="token function">spin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">destroyWindow</span><span class="token punctuation">(</span><span class="token string">"image"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">destroyWindow</span><span class="token punctuation">(</span><span class="token string">"gray"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Derived d<span class="token punctuation">;</span>
+    d<span class="token punctuation">.</span><span class="token function">mf1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// Base::mf1</span>
+    <span class="token comment">// d.mf1(1);    // 错误，Base::mf1(int)被遮掩了</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><pre class="line-numbers language-py" data-language="py"><code class="language-py"><span class="token comment">#! /usr/bin/env python</span>
-<span class="token comment"># coding=utf-8</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<ul>
+<li>derived classes 中的名字覆盖 base classes 中的名字，在 public 继承中，这不是我们想要的</li>
+<li>为了使隐藏的名字重新可见，使用 using declarations 或者 forwarding functions</li>
+</ul>
+</blockquote>
 
-<span class="token keyword">import</span> rospy
-<span class="token keyword">from</span> sensor_msgs<span class="token punctuation">.</span>msg <span class="token keyword">import</span> Image
-<span class="token keyword">import</span> cv2
-<span class="token keyword">from</span> cv_bridge <span class="token keyword">import</span> CvBridge
-
-
-rospy<span class="token punctuation">.</span>init_node<span class="token punctuation">(</span><span class="token string">'py_image_sub'</span><span class="token punctuation">,</span> anonymous<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
-
-<span class="token keyword">def</span> <span class="token function">colorCallBack</span><span class="token punctuation">(</span>msg<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    bridge <span class="token operator">=</span> CvBridge<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    img <span class="token operator">=</span> bridge<span class="token punctuation">.</span>imgmsg_to_cv2<span class="token punctuation">(</span>msg<span class="token punctuation">,</span> <span class="token string">"bgr8"</span><span class="token punctuation">)</span>
-    cv2<span class="token punctuation">.</span>imshow<span class="token punctuation">(</span><span class="token string">"color"</span><span class="token punctuation">,</span> img<span class="token punctuation">)</span>
-    cv2<span class="token punctuation">.</span>waitKey<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
-
-<span class="token keyword">def</span> <span class="token function">listener</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    rospy<span class="token punctuation">.</span>Subscriber<span class="token punctuation">(</span><span class="token string">"image_topic"</span><span class="token punctuation">,</span> Image<span class="token punctuation">,</span> colorCallBack<span class="token punctuation">)</span>
-    rospy<span class="token punctuation">.</span>spin<span class="token punctuation">(</span><span class="token punctuation">)</span>
-
-
-<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span>cv2<span class="token punctuation">.</span>__version__<span class="token punctuation">)</span>
-    listener<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'done'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -717,7 +676,7 @@ rospy<span class="token punctuation">.</span>init_node<span class="token punctua
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/03/26/ROS-ROS-CV/">http://example.com/2021/03/26/ROS-ROS-CV/</a>
+                    <a href="http://example.com/2022/08/27/C-Effective-32-%E5%85%AC%E6%9C%89%E7%BB%A7%E6%89%BF/">http://example.com/2022/08/27/C-Effective-32-%E5%85%AC%E6%9C%89%E7%BB%A7%E6%89%BF/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -755,12 +714,8 @@ rospy<span class="token punctuation">.</span>init_node<span class="token punctua
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/OpenCV/">
-                                    <span class="chip bg-color">OpenCV</span>
-                                </a>
-                            
-                                <a href="/tags/ROS/">
-                                    <span class="chip bg-color">ROS</span>
+                                <a href="/tags/Effective/">
+                                    <span class="chip bg-color">Effective</span>
                                 </a>
                             
                         </div>
@@ -936,13 +891,13 @@ rospy<span class="token punctuation">.</span>init_node<span class="token punctua
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/04/01/OpenCV-OpenCV-RGB-GRAY/">
+                <a href="/2022/08/27/C-Effective-36-%E7%BB%9D%E4%B8%8D%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E9%9D%9E%E8%99%9A%E5%87%BD%E6%95%B0/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="OpenCV_RGB&amp;GRAY">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="36-绝不重新定义非虚函数">
                         
-                        <span class="card-title">OpenCV_RGB&amp;GRAY</span>
+                        <span class="card-title">36-绝不重新定义非虚函数</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -953,14 +908,14 @@ rospy<span class="token punctuation">.</span>init_node<span class="token punctua
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-01
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-08-27
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/OpenCV/" class="post-category">
-                                    OpenCV
+                            <a href="/categories/C/" class="post-category">
+                                    C++
                                 </a>
                             
                             
@@ -970,8 +925,8 @@ rospy<span class="token punctuation">.</span>init_node<span class="token punctua
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/OpenCV/">
-                        <span class="chip bg-color">OpenCV</span>
+                    <a href="/tags/Effective/">
+                        <span class="chip bg-color">Effective</span>
                     </a>
                     
                 </div>
@@ -985,13 +940,13 @@ rospy<span class="token punctuation">.</span>init_node<span class="token punctua
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/26/ROS-ROS-action/">
+                <a href="/2022/08/27/C-Effective-04-%E5%88%9D%E5%A7%8B%E5%8C%96/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="ROS action">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="04-初始化">
                         
-                        <span class="card-title">ROS action</span>
+                        <span class="card-title">04-初始化</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1002,12 +957,16 @@ rospy<span class="token punctuation">.</span>init_node<span class="token punctua
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-26
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-27
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            kunpeng
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/C/" class="post-category">
+                                    C++
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -1015,8 +974,8 @@ rospy<span class="token punctuation">.</span>init_node<span class="token punctua
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/ROS/">
-                        <span class="chip bg-color">ROS</span>
+                    <a href="/tags/Effective/">
+                        <span class="chip bg-color">Effective</span>
                     </a>
                     
                 </div>

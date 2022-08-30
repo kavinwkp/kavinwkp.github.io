@@ -560,7 +560,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="抽象工厂"><a href="#抽象工厂" class="headerlink" title="抽象工厂"></a>抽象工厂</h3><p>数据访问层需要创建一系列的数据库对象</p>
+                <h3 id="抽象工厂"><a href="#抽象工厂" class="headerlink" title="抽象工厂"></a>抽象工厂</h3><p>数据访问层需要创建一系列的数据库对象，这些对象之间有依赖性</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">EmployeeDAO</span><span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     vector<span class="token operator">&lt;</span>EmployeeDO<span class="token operator">></span> <span class="token function">GetEmployees</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -579,29 +579,27 @@
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这里也不希望跟具体类绑定，因为后面可能数据库会变化</p>
-<p>所以还是需要一个基类指针</p>
+<p>所以还是需要用工厂指针，每个类型都需要一个工厂，然后在<code>EmployeeDAO</code>中组合三个工厂指针</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">//数据库访问有关的基类</span>
 <span class="token keyword">class</span> <span class="token class-name">IDBConnection</span><span class="token punctuation">&#123;</span>
-    
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">IDBCommand</span><span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">IDataReader</span><span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
 <span class="token keyword">class</span> <span class="token class-name">IDBConnectionFactory</span><span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token keyword">virtual</span> IDBConnection<span class="token operator">*</span> <span class="token function">CreateDBConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-
-<span class="token keyword">class</span> <span class="token class-name">IDBCommand</span><span class="token punctuation">&#123;</span>
-    
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 <span class="token keyword">class</span> <span class="token class-name">IDBCommandFactory</span><span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token keyword">virtual</span> IDBCommand<span class="token operator">*</span> <span class="token function">CreateDBCommand</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-
-<span class="token keyword">class</span> <span class="token class-name">IDataReader</span><span class="token punctuation">&#123;</span>
-    
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 <span class="token keyword">class</span> <span class="token class-name">IDataReaderFactory</span><span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token keyword">virtual</span> IDataReader<span class="token operator">*</span> <span class="token function">CreateDataReader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
@@ -630,21 +628,6 @@
     
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 
-<span class="token comment">//支持Oracle</span>
-<span class="token keyword">class</span> <span class="token class-name">OracleConnection</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">IDBConnection</span></span><span class="token punctuation">&#123;</span>
-    
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-<span class="token keyword">class</span> <span class="token class-name">OracleCommand</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">IDBCommand</span></span><span class="token punctuation">&#123;</span>
-    
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-<span class="token keyword">class</span> <span class="token class-name">OracleDataReader</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">IDataReader</span></span><span class="token punctuation">&#123;</span>
-    
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-
-
 <span class="token keyword">class</span> <span class="token class-name">EmployeeDAO</span><span class="token punctuation">&#123;</span>
     IDBConnectionFactory<span class="token operator">*</span> dbConnectionFactory<span class="token punctuation">;</span>
     IDBCommandFactory<span class="token operator">*</span> dbCommandFactory<span class="token punctuation">;</span>
@@ -666,77 +649,38 @@
         <span class="token punctuation">&#125;</span>
 
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>EmployeeDAO里面的三个指针可以提到一个类中</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">//数据库访问有关的基类</span>
-<span class="token keyword">class</span> <span class="token class-name">IDBConnection</span><span class="token punctuation">&#123;</span>
-    
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-<span class="token keyword">class</span> <span class="token class-name">IDBCommand</span><span class="token punctuation">&#123;</span>
-    
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-<span class="token keyword">class</span> <span class="token class-name">IDataReader</span><span class="token punctuation">&#123;</span>
-    
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-
-<span class="token keyword">class</span> <span class="token class-name">IDBFactory</span><span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>EmployeeDAO</code>里面的三个指针可以提到一个类中</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">IDBFactory</span><span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token keyword">virtual</span> IDBConnection<span class="token operator">*</span> <span class="token function">CreateDBConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
     <span class="token keyword">virtual</span> IDBCommand<span class="token operator">*</span> <span class="token function">CreateDBCommand</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
     <span class="token keyword">virtual</span> IDataReader<span class="token operator">*</span> <span class="token function">CreateDataReader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
-    
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-
-<span class="token comment">//支持SQL Server</span>
-<span class="token keyword">class</span> <span class="token class-name">SqlConnection</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">IDBConnection</span></span><span class="token punctuation">&#123;</span>
-    
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-<span class="token keyword">class</span> <span class="token class-name">SqlCommand</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">IDBCommand</span></span><span class="token punctuation">&#123;</span>
-    
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-<span class="token keyword">class</span> <span class="token class-name">SqlDataReader</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">IDataReader</span></span><span class="token punctuation">&#123;</span>
-    
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
 
 <span class="token keyword">class</span> <span class="token class-name">SqlDBFactory</span><span class="token operator">:</span><span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">IDBFactory</span></span><span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">virtual</span> IDBConnection<span class="token operator">*</span> <span class="token function">CreateDBConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">virtual</span> IDBCommand<span class="token operator">*</span> <span class="token function">CreateDBCommand</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">virtual</span> IDataReader<span class="token operator">*</span> <span class="token function">CreateDataReader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+    IDBConnection<span class="token operator">*</span> <span class="token function">CreateDBConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token function">SqlConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    IDBCommand<span class="token operator">*</span> <span class="token function">CreateDBCommand</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token function">SqlCommand</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    IDataReader<span class="token operator">*</span> <span class="token function">CreateDataReader</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token function">SqlDataReader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
  
 <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-<span class="token comment">//支持Oracle</span>
-<span class="token keyword">class</span> <span class="token class-name">OracleConnection</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">IDBConnection</span></span><span class="token punctuation">&#123;</span>
-    
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-<span class="token keyword">class</span> <span class="token class-name">OracleCommand</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">IDBCommand</span></span><span class="token punctuation">&#123;</span>
-    
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-<span class="token keyword">class</span> <span class="token class-name">OracleDataReader</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">IDataReader</span></span><span class="token punctuation">&#123;</span>
-    
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-
-
 
 <span class="token keyword">class</span> <span class="token class-name">EmployeeDAO</span><span class="token punctuation">&#123;</span>
     IDBFactory<span class="token operator">*</span> dbFactory<span class="token punctuation">;</span>
     
 <span class="token keyword">public</span><span class="token operator">:</span>
     vector<span class="token operator">&lt;</span>EmployeeDO<span class="token operator">></span> <span class="token function">GetEmployees</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        IDBConnection<span class="token operator">*</span> connection <span class="token operator">=</span>
-            dbFactory<span class="token operator">-></span><span class="token function">CreateDBConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        IDBConnection<span class="token operator">*</span> connection <span class="token operator">=</span> dbFactory<span class="token operator">-></span><span class="token function">CreateDBConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         connection<span class="token operator">-></span><span class="token function">ConnectionString</span><span class="token punctuation">(</span><span class="token string">"..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        IDBCommand<span class="token operator">*</span> command <span class="token operator">=</span>
-            dbFactory<span class="token operator">-></span><span class="token function">CreateDBCommand</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        IDBCommand<span class="token operator">*</span> command <span class="token operator">=</span> dbFactory<span class="token operator">-></span><span class="token function">CreateDBCommand</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         command<span class="token operator">-></span><span class="token function">CommandText</span><span class="token punctuation">(</span><span class="token string">"..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         command<span class="token operator">-></span><span class="token function">SetConnection</span><span class="token punctuation">(</span>connection<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//关联性</span>
 
@@ -746,7 +690,7 @@
         <span class="token punctuation">&#125;</span>
 
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><strong>模式定义</strong></p>
 <blockquote>
 <p>提供一个接口，让该接口负责创建一系列“相关或者相互依赖的对象”，无需指定它们具体的类</p>
