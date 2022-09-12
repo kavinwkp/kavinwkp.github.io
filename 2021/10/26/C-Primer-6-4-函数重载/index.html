@@ -536,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-07-13
+                    2021-10-26
                 </div>
                 
 
@@ -599,7 +599,21 @@ string window <span class="token operator">=</span> <span class="token function"
     <span class="token keyword">int</span> wd <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>   <span class="token comment">// 局部变量不影响全局变量</span>
     window <span class="token operator">=</span> <span class="token function">screen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 调用screen(ht(), 80, '*');</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="6-5-2-内联函数和constexpr函数"><a href="#6-5-2-内联函数和constexpr函数" class="headerlink" title="6.5.2 内联函数和constexpr函数"></a>6.5.2 内联函数和constexpr函数</h3><p>内联函数可避免函数调用的开销，将函数指定为<strong>内联函数(inline)</strong>，通常就是将它在每个调用点上“内联地”展开。</p>
+<h3 id="6-5-2-内联函数和constexpr函数"><a href="#6-5-2-内联函数和constexpr函数" class="headerlink" title="6.5.2 内联函数和constexpr函数"></a>6.5.2 内联函数和constexpr函数</h3><p>内联函数可避免函数调用的开销，将函数指定为<strong>内联函数(inline)</strong>，通常就是将它在每个调用点上“内联地”展开</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">inline</span> <span class="token keyword">const</span> string <span class="token operator">&amp;</span><span class="token function">horterString</span><span class="token punctuation">(</span><span class="token keyword">const</span> string <span class="token operator">&amp;</span>s1<span class="token punctuation">,</span> <span class="token keyword">const</span> string <span class="token operator">&amp;</span>s2<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> s1<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;=</span> s2<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span> s1 <span class="token operator">:</span> s2<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在函数声明和定义中都能使用关键字<code>inline</code>，但是建议只在函数定义时使用</p>
+<p>一般来说，内联机制适用于优化规模较小、流程直接、调用频繁的函数。内联函数中不允许有循环语句和<code>switch</code>语句，否则函数会被编译为普通函数</p>
+<p><code>constexpr</code>函数是指能用于常量表达式的函数。<code>constexpr</code>函数的返回类型及所有形参的类型都得是字面值类型。另外C++11标准要求<code>constexpr</code>函数体中必须有且只有一条return语句，但是此限制在C++14标准中被删除</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">constexpr</span> <span class="token keyword">int</span> <span class="token function">new_sz</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token number">42</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">constexpr</span> <span class="token keyword">int</span> foo <span class="token operator">=</span> <span class="token function">new_sz</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// ok: foo是常量表达式</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>constexpr</code>函数被隐式地指定为内联函数</p>
 
                 
             </div>
@@ -626,7 +640,7 @@ string window <span class="token operator">=</span> <span class="token function"
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/07/13/C-Primer-6-4-%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD/">http://example.com/2021/07/13/C-Primer-6-4-%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD/</a>
+                    <a href="http://example.com/2021/10/26/C-Primer-6-4-%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD/">http://example.com/2021/10/26/C-Primer-6-4-%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -841,13 +855,13 @@ string window <span class="token operator">=</span> <span class="token function"
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/07/14/LeetCode-257-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%89%80%E6%9C%89%E8%B7%AF%E5%BE%84/">
+                <a href="/2021/10/26/C-Primer-7-1-%E5%AE%9A%E4%B9%89%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="257-二叉树的所有路径">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="7.1-定义抽象数据结构">
                         
-                        <span class="card-title">257-二叉树的所有路径</span>
+                        <span class="card-title">7.1-定义抽象数据结构</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -858,14 +872,14 @@ string window <span class="token operator">=</span> <span class="token function"
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-07-14
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-26
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/LeetCode/" class="post-category">
-                                    LeetCode
+                            <a href="/categories/C/" class="post-category">
+                                    C++
                                 </a>
                             
                             
@@ -875,8 +889,8 @@ string window <span class="token operator">=</span> <span class="token function"
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%9B%9E%E6%BA%AF/">
-                        <span class="chip bg-color">回溯</span>
+                    <a href="/tags/Primer/">
+                        <span class="chip bg-color">Primer</span>
                     </a>
                     
                 </div>
@@ -890,13 +904,13 @@ string window <span class="token operator">=</span> <span class="token function"
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/07/13/LeetCode-110-%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/">
+                <a href="/2021/10/26/C-Primer-5-6-try%E8%AF%AD%E5%8F%A5%E5%9D%97%E5%92%8C%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="110-平衡二叉树">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="5.6-try语句块和异常处理">
                         
-                        <span class="card-title">110-平衡二叉树</span>
+                        <span class="card-title">5.6-try语句块和异常处理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -907,14 +921,14 @@ string window <span class="token operator">=</span> <span class="token function"
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-13
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-26
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/LeetCode/" class="post-category">
-                                    LeetCode
+                            <a href="/categories/C/" class="post-category">
+                                    C++
                                 </a>
                             
                             
@@ -924,8 +938,8 @@ string window <span class="token operator">=</span> <span class="token function"
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">
-                        <span class="chip bg-color">二叉树</span>
+                    <a href="/tags/Primer/">
+                        <span class="chip bg-color">Primer</span>
                     </a>
                     
                 </div>
