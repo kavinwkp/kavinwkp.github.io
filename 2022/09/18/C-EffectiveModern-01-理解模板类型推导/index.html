@@ -605,7 +605,7 @@
 
 <span class="token function">f</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>                      <span class="token comment">// T是int，param的类型是int*</span>
 <span class="token function">f</span><span class="token punctuation">(</span>px<span class="token punctuation">)</span><span class="token punctuation">;</span>                      <span class="token comment">// T是const int，param的类型是const int*</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="情况二：ParamType是一个通用引用"><a href="#情况二：ParamType是一个通用引用" class="headerlink" title="情况二：ParamType是一个通用引用"></a>情况二：<code>ParamType</code>是一个通用引用</h3><ul>
+<h3 id="情况二：ParamType是一个通用引用"><a href="#情况二：ParamType是一个通用引用" class="headerlink" title="情况二：ParamType是一个通用引用"></a>情况二：ParamType是一个通用引用</h3><ul>
 <li>如果<code>expr</code>是左值，<code>T</code>和<code>ParamType</code>都会被推导为左值引用。第一，这是模板类型推导中唯一一种<code>T</code>被推导为引用的情况。第二，虽然<code>ParamType</code>被声明为右值引用类型，但是最后推导的结果是左值引用。</li>
 <li>如果<code>expr</code>是右值，就使用正常的（也就是情况一）推导规则</li>
 </ul>
@@ -626,7 +626,7 @@
                         <span class="token comment">// param类型也是const int&amp;</span>
 
 <span class="token function">f</span><span class="token punctuation">(</span><span class="token number">27</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                  <span class="token comment">// 27是右值，所以T是int，param类型就是int&amp;&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="情况三：ParamType既不是指针也不是引用"><a href="#情况三：ParamType既不是指针也不是引用" class="headerlink" title="情况三：ParamType既不是指针也不是引用"></a>情况三：<code>ParamType</code>既不是指针也不是引用</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">></span>
+<h3 id="情况三：ParamType既不是指针也不是引用"><a href="#情况三：ParamType既不是指针也不是引用" class="headerlink" title="情况三：ParamType既不是指针也不是引用"></a>情况三：ParamType既不是指针也不是引用</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">></span>
 <span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span>T param<span class="token punctuation">)</span><span class="token punctuation">;</span>                <span class="token comment">//以传值的方式处理param</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <ol>
 <li>和之前一样，如果<code>expr</code>的类型是一个引用，忽略这个引用部分</li>
@@ -656,7 +656,7 @@
 
 <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span> ptrToName <span class="token operator">=</span> name<span class="token punctuation">;</span>      <span class="token comment">// 数组退化为指针</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>这两种类型（<code>const char*</code>和<code>const char[13]</code>）是不一样的</p>
-<p>如果给一个函数传递数组，形参可以使这样的</p>
+<p>如果给一个函数传递数组，形参可以是这样的</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">myFunc</span><span class="token punctuation">(</span><span class="token keyword">int</span> param<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>但是数组声明会被视作指针声明，这意味着<code>myFunc</code>的声明和下面声明是等价的</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">myFunc</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">*</span> param<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
