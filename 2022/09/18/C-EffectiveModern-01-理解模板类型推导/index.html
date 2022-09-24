@@ -560,13 +560,13 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Item-1-Understand-template-type-deduction"><a href="#Item-1-Understand-template-type-deduction" class="headerlink" title="Item 1: Understand template type deduction"></a>Item 1: Understand template type deduction</h2><p>考虑这样的函数模板</p>
+                <p>考虑这样的函数模板</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">></span>
 <span class="token keyword">void</span> <span class="token function">f</span><span class="token punctuation">(</span>ParamType param<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 <span class="token function">f</span><span class="token punctuation">(</span>expr<span class="token punctuation">)</span><span class="token punctuation">;</span>                        <span class="token comment">//从expr中推导T和ParamType</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>有三种情况需要考虑</p>
-<h3 id="情况一：ParamType-是一个指针或引用，但不是通用引用"><a href="#情况一：ParamType-是一个指针或引用，但不是通用引用" class="headerlink" title="情况一：ParamType 是一个指针或引用，但不是通用引用"></a>情况一：ParamType 是一个指针或引用，但不是通用引用</h3><p>最简单的情况是<code>ParamType</code>是一个指针或者引用，但非通用引用。在这种情况下，类型推导会这样进行：</p>
+<h3 id="情况一：ParamType是一个指针或引用，但不是通用引用"><a href="#情况一：ParamType是一个指针或引用，但不是通用引用" class="headerlink" title="情况一：ParamType是一个指针或引用，但不是通用引用"></a>情况一：ParamType是一个指针或引用，但不是通用引用</h3><p>最简单的情况是<code>ParamType</code>是一个指针或者引用，但非通用引用。在这种情况下，类型推导会这样进行：</p>
 <ol>
 <li>如果<code>expr</code>的类型是一个引用，<font color="LightSeaGreen">忽略引用部分</font></li>
 <li>然后<code>expr</code>的类型与<code>ParamType</code>进行模式匹配来决定<code>T</code></li>
@@ -579,9 +579,9 @@
 <span class="token keyword">const</span> <span class="token keyword">int</span> cx <span class="token operator">=</span> x<span class="token punctuation">;</span>       <span class="token comment">// cx是const int</span>
 <span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">&amp;</span> rx <span class="token operator">=</span> x<span class="token punctuation">;</span>      <span class="token comment">// rx是指向作为const int的x的引用</span>
 
-<span class="token function">f</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>                   <span class="token comment">// T是int，param的类型是int&amp;</span>
-<span class="token function">f</span><span class="token punctuation">(</span>cx<span class="token punctuation">)</span><span class="token punctuation">;</span>                  <span class="token comment">// T是const int，param的类型是const int&amp;</span>
-<span class="token function">f</span><span class="token punctuation">(</span>rx<span class="token punctuation">)</span><span class="token punctuation">;</span>                  <span class="token comment">// T是const int，param的类型是const int&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">f</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>                   <span class="token comment">// T是int, param的类型是int&amp;</span>
+<span class="token function">f</span><span class="token punctuation">(</span>cx<span class="token punctuation">)</span><span class="token punctuation">;</span>                  <span class="token comment">// T是const int, param的类型是const int&amp;</span>
+<span class="token function">f</span><span class="token punctuation">(</span>rx<span class="token punctuation">)</span><span class="token punctuation">;</span>                  <span class="token comment">// T是const int, param的类型是const int&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这也是为什么将一个<code>const</code>对象传递给以<code>T&amp;</code>类型为形参的模板安全的：对象的常量性constness会被保留为<code>T</code>的一部分</p>
 <p>如果是右值也是一样的</p>
 <p>如果我们将<code>f</code>的形参类型<code>T&amp;</code>改为<code>const T&amp;</code>，情况有所变化</p>
@@ -654,7 +654,7 @@
 <h3 id="数组实参"><a href="#数组实参" class="headerlink" title="数组实参"></a>数组实参</h3><p>数组可以退化为指针</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">char</span> name<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"J. P. Briggs"</span><span class="token punctuation">;</span> <span class="token comment">// name的类型是const char[13]</span>
 
-<span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span> ptrToName <span class="token operator">=</span> name<span class="token punctuation">;</span>      <span class="token comment">// 数组退化为指针</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> ptrToName <span class="token operator">=</span> name<span class="token punctuation">;</span>       <span class="token comment">// 数组退化为指针</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>这两种类型（<code>const char*</code>和<code>const char[13]</code>）是不一样的</p>
 <p>如果给一个函数传递数组，形参可以是这样的</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">myFunc</span><span class="token punctuation">(</span><span class="token keyword">int</span> param<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -685,7 +685,7 @@
 <span class="token keyword">void</span> <span class="token function">f1</span><span class="token punctuation">(</span>T param<span class="token punctuation">)</span><span class="token punctuation">;</span>                   <span class="token comment">// 传值给f1</span>
 
 <span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">></span>
-<span class="token keyword">void</span> <span class="token function">f2</span><span class="token punctuation">(</span>T <span class="token operator">&amp;</span> param<span class="token punctuation">)</span><span class="token punctuation">;</span>                 <span class="token comment">// 传引用给f2</span>
+<span class="token keyword">void</span> <span class="token function">f2</span><span class="token punctuation">(</span>T<span class="token operator">&amp;</span> param<span class="token punctuation">)</span><span class="token punctuation">;</span>                  <span class="token comment">// 传引用给f2</span>
 
 <span class="token function">f1</span><span class="token punctuation">(</span>someFunc<span class="token punctuation">)</span><span class="token punctuation">;</span>                       <span class="token comment">// param被推导为指向函数的指针，</span>
                                     <span class="token comment">// 类型是void(*)(int, double)</span>
@@ -939,13 +939,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/09/18/LeetCode-525-%E8%BF%9E%E7%BB%AD%E6%95%B0%E7%BB%84/">
+                <a href="/2022/09/18/C-EffectiveModern-02-%E7%90%86%E8%A7%A3auto%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="525-连续数组">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="02-理解auto类型推导">
                         
-                        <span class="card-title">525-连续数组</span>
+                        <span class="card-title">02-理解auto类型推导</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -962,8 +962,8 @@
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/LeetCode/" class="post-category">
-                                    LeetCode
+                            <a href="/categories/C/" class="post-category">
+                                    C++
                                 </a>
                             
                             
@@ -973,8 +973,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%89%8D%E7%BC%80%E5%92%8C/">
-                        <span class="chip bg-color">前缀和</span>
+                    <a href="/tags/Modern/">
+                        <span class="chip bg-color">Modern</span>
                     </a>
                     
                 </div>
