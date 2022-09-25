@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="202-快乐数, kunpeng">
+    <meta name="keywords" content="34-考虑lambda而非bind, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>202-快乐数 | kunpeng</title>
+    <title>34-考虑lambda而非bind | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">202-快乐数</h1>
+                    <h1 class="description center-align post-title">34-考虑lambda而非bind</h1>
                 </div>
             </div>
         </div>
@@ -511,12 +511,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%95%B0%E5%AD%A6/">
-                                <span class="chip bg-color">数学</span>
-                            </a>
-                        
-                            <a href="/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/">
-                                <span class="chip bg-color">哈希表</span>
+                            <a href="/tags/Modern/">
+                                <span class="chip bg-color">Modern</span>
                             </a>
                         
                     </div>
@@ -527,8 +523,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/LeetCode/" class="post-category">
-                                LeetCode
+                            <a href="/categories/C/" class="post-category">
+                                C++
                             </a>
                         
                     </div>
@@ -540,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-20
+                    2022-09-18
                 </div>
                 
 
@@ -564,39 +560,73 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="LeetCode-202-Happy-Number"><a href="#LeetCode-202-Happy-Number" class="headerlink" title="LeetCode 202. Happy Number"></a>LeetCode 202. Happy Number</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/happy-number/">LeetCode</a></p>
-<p>Write an algorithm to determine if a number n is happy.</p>
-<p>A <code>happy number</code> is a number defined by the following process:</p>
-<ul>
-<li>Starting with any positive integer, replace the number by the sum of the squares of its digits.</li>
-<li>Repeat the process until the number equals 1, or <code>it loops endlessly in a cycle</code> which does not include 1.</li>
-<li>Those numbers for which this process <code>ends in 1</code> are happy.</li>
-</ul>
-<p>Return true if n is a happy number, and false if not.</p>
-<p>Example 1:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> n <span class="token operator">=</span> <span class="token number">19</span>
-Output<span class="token operator">:</span> <span class="token boolean">true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>Explanation:<br>$1^2 + 9^2 = 82$<br>$8^2 + 2^2 = 68$<br>$6^2 + 8^2 = 100$<br>$1^2 + 0^2 + 0^2 = 1$</p>
-<p>Example 2:<br><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Input<span class="token operator">:</span> n <span class="token operator">=</span> <span class="token number">2</span>
-Output<span class="token operator">:</span> <span class="token boolean">false</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></p>
-<h2 id="method-哈希表"><a href="#method-哈希表" class="headerlink" title="method: 哈希表"></a>method: 哈希表</h2><p>记录每次平方和结果，如果出现循环返回<code>false</code></p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">squareSum</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">int</span> sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        sum <span class="token operator">+=</span> <span class="token punctuation">(</span>x <span class="token operator">%</span> <span class="token number">10</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>x <span class="token operator">%</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        x <span class="token operator">/=</span> <span class="token number">10</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> sum<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
+                <p>考虑以下C++14的lambda使用，它返回其实参是否在最小值（<code>lowVal</code>）和最大值（<code>highVal</code>）之间的结果，其中<code>lowVal</code>和<code>highVal</code>是局部变量</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">auto</span> betweenL <span class="token operator">=</span>
+    <span class="token punctuation">[</span>lowVal<span class="token punctuation">,</span> highVal<span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">auto</span><span class="token operator">&amp;</span> val<span class="token punctuation">)</span>    		<span class="token comment">//C++14</span>
+    <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> lowVal <span class="token operator">&lt;=</span> val <span class="token operator">&amp;&amp;</span> val <span class="token operator">&lt;=</span> highVal<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>使用<code>std::bind</code>可以表达相同的内容，但是该构造是一个通过晦涩难懂的代码来保证工作安全性的示例：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token operator">::</span>placeholders<span class="token punctuation">;</span>              <span class="token comment">//同上</span>
+<span class="token keyword">auto</span> betweenB <span class="token operator">=</span>
+    std<span class="token operator">::</span><span class="token function">bind</span><span class="token punctuation">(</span>std<span class="token operator">::</span>logical_and<span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>             <span class="token comment">//C++14</span>
+              std<span class="token operator">::</span><span class="token function">bind</span><span class="token punctuation">(</span>std<span class="token operator">::</span>less_equal<span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> lowVal<span class="token punctuation">,</span> _1<span class="token punctuation">)</span><span class="token punctuation">,</span>
+              std<span class="token operator">::</span><span class="token function">bind</span><span class="token punctuation">(</span>std<span class="token operator">::</span>less_equal<span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> _1<span class="token punctuation">,</span> highVal<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在C++11中，我们必须指定要比较的类型，然后<code>std::bind</code>调用将如下所示：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">auto</span> betweenB <span class="token operator">=</span>
+    std<span class="token operator">::</span><span class="token function">bind</span><span class="token punctuation">(</span>std<span class="token operator">::</span>logical_and<span class="token operator">&lt;</span><span class="token keyword">bool</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>         <span class="token comment">//C++11版本</span>
+              std<span class="token operator">::</span><span class="token function">bind</span><span class="token punctuation">(</span>std<span class="token operator">::</span>less_equal<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> lowVal<span class="token punctuation">,</span> _1<span class="token punctuation">)</span><span class="token punctuation">,</span>
+              std<span class="token operator">::</span><span class="token function">bind</span><span class="token punctuation">(</span>std<span class="token operator">::</span>less_equal<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> _1<span class="token punctuation">,</span> highVal<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>当然，在C++11中，<em>lambda</em>也不能采用<code>auto</code>形参，因此它也必须指定一个类型：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">auto</span> betweenL <span class="token operator">=</span>                                 <span class="token comment">//C++11版本</span>
+    <span class="token punctuation">[</span>lowVal<span class="token punctuation">,</span> highVal<span class="token punctuation">]</span> <span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> lowVal <span class="token operator">&lt;=</span> val <span class="token operator">&amp;&amp;</span> val <span class="token operator">&lt;=</span> highVal<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>lambda版本不仅更短，而且更易于理解和维护</p>
+<p>假设我们有一个函数可以创建<code>Widget</code>的压缩副本</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">enum</span> <span class="token keyword">class</span> <span class="token class-name">CompLevel</span> <span class="token punctuation">&#123;</span> Low<span class="token punctuation">,</span> Normal<span class="token punctuation">,</span> High <span class="token punctuation">&#125;</span><span class="token punctuation">;</span> <span class="token comment">//压缩等级</span>
 
-<span class="token keyword">bool</span> <span class="token function">isHappy</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    unordered_set<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> hash<span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        n <span class="token operator">=</span> <span class="token function">squareSum</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>hash<span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token operator">!=</span> hash<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-        <span class="token keyword">else</span> hash<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+Widget <span class="token function">compress</span><span class="token punctuation">(</span><span class="token keyword">const</span> Widget<span class="token operator">&amp;</span> w<span class="token punctuation">,</span>            <span class="token comment">//制作w的压缩副本</span>
+                CompLevel lev<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>并且我们想创建一个函数对象，该函数对象允许我们指定<code>Widget w</code>的压缩级别。这种使用<code>std::bind</code>的话将创建一个这样的对象：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Widget w<span class="token punctuation">;</span>
+<span class="token keyword">auto</span> compressRateB <span class="token operator">=</span> std<span class="token operator">::</span><span class="token function">bind</span><span class="token punctuation">(</span>compress<span class="token punctuation">,</span> w<span class="token punctuation">,</span> _1<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p><code>std::bind</code>总是拷贝它的实参，但是调用者可以使用引用来存储实参，这要通过应用<code>std::ref</code>到实参上实现</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">auto</span> compressRateB <span class="token operator">=</span> std<span class="token operator">::</span><span class="token function">bind</span><span class="token punctuation">(</span>compress<span class="token punctuation">,</span> std<span class="token operator">::</span><span class="token function">ref</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span><span class="token punctuation">,</span> _1<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>结果就是<code>compressRateB</code>行为像是持有<code>w</code>的引用而非副本</p>
+<p>然而在lambda方法中，其中<code>w</code>是通过值还是通过引用捕获是显式的：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">auto</span> compressRateL <span class="token operator">=</span>                <span class="token comment">//w是按值捕获，lev是按值传递</span>
+    <span class="token punctuation">[</span>w<span class="token punctuation">]</span><span class="token punctuation">(</span>CompLevel lev<span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token function">compress</span><span class="token punctuation">(</span>w<span class="token punctuation">,</span> lev<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>同样明确的是形参是如何传递给lambda的。在这里，很明显形参<code>lev</code>是通过值传递的</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">compressRateL</span><span class="token punctuation">(</span>CompLevel<span class="token operator">::</span>High<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">//实参按值传递</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>但是在对由<code>std::bind</code>生成的对象调用中</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">compressRateB</span><span class="token punctuation">(</span>CompLevel<span class="token operator">::</span>High<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">//实参如何传递？</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>答案是传递给<code>bind</code>对象的所有实参都是通过引用传递的，因为此类对象的函数调用运算符使用完美转发</p>
+<p>在C++11中，可以在两个受约束的情况下证明使用<code>std::bind</code>是合理的</p>
+<ul>
+<li><strong>移动捕获</strong>。C++11的lambda不提供移动捕获，但是可以通过结合lambda和<code>std::bind</code>来模拟</li>
+<li><strong>多态函数对象</strong>。因为bind对象上的函数调用运算符使用完美转发，所以它可以接受任何类型的实参，当你要绑定带有模板化函数调用运算符的对象时，此功能很有用。</li>
+</ul>
+<p>例如</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">PolyWidget</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">></span>
+    <span class="token keyword">void</span> <span class="token keyword">operator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">const</span> T<span class="token operator">&amp;</span> param<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>std::bind</code>可以如下绑定一个<code>PolyWidget</code>对象</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">PolyWidget pw<span class="token punctuation">;</span>
+<span class="token keyword">auto</span> boundPW <span class="token operator">=</span> std<span class="token operator">::</span><span class="token function">bind</span><span class="token punctuation">(</span>pw<span class="token punctuation">,</span> _1<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p><code>boundPW</code>可以接受任意类型的对象了</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token function">boundPW</span><span class="token punctuation">(</span><span class="token number">1930</span><span class="token punctuation">)</span><span class="token punctuation">;</span>              <span class="token comment">//传int给PolyWidget::operator()</span>
+<span class="token function">boundPW</span><span class="token punctuation">(</span><span class="token keyword">nullptr</span><span class="token punctuation">)</span><span class="token punctuation">;</span>           <span class="token comment">//传nullptr给PolyWidget::operator()</span>
+<span class="token function">boundPW</span><span class="token punctuation">(</span><span class="token string">"Rosebud"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 		<span class="token comment">//传字面值给PolyWidget::operator()</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>这一点无法使用C++11的lambda做到。但是，在C++14中，可以通过带有<code>auto</code>形参的lambda轻松实现</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">auto</span> boundPW <span class="token operator">=</span> <span class="token punctuation">[</span>pw<span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">auto</span><span class="token operator">&amp;</span> param<span class="token punctuation">)</span>  <span class="token comment">//C++14 </span>
+               <span class="token punctuation">&#123;</span> <span class="token function">pw</span><span class="token punctuation">(</span>param<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p><strong>请记住：</strong></p>
+<ul>
+<li>与使用<code>std::bind</code>相比，lambda更易读，更具表达力并且可能更高效</li>
+<li>只有在C++11中，<code>std::bind</code>可能对实现移动捕获或绑定带有模板化函数调用运算符的对象时会很有用</li>
+</ul>
+
                 
             </div>
             <hr/>
@@ -622,7 +652,7 @@ Output<span class="token operator">:</span> <span class="token boolean">false</s
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/06/20/LeetCode-202-%E5%BF%AB%E4%B9%90%E6%95%B0/">http://example.com/2021/06/20/LeetCode-202-%E5%BF%AB%E4%B9%90%E6%95%B0/</a>
+                    <a href="http://example.com/2022/09/18/C-EffectiveModern-34-%E8%80%83%E8%99%91lambda%E8%80%8C%E9%9D%9Ebind/">http://example.com/2022/09/18/C-EffectiveModern-34-%E8%80%83%E8%99%91lambda%E8%80%8C%E9%9D%9Ebind/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -660,12 +690,8 @@ Output<span class="token operator">:</span> <span class="token boolean">false</s
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%95%B0%E5%AD%A6/">
-                                    <span class="chip bg-color">数学</span>
-                                </a>
-                            
-                                <a href="/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/">
-                                    <span class="chip bg-color">哈希表</span>
+                                <a href="/tags/Modern/">
+                                    <span class="chip bg-color">Modern</span>
                                 </a>
                             
                         </div>
@@ -841,13 +867,13 @@ Output<span class="token operator">:</span> <span class="token boolean">false</s
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/06/20/Math-%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B-%E4%BA%8C%E9%98%B6%E5%B8%B8%E7%B3%BB%E6%95%B0%E9%BD%90%E6%AC%A1%E7%BA%BF%E6%80%A7%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B/">
+                <a href="/2022/09/18/LeetCode-525-%E8%BF%9E%E7%BB%AD%E6%95%B0%E7%BB%84/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="二阶常系数齐次线性微分方程">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="525-连续数组">
                         
-                        <span class="card-title">二阶常系数齐次线性微分方程</span>
+                        <span class="card-title">525-连续数组</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -858,57 +884,8 @@ Output<span class="token operator">:</span> <span class="token boolean">false</s
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-06-20
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-18
                         </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%95%B0%E5%AD%A6/" class="post-category">
-                                    数学
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E6%95%B0%E5%AD%A6/">
-                        <span class="chip bg-color">数学</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/06/20/LeetCode-349-%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E7%9A%84%E4%BA%A4%E9%9B%86/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="349/350-两个数组的交集">
-                        
-                        <span class="card-title">349/350-两个数组的交集</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-20
-                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -924,8 +901,57 @@ Output<span class="token operator">:</span> <span class="token boolean">false</s
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/">
-                        <span class="chip bg-color">哈希表</span>
+                    <a href="/tags/%E5%89%8D%E7%BC%80%E5%92%8C/">
+                        <span class="chip bg-color">前缀和</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/09/18/C-EffectiveModern-33-lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="33-lambda表达式的完美转发">
+                        
+                        <span class="card-title">33-lambda表达式的完美转发</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-18
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/C/" class="post-category">
+                                    C++
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Modern/">
+                        <span class="chip bg-color">Modern</span>
                     </a>
                     
                 </div>
@@ -1056,13 +1082,6 @@ Output<span class="token operator">:</span> <span class="token boolean">false</s
 
 </main>
 
-
-<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-    MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
-    });
-</script>
 
 
 
