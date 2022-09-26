@@ -4,7 +4,7 @@
 
 <head>
     <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <meta name="keywords" content="指针和const, kunpeng">
+    <meta name="keywords" content="03-理解decltype, kunpeng">
     <meta name="description" content="个人技术博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>指针和const | kunpeng</title>
+    <title>03-理解decltype | kunpeng</title>
     <link rel="icon" type="image/png" href="/rocket.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -387,12 +387,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">指针和const</h1>
+                    <h1 class="description center-align post-title">03-理解decltype</h1>
                 </div>
             </div>
         </div>
@@ -511,8 +511,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/C/">
-                                <span class="chip bg-color">C++</span>
+                            <a href="/tags/Modern/">
+                                <span class="chip bg-color">Modern</span>
                             </a>
                         
                     </div>
@@ -536,7 +536,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-03-25
+                    2022-09-18
                 </div>
                 
 
@@ -560,80 +560,112 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="指向常量的指针（pointer-to-const）"><a href="#指向常量的指针（pointer-to-const）" class="headerlink" title="指向常量的指针（pointer to const）"></a>指向常量的指针（pointer to const）</h3><ol>
-<li><code>const</code>修饰的是<code>int</code>，说明<code>int</code>是常量不可修改，不能通过指针修改他的值，但可以指向别处</li>
-<li>指针指向的对象可以不是<code>const</code>，但是还是不能用指针去修改他，可以用其他方法修改</li>
-<li>必须用<code>const void*</code>才能指向<code>const</code>对象</li>
-</ol>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">*</span> pInteger<span class="token punctuation">;</span>    <span class="token comment">// int const* pInteger;</span>
-<span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>           <span class="token comment">// 不是const</span>
-pInteger <span class="token operator">=</span> <span class="token operator">&amp;</span>num<span class="token punctuation">;</span>
-<span class="token comment">// *pInteger = 100;	// error, 不能用指针修改常量</span>
-num <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>               <span class="token comment">// yes，可以用其他方法修改</span>
+                <p>相比模板类型推导和<code>auto</code>类型推导，<code>decltype</code>只是简单的返回名字或者表达式的类型</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>                <span class="token comment">//decltype(i)是const int</span>
 
-<span class="token keyword">int</span> another <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
-pInteger <span class="token operator">=</span> <span class="token operator">&amp;</span>another<span class="token punctuation">;</span>    <span class="token comment">// yes，可以改变指针指向</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">char</span> ch <span class="token operator">=</span> <span class="token string">'a'</span><span class="token punctuation">;</span>
-<span class="token comment">// void* p = &amp;ch;   //error</span>
-<span class="token keyword">const</span> <span class="token keyword">void</span><span class="token operator">*</span> p <span class="token operator">=</span> <span class="token operator">&amp;</span>ch<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p>所谓指向常量的指针或引用，不过是指针或引用“自以为是”罢了，它们觉得自己指向了常量，所以自觉地不去改变所指对象的值</p>
-</blockquote>
-<h3 id="常量指针（const-pointer）"><a href="#常量指针（const-pointer）" class="headerlink" title="常量指针（const pointer）"></a>常量指针（const pointer）</h3><ol>
-<li><code>const</code>在<code>*</code>右边，修饰的是指针，说明指针是常量，所以他存储的地址不能变，也就是不能改变指向，可以通过指针改变指向对象的值</li>
-<li>常量指针必须进行初始化</li>
-<li>常量指针不能指向<code>const</code>变量，只能用指向常量的指针指向<code>const</code>变量</li>
-</ol>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
-<span class="token comment">// const int num = 10;  // error，const int* -> int*</span>
-<span class="token keyword">int</span><span class="token operator">*</span> <span class="token keyword">const</span> pInt <span class="token operator">=</span> <span class="token operator">&amp;</span>num<span class="token punctuation">;</span> 
+<span class="token keyword">bool</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token keyword">const</span> Widget<span class="token operator">&amp;</span> w<span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment">//decltype(w)是const Widget&amp;</span>
+                                <span class="token comment">//decltype(f)是bool(const Widget&amp;)</span>
 
-<span class="token keyword">int</span> another <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
-<span class="token comment">// pInt = &amp;another;     // error, 常指针不能修改指向</span>
+<span class="token keyword">struct</span> <span class="token class-name">Point</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> x<span class="token punctuation">,</span>y<span class="token punctuation">;</span>                    <span class="token comment">//decltype(Point::x)是int</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>                              <span class="token comment">//decltype(Point::y)是int</span>
 
-<span class="token operator">*</span>pInt <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>            <span class="token comment">// yes，变量不是const，可以改变他的值</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>用名词<font color="LightSeaGreen">顶层const表示指针本身是个常量</font>，而用名词<font color="Coral">底层const表示指针所指对象是一个常量</font></p>
-<h3 id="指针大小"><a href="#指针大小" class="headerlink" title="指针大小"></a>指针大小</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>    <span class="token comment">// 4</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>   <span class="token comment">// 1</span>
-    
-    cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>   <span class="token comment">// 8</span>
-    cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>  <span class="token comment">// 8</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+Widget w<span class="token punctuation">;</span>                       <span class="token comment">//decltype(w)是Widget</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">f</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span><span class="token punctuation">)</span>…                      <span class="token comment">//decltype(f(w))是bool</span>
+
+<span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token operator">></span>            <span class="token comment">//std::vector的简化版本</span>
+<span class="token keyword">class</span> <span class="token class-name">vector</span><span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    T<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">(</span>std<span class="token operator">::</span>size_t index<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> v<span class="token punctuation">;</span>                  <span class="token comment">//decltype(v)是vector&lt;int></span>
+…
+<span class="token keyword">if</span> <span class="token punctuation">(</span>v<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>…                 <span class="token comment">//decltype(v[0])是int&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在C++11中，<code>decltype</code>最主要的用途就是用于声明函数模板，而这个函数返回类型依赖于形参类型</p>
+<p>例如要根据容器和下标返回指定下标的元素</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">Container</span><span class="token punctuation">,</span> <span class="token keyword">typename</span> <span class="token class-name">Index</span><span class="token operator">></span>    <span class="token comment">//可以工作，但是需要改良</span>
+<span class="token keyword">auto</span> <span class="token function">authAndAccess</span><span class="token punctuation">(</span>Container<span class="token operator">&amp;</span> c<span class="token punctuation">,</span> Index i<span class="token punctuation">)</span> <span class="token operator">-></span><span class="token keyword">decltype</span><span class="token punctuation">(</span>c<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">authenticateUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> c<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>函数名称前面的<code>auto</code>不会做任何的类型推导工作。相反的，他只是暗示使用了C++11的<strong>尾置返回类型</strong>语法，尾置返回类型的好处是我们可以在函数返回类型中使用函数形参相关的信息。在<code>authAndAccess</code>函数中，我们使用<code>c</code>和<code>i</code>指定返回类型。如果我们按照传统语法把函数返回类型放在函数名称之前，<code>c</code>和<code>i</code>就未被声明所以不能使用</p>
+<p>C++14标准下我们可以忽略尾置返回类型，只留下一个<code>auto</code></p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">Container</span><span class="token punctuation">,</span> <span class="token keyword">typename</span> <span class="token class-name">Index</span><span class="token operator">></span>    <span class="token comment">//C++14版本，</span>
+<span class="token keyword">auto</span> <span class="token function">authAndAccess</span><span class="token punctuation">(</span>Container<span class="token operator">&amp;</span> c<span class="token punctuation">,</span> Index i<span class="token punctuation">)</span>       <span class="token comment">//不那么正确</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">authenticateUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> c<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>                                <span class="token comment">//从c[i]中推导返回类型</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>函数返回类型中使用<code>auto</code>，编译器实际上是使用的模板类型推导的那套规则。<code>operator[]</code>对于大多数<code>T</code>类型的容器会返回一个<code>T&amp;</code>，但是在模板类型推导期间，表达式的引用性会被忽略</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">std<span class="token operator">::</span>deque<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> d<span class="token punctuation">;</span>
+<span class="token function">authAndAccess</span><span class="token punctuation">(</span>d<span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>               <span class="token comment">//返回d[5]，然后把10赋值给它</span>
+                                        <span class="token comment">//无法通过编译器</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>在这里<code>d[5]</code>本该返回一个<code>int&amp;</code>，但是模板类型推导会剥去引用的部分，因此产生了<code>int</code>返回类型。函数返回的那个<code>int</code>是一个右值，上面的代码尝试把10赋值给右值<code>int</code>，C++11禁止这样做，所以代码无法编译</p>
+<p>要想让<code>authAndAccess</code>像我们期待的那样工作，我们需要使用<code>decltype</code>类型推导来推导它的返回值，即指定<code>authAndAccess</code>应该返回一个和<code>c[i]</code>表达式类型一样的类型。C++期望在某些情况下当类型被暗示时需要使用<code>decltype</code>类型推导的规则，C++14通过使用<code>decltype(auto)</code>说明符使得这成为可能：<code>auto</code>说明符表示这个类型将会被推导，<code>decltype</code>说明<code>decltype</code>的规则将会被用到这个推导过程中</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">Container</span><span class="token punctuation">,</span> <span class="token keyword">typename</span> <span class="token class-name">Index</span><span class="token operator">></span>    <span class="token comment">//C++14版本，</span>
+<span class="token keyword">decltype</span><span class="token punctuation">(</span><span class="token keyword">auto</span><span class="token punctuation">)</span>                                  <span class="token comment">//可以工作，</span>
+<span class="token function">authAndAccess</span><span class="token punctuation">(</span>Container<span class="token operator">&amp;</span> c<span class="token punctuation">,</span> Index i<span class="token punctuation">)</span>            <span class="token comment">//但是还需要</span>
+<span class="token punctuation">&#123;</span>                                               <span class="token comment">//改良</span>
+    <span class="token function">authenticateUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> c<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>现在<code>authAndAccess</code>将会真正的返回<code>c[i]</code>的类型。一般情况下<code>c[i]</code>返回<code>T&amp;</code>，<code>authAndAccess</code>也会返回<code>T&amp;</code>，特殊情况下<code>c[i]</code>返回一个对象，<code>authAndAccess</code>也会返回一个对象</p>
+<p><code>decltype(auto)</code>的使用不仅仅局限于函数返回类型，当你想对初始化表达式使用<code>decltype</code>推导的规则，也可以使用</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Widget w<span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> Widget<span class="token operator">&amp;</span> cw <span class="token operator">=</span> w<span class="token punctuation">;</span>
+
+<span class="token keyword">auto</span> myWidget1 <span class="token operator">=</span> cw<span class="token punctuation">;</span>                    <span class="token comment">//auto类型推导</span>
+                                        <span class="token comment">//myWidget1的类型为Widget</span>
+<span class="token keyword">decltype</span><span class="token punctuation">(</span><span class="token keyword">auto</span><span class="token punctuation">)</span> myWidget2 <span class="token operator">=</span> cw<span class="token punctuation">;</span>          <span class="token comment">//decltype类型推导</span>
+                                        <span class="token comment">//myWidget2的类型是const Widget&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>再看看C++14版本的<code>authAndAccess</code>声明：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">Container</span><span class="token punctuation">,</span> <span class="token keyword">typename</span> <span class="token class-name">Index</span><span class="token operator">></span>
+<span class="token keyword">decltype</span><span class="token punctuation">(</span><span class="token keyword">auto</span><span class="token punctuation">)</span> <span class="token function">authAndAccess</span><span class="token punctuation">(</span>Container<span class="token operator">&amp;</span> c<span class="token punctuation">,</span> Index i<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>如果想支持右值，可以用通用引用和完美转发</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">Containter</span><span class="token punctuation">,</span> <span class="token keyword">typename</span> <span class="token class-name">Index</span><span class="token operator">></span>   <span class="token comment">//最终的C++14版本</span>
+<span class="token keyword">decltype</span><span class="token punctuation">(</span><span class="token keyword">auto</span><span class="token punctuation">)</span>
+<span class="token function">authAndAccess</span><span class="token punctuation">(</span>Container<span class="token operator">&amp;&amp;</span> c<span class="token punctuation">,</span> Index i<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">authenticateUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> std<span class="token operator">::</span>forward<span class="token operator">&lt;</span>Container<span class="token operator">></span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>C++11中要使用尾置返回类型</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">Container</span><span class="token punctuation">,</span> <span class="token keyword">typename</span> <span class="token class-name">Index</span><span class="token operator">></span>    <span class="token comment">//最终的C++11版本</span>
+<span class="token keyword">auto</span>
+<span class="token function">authAndAccess</span><span class="token punctuation">(</span>Container<span class="token operator">&amp;&amp;</span> c<span class="token punctuation">,</span> Index i<span class="token punctuation">)</span>
+<span class="token operator">-></span><span class="token keyword">decltype</span><span class="token punctuation">(</span>std<span class="token operator">::</span>forward<span class="token operator">&lt;</span>Container<span class="token operator">></span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">authenticateUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> std<span class="token operator">::</span>forward<span class="token operator">&lt;</span>Container<span class="token operator">></span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>可见不管是什么类型的指针，大小都是<strong>8个字节</strong>（64位机器）</p>
-<h3 id="类中使用const"><a href="#类中使用const" class="headerlink" title="类中使用const"></a>类中使用const</h3><p>使用<code>const</code>关键字进行说明的成员函数，称为<font color="LightSeaGreen">常成员函数</font>。<strong>只有常成员函数才有资格操作常量或常对象</strong>，没有使用<code>const</code>关键字进行说明的成员函数不能用来操作常对象。</p>
-<blockquote>
-<p>对于类中的<code>const</code>成员变量必须通过初始化列表进行初始化</p>
-</blockquote>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Apple</span> <span class="token punctuation">&#123;</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token function">Apple</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">num</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-    <span class="token keyword">static</span> <span class="token keyword">const</span> <span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<hr>
+<p>一些特殊情况，例如</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>其中，<code>x</code>是一个变量的名字，所以<code>decltype(x)</code>是<code>int</code>。但是如果用一个小括号包覆这个名字，比如这样<code>(x)</code> ，就会产生一个比名字更复杂的表达式。对于名字来说，<code>x</code>是一个左值，C++11定义了表达式<code>(x)</code>也是一个左值。因此<code>decltype((x))</code>是<code>int&amp;</code>。用小括号覆盖一个名字可以改变<code>decltype</code>对于名字产生的结果</p>
+<p>所以</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">decltype</span><span class="token punctuation">(</span><span class="token keyword">auto</span><span class="token punctuation">)</span> <span class="token function">f1</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> x<span class="token punctuation">;</span>                            <span class="token comment">//decltype(x）是int，所以f1返回int</span>
+<span class="token punctuation">&#125;</span>
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token keyword">const</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    Apple a<span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> a<span class="token punctuation">.</span>num <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    cout <span class="token operator">&lt;&lt;</span> Apple<span class="token operator">::</span>num <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><strong>static可以和const结合</strong></p>
-<p>本来<code>static</code>成员必须在类内声明，在类外初始化</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Apple</span> <span class="token punctuation">&#123;</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token function">Apple</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-    <span class="token keyword">static</span> <span class="token keyword">int</span> num<span class="token punctuation">;</span>   <span class="token comment">// 声明</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-<span class="token keyword">int</span> Apple<span class="token operator">::</span>num <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>  <span class="token comment">// 定义</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>加上<code>const</code>就可以在类内初始化了，当然也可以在类外初始化</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Apple</span> <span class="token punctuation">&#123;</span>
-<span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token function">Apple</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
-    <span class="token comment">// static const int num = 10;   // 直接在类内初始化</span>
-    <span class="token keyword">static</span> <span class="token keyword">const</span> <span class="token keyword">int</span> num<span class="token punctuation">;</span>   <span class="token comment">// 声明</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-<span class="token keyword">const</span> <span class="token keyword">int</span> Apple<span class="token operator">::</span>num <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>  <span class="token comment">// 定义</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">decltype</span><span class="token punctuation">(</span><span class="token keyword">auto</span><span class="token punctuation">)</span> <span class="token function">f2</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>                          <span class="token comment">//decltype((x))是int&amp;，所以f2返回int&amp;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>注意不仅<code>f2</code>的返回类型不同于<code>f1</code>，而且它还引用了一个局部变量</p>
+<p><strong>请记住：</strong></p>
+<ul>
+<li><code>decltype</code>总是不加修改的产生变量或者表达式的类型</li>
+<li>对于<code>T</code>类型的不是单纯的变量名的左值表达式，<code>decltype</code>总是产出<code>T</code>的引用即<code>T&amp;</code></li>
+<li>C++14支持<code>decltype(auto)</code>，就像<code>auto</code>一样，推导出类型，但是它使用<code>decltype</code>的规则进行推导</li>
+</ul>
+
                 
             </div>
             <hr/>
@@ -659,7 +691,7 @@ pInteger <span class="token operator">=</span> <span class="token operator">&amp
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2021/03/25/C-%E6%8C%87%E9%92%88%E5%92%8Cconst/">http://example.com/2021/03/25/C-%E6%8C%87%E9%92%88%E5%92%8Cconst/</a>
+                    <a href="http://example.com/2022/09/18/C-EffectiveModern-03-%E7%90%86%E8%A7%A3decltype/">http://example.com/2022/09/18/C-EffectiveModern-03-%E7%90%86%E8%A7%A3decltype/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -697,8 +729,8 @@ pInteger <span class="token operator">=</span> <span class="token operator">&amp
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/C/">
-                                    <span class="chip bg-color">C++</span>
+                                <a href="/tags/Modern/">
+                                    <span class="chip bg-color">Modern</span>
                                 </a>
                             
                         </div>
@@ -874,13 +906,13 @@ pInteger <span class="token operator">=</span> <span class="token operator">&amp
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/03/26/%E5%A4%9A%E6%97%8B%E7%BF%BC-PX4-sender/">
+                <a href="/2022/09/18/C-EffectiveModern-31-%E9%81%BF%E5%85%8D%E4%BD%BF%E7%94%A8%E9%BB%98%E8%AE%A4%E6%8D%95%E8%8E%B7%E6%A8%A1%E5%BC%8F/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="PX4_sender">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="31-避免使用默认捕获模式">
                         
-                        <span class="card-title">PX4_sender</span>
+                        <span class="card-title">31-避免使用默认捕获模式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -891,14 +923,14 @@ pInteger <span class="token operator">=</span> <span class="token operator">&amp
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-03-26
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-18
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%A4%9A%E6%97%8B%E7%BF%BC/" class="post-category">
-                                    多旋翼
+                            <a href="/categories/C/" class="post-category">
+                                    C++
                                 </a>
                             
                             
@@ -908,8 +940,8 @@ pInteger <span class="token operator">=</span> <span class="token operator">&amp
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%A4%9A%E6%97%8B%E7%BF%BC/">
-                        <span class="chip bg-color">多旋翼</span>
+                    <a href="/tags/Modern/">
+                        <span class="chip bg-color">Modern</span>
                     </a>
                     
                 </div>
@@ -923,13 +955,13 @@ pInteger <span class="token operator">=</span> <span class="token operator">&amp
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/03/21/OpenCV-CMakeForOpenCV/">
+                <a href="/2022/09/18/C-EffectiveModern-02-%E7%90%86%E8%A7%A3auto%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="CMakeForOpenCV">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="02-理解auto类型推导">
                         
-                        <span class="card-title">CMakeForOpenCV</span>
+                        <span class="card-title">02-理解auto类型推导</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -940,14 +972,14 @@ pInteger <span class="token operator">=</span> <span class="token operator">&amp
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-18
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/OpenCV/" class="post-category">
-                                    OpenCV
+                            <a href="/categories/C/" class="post-category">
+                                    C++
                                 </a>
                             
                             
@@ -957,12 +989,8 @@ pInteger <span class="token operator">=</span> <span class="token operator">&amp
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/CMake/">
-                        <span class="chip bg-color">CMake</span>
-                    </a>
-                    
-                    <a href="/tags/OpenCV/">
-                        <span class="chip bg-color">OpenCV</span>
+                    <a href="/tags/Modern/">
+                        <span class="chip bg-color">Modern</span>
                     </a>
                     
                 </div>
